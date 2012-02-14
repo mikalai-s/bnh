@@ -140,7 +140,10 @@
     <Content Include="Views\Web.config" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="App_Data\" />
+    <ProjectReference Include="..\BnhWebFramework\BnhWebFramework.csproj">
+      <Project>{291A879A-93D4-47A2-9749-BEE9E2A2DD62}</Project>
+      <Name>BnhWebFramework</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
