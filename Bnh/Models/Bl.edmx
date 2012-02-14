@@ -107,60 +107,60 @@
     <edmx:ConceptualModels>
       <Schema Namespace="BlModel" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2008/09/edm">
         <EntityContainer Name="BlEntities" annotation:LazyLoadingEnabled="true">
-          <EntitySet Name="builders" EntityType="BlModel.builder" />
-          <EntitySet Name="cities" EntityType="BlModel.city" />
-          <EntitySet Name="communities" EntityType="BlModel.community" />
+          <EntitySet Name="BuilderEntities" EntityType="BlModel.Builder" />
+          <EntitySet Name="CitiyEntities" EntityType="BlModel.City" />
+          <EntitySet Name="CommunityEntities" EntityType="BlModel.Community" />
           <AssociationSet Name="FK_community_TO_city" Association="BlModel.FK_community_TO_city">
-            <End Role="city" EntitySet="cities" />
-            <End Role="community" EntitySet="communities" />
+            <End Role="city" EntitySet="CitiyEntities" />
+            <End Role="community" EntitySet="CommunityEntities" />
           </AssociationSet>
           <AssociationSet Name="community_builders" Association="BlModel.community_builders">
-            <End Role="builder" EntitySet="builders" />
-            <End Role="community" EntitySet="communities" />
+            <End Role="builder" EntitySet="BuilderEntities" />
+            <End Role="community" EntitySet="CommunityEntities" />
           </AssociationSet>
         </EntityContainer>
-        <EntityType Name="builder">
+        <EntityType Name="Builder">
           <Key>
-            <PropertyRef Name="builder_id" />
+            <PropertyRef Name="Id" />
           </Key>
-          <Property Type="Guid" Name="builder_id" Nullable="false" />
-          <Property Type="String" Name="builder_name" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="communities" Relationship="BlModel.community_builders" FromRole="builder" ToRole="community" />
+          <Property Type="Guid" Name="Id" Nullable="false" />
+          <Property Type="String" Name="Name" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Communities" Relationship="BlModel.community_builders" FromRole="builder" ToRole="community" />
         </EntityType>
-        <EntityType Name="city">
+        <EntityType Name="City">
           <Key>
-            <PropertyRef Name="city_id" />
+            <PropertyRef Name="Id" />
           </Key>
-          <Property Type="Guid" Name="city_id" Nullable="false" />
-          <Property Type="String" Name="city_name" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="communities" Relationship="BlModel.FK_community_TO_city" FromRole="city" ToRole="community" />
+          <Property Type="Guid" Name="Id" Nullable="false" />
+          <Property Type="String" Name="Name" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Communities" Relationship="BlModel.FK_community_TO_city" FromRole="city" ToRole="community" />
         </EntityType>
-        <EntityType Name="community">
+        <EntityType Name="Community">
           <Key>
-            <PropertyRef Name="community_id" />
+            <PropertyRef Name="Id" />
           </Key>
-          <Property Type="Guid" Name="community_id" Nullable="false" />
-          <Property Type="String" Name="community_name" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Type="String" Name="zone" Nullable="false" MaxLength="30" FixedLength="false" Unicode="true" />
-          <Property Type="Guid" Name="city_id" Nullable="false" />
-          <NavigationProperty Name="city" Relationship="BlModel.FK_community_TO_city" FromRole="community" ToRole="city" />
-          <NavigationProperty Name="builders" Relationship="BlModel.community_builders" FromRole="community" ToRole="builder" />
+          <Property Type="Guid" Name="Id" Nullable="false" />
+          <Property Type="String" Name="Name" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="Zone" Nullable="false" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Type="Guid" Name="CityId" Nullable="false" a:GetterAccess="Protected" xmlns:a="http://schemas.microsoft.com/ado/2006/04/codegeneration" />
+          <NavigationProperty Name="City" Relationship="BlModel.FK_community_TO_city" FromRole="community" ToRole="city" />
+          <NavigationProperty Name="Builders" Relationship="BlModel.community_builders" FromRole="community" ToRole="builder" />
         </EntityType>
         <Association Name="FK_community_TO_city">
-          <End Type="BlModel.city" Role="city" Multiplicity="1" />
-          <End Type="BlModel.community" Role="community" Multiplicity="*" />
+          <End Type="BlModel.City" Role="city" Multiplicity="1" />
+          <End Type="BlModel.Community" Role="community" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="city">
-              <PropertyRef Name="city_id" />
+              <PropertyRef Name="Id" />
             </Principal>
             <Dependent Role="community">
-              <PropertyRef Name="city_id" />
+              <PropertyRef Name="CityId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
         <Association Name="community_builders">
-          <End Type="BlModel.builder" Role="builder" Multiplicity="*" />
-          <End Type="BlModel.community" Role="community" Multiplicity="*" />
+          <End Type="BlModel.Builder" Role="builder" Multiplicity="*" />
+          <End Type="BlModel.Community" Role="community" Multiplicity="*" />
         </Association>
       </Schema>
     </edmx:ConceptualModels>
@@ -168,38 +168,38 @@
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2008/09/mapping/cs">
         <EntityContainerMapping StorageEntityContainer="BlModelStoreContainer" CdmEntityContainer="BlEntities">
-          <EntitySetMapping Name="builders">
-            <EntityTypeMapping TypeName="BlModel.builder">
+          <EntitySetMapping Name="BuilderEntities">
+            <EntityTypeMapping TypeName="BlModel.Builder">
               <MappingFragment StoreEntitySet="builder">
-                <ScalarProperty Name="builder_name" ColumnName="builder_name" />
-                <ScalarProperty Name="builder_id" ColumnName="builder_id" />
+                <ScalarProperty Name="Name" ColumnName="builder_name" />
+                <ScalarProperty Name="Id" ColumnName="builder_id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="cities">
-            <EntityTypeMapping TypeName="BlModel.city">
+          <EntitySetMapping Name="CitiyEntities">
+            <EntityTypeMapping TypeName="BlModel.City">
               <MappingFragment StoreEntitySet="city">
-                <ScalarProperty Name="city_name" ColumnName="city_name" />
-                <ScalarProperty Name="city_id" ColumnName="city_id" />
+                <ScalarProperty Name="Name" ColumnName="city_name" />
+                <ScalarProperty Name="Id" ColumnName="city_id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="communities">
-            <EntityTypeMapping TypeName="BlModel.community">
+          <EntitySetMapping Name="CommunityEntities">
+            <EntityTypeMapping TypeName="BlModel.Community">
               <MappingFragment StoreEntitySet="community">
-                <ScalarProperty Name="city_id" ColumnName="city_id" />
-                <ScalarProperty Name="zone" ColumnName="zone" />
-                <ScalarProperty Name="community_name" ColumnName="community_name" />
-                <ScalarProperty Name="community_id" ColumnName="community_id" />
+                <ScalarProperty Name="CityId" ColumnName="city_id" />
+                <ScalarProperty Name="Zone" ColumnName="zone" />
+                <ScalarProperty Name="Name" ColumnName="community_name" />
+                <ScalarProperty Name="Id" ColumnName="community_id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <AssociationSetMapping Name="community_builders" TypeName="BlModel.community_builders" StoreEntitySet="community_builders">
             <EndProperty Name="community">
-              <ScalarProperty Name="community_id" ColumnName="community_id" />
+              <ScalarProperty Name="Id" ColumnName="community_id" />
             </EndProperty>
             <EndProperty Name="builder">
-              <ScalarProperty Name="builder_id" ColumnName="builder_id" />
+              <ScalarProperty Name="Id" ColumnName="builder_id" />
             </EndProperty>
           </AssociationSetMapping>
         </EntityContainerMapping>
@@ -223,9 +223,9 @@
     <!-- Diagram content (shape and connector positions) -->
     <Diagrams>
       <Diagram Name="Bl">
-        <EntityTypeShape EntityType="BlModel.builder" Width="1.5" PointX="0.75" PointY="1.25" Height="1.5956835937499996" />
-        <EntityTypeShape EntityType="BlModel.city" Width="1.5" PointX="0.75" PointY="5.25" Height="1.5956835937499996" />
-        <EntityTypeShape EntityType="BlModel.community" Width="1.5" PointX="3" PointY="0.875" Height="2.1725878906249996" />
+        <EntityTypeShape EntityType="BlModel.Builder" Width="1.5" PointX="0.75" PointY="1.25" Height="1.5956835937499996" />
+        <EntityTypeShape EntityType="BlModel.City" Width="1.5" PointX="0.75" PointY="5.25" Height="1.5956835937499996" />
+        <EntityTypeShape EntityType="BlModel.Community" Width="1.5" PointX="3" PointY="0.875" Height="2.1725878906249996" />
         <AssociationConnector Association="BlModel.FK_community_TO_city" >
           <ConnectorPoint PointX="2.25" PointY="6.047841796875" />
           <ConnectorPoint PointX="3.75" PointY="6.047841796875" />
