@@ -1,0 +1,241 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="2.0" xmlns:edmx="http://schemas.microsoft.com/ado/2008/10/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="BlModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/02/edm/ssdl">
+        <EntityContainer Name="BlModelStoreContainer">
+          <EntitySet Name="builder" EntityType="BlModel.Store.builder" store:Type="Tables" Schema="bl" />
+          <EntitySet Name="city" EntityType="BlModel.Store.city" store:Type="Tables" Schema="bl" />
+          <EntitySet Name="community" EntityType="BlModel.Store.community" store:Type="Tables" Schema="bl" />
+          <EntitySet Name="community_builders" EntityType="BlModel.Store.community_builders" store:Type="Tables" store:Schema="bl" store:Name="community_builders">
+            <DefiningQuery>SELECT 
+      [community_builders].[community_id] AS [community_id], 
+      [community_builders].[builder_id] AS [builder_id]
+      FROM [bl].[community_builders] AS [community_builders]</DefiningQuery>
+          </EntitySet>
+          <AssociationSet Name="FK_community_builders_TO_builder" Association="BlModel.Store.FK_community_builders_TO_builder">
+            <End Role="builder" EntitySet="builder" />
+            <End Role="community_builders" EntitySet="community_builders" />
+          </AssociationSet>
+          <AssociationSet Name="FK_community_builders_TO_community" Association="BlModel.Store.FK_community_builders_TO_community">
+            <End Role="community" EntitySet="community" />
+            <End Role="community_builders" EntitySet="community_builders" />
+          </AssociationSet>
+          <AssociationSet Name="FK_community_TO_city" Association="BlModel.Store.FK_community_TO_city">
+            <End Role="city" EntitySet="city" />
+            <End Role="community" EntitySet="community" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="builder">
+          <Key>
+            <PropertyRef Name="builder_id" />
+          </Key>
+          <Property Name="builder_id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="builder_name" Type="nvarchar" Nullable="false" MaxLength="100" />
+        </EntityType>
+        <EntityType Name="city">
+          <Key>
+            <PropertyRef Name="city_id" />
+          </Key>
+          <Property Name="city_id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="city_name" Type="nvarchar" Nullable="false" MaxLength="100" />
+        </EntityType>
+        <EntityType Name="community">
+          <Key>
+            <PropertyRef Name="community_id" />
+          </Key>
+          <Property Name="community_id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="community_name" Type="nvarchar" Nullable="false" MaxLength="100" />
+          <Property Name="zone" Type="nvarchar" Nullable="false" MaxLength="30" />
+          <Property Name="city_id" Type="uniqueidentifier" Nullable="false" />
+        </EntityType>
+        <!--Errors Found During Generation:
+      warning 6002: The table/view 'bnh.bl.community_builders' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
+      -->
+        <EntityType Name="community_builders">
+          <Key>
+            <PropertyRef Name="community_id" />
+            <PropertyRef Name="builder_id" />
+          </Key>
+          <Property Name="community_id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="builder_id" Type="uniqueidentifier" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_community_builders_TO_builder">
+          <End Role="builder" Type="BlModel.Store.builder" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="community_builders" Type="BlModel.Store.community_builders" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="builder">
+              <PropertyRef Name="builder_id" />
+            </Principal>
+            <Dependent Role="community_builders">
+              <PropertyRef Name="builder_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_community_builders_TO_community">
+          <End Role="community" Type="BlModel.Store.community" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="community_builders" Type="BlModel.Store.community_builders" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="community">
+              <PropertyRef Name="community_id" />
+            </Principal>
+            <Dependent Role="community_builders">
+              <PropertyRef Name="community_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_community_TO_city">
+          <End Role="city" Type="BlModel.Store.city" Multiplicity="1" />
+          <End Role="community" Type="BlModel.Store.community" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="city">
+              <PropertyRef Name="city_id" />
+            </Principal>
+            <Dependent Role="community">
+              <PropertyRef Name="city_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="BlModel" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2008/09/edm">
+        <EntityContainer Name="BlEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="builders" EntityType="BlModel.builder" />
+          <EntitySet Name="cities" EntityType="BlModel.city" />
+          <EntitySet Name="communities" EntityType="BlModel.community" />
+          <AssociationSet Name="FK_community_TO_city" Association="BlModel.FK_community_TO_city">
+            <End Role="city" EntitySet="cities" />
+            <End Role="community" EntitySet="communities" />
+          </AssociationSet>
+          <AssociationSet Name="community_builders" Association="BlModel.community_builders">
+            <End Role="builder" EntitySet="builders" />
+            <End Role="community" EntitySet="communities" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="builder">
+          <Key>
+            <PropertyRef Name="builder_id" />
+          </Key>
+          <Property Type="Guid" Name="builder_id" Nullable="false" />
+          <Property Type="String" Name="builder_name" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="communities" Relationship="BlModel.community_builders" FromRole="builder" ToRole="community" />
+        </EntityType>
+        <EntityType Name="city">
+          <Key>
+            <PropertyRef Name="city_id" />
+          </Key>
+          <Property Type="Guid" Name="city_id" Nullable="false" />
+          <Property Type="String" Name="city_name" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="communities" Relationship="BlModel.FK_community_TO_city" FromRole="city" ToRole="community" />
+        </EntityType>
+        <EntityType Name="community">
+          <Key>
+            <PropertyRef Name="community_id" />
+          </Key>
+          <Property Type="Guid" Name="community_id" Nullable="false" />
+          <Property Type="String" Name="community_name" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="zone" Nullable="false" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Type="Guid" Name="city_id" Nullable="false" />
+          <NavigationProperty Name="city" Relationship="BlModel.FK_community_TO_city" FromRole="community" ToRole="city" />
+          <NavigationProperty Name="builders" Relationship="BlModel.community_builders" FromRole="community" ToRole="builder" />
+        </EntityType>
+        <Association Name="FK_community_TO_city">
+          <End Type="BlModel.city" Role="city" Multiplicity="1" />
+          <End Type="BlModel.community" Role="community" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="city">
+              <PropertyRef Name="city_id" />
+            </Principal>
+            <Dependent Role="community">
+              <PropertyRef Name="city_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="community_builders">
+          <End Type="BlModel.builder" Role="builder" Multiplicity="*" />
+          <End Type="BlModel.community" Role="community" Multiplicity="*" />
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2008/09/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="BlModelStoreContainer" CdmEntityContainer="BlEntities">
+          <EntitySetMapping Name="builders">
+            <EntityTypeMapping TypeName="BlModel.builder">
+              <MappingFragment StoreEntitySet="builder">
+                <ScalarProperty Name="builder_name" ColumnName="builder_name" />
+                <ScalarProperty Name="builder_id" ColumnName="builder_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="cities">
+            <EntityTypeMapping TypeName="BlModel.city">
+              <MappingFragment StoreEntitySet="city">
+                <ScalarProperty Name="city_name" ColumnName="city_name" />
+                <ScalarProperty Name="city_id" ColumnName="city_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="communities">
+            <EntityTypeMapping TypeName="BlModel.community">
+              <MappingFragment StoreEntitySet="community">
+                <ScalarProperty Name="city_id" ColumnName="city_id" />
+                <ScalarProperty Name="zone" ColumnName="zone" />
+                <ScalarProperty Name="community_name" ColumnName="community_name" />
+                <ScalarProperty Name="community_id" ColumnName="community_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <AssociationSetMapping Name="community_builders" TypeName="BlModel.community_builders" StoreEntitySet="community_builders">
+            <EndProperty Name="community">
+              <ScalarProperty Name="community_id" ColumnName="community_id" />
+            </EndProperty>
+            <EndProperty Name="builder">
+              <ScalarProperty Name="builder_id" ColumnName="builder_id" />
+            </EndProperty>
+          </AssociationSetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2008/10/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="True" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="True" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams>
+      <Diagram Name="Bl">
+        <EntityTypeShape EntityType="BlModel.builder" Width="1.5" PointX="0.75" PointY="1.25" Height="1.5956835937499996" />
+        <EntityTypeShape EntityType="BlModel.city" Width="1.5" PointX="0.75" PointY="5.25" Height="1.5956835937499996" />
+        <EntityTypeShape EntityType="BlModel.community" Width="1.5" PointX="3" PointY="0.875" Height="2.1725878906249996" />
+        <AssociationConnector Association="BlModel.FK_community_TO_city" >
+          <ConnectorPoint PointX="2.25" PointY="6.047841796875" />
+          <ConnectorPoint PointX="3.75" PointY="6.047841796875" />
+          <ConnectorPoint PointX="3.75" PointY="3.0475878906249996" />
+        </AssociationConnector>
+        <AssociationConnector Association="BlModel.community_builders" >
+          <ConnectorPoint PointX="2.25" PointY="2.047841796875" />
+          <ConnectorPoint PointX="3" PointY="2.047841796875" />
+        </AssociationConnector>
+      </Diagram>
+    </Diagrams>
+  </Designer>
+</edmx:Edmx>
