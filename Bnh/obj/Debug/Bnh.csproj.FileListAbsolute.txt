@@ -1,0 +1,7 @@
+d:\documents\Bnh\Bnh\bin\Bnh.dll
+d:\documents\Bnh\Bnh\bin\Bnh.pdb
+d:\documents\Bnh\Bnh\bin\EntityFramework.dll
+d:\documents\Bnh\Bnh\bin\EntityFramework.xml
+d:\documents\Bnh\Bnh\obj\Debug\ResolveAssemblyReference.cache
+d:\documents\Bnh\Bnh\obj\Debug\Bnh.dll
+d:\documents\Bnh\Bnh\obj\Debug\Bnh.pdb
