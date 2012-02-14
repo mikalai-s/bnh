@@ -18,8 +18,8 @@ using System.Runtime.Serialization;
 [assembly: EdmSchemaAttribute()]
 #region EDM Relationship Metadata
 
-[assembly: EdmRelationshipAttribute("BlModel", "FK_community_TO_city", "city", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(Bnh.Models.city), "community", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(Bnh.Models.community), true)]
-[assembly: EdmRelationshipAttribute("BlModel", "community_builders", "builder", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(Bnh.Models.builder), "community", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(Bnh.Models.community))]
+[assembly: EdmRelationshipAttribute("BlModel", "FK_community_TO_city", "city", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(Bnh.Models.City), "community", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(Bnh.Models.Community), true)]
+[assembly: EdmRelationshipAttribute("BlModel", "community_builders", "builder", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(Bnh.Models.Builder), "community", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(Bnh.Models.Community))]
 
 #endregion
 
@@ -74,76 +74,76 @@ namespace Bnh.Models
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        public ObjectSet<builder> builders
+        public ObjectSet<Builder> BuilderEntities
         {
             get
             {
-                if ((_builders == null))
+                if ((_BuilderEntities == null))
                 {
-                    _builders = base.CreateObjectSet<builder>("builders");
+                    _BuilderEntities = base.CreateObjectSet<Builder>("BuilderEntities");
                 }
-                return _builders;
+                return _BuilderEntities;
             }
         }
-        private ObjectSet<builder> _builders;
+        private ObjectSet<Builder> _BuilderEntities;
     
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        public ObjectSet<city> cities
+        public ObjectSet<City> CitiyEntities
         {
             get
             {
-                if ((_cities == null))
+                if ((_CitiyEntities == null))
                 {
-                    _cities = base.CreateObjectSet<city>("cities");
+                    _CitiyEntities = base.CreateObjectSet<City>("CitiyEntities");
                 }
-                return _cities;
+                return _CitiyEntities;
             }
         }
-        private ObjectSet<city> _cities;
+        private ObjectSet<City> _CitiyEntities;
     
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        public ObjectSet<community> communities
+        public ObjectSet<Community> CommunityEntities
         {
             get
             {
-                if ((_communities == null))
+                if ((_CommunityEntities == null))
                 {
-                    _communities = base.CreateObjectSet<community>("communities");
+                    _CommunityEntities = base.CreateObjectSet<Community>("CommunityEntities");
                 }
-                return _communities;
+                return _CommunityEntities;
             }
         }
-        private ObjectSet<community> _communities;
+        private ObjectSet<Community> _CommunityEntities;
 
         #endregion
         #region AddTo Methods
     
         /// <summary>
-        /// Deprecated Method for adding a new object to the builders EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
+        /// Deprecated Method for adding a new object to the BuilderEntities EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
         /// </summary>
-        public void AddTobuilders(builder builder)
+        public void AddToBuilderEntities(Builder builder)
         {
-            base.AddObject("builders", builder);
+            base.AddObject("BuilderEntities", builder);
         }
     
         /// <summary>
-        /// Deprecated Method for adding a new object to the cities EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
+        /// Deprecated Method for adding a new object to the CitiyEntities EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
         /// </summary>
-        public void AddTocities(city city)
+        public void AddToCitiyEntities(City city)
         {
-            base.AddObject("cities", city);
+            base.AddObject("CitiyEntities", city);
         }
     
         /// <summary>
-        /// Deprecated Method for adding a new object to the communities EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
+        /// Deprecated Method for adding a new object to the CommunityEntities EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
         /// </summary>
-        public void AddTocommunities(community community)
+        public void AddToCommunityEntities(Community community)
         {
-            base.AddObject("communities", community);
+            base.AddObject("CommunityEntities", community);
         }
 
         #endregion
@@ -157,23 +157,23 @@ namespace Bnh.Models
     /// <summary>
     /// No Metadata Documentation available.
     /// </summary>
-    [EdmEntityTypeAttribute(NamespaceName="BlModel", Name="builder")]
+    [EdmEntityTypeAttribute(NamespaceName="BlModel", Name="Builder")]
     [Serializable()]
     [DataContractAttribute(IsReference=true)]
-    public partial class builder : EntityObject
+    public partial class Builder : EntityObject
     {
         #region Factory Method
     
         /// <summary>
-        /// Create a new builder object.
+        /// Create a new Builder object.
         /// </summary>
-        /// <param name="builder_id">Initial value of the builder_id property.</param>
-        /// <param name="builder_name">Initial value of the builder_name property.</param>
-        public static builder Createbuilder(global::System.Guid builder_id, global::System.String builder_name)
+        /// <param name="id">Initial value of the Id property.</param>
+        /// <param name="name">Initial value of the Name property.</param>
+        public static Builder CreateBuilder(global::System.Guid id, global::System.String name)
         {
-            builder builder = new builder();
-            builder.builder_id = builder_id;
-            builder.builder_name = builder_name;
+            Builder builder = new Builder();
+            builder.Id = id;
+            builder.Name = name;
             return builder;
         }
 
@@ -185,51 +185,51 @@ namespace Bnh.Models
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
         [DataMemberAttribute()]
-        public global::System.Guid builder_id
+        public global::System.Guid Id
         {
             get
             {
-                return _builder_id;
+                return _Id;
             }
             set
             {
-                if (_builder_id != value)
+                if (_Id != value)
                 {
-                    Onbuilder_idChanging(value);
-                    ReportPropertyChanging("builder_id");
-                    _builder_id = StructuralObject.SetValidValue(value);
-                    ReportPropertyChanged("builder_id");
-                    Onbuilder_idChanged();
+                    OnIdChanging(value);
+                    ReportPropertyChanging("Id");
+                    _Id = StructuralObject.SetValidValue(value);
+                    ReportPropertyChanged("Id");
+                    OnIdChanged();
                 }
             }
         }
-        private global::System.Guid _builder_id;
-        partial void Onbuilder_idChanging(global::System.Guid value);
-        partial void Onbuilder_idChanged();
+        private global::System.Guid _Id;
+        partial void OnIdChanging(global::System.Guid value);
+        partial void OnIdChanged();
     
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
         [DataMemberAttribute()]
-        public global::System.String builder_name
+        public global::System.String Name
         {
             get
             {
-                return _builder_name;
+                return _Name;
             }
             set
             {
-                Onbuilder_nameChanging(value);
-                ReportPropertyChanging("builder_name");
-                _builder_name = StructuralObject.SetValidValue(value, false);
-                ReportPropertyChanged("builder_name");
-                Onbuilder_nameChanged();
+                OnNameChanging(value);
+                ReportPropertyChanging("Name");
+                _Name = StructuralObject.SetValidValue(value, false);
+                ReportPropertyChanged("Name");
+                OnNameChanged();
             }
         }
-        private global::System.String _builder_name;
-        partial void Onbuilder_nameChanging(global::System.String value);
-        partial void Onbuilder_nameChanged();
+        private global::System.String _Name;
+        partial void OnNameChanging(global::System.String value);
+        partial void OnNameChanged();
 
         #endregion
     
@@ -242,17 +242,17 @@ namespace Bnh.Models
         [SoapIgnoreAttribute()]
         [DataMemberAttribute()]
         [EdmRelationshipNavigationPropertyAttribute("BlModel", "community_builders", "community")]
-        public EntityCollection<community> communities
+        public EntityCollection<Community> Communities
         {
             get
             {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<community>("BlModel.community_builders", "community");
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<Community>("BlModel.community_builders", "community");
             }
             set
             {
                 if ((value != null))
                 {
-                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<community>("BlModel.community_builders", "community", value);
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<Community>("BlModel.community_builders", "community", value);
                 }
             }
         }
@@ -263,23 +263,23 @@ namespace Bnh.Models
     /// <summary>
     /// No Metadata Documentation available.
     /// </summary>
-    [EdmEntityTypeAttribute(NamespaceName="BlModel", Name="city")]
+    [EdmEntityTypeAttribute(NamespaceName="BlModel", Name="City")]
     [Serializable()]
     [DataContractAttribute(IsReference=true)]
-    public partial class city : EntityObject
+    public partial class City : EntityObject
     {
         #region Factory Method
     
         /// <summary>
-        /// Create a new city object.
+        /// Create a new City object.
         /// </summary>
-        /// <param name="city_id">Initial value of the city_id property.</param>
-        /// <param name="city_name">Initial value of the city_name property.</param>
-        public static city Createcity(global::System.Guid city_id, global::System.String city_name)
+        /// <param name="id">Initial value of the Id property.</param>
+        /// <param name="name">Initial value of the Name property.</param>
+        public static City CreateCity(global::System.Guid id, global::System.String name)
         {
-            city city = new city();
-            city.city_id = city_id;
-            city.city_name = city_name;
+            City city = new City();
+            city.Id = id;
+            city.Name = name;
             return city;
         }
 
@@ -291,51 +291,51 @@ namespace Bnh.Models
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
         [DataMemberAttribute()]
-        public global::System.Guid city_id
+        public global::System.Guid Id
         {
             get
             {
-                return _city_id;
+                return _Id;
             }
             set
             {
-                if (_city_id != value)
+                if (_Id != value)
                 {
-                    Oncity_idChanging(value);
-                    ReportPropertyChanging("city_id");
-                    _city_id = StructuralObject.SetValidValue(value);
-                    ReportPropertyChanged("city_id");
-                    Oncity_idChanged();
+                    OnIdChanging(value);
+                    ReportPropertyChanging("Id");
+                    _Id = StructuralObject.SetValidValue(value);
+                    ReportPropertyChanged("Id");
+                    OnIdChanged();
                 }
             }
         }
-        private global::System.Guid _city_id;
-        partial void Oncity_idChanging(global::System.Guid value);
-        partial void Oncity_idChanged();
+        private global::System.Guid _Id;
+        partial void OnIdChanging(global::System.Guid value);
+        partial void OnIdChanged();
     
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
         [DataMemberAttribute()]
-        public global::System.String city_name
+        public global::System.String Name
         {
             get
             {
-                return _city_name;
+                return _Name;
             }
             set
             {
-                Oncity_nameChanging(value);
-                ReportPropertyChanging("city_name");
-                _city_name = StructuralObject.SetValidValue(value, false);
-                ReportPropertyChanged("city_name");
-                Oncity_nameChanged();
+                OnNameChanging(value);
+                ReportPropertyChanging("Name");
+                _Name = StructuralObject.SetValidValue(value, false);
+                ReportPropertyChanged("Name");
+                OnNameChanged();
             }
         }
-        private global::System.String _city_name;
-        partial void Oncity_nameChanging(global::System.String value);
-        partial void Oncity_nameChanged();
+        private global::System.String _Name;
+        partial void OnNameChanging(global::System.String value);
+        partial void OnNameChanged();
 
         #endregion
     
@@ -348,17 +348,17 @@ namespace Bnh.Models
         [SoapIgnoreAttribute()]
         [DataMemberAttribute()]
         [EdmRelationshipNavigationPropertyAttribute("BlModel", "FK_community_TO_city", "community")]
-        public EntityCollection<community> communities
+        public EntityCollection<Community> Communities
         {
             get
             {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<community>("BlModel.FK_community_TO_city", "community");
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<Community>("BlModel.FK_community_TO_city", "community");
             }
             set
             {
                 if ((value != null))
                 {
-                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<community>("BlModel.FK_community_TO_city", "community", value);
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<Community>("BlModel.FK_community_TO_city", "community", value);
                 }
             }
         }
@@ -369,27 +369,27 @@ namespace Bnh.Models
     /// <summary>
     /// No Metadata Documentation available.
     /// </summary>
-    [EdmEntityTypeAttribute(NamespaceName="BlModel", Name="community")]
+    [EdmEntityTypeAttribute(NamespaceName="BlModel", Name="Community")]
     [Serializable()]
     [DataContractAttribute(IsReference=true)]
-    public partial class community : EntityObject
+    public partial class Community : EntityObject
     {
         #region Factory Method
     
         /// <summary>
-        /// Create a new community object.
+        /// Create a new Community object.
         /// </summary>
-        /// <param name="community_id">Initial value of the community_id property.</param>
-        /// <param name="community_name">Initial value of the community_name property.</param>
-        /// <param name="zone">Initial value of the zone property.</param>
-        /// <param name="city_id">Initial value of the city_id property.</param>
-        public static community Createcommunity(global::System.Guid community_id, global::System.String community_name, global::System.String zone, global::System.Guid city_id)
+        /// <param name="id">Initial value of the Id property.</param>
+        /// <param name="name">Initial value of the Name property.</param>
+        /// <param name="zone">Initial value of the Zone property.</param>
+        /// <param name="cityId">Initial value of the CityId property.</param>
+        public static Community CreateCommunity(global::System.Guid id, global::System.String name, global::System.String zone, global::System.Guid cityId)
         {
-            community community = new community();
-            community.community_id = community_id;
-            community.community_name = community_name;
-            community.zone = zone;
-            community.city_id = city_id;
+            Community community = new Community();
+            community.Id = id;
+            community.Name = name;
+            community.Zone = zone;
+            community.CityId = cityId;
             return community;
         }
 
@@ -401,99 +401,99 @@ namespace Bnh.Models
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
         [DataMemberAttribute()]
-        public global::System.Guid community_id
+        public global::System.Guid Id
         {
             get
             {
-                return _community_id;
+                return _Id;
             }
             set
             {
-                if (_community_id != value)
+                if (_Id != value)
                 {
-                    Oncommunity_idChanging(value);
-                    ReportPropertyChanging("community_id");
-                    _community_id = StructuralObject.SetValidValue(value);
-                    ReportPropertyChanged("community_id");
-                    Oncommunity_idChanged();
+                    OnIdChanging(value);
+                    ReportPropertyChanging("Id");
+                    _Id = StructuralObject.SetValidValue(value);
+                    ReportPropertyChanged("Id");
+                    OnIdChanged();
                 }
             }
         }
-        private global::System.Guid _community_id;
-        partial void Oncommunity_idChanging(global::System.Guid value);
-        partial void Oncommunity_idChanged();
+        private global::System.Guid _Id;
+        partial void OnIdChanging(global::System.Guid value);
+        partial void OnIdChanged();
     
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
         [DataMemberAttribute()]
-        public global::System.String community_name
+        public global::System.String Name
         {
             get
             {
-                return _community_name;
+                return _Name;
             }
             set
             {
-                Oncommunity_nameChanging(value);
-                ReportPropertyChanging("community_name");
-                _community_name = StructuralObject.SetValidValue(value, false);
-                ReportPropertyChanged("community_name");
-                Oncommunity_nameChanged();
+                OnNameChanging(value);
+                ReportPropertyChanging("Name");
+                _Name = StructuralObject.SetValidValue(value, false);
+                ReportPropertyChanged("Name");
+                OnNameChanged();
             }
         }
-        private global::System.String _community_name;
-        partial void Oncommunity_nameChanging(global::System.String value);
-        partial void Oncommunity_nameChanged();
+        private global::System.String _Name;
+        partial void OnNameChanging(global::System.String value);
+        partial void OnNameChanged();
     
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
         [DataMemberAttribute()]
-        public global::System.String zone
+        public global::System.String Zone
         {
             get
             {
-                return _zone;
+                return _Zone;
             }
             set
             {
-                OnzoneChanging(value);
-                ReportPropertyChanging("zone");
-                _zone = StructuralObject.SetValidValue(value, false);
-                ReportPropertyChanged("zone");
-                OnzoneChanged();
+                OnZoneChanging(value);
+                ReportPropertyChanging("Zone");
+                _Zone = StructuralObject.SetValidValue(value, false);
+                ReportPropertyChanged("Zone");
+                OnZoneChanged();
             }
         }
-        private global::System.String _zone;
-        partial void OnzoneChanging(global::System.String value);
-        partial void OnzoneChanged();
+        private global::System.String _Zone;
+        partial void OnZoneChanging(global::System.String value);
+        partial void OnZoneChanged();
     
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
         [DataMemberAttribute()]
-        public global::System.Guid city_id
+        public global::System.Guid CityId
         {
-            get
+            protected get
             {
-                return _city_id;
+                return _CityId;
             }
             set
             {
-                Oncity_idChanging(value);
-                ReportPropertyChanging("city_id");
-                _city_id = StructuralObject.SetValidValue(value);
-                ReportPropertyChanged("city_id");
-                Oncity_idChanged();
+                OnCityIdChanging(value);
+                ReportPropertyChanging("CityId");
+                _CityId = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("CityId");
+                OnCityIdChanged();
             }
         }
-        private global::System.Guid _city_id;
-        partial void Oncity_idChanging(global::System.Guid value);
-        partial void Oncity_idChanged();
+        private global::System.Guid _CityId;
+        partial void OnCityIdChanging(global::System.Guid value);
+        partial void OnCityIdChanged();
 
         #endregion
     
@@ -506,15 +506,15 @@ namespace Bnh.Models
         [SoapIgnoreAttribute()]
         [DataMemberAttribute()]
         [EdmRelationshipNavigationPropertyAttribute("BlModel", "FK_community_TO_city", "city")]
-        public city city
+        public City City
         {
             get
             {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<city>("BlModel.FK_community_TO_city", "city").Value;
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<City>("BlModel.FK_community_TO_city", "city").Value;
             }
             set
             {
-                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<city>("BlModel.FK_community_TO_city", "city").Value = value;
+                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<City>("BlModel.FK_community_TO_city", "city").Value = value;
             }
         }
         /// <summary>
@@ -522,17 +522,17 @@ namespace Bnh.Models
         /// </summary>
         [BrowsableAttribute(false)]
         [DataMemberAttribute()]
-        public EntityReference<city> cityReference
+        public EntityReference<City> CityReference
         {
             get
             {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<city>("BlModel.FK_community_TO_city", "city");
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<City>("BlModel.FK_community_TO_city", "city");
             }
             set
             {
                 if ((value != null))
                 {
-                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<city>("BlModel.FK_community_TO_city", "city", value);
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<City>("BlModel.FK_community_TO_city", "city", value);
                 }
             }
         }
@@ -544,17 +544,17 @@ namespace Bnh.Models
         [SoapIgnoreAttribute()]
         [DataMemberAttribute()]
         [EdmRelationshipNavigationPropertyAttribute("BlModel", "community_builders", "builder")]
-        public EntityCollection<builder> builders
+        public EntityCollection<Builder> Builders
         {
             get
             {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<builder>("BlModel.community_builders", "builder");
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<Builder>("BlModel.community_builders", "builder");
             }
             set
             {
                 if ((value != null))
                 {
-                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<builder>("BlModel.community_builders", "builder", value);
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<Builder>("BlModel.community_builders", "builder", value);
                 }
             }
         }
