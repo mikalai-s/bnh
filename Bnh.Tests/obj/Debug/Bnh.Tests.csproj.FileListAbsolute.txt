@@ -1,8 +1,0 @@
-d:\documents\Bnh\Bnh.Tests\bin\Debug\Bnh.Tests.dll.config
-d:\documents\Bnh\Bnh.Tests\bin\Debug\Bnh.Tests.dll
-d:\documents\Bnh\Bnh.Tests\bin\Debug\Bnh.Tests.pdb
-d:\documents\Bnh\Bnh.Tests\bin\Debug\Bnh.dll
-d:\documents\Bnh\Bnh.Tests\bin\Debug\Bnh.pdb
-d:\documents\Bnh\Bnh.Tests\obj\Debug\ResolveAssemblyReference.cache
-d:\documents\Bnh\Bnh.Tests\obj\Debug\Bnh.Tests.dll
-d:\documents\Bnh\Bnh.Tests\obj\Debug\Bnh.Tests.pdb
