@@ -1,40 +1,42 @@
 ﻿@model IEnumerable<Bnh.Models.Community>
-
+           
+@section Styles {
+    <link href="@Url.Content("~/Styles/Community.css")" rel="stylesheet" type="text/css" />
+}
+           
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Communities in Calgary";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Index</h2>
+<h2>@ViewBag.Title</h2>
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
-<table>
+<table id="community-table">    
     <tr>
-        <th>
-            Name
-        </th>
-        <th>
-            Zone
-        </th>
-        <th></th>
-    </tr>
-
-@foreach (var item in Model) {
-    <tr>
+    @foreach (var zoneGroup in Model.GroupBy(c => c.Zone.Name))
+    {
         <td>
-            @Html.DisplayFor(modelItem => item.Name)
+            <div class="zone">@zoneGroup.Key</div>
+            @foreach (var community in zoneGroup.OrderBy(c => c.Name))
+            {
+                <div class="community">                    
+                    @if (Context.User.IsInRole("content_manager"))
+                    {
+                        <span>@Html.ActionLink(community.Name, "Edit", new { id = community.Id })</span>
+                        <span>@Html.ActionLink("x", "Delete", new { id = community.Id })</span>
+                    }
+                    else
+                    {
+                        <span>@Html.ActionLink(community.Name, "Details", new { id = community.Id })</span>
+                    }
+                </div>
+            }
         </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Zone)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
-            @Html.ActionLink("Details", "Details", new { id=item.Id }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.Id })
-        </td>
-    </tr>
-}
-
+    }  
+    </tr>    
 </table>
+
+@if (Context.User.IsInRole("content_manager"))
+{
+<p>@Html.ActionLink("Create New", "Create")</p>
+}

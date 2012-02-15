@@ -18,7 +18,7 @@ namespace Bnh.Controllers
 
         public ViewResult Index()
         {
-            return View(db.BuilderEntities.ToList());
+            return View(db.Builders.ToList());
         }
 
         //
@@ -26,7 +26,7 @@ namespace Bnh.Controllers
 
         public ViewResult Details(Guid id)
         {
-            Builder builder = db.BuilderEntities.Single(b => b.Id == id);
+            Builder builder = db.Builders.Single(b => b.Id == id);
             return View(builder);
         }
 
@@ -47,7 +47,7 @@ namespace Bnh.Controllers
             if (ModelState.IsValid)
             {
                 builder.Id = Guid.NewGuid();
-                db.BuilderEntities.AddObject(builder);
+                db.Builders.AddObject(builder);
                 db.SaveChanges();
                 return RedirectToAction("Index");  
             }
@@ -60,7 +60,7 @@ namespace Bnh.Controllers
  
         public ActionResult Edit(Guid id)
         {
-            Builder builder = db.BuilderEntities.Single(b => b.Id == id);
+            Builder builder = db.Builders.Single(b => b.Id == id);
             return View(builder);
         }
 
@@ -72,7 +72,7 @@ namespace Bnh.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.BuilderEntities.Attach(builder);
+                db.Builders.Attach(builder);
                 db.ObjectStateManager.ChangeObjectState(builder, EntityState.Modified);
                 db.SaveChanges();
                 return RedirectToAction("Index");
@@ -85,7 +85,7 @@ namespace Bnh.Controllers
  
         public ActionResult Delete(Guid id)
         {
-            Builder builder = db.BuilderEntities.Single(b => b.Id == id);
+            Builder builder = db.Builders.Single(b => b.Id == id);
             return View(builder);
         }
 
@@ -95,8 +95,8 @@ namespace Bnh.Controllers
         [HttpPost, ActionName("Delete")]
         public ActionResult DeleteConfirmed(Guid id)
         {            
-            Builder builder = db.BuilderEntities.Single(b => b.Id == id);
-            db.BuilderEntities.DeleteObject(builder);
+            Builder builder = db.Builders.Single(b => b.Id == id);
+            db.Builders.DeleteObject(builder);
             db.SaveChanges();
             return RedirectToAction("Index");
         }
