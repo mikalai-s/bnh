@@ -1,0 +1,16 @@
+﻿#community-table
+{
+    width: 100%;
+}
+
+#community-table .zone, #community-table .community
+{
+    padding: 5px;
+    font-size: 110%;
+}
+
+#community-table .zone
+{
+    padding-left: 10px;
+    font-weight: bold;
+}

@@ -18,8 +18,8 @@ namespace Bnh.Controllers
 
         public ViewResult Index()
         {
-            var communityentities = db.CommunityEntities.Include("City");
-            return View(communityentities.ToList());
+            var communities = db.Communities.Include("Zone");
+            return View(communities.ToList());
         }
 
         //
@@ -27,7 +27,7 @@ namespace Bnh.Controllers
 
         public ViewResult Details(Guid id)
         {
-            Community community = db.CommunityEntities.Single(c => c.Id == id);
+            Community community = db.Communities.Single(c => c.Id == id);
             return View(community);
         }
 
@@ -36,7 +36,7 @@ namespace Bnh.Controllers
 
         public ActionResult Create()
         {
-            ViewBag.CityId = new SelectList(db.CitiyEntities, "Id", "Name");
+            ViewBag.ZoneId = new SelectList(db.Zones, "Id", "Name");
             return View();
         } 
 
@@ -49,12 +49,12 @@ namespace Bnh.Controllers
             if (ModelState.IsValid)
             {
                 community.Id = Guid.NewGuid();
-                db.CommunityEntities.AddObject(community);
+                db.Communities.AddObject(community);
                 db.SaveChanges();
                 return RedirectToAction("Index");  
             }
 
-            ViewBag.CityId = new SelectList(db.CitiyEntities, "Id", "Name", community.City.Id);
+            ViewBag.ZoneId = new SelectList(db.Zones, "Id", "Name", community.ZoneId);
             return View(community);
         }
         
@@ -63,8 +63,8 @@ namespace Bnh.Controllers
  
         public ActionResult Edit(Guid id)
         {
-            Community community = db.CommunityEntities.Single(c => c.Id == id);
-            ViewBag.CityId = new SelectList(db.CitiyEntities, "Id", "Name", community.City.Id);
+            Community community = db.Communities.Single(c => c.Id == id);
+            ViewBag.ZoneId = new SelectList(db.Zones, "Id", "Name", community.ZoneId);
             return View(community);
         }
 
@@ -76,12 +76,12 @@ namespace Bnh.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.CommunityEntities.Attach(community);
+                db.Communities.Attach(community);
                 db.ObjectStateManager.ChangeObjectState(community, EntityState.Modified);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            ViewBag.CityId = new SelectList(db.CitiyEntities, "Id", "Name", community.City.Id);
+            ViewBag.ZoneId = new SelectList(db.Zones, "Id", "Name", community.ZoneId);
             return View(community);
         }
 
@@ -90,7 +90,7 @@ namespace Bnh.Controllers
  
         public ActionResult Delete(Guid id)
         {
-            Community community = db.CommunityEntities.Single(c => c.Id == id);
+            Community community = db.Communities.Single(c => c.Id == id);
             return View(community);
         }
 
@@ -100,8 +100,8 @@ namespace Bnh.Controllers
         [HttpPost, ActionName("Delete")]
         public ActionResult DeleteConfirmed(Guid id)
         {            
-            Community community = db.CommunityEntities.Single(c => c.Id == id);
-            db.CommunityEntities.DeleteObject(community);
+            Community community = db.Communities.Single(c => c.Id == id);
+            db.Communities.DeleteObject(community);
             db.SaveChanges();
             return RedirectToAction("Index");
         }

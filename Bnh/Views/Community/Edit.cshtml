@@ -26,11 +26,11 @@
         </div>
 
         <div class="editor-label">
-            @Html.LabelFor(model => model.Zone)
+            @Html.LabelFor(model => model.ZoneId, "Zone")
         </div>
         <div class="editor-field">
-            @Html.EditorFor(model => model.Zone)
-            @Html.ValidationMessageFor(model => model.Zone)
+            @Html.DropDownList("ZoneId", String.Empty)
+            @Html.ValidationMessageFor(model => model.ZoneId)
         </div>
 
         <p>
