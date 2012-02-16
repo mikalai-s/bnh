@@ -1,26 +1,30 @@
 ﻿@model Bnh.Models.Community
 
 @{
-    ViewBag.Title = "Details";
+    ViewBag.Title = Model.Name;
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Details</h2>
+<div class="page-view">
+    <h2>Welcome to @Model.Name<sup>@Model.Zone.Name</sup> page</h2>
 
-<fieldset>
-    <legend>Community</legend>
+    <p>Community details will go here...</p>
 
-    <div class="display-label">Name</div>
-    <div class="display-field">
-        @Html.DisplayFor(model => model.Name)
-    </div>
+@*    <fieldset>
+        <legend>Community details will go here...</legend>
 
-    <div class="display-label">Zone</div>
-    <div class="display-field">
-        @Html.DisplayFor(model => model.Zone.Name)
-    </div>
-</fieldset>
-<p>
-    @Html.ActionLink("Edit", "Edit", new { id=Model.Id }) |
-    @Html.ActionLink("Back to List", "Index")
-</p>
+        <div class="display-label">Name</div>
+        <div class="display-field">
+            @Html.DisplayFor(model => model.Name)
+        </div>
+
+        <div class="display-label">Zone</div>
+        <div class="display-field">
+            @Html.DisplayFor(model => model.Zone.Name)
+        </div>
+    </fieldset>
+    <p>
+        @Html.ActionLink("Edit", "Edit", new { id=Model.Id }) |
+        @Html.ActionLink("Back to List", "Index")
+    </p>*@
+</div>

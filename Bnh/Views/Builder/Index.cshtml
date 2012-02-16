@@ -1,34 +1,58 @@
 ﻿@model IEnumerable<Bnh.Models.Builder>
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Builders in Calgary";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Index</h2>
+<div class="page-view">
+    <h2>@ViewBag.Title</h2>
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
-<table>
-    <tr>
-        <th>
-            Name
-        </th>
-        <th></th>
-    </tr>
+   @* <p>
+        @Html.ActionLink("Create New", "Create")
+    </p>*@
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Name)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
-            @Html.ActionLink("Details", "Details", new { id=item.Id }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.Id })
-        </td>
-    </tr>
-}
+    <table>  
+        @{
+            var groupNumber = 5;
+            var builderGroups = Model.OrderBy(b => b.Name).GroupBy(b => b.Name[0].ToString()).ToList();
+        }
+        @for (int i = 0; i <= builderGroups.Count / groupNumber; i++)
+        {
+            <tr>
+                @foreach (var builderGroup in builderGroups.Skip(i * groupNumber).Take(groupNumber))
+                {
+                <td>
+                    <div class="list-header">@builderGroup.Key</div>
+                    
+                    @foreach (var builder in builderGroup)
+                    {
+                    <div class="list">@Html.ActionLink(builder.Name, "Details", new { id = builder.Id })</div>
+                    }
+                    
+                </td>
+                }
+            </tr>
+            <tr>
+                <td colspan="@groupNumber"><hr /></td>
+            </tr>
+        }
+    </table>
 
-</table>
+
+    @*@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
+                @Html.ActionLink("Details", "Details", new { id=item.Id }) |
+                @Html.ActionLink("Delete", "Delete", new { id=item.Id })
+            </td>
+        </tr>
+    }*@
+
+  
+
+</div>

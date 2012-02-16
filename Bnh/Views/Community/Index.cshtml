@@ -1,40 +1,38 @@
 ﻿@model IEnumerable<Bnh.Models.Community>
-           
-@section Styles {
-    <link href="@Url.Content("~/Styles/Community.css")" rel="stylesheet" type="text/css" />
-}
-           
+
 @{
     ViewBag.Title = "Communities in Calgary";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>@ViewBag.Title</h2>
+<div class="page-view">
+    <h2>@ViewBag.Title</h2>
 
-<table id="community-table">    
-    <tr>
-    @foreach (var zoneGroup in Model.GroupBy(c => c.Zone.Name))
-    {
-        <td>
-            <div class="zone">@zoneGroup.Key</div>
-            @foreach (var community in zoneGroup.OrderBy(c => c.Name))
-            {
-                <div class="community">                    
-                    @if (Context.User.IsInRole("content_manager"))
-                    {
-                        <span>@Html.ActionLink(community.Name, "Edit", new { id = community.Id })</span>
-                        <span>@Html.ActionLink("x", "Delete", new { id = community.Id })</span>
-                    }
-                    else
-                    {
-                        <span>@Html.ActionLink(community.Name, "Details", new { id = community.Id })</span>
-                    }
-                </div>
-            }
-        </td>
-    }  
-    </tr>    
-</table>
+    <table>
+        <tr>
+        @foreach (var zone in Model.Select(c => c.Zone).Distinct().OrderBy(z => z.Order))
+        {
+            <td>
+                <div class="list-header">@zone.Name</div>
+                @foreach (var community in Model.Where(c => c.Zone == zone).OrderBy(c => c.Name))
+                {
+                    <div class="list">
+                        @if (Context.User.IsInRole("content_manager"))
+                        {
+                            <span>@Html.ActionLink(community.Name, "Edit", new { id = community.Id })</span>
+                            <span>@Html.ActionLink("x", "Delete", new { id = community.Id })</span>
+                        }
+                        else
+                        {
+                            <span>@Html.ActionLink(community.Name, "Details", new { id = community.Id })</span>
+                        }
+                    </div>
+                }
+            </td>
+        }
+        </tr>
+    </table>
+</div>
 
 @if (Context.User.IsInRole("content_manager"))
 {
