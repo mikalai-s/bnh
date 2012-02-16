@@ -1,13 +1,16 @@
 ﻿@model Bnh.Models.Builder
 
 @{
-    ViewBag.Title = "Details";
+    ViewBag.Title = Model.Name;
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Details</h2>
+<div class="page-view">
+    <h2>Welcome to @Model.Name page</h2>
 
-<fieldset>
+    <p>Builder details will go here...</p>
+
+@*<fieldset>
     <legend>Builder</legend>
 
     <div class="display-label">Name</div>
@@ -19,3 +22,5 @@
     @Html.ActionLink("Edit", "Edit", new { id=Model.Id }) |
     @Html.ActionLink("Back to List", "Index")
 </p>
+*@
+</div>

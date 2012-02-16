@@ -577,12 +577,14 @@ namespace Bnh.Models
         /// <param name="id">Initial value of the Id property.</param>
         /// <param name="name">Initial value of the Name property.</param>
         /// <param name="cityId">Initial value of the CityId property.</param>
-        public static Zone CreateZone(global::System.Guid id, global::System.String name, global::System.Guid cityId)
+        /// <param name="order">Initial value of the Order property.</param>
+        public static Zone CreateZone(global::System.Guid id, global::System.String name, global::System.Guid cityId, global::System.Int32 order)
         {
             Zone zone = new Zone();
             zone.Id = id;
             zone.Name = name;
             zone.CityId = cityId;
+            zone.Order = order;
             return zone;
         }
 
@@ -663,6 +665,30 @@ namespace Bnh.Models
         private global::System.Guid _CityId;
         partial void OnCityIdChanging(global::System.Guid value);
         partial void OnCityIdChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 Order
+        {
+            get
+            {
+                return _Order;
+            }
+            set
+            {
+                OnOrderChanging(value);
+                ReportPropertyChanging("Order");
+                _Order = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("Order");
+                OnOrderChanged();
+            }
+        }
+        private global::System.Int32 _Order;
+        partial void OnOrderChanging(global::System.Int32 value);
+        partial void OnOrderChanged();
 
         #endregion
     

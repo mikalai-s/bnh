@@ -21,29 +21,18 @@ Links: #5f97af
 /* Reset
 ***************************************************************/
 
-html, body, div, span, applet, object, iframe,
-h1, h2, h3, h4, h5, h6, p, blockquote, pre,
-a, abbr, acronym, address, big, cite, code,
-del, dfn, em, font, img, ins, kbd, q, s, samp,
-small, strike, strong, sub, sup, tt, var,
-dl, dt, dd, ol, ul, li,
-fieldset, form, label, legend,
-table, caption, tbody, tfoot, thead, tr, th, td {
-    margin: 0;
-    padding: 0;
-    border: 0;
-    outline: 0;
-    font-weight: inherit;
-    font-style: inherit;
-    font-size: 100%;
-    font-family: inherit;
-    vertical-align: baseline;
+html, body {    
+}
+
+body
+{
+    overflow-y: scroll;
 }
 
 /* Remember focus styles! */
 :focus { outline: 0; }
 
-body { line-height: 1; color: black; background: white; }
+body { line-height: 20px; color: black; background: white; }
 ol, ul { list-style: none; }
 
 /* Tables still need 'cellspacing="0"' in the markup */
@@ -56,8 +45,6 @@ blockquote, q { quotes: "" ""; }
 
 /* HTML 5 elements as block */  
 header, footer, aside, nav, article { display: block; }
-
-
 
 /* Clearing Floats
 ***************************************************************/
@@ -111,21 +98,26 @@ Pixels     EMs         Percent Points
 */
 
 body { 
-  font-size: 81.3%;
+  font-size: 100%;
   color: #434343; 
   background: #fff;
   font-family: Tahoma, "Helvetica Neue", Arial, Helvetica, sans-serif;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  outline: 0;
+  vertical-align: baseline;
 }
 
 /* Headings */
-h1,h2,h3,h4,h5,h6 { font-weight: normal; margin:.6em 0;}
+h1,h2,h3,h4,h5,h6 { font-weight: normal; margin:10px 0;}
 
-h1 { font-size: 1.308em; }
-h2 { font-size: 1.231em; }
-h3 { font-size: 1.154em; }
-h4 { font-size: 1.077em; }
-h5 { font-size: 1em; }
-h6 { font-size: 1em; }
+h1 { font-size: 150%; }
+h2 { font-size: 130%; }
+h3 { font-size: 120%; }
+h4 { font-size: 115%; }
+h5 { font-size: 110%; }
+h6 { font-size: 110%; }
 
 h1 img, h2 img, h3 img, 
 h4 img, h5 img, h6 img {
@@ -242,7 +234,6 @@ nav ul
         display:block;
         float:left;
         color: #333;
-        font-size: 1.077em;
         text-decoration:none;
         line-height:24px;
     }
@@ -256,7 +247,7 @@ nav ul
     #branding 
     {   
         font-family: 'Lobster', Tahoma, Arial, Helvetica, sans-serif;
-        font-size: 2.1em;
+        font-size: 160%;
         padding: 0;
         margin: 0;
     }
@@ -308,7 +299,7 @@ nav ul
 .zone-asidefirst {}
 .zone-messages {}
 .zone-beforecontent {}
-.zone-content {}
+.zone-content { padding: 30px 0 30px 12px; }
 .zone-aftercontent {}
 .zone-asidesecond {}
 .zone-aftermain {}

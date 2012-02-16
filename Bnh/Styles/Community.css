@@ -1,16 +1,27 @@
-﻿#community-table
+﻿
+.page-view table
 {
     width: 100%;
 }
 
-#community-table .zone, #community-table .community
+.page-view td
 {
-    padding: 5px;
-    font-size: 110%;
+    vertical-align: top;
 }
 
-#community-table .zone
+.page-view .list-header, .page-view .list
+{
+    padding: 5px;
+}
+
+.page-view .list-header
 {
     padding-left: 10px;
+    font-weight: bold;
+}
+
+.page-view sup
+{
+    color: #6c6c6c;
     font-weight: bold;
 }
