@@ -151,7 +151,7 @@ p img.right { float: right; margin: 0.923em 0 0.923em 0.923em; }
 
 a:focus, 
 a:hover     { text-decoration: underline; }
-a           { color: #5f97af; text-decoration: none; }
+a           { color: #5087a9; text-decoration: none; }
 
 blockquote  { margin: 0.923em; color: #666; font-style: italic; }
 strong      { font-weight: bold; }
