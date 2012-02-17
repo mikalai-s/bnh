@@ -8,13 +8,14 @@
 <div class="page-view">
     <h2>@ViewBag.Title</h2>
 
-   @* <p>
-        @Html.ActionLink("Create New", "Create")
-    </p>*@
+    @if (Context.User.IsInRole("content_manager"))
+    {
+        <p class="alter">@Html.ActionInputLink("Create new...", "Create")</p>
+    }
 
     <table>  
         @{
-            var groupNumber = 5;
+            var groupNumber = 4;
             var builderGroups = Model.OrderBy(b => b.Name).GroupBy(b => b.Name[0].ToString()).ToList();
         }
         @for (int i = 0; i <= builderGroups.Count / groupNumber; i++)
@@ -27,7 +28,13 @@
                     
                     @foreach (var builder in builderGroup)
                     {
-                    <div class="list">@Html.ActionLink(builder.Name, "Details", new { id = builder.Id })</div>
+                        <div class="list">
+                            @if (Context.User.IsInRole("content_manager"))
+                            {
+                                <sup class="alter">@Html.ActionLink("x", "Delete", new { id = builder.Id })</sup>
+                            }
+                            <span>@Html.ActionLink(builder.Name, "Details", new { id = builder.Id })</span>
+                        </div>
                     }
                     
                 </td>
