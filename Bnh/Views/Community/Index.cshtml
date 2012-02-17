@@ -8,6 +8,11 @@
 <div class="page-view">
     <h2>@ViewBag.Title</h2>
 
+    @if (Context.User.IsInRole("content_manager"))
+    {
+        <p class="alter">@Html.ActionInputLink("Create new...", "Create")</p>
+    }
+
     <table>
         <tr>
         @foreach (var zone in Model.Select(c => c.Zone).Distinct().OrderBy(z => z.Order))
@@ -19,13 +24,9 @@
                     <div class="list">
                         @if (Context.User.IsInRole("content_manager"))
                         {
-                            <span>@Html.ActionLink(community.Name, "Edit", new { id = community.Id })</span>
-                            <span>@Html.ActionLink("x", "Delete", new { id = community.Id })</span>
+                            <sup class="alter">@Html.ActionLink("x", "Delete", new { id = community.Id })</sup>
                         }
-                        else
-                        {
-                            <span>@Html.ActionLink(community.Name, "Details", new { id = community.Id })</span>
-                        }
+                        <span>@Html.ActionLink(community.Name, "Details", new { id = community.Id })</span>
                     </div>
                 }
             </td>
@@ -34,7 +35,3 @@
     </table>
 </div>
 
-@if (Context.User.IsInRole("content_manager"))
-{
-<p>@Html.ActionLink("Create New", "Create")</p>
-}
