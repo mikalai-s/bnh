@@ -31,7 +31,7 @@
                         <div class="list">
                             @if (Context.User.IsInRole("content_manager"))
                             {
-                                <sup class="alter">@Html.ActionLink("x", "Delete", new { id = builder.Id })</sup>
+                                <sup class="alter">@Html.ActionLink("x", "Delete", new { id = builder.Id }, new { title = "Delete " + builder.Name })</sup>
                             }
                             <span>@Html.ActionLink(builder.Name, "Details", new { id = builder.Id })</span>
                         </div>

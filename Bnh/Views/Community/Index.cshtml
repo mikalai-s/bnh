@@ -24,7 +24,7 @@
                     <div class="list">
                         @if (Context.User.IsInRole("content_manager"))
                         {
-                            <sup class="alter">@Html.ActionLink("x", "Delete", new { id = community.Id })</sup>
+                            <sup class="alter">@Html.ActionLink("x", "Delete", new { id = community.Id }, new { title = "Delete " + community.Name })</sup>
                         }
                         <span>@Html.ActionLink(community.Name, "Details", new { id = community.Id })</span>
                     </div>
