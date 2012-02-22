@@ -1,0 +1,25 @@
+﻿@model Bnh.Models.Wall
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<fieldset>
+    <legend>Wall</legend>
+
+    <div class="display-label">OwnerId</div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.OwnerId)
+    </div>
+
+    <div class="display-label">Title</div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Title)
+    </div>
+</fieldset>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id=Model.Id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

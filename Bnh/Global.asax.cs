@@ -4,6 +4,8 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Routing;
+using BnhWebFramework;
+using Bnh.Model;
 
 namespace Bnh
 {
@@ -35,6 +37,9 @@ namespace Bnh
 
             RegisterGlobalFilters(GlobalFilters.Filters);
             RegisterRoutes(RouteTable.Routes);
+
+            ModelBinders.Binders.DefaultBinder = new BnhModelBinder();
+            //ModelBinders.Binders.DefaultBinder = new DerivedTypeModelBinder();
         }
     }
 }

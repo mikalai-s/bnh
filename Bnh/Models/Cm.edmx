@@ -1,0 +1,244 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="2.0" xmlns:edmx="http://schemas.microsoft.com/ado/2008/10/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="bnhModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/02/edm/ssdl">
+        <EntityContainer Name="bnhModelStoreContainer">
+          <EntitySet Name="Brick" EntityType="bnhModel.Store.Brick" store:Type="Tables" Schema="cm" />
+          <EntitySet Name="Wall" EntityType="bnhModel.Store.Wall" store:Type="Tables" Schema="cm" />
+          <AssociationSet Name="FK_Brick_Wall" Association="bnhModel.Store.FK_Brick_Wall">
+            <End Role="Wall" EntitySet="Wall" />
+            <End Role="Brick" EntitySet="Brick" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="Brick">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="bigint" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="WallId" Type="bigint" Nullable="false" />
+          <Property Name="X" Type="int" Nullable="false" />
+          <Property Name="Y" Type="int" Nullable="false" />
+          <Property Name="Width" Type="int" Nullable="false" />
+          <Property Name="Title" Type="nvarchar" Nullable="false" MaxLength="50" />
+          <Property Name="Type" Type="tinyint" Nullable="false" />
+          <Property Name="Html" Type="ntext" />
+          <Property Name="ImageUrl" Type="nvarchar" MaxLength="512" />
+          <Property Name="PicturesUrl" Type="nvarchar" MaxLength="512" />
+          <Property Name="GpsLocation" Type="nvarchar" MaxLength="100" />
+        </EntityType>
+        <EntityType Name="Wall">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="bigint" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="OwnerId" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="Title" Type="nvarchar" Nullable="false" MaxLength="50" />
+        </EntityType>
+        <Association Name="FK_Brick_Wall">
+          <End Role="Wall" Type="bnhModel.Store.Wall" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Brick" Type="bnhModel.Store.Brick" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Wall">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Brick">
+              <PropertyRef Name="WallId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="bnhModel" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2008/09/edm">
+        <EntityContainer Name="CmEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Bricks" EntityType="bnhModel.Brick" />
+          <EntitySet Name="Walls" EntityType="bnhModel.Wall" />
+          <AssociationSet Name="FK_Brick_Wall" Association="bnhModel.FK_Brick_Wall">
+            <End Role="Wall" EntitySet="Walls" />
+            <End Role="Brick" EntitySet="Bricks" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="Brick" Abstract="false">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="WallId" Type="Int64" Nullable="false" />
+          <Property Name="X" Type="Int32" Nullable="false" />
+          <Property Name="Y" Type="Int32" Nullable="false" />
+          <Property Name="Width" Type="Int32" Nullable="false" />
+          <Property Name="Title" Type="String" Nullable="false" MaxLength="50" Unicode="true" FixedLength="false" />
+          <NavigationProperty Name="Wall" Relationship="bnhModel.FK_Brick_Wall" FromRole="Brick" ToRole="Wall" />
+        </EntityType>
+        <EntityType Name="Wall" Abstract="false">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="OwnerId" Type="Guid" Nullable="false" />
+          <Property Name="Title" Type="String" Nullable="false" MaxLength="50" Unicode="true" FixedLength="false" />
+          <NavigationProperty Name="Bricks" Relationship="bnhModel.FK_Brick_Wall" FromRole="Wall" ToRole="Brick" />
+        </EntityType>
+        <Association Name="FK_Brick_Wall">
+          <End Role="Wall" Type="bnhModel.Wall" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Brick" Type="bnhModel.Brick" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Wall">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Brick">
+              <PropertyRef Name="WallId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="HtmlBrick" BaseType="bnhModel.Brick" >
+          <Property Type="String" Name="Html" MaxLength="Max" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="MapBrick" BaseType="bnhModel.Brick" >
+          <Property Type="String" Name="GpsLocation" MaxLength="100" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="PictureBrick" BaseType="bnhModel.Brick" >
+          <Property Type="String" Name="ImageUrl" MaxLength="512" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="GalleryBrick" BaseType="bnhModel.Brick" >
+          <Property Type="String" Name="PicturesUrl" MaxLength="512" FixedLength="false" Unicode="true" />
+        </EntityType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2008/09/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="bnhModelStoreContainer" CdmEntityContainer="CmEntities">
+          <EntitySetMapping Name="Bricks">
+            <EntityTypeMapping TypeName="IsTypeOf(bnhModel.HtmlBrick)">
+              <MappingFragment StoreEntitySet="Brick">
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="Width" ColumnName="Width" />
+                <ScalarProperty Name="Y" ColumnName="Y" />
+                <ScalarProperty Name="X" ColumnName="X" />
+                <ScalarProperty Name="WallId" ColumnName="WallId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Html" ColumnName="Html" />
+                <Condition ColumnName="Type" Value="1" />
+              </MappingFragment>
+            </EntityTypeMapping>
+            <EntityTypeMapping TypeName="IsTypeOf(bnhModel.MapBrick)">
+              <MappingFragment StoreEntitySet="Brick">
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="Width" ColumnName="Width" />
+                <ScalarProperty Name="Y" ColumnName="Y" />
+                <ScalarProperty Name="X" ColumnName="X" />
+                <ScalarProperty Name="WallId" ColumnName="WallId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="GpsLocation" ColumnName="GpsLocation" />
+                <Condition ColumnName="Type" Value="2" />
+              </MappingFragment>
+            </EntityTypeMapping>
+            <EntityTypeMapping TypeName="IsTypeOf(bnhModel.GalleryBrick)">
+              <MappingFragment StoreEntitySet="Brick">
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="Width" ColumnName="Width" />
+                <ScalarProperty Name="Y" ColumnName="Y" />
+                <ScalarProperty Name="X" ColumnName="X" />
+                <ScalarProperty Name="WallId" ColumnName="WallId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="PicturesUrl" ColumnName="PicturesUrl" />
+                <Condition ColumnName="Type" Value="3" />
+              </MappingFragment>
+            </EntityTypeMapping>
+            <EntityTypeMapping TypeName="IsTypeOf(bnhModel.PictureBrick)">
+              <MappingFragment StoreEntitySet="Brick">
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="Width" ColumnName="Width" />
+                <ScalarProperty Name="Y" ColumnName="Y" />
+                <ScalarProperty Name="X" ColumnName="X" />
+                <ScalarProperty Name="WallId" ColumnName="WallId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="ImageUrl" ColumnName="ImageUrl" />
+                <Condition ColumnName="Type" Value="4" />
+              </MappingFragment>
+            </EntityTypeMapping>
+            <EntityTypeMapping TypeName="bnhModel.Brick">
+              <MappingFragment StoreEntitySet="Brick">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="Width" ColumnName="Width" />
+                <ScalarProperty Name="Y" ColumnName="Y" />
+                <ScalarProperty Name="X" ColumnName="X" />
+                <ScalarProperty Name="WallId" ColumnName="WallId" />
+                <Condition ColumnName="Type" Value="0" />
+              </MappingFragment>
+            </EntityTypeMapping></EntitySetMapping>
+          <EntitySetMapping Name="Walls"><EntityTypeMapping TypeName="bnhModel.Wall"><MappingFragment StoreEntitySet="Wall">
+            <ScalarProperty Name="Id" ColumnName="Id" />
+            <ScalarProperty Name="OwnerId" ColumnName="OwnerId" />
+            <ScalarProperty Name="Title" ColumnName="Title" />
+          </MappingFragment></EntityTypeMapping></EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2008/10/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="True" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="True" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams>
+      <Diagram Name="Cm">
+        <EntityTypeShape EntityType="bnhModel.Brick" Width="1.5" PointX="3" PointY="1.5" Height="2.364889322916667" IsExpanded="true" />
+        <EntityTypeShape EntityType="bnhModel.Wall" Width="1.5" PointX="0.75" PointY="1.25" Height="1.7879850260416674" IsExpanded="true" />
+        <AssociationConnector Association="bnhModel.FK_Brick_Wall" ManuallyRouted="false">
+          <ConnectorPoint PointX="2.25" PointY="2.2689925130208337" />
+          <ConnectorPoint PointX="3" PointY="2.2689925130208337" />
+        </AssociationConnector>
+        <EntityTypeShape EntityType="bnhModel.HtmlBrick" Width="1.5" PointX="5.875" PointY="0.5" Height="1.211080729166667" />
+        <InheritanceConnector EntityType="bnhModel.HtmlBrick" >
+          <ConnectorPoint PointX="3.75" PointY="1.5" />
+          <ConnectorPoint PointX="3.75" PointY="1.2" />
+          <ConnectorPoint PointX="4.8" PointY="1.2" />
+          <ConnectorPoint PointX="4.8" PointY="2.0110807291666672" />
+          <ConnectorPoint PointX="6.625" PointY="2.0110807291666672" />
+          <ConnectorPoint PointX="6.625" PointY="1.711080729166667" />
+        </InheritanceConnector>
+        <EntityTypeShape EntityType="bnhModel.MapBrick" Width="1.5" PointX="5.875" PointY="2.25" Height="1.0187792968749996" />
+        <InheritanceConnector EntityType="bnhModel.MapBrick" >
+          <ConnectorPoint PointX="4.5" PointY="2.8555403645833337" />
+          <ConnectorPoint PointX="5.875" PointY="2.8555403645833337" />
+        </InheritanceConnector>
+        <EntityTypeShape EntityType="bnhModel.PictureBrick" Width="1.5" PointX="5.875" PointY="5.25" Height="1.2110807291666665" />
+        <InheritanceConnector EntityType="bnhModel.PictureBrick" >
+          <ConnectorPoint PointX="3.75" PointY="3.864889322916667" />
+          <ConnectorPoint PointX="3.75" PointY="5.0964" />
+          <ConnectorPoint PointX="6.625" PointY="5.0964" />
+          <ConnectorPoint PointX="6.625" PointY="5.25" />
+        </InheritanceConnector>
+        <EntityTypeShape EntityType="bnhModel.GalleryBrick" Width="1.5" PointX="5.875" PointY="3.75" Height="1.2110807291666665" />
+        <InheritanceConnector EntityType="bnhModel.GalleryBrick" >
+          <ConnectorPoint PointX="3.75" PointY="3.864889322916667" />
+          <ConnectorPoint PointX="3.75" PointY="4.0184893229166674" />
+          <ConnectorPoint PointX="4.6536" PointY="4.0184893229166674" />
+          <ConnectorPoint PointX="4.6536" PointY="3.5964" />
+          <ConnectorPoint PointX="6.625" PointY="3.5964" />
+          <ConnectorPoint PointX="6.625" PointY="3.75" />
+        </InheritanceConnector>
+      </Diagram>
+    </Diagrams>
+  </Designer>
+</edmx:Edmx>
