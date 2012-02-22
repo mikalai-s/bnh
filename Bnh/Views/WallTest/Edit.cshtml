@@ -1,0 +1,57 @@
+﻿@model Bnh.Models.Wall
+
+@{
+    ViewBag.Title = "Edit";
+}
+
+<h2>Edit</h2>
+<script src="@Url.Content("~/Scripts/jquery-ui-1.8.11.js")" type="text/javascript"></script>
+<script src="@Url.Content("~/Scripts/jquery.json-2.3.js")" type="text/javascript"></script>
+<script src="@Url.Content("~/Scripts/jquery.validate.js")" type="text/javascript"></script>
+<script src="@Url.Content("~/Scripts/WallDesigner.js")" type="text/javascript"></script>
+<link href="@Url.Content("~/Styles/WallDesigner.css")" rel="stylesheet" type="text/css" />
+@*TODO: change theme to local one*@
+<link rel="stylesheet" type="text/css" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.7.1/themes/base/jquery-ui.css"/>
+
+@using (Html.BeginForm()) {
+    @Html.ValidationSummary(true)
+
+    <fieldset>
+        <legend>Wall</legend>
+
+        @Html.HiddenFor(model => model.Id)
+        @Html.HiddenFor(model => model.OwnerId)
+
+        @*<div class="editor-label">
+            @Html.LabelFor(model => model.OwnerId)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.OwnerId)
+            @Html.ValidationMessageFor(model => model.OwnerId)
+        </div>*@
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Title)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.Title)
+            @Html.ValidationMessageFor(model => model.Title)
+        </div>
+
+        <p class="alter">
+            <input type="submit" value="Save" />
+        </p>
+    </fieldset>
+}
+
+<div>
+    <div id="wallToolbar">
+        <input id="addRowButton" type="button" value="Add Row" />
+    </div>    
+    <div id="wallScene">
+    </div>
+</div>
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
