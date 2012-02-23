@@ -122,6 +122,7 @@
     <Content Include="Scripts\modernizr-1.7.min.js" />
     <Content Include="Scripts\WallDesigner.js" />
     <Content Include="Styles\Community.css" />
+    <Content Include="Styles\Wall.css" />
     <Content Include="Styles\WallDesigner.css" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>

@@ -1,0 +1,22 @@
+﻿#wallScene
+{
+    width: 100%;
+    min-height: 100px;
+    padding: 5px;
+    height: auto;
+    overflow: hidden;
+}
+
+.brick-wrapper
+{
+    width: 100%;
+    float: left;
+}
+
+.brick-wrapper .brick
+{
+    width: auto;
+    height: 62px;
+    margin: 5px;    
+    overflow: hidden;
+}
