@@ -1,24 +1,14 @@
-﻿@using Bnh.Entities
-@model Community
-
+﻿@model Bnh.Entities.Community
 @{
     ViewBag.Title = Model.Name;
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
 <link href="@Url.Content("~/Styles/Wall.css")" rel="stylesheet" type="text/css" />
-
 <div class="page-view">
-
-<div>
-    <div id="wallToolbar">
-        
-    </div>    
-    <div id="wallScene">
-    @foreach (var brick in Model.GetWallBricks())
-    {
-        @Html.Brick(brick)
-    }
+    <div>
+        <div id="wallToolbar">
+            @Html.ActionLink("Edit", "Edit", "WallTest", new { id = Model.GetWall().Id }, null)
+        </div>
+        @Html.Partial("WallScene", Model.GetWallBricks())
     </div>
-</div>
 </div>
