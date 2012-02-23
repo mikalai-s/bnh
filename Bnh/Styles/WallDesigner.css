@@ -1,39 +1,9 @@
 ﻿#wallScene
 {
     border: 1px solid navy;
-    width: 100%;
-    min-height: 100px;
-    padding: 5px;
-    height: auto;
-    overflow: hidden;
-}
-
-.brick-wrapper
-{
-    width: 100%;
-    float: left;
 }
 
 .brick-wrapper .brick
 {
-    width: auto;
-    height: 62px;
-    margin: 5px;
     border: 1px dashed red;
-    overflow: hidden;
-}
-
-.brick-wrapper .last
-{
-    clear: both;
-}
-
-.brick-resize-handler
-{
-    width: 4px;
-    height: 100%;
-    cursor: e-resize;
-    background-color: gray;
-    margin: 1px;
-    float: right;
 }
