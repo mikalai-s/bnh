@@ -8,8 +8,8 @@
     <ProjectGuid>{291A879A-93D4-47A2-9749-BEE9E2A2DD62}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>BnhWebFramework</RootNamespace>
-    <AssemblyName>BnhWebFramework</AssemblyName>
+    <RootNamespace>Bnh.WebFramework</RootNamespace>
+    <AssemblyName>Bnh.WebFramework</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>

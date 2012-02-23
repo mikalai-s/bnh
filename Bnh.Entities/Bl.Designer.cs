@@ -18,13 +18,13 @@ using System.Runtime.Serialization;
 [assembly: EdmSchemaAttribute()]
 #region EDM Relationship Metadata
 
-[assembly: EdmRelationshipAttribute("BlModel", "FK_Zone_City", "City", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(Bnh.Models.City), "Zone", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(Bnh.Models.Zone), true)]
-[assembly: EdmRelationshipAttribute("BlModel", "FK_Community_Zone", "Zone", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(Bnh.Models.Zone), "Community", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(Bnh.Models.Community), true)]
-[assembly: EdmRelationshipAttribute("BlModel", "Community_Builders", "Builder", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(Bnh.Models.Builder), "Community", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(Bnh.Models.Community))]
+[assembly: EdmRelationshipAttribute("BlModel", "FK_Zone_City", "City", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(Bnh.Entities.City), "Zone", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(Bnh.Entities.Zone), true)]
+[assembly: EdmRelationshipAttribute("BlModel", "FK_Community_Zone", "Zone", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(Bnh.Entities.Zone), "Community", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(Bnh.Entities.Community), true)]
+[assembly: EdmRelationshipAttribute("BlModel", "Community_Builders", "Builder", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(Bnh.Entities.Builder), "Community", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(Bnh.Entities.Community))]
 
 #endregion
 
-namespace Bnh.Models
+namespace Bnh.Entities
 {
     #region Contexts
     

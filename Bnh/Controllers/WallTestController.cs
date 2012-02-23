@@ -5,7 +5,7 @@ using System.Data.Entity;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-using Bnh.Models;
+using Bnh.Entities;
 using System.Web.Script.Serialization;
 using System.Data.Objects.DataClasses;
 
