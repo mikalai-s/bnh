@@ -9,9 +9,11 @@
     $(function () {
 
         $("#addRowButton").click(onAddRowButtonClicked);
- 
+
+        initBricks();
+
         $("form").validate({
-            submitHandler: function(form) {
+            submitHandler: function (form) {
                 var data = {
                     wall: {
                         Id: form["Id"].value,
@@ -20,14 +22,15 @@
                     },
                     bricks: []
                 };
-                                
+
                 var brickElements = $("#wallScene").children();
                 for (var i = 0; i < brickElements.length; i++) {
-                    data.bricks[i] = { 
+                    data.bricks[i] = {
                         Width: $.data(brickElements[i], "width"),
                         Title: "Title",
                         Html: "Html",
-                        Type: 1 };
+                        Type: 1
+                    };
                 }
 
                 $.ajax({
@@ -35,15 +38,24 @@
                     type: "POST",
                     contentType: "application/json",
                     data: jQuery.toJSON(data),
-                    success: function(result){
+                    success: function (result) {
+                        $("wallScene").replaceWith(result);
+                        initBricks();
                     },
-                    error: function(result) {
-                    },
+                    error: function (result) {
+                    }
                 });
-            },
+            }
         });
 
     });
+
+    function initBricks() {
+        var brickElements = $("#wallScene").children();
+        for (var i = 0; i < brickElements.length; i++) {
+            makeBrickResizable($(brickElements[i]));
+        }
+    }
 
 
     function onAddRowButtonClicked() {
@@ -52,33 +64,36 @@
         var brick = $("<div class='brick-wrapper'><div class='brick'/></div>");
         wall.append(brick);
 
+        makeBrickResizable(brick);
+    }
+
+    function makeBrickResizable(brick) {
         updateBrickText(brick);
 
         brick.resizable({
             containment: 'parent',
             handles: "e",
-            start: function (event, ui) { onBrickResizeStart(event, ui, wall, brick) },
-            resize: function (event, ui) { onBrickResize(event, ui, wall, brick) },
-            stop: function (event, ui) { onBrickResizeStop(event, ui, wall, brick) }
+            start: function (event, ui) { onBrickResizeStart(event, ui, brick); },
+            resize: function (event, ui) { onBrickResize(event, ui, brick); },
+            stop: function (event, ui) { onBrickResizeStop(event, ui, brick); }
         });
+    }
+
+    function onBrickResizeStart(event, ui, brick) {
 
     }
 
-    function onBrickResizeStart(event, ui, wall, brick) {
-
-    }
-
-    function onBrickResize(event, ui, wall, brick) {
+    function onBrickResize(event, ui, brick) {
         updateBrickText(brick);
     }
 
-    function onBrickResizeStop(event, ui, wall, brick) {
+    function onBrickResizeStop(event, ui, brick) {
     }
 
     function updateBrickText(brick) {
         var width = (brick.width() / brick.parent().width() * 100);
         $.data(brick[0], "width", width);
         brick.children().first().text(width.toFixed(2));
-    }    
+    }
 
 })();

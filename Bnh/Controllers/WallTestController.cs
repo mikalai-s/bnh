@@ -58,17 +58,28 @@ namespace Bnh.Controllers
         
         //
         // GET: /WallTest/Edit/5
- 
+        
         public ActionResult Edit(long id)
         {
             Wall wall = db.Walls.Single(w => w.Id == id);
             return View(wall);
         }
 
+        //public ActionResult GetWallScene(Wall wall)
+        //{
+        //    return PartialView("WallScene", wall.Bricks);
+        //}
+
+        //public ActionResult GetWallScene(Community community)
+        //{
+        //    return PartialView("WallScene", community.GetWallBricks());
+        //}
+
         //
         // POST: /WallTest/Edit/5
 
         [HttpPost]
+        // NOTE: Currently it's called asynchronously
         public ActionResult Edit(Wall wall, Brick[] bricks)
         {
             if (ModelState.IsValid)
@@ -83,9 +94,9 @@ namespace Bnh.Controllers
                 bricks.ToList().ForEach(b => b.Wall = realWall);                
                 // save changes
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return PartialView("WallScene", bricks);
             }
-            return View(wall);
+            return PartialView("WallScene", wall.Bricks);
         }
 
         //

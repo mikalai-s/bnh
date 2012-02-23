@@ -40,11 +40,12 @@
 <div>
     <div id="wallToolbar">
         <input id="addRowButton" type="button" value="Add Row" />
-    </div>    
-    <div id="wallScene">
     </div>
+
+    @Html.Partial("WallScene", Model.Bricks)
 </div>
 
 <div>
     @Html.ActionLink("Back to List", "Index")
 </div>
+
