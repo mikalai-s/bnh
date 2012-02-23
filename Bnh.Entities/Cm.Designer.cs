@@ -36,7 +36,7 @@ namespace Bnh.Entities
         /// <summary>
         /// Initializes a new CmEntities object using the connection string found in the 'CmEntities' section of the application configuration file.
         /// </summary>
-        public CmEntities() : base("name=CmEntities", "CmEntities")
+        public CmEntities() : this(EntityConnectionHelper.Get("Cm"))
         {
             this.ContextOptions.LazyLoadingEnabled = true;
             OnContextCreated();
