@@ -7,7 +7,7 @@
 using System.Web.Mvc;
 using System.Web.Routing;
 
-namespace BnhWebFramework
+namespace Bnh.WebFramework
 {
     using System;
     using System.Collections.Generic;

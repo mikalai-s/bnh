@@ -1,4 +1,4 @@
-﻿@model Bnh.Models.Wall
+﻿@model Bnh.Entities.Wall
 
 @{
     ViewBag.Title = "Edit";
@@ -21,14 +21,6 @@
 
         @Html.HiddenFor(model => model.Id)
         @Html.HiddenFor(model => model.OwnerId)
-
-        @*<div class="editor-label">
-            @Html.LabelFor(model => model.OwnerId)
-        </div>
-        <div class="editor-field">
-            @Html.EditorFor(model => model.OwnerId)
-            @Html.ValidationMessageFor(model => model.OwnerId)
-        </div>*@
 
         <div class="editor-label">
             @Html.LabelFor(model => model.Title)

@@ -4,8 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Routing;
-using BnhWebFramework;
-using Bnh.Model;
+using Bnh.Entities;
 
 namespace Bnh
 {

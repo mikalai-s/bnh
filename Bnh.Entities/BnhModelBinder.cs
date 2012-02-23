@@ -6,10 +6,10 @@ using System.Web.Mvc;
 using System.ComponentModel;
 using System.Collections;
 using System.Data.Objects.DataClasses;
-using Bnh.Models;
+using Bnh.Entities;
 using TypeMap = System.Collections.Generic.Dictionary<string, System.Type>;
 
-namespace Bnh.Model
+namespace Bnh.Entities
 {
     public class BnhModelBinder : DefaultModelBinder
     {

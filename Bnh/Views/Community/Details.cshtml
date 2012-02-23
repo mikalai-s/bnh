@@ -1,4 +1,5 @@
-﻿@model Bnh.Models.Community
+﻿@using Bnh.Entities
+@model Bnh.Entities.Community
 
 @{
     ViewBag.Title = Model.Name;
@@ -10,21 +11,15 @@
 
     <p>Community details will go here...</p>
 
-@*    <fieldset>
-        <legend>Community details will go here...</legend>
-
-        <div class="display-label">Name</div>
-        <div class="display-field">
-            @Html.DisplayFor(model => model.Name)
-        </div>
-
-        <div class="display-label">Zone</div>
-        <div class="display-field">
-            @Html.DisplayFor(model => model.Zone.Name)
-        </div>
-    </fieldset>
-    <p>
-        @Html.ActionLink("Edit", "Edit", new { id=Model.Id }) |
-        @Html.ActionLink("Back to List", "Index")
-    </p>*@
+<div>
+    <div id="wallToolbar">
+        <input id="editWallButton" type="button" value="Add Row" />
+    </div>    
+    <div id="wallScene">
+    @foreach (var brick in Model.GetWallBricks())
+    {
+       // @Html.RenderBrick(brick)
+    }
+    </div>
+</div>
 </div>

@@ -18,11 +18,11 @@ using System.Runtime.Serialization;
 [assembly: EdmSchemaAttribute()]
 #region EDM Relationship Metadata
 
-[assembly: EdmRelationshipAttribute("bnhModel", "FK_Brick_Wall", "Wall", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(Bnh.Models.Wall), "Brick", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(Bnh.Models.Brick), true)]
+[assembly: EdmRelationshipAttribute("bnhModel", "FK_Brick_Wall", "Wall", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(Bnh.Entities.Wall), "Brick", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(Bnh.Entities.Brick), true)]
 
 #endregion
 
-namespace Bnh.Models
+namespace Bnh.Entities
 {
     #region Contexts
     

@@ -35,9 +35,6 @@
     <UseVSHostingProcess>true</UseVSHostingProcess>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="EntityFramework">
-      <HintPath>..\packages\EntityFramework.4.1.10331.0\lib\EntityFramework.dll</HintPath>
-    </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data.Entity" />
     <Reference Include="System.Runtime.Serialization" />
@@ -51,7 +48,6 @@
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
-    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.Xml.Linq" />
@@ -79,18 +75,6 @@
     </Compile>
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
-    </Compile>
-    <Compile Include="Models\AccountModels.cs" />
-    <Compile Include="Models\Bl.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Bl.edmx</DependentUpon>
-    </Compile>
-    <Compile Include="Models\BnhModelBinder.cs" />
-    <Compile Include="Models\Cm.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Cm.edmx</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -173,19 +157,17 @@
     <Content Include="Views\Web.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\BnhWebFramework\BnhWebFramework.csproj">
+    <ProjectReference Include="..\Bnh.Entities\Bnh.Entities.csproj">
+      <Project>{A383D25F-9AB2-4EA2-B155-C4FB9827E9A5}</Project>
+      <Name>Bnh.Entities</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Bnh.WebFramework\Bnh.WebFramework.csproj">
       <Project>{291A879A-93D4-47A2-9749-BEE9E2A2DD62}</Project>
-      <Name>BnhWebFramework</Name>
+      <Name>Bnh.WebFramework</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <EntityDeploy Include="Models\Bl.edmx">
-      <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>Bl.Designer.cs</LastGenOutput>
-    </EntityDeploy>
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Builder\Index.cshtml" />
@@ -216,12 +198,6 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Community\Delete.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <EntityDeploy Include="Models\Cm.edmx">
-      <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>Cm.Designer.cs</LastGenOutput>
-    </EntityDeploy>
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\WallTest\Index.cshtml" />
