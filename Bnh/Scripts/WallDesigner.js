@@ -24,7 +24,7 @@
                 var brickElements = $("#wallScene").children();
                 for (var i = 0; i < brickElements.length; i++) {
                     data.bricks[i] = { 
-                        Width: brickElements[i].innerText,
+                        Width: $.data(brickElements[i], "width"),
                         Title: "Title",
                         Html: "Html",
                         Type: 1 };
@@ -49,14 +49,12 @@
     function onAddRowButtonClicked() {
 
         var wall = $("#wallScene");
-        var brickWrapper = $("<div class='brick-wrapper'><div class='brick'/></div>");
-        wall.append(brickWrapper);
-
-        var brick = brickWrapper.children().first();
+        var brick = $("<div class='brick-wrapper'><div class='brick'/></div>");
+        wall.append(brick);
 
         updateBrickText(brick);
 
-        brickWrapper.resizable({
+        brick.resizable({
             containment: 'parent',
             handles: "e",
             start: function (event, ui) { onBrickResizeStart(event, ui, wall, brick) },
@@ -78,8 +76,9 @@
     }
 
     function updateBrickText(brick) {
-        var widthPercentage = (brick.parent().width() / brick.parent().parent().width() * 100).toFixed(2) * 100;
-        brick.text(widthPercentage);
+        var width = (brick.width() / brick.parent().width() * 100);
+        $.data(brick[0], "width", width);
+        brick.children().first().text(width.toFixed(2));
     }    
 
 })();

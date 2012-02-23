@@ -136,35 +136,28 @@ namespace Bnh.Models
     [Serializable()]
     [DataContractAttribute(IsReference=true)]
     [KnownTypeAttribute(typeof(HtmlBrick))]
-    [KnownTypeAttribute(typeof(MapBrick))]
-    [KnownTypeAttribute(typeof(PictureBrick))]
     [KnownTypeAttribute(typeof(GalleryBrick))]
+    [KnownTypeAttribute(typeof(MapBrick))]
     public partial class Brick : EntityObject
     {
         #region Factory Method
-
-        public Brick()
-        {
-        }
     
         /// <summary>
         /// Create a new Brick object.
         /// </summary>
         /// <param name="id">Initial value of the Id property.</param>
         /// <param name="wallId">Initial value of the WallId property.</param>
-        /// <param name="x">Initial value of the X property.</param>
-        /// <param name="y">Initial value of the Y property.</param>
-        /// <param name="width">Initial value of the Width property.</param>
         /// <param name="title">Initial value of the Title property.</param>
-        public static Brick CreateBrick(global::System.Int64 id, global::System.Int64 wallId, global::System.Int32 x, global::System.Int32 y, global::System.Int32 width, global::System.String title)
+        /// <param name="width">Initial value of the Width property.</param>
+        /// <param name="order">Initial value of the Order property.</param>
+        public static Brick CreateBrick(global::System.Int64 id, global::System.Int64 wallId, global::System.String title, global::System.Single width, global::System.Byte order)
         {
             Brick brick = new Brick();
             brick.Id = id;
             brick.WallId = wallId;
-            brick.X = x;
-            brick.Y = y;
-            brick.Width = width;
             brick.Title = title;
+            brick.Width = width;
+            brick.Order = order;
             return brick;
         }
 
@@ -227,78 +220,6 @@ namespace Bnh.Models
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
         [DataMemberAttribute()]
-        public global::System.Int32 X
-        {
-            get
-            {
-                return _X;
-            }
-            set
-            {
-                OnXChanging(value);
-                ReportPropertyChanging("X");
-                _X = StructuralObject.SetValidValue(value);
-                ReportPropertyChanged("X");
-                OnXChanged();
-            }
-        }
-        private global::System.Int32 _X;
-        partial void OnXChanging(global::System.Int32 value);
-        partial void OnXChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
-        [DataMemberAttribute()]
-        public global::System.Int32 Y
-        {
-            get
-            {
-                return _Y;
-            }
-            set
-            {
-                OnYChanging(value);
-                ReportPropertyChanging("Y");
-                _Y = StructuralObject.SetValidValue(value);
-                ReportPropertyChanged("Y");
-                OnYChanged();
-            }
-        }
-        private global::System.Int32 _Y;
-        partial void OnYChanging(global::System.Int32 value);
-        partial void OnYChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
-        [DataMemberAttribute()]
-        public global::System.Int32 Width
-        {
-            get
-            {
-                return _Width;
-            }
-            set
-            {
-                OnWidthChanging(value);
-                ReportPropertyChanging("Width");
-                _Width = StructuralObject.SetValidValue(value);
-                ReportPropertyChanged("Width");
-                OnWidthChanged();
-            }
-        }
-        private global::System.Int32 _Width;
-        partial void OnWidthChanging(global::System.Int32 value);
-        partial void OnWidthChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
-        [DataMemberAttribute()]
         public global::System.String Title
         {
             get
@@ -317,6 +238,54 @@ namespace Bnh.Models
         private global::System.String _Title;
         partial void OnTitleChanging(global::System.String value);
         partial void OnTitleChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Single Width
+        {
+            get
+            {
+                return _Width;
+            }
+            set
+            {
+                OnWidthChanging(value);
+                ReportPropertyChanging("Width");
+                _Width = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("Width");
+                OnWidthChanged();
+            }
+        }
+        private global::System.Single _Width;
+        partial void OnWidthChanging(global::System.Single value);
+        partial void OnWidthChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Byte Order
+        {
+            get
+            {
+                return _Order;
+            }
+            set
+            {
+                OnOrderChanging(value);
+                ReportPropertyChanging("Order");
+                _Order = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("Order");
+                OnOrderChanged();
+            }
+        }
+        private global::System.Byte _Order;
+        partial void OnOrderChanging(global::System.Byte value);
+        partial void OnOrderChanged();
 
         #endregion
     
@@ -378,19 +347,17 @@ namespace Bnh.Models
         /// </summary>
         /// <param name="id">Initial value of the Id property.</param>
         /// <param name="wallId">Initial value of the WallId property.</param>
-        /// <param name="x">Initial value of the X property.</param>
-        /// <param name="y">Initial value of the Y property.</param>
-        /// <param name="width">Initial value of the Width property.</param>
         /// <param name="title">Initial value of the Title property.</param>
-        public static GalleryBrick CreateGalleryBrick(global::System.Int64 id, global::System.Int64 wallId, global::System.Int32 x, global::System.Int32 y, global::System.Int32 width, global::System.String title)
+        /// <param name="width">Initial value of the Width property.</param>
+        /// <param name="order">Initial value of the Order property.</param>
+        public static GalleryBrick CreateGalleryBrick(global::System.Int64 id, global::System.Int64 wallId, global::System.String title, global::System.Single width, global::System.Byte order)
         {
             GalleryBrick galleryBrick = new GalleryBrick();
             galleryBrick.Id = id;
             galleryBrick.WallId = wallId;
-            galleryBrick.X = x;
-            galleryBrick.Y = y;
-            galleryBrick.Width = width;
             galleryBrick.Title = title;
+            galleryBrick.Width = width;
+            galleryBrick.Order = order;
             return galleryBrick;
         }
 
@@ -402,24 +369,24 @@ namespace Bnh.Models
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
         [DataMemberAttribute()]
-        public global::System.String PicturesUrl
+        public Nullable<global::System.Int64> ImageListId
         {
             get
             {
-                return _PicturesUrl;
+                return _ImageListId;
             }
             set
             {
-                OnPicturesUrlChanging(value);
-                ReportPropertyChanging("PicturesUrl");
-                _PicturesUrl = StructuralObject.SetValidValue(value, true);
-                ReportPropertyChanged("PicturesUrl");
-                OnPicturesUrlChanged();
+                OnImageListIdChanging(value);
+                ReportPropertyChanging("ImageListId");
+                _ImageListId = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("ImageListId");
+                OnImageListIdChanged();
             }
         }
-        private global::System.String _PicturesUrl;
-        partial void OnPicturesUrlChanging(global::System.String value);
-        partial void OnPicturesUrlChanged();
+        private Nullable<global::System.Int64> _ImageListId;
+        partial void OnImageListIdChanging(Nullable<global::System.Int64> value);
+        partial void OnImageListIdChanged();
 
         #endregion
     
@@ -440,19 +407,17 @@ namespace Bnh.Models
         /// </summary>
         /// <param name="id">Initial value of the Id property.</param>
         /// <param name="wallId">Initial value of the WallId property.</param>
-        /// <param name="x">Initial value of the X property.</param>
-        /// <param name="y">Initial value of the Y property.</param>
-        /// <param name="width">Initial value of the Width property.</param>
         /// <param name="title">Initial value of the Title property.</param>
-        public static HtmlBrick CreateHtmlBrick(global::System.Int64 id, global::System.Int64 wallId, global::System.Int32 x, global::System.Int32 y, global::System.Int32 width, global::System.String title)
+        /// <param name="width">Initial value of the Width property.</param>
+        /// <param name="order">Initial value of the Order property.</param>
+        public static HtmlBrick CreateHtmlBrick(global::System.Int64 id, global::System.Int64 wallId, global::System.String title, global::System.Single width, global::System.Byte order)
         {
             HtmlBrick htmlBrick = new HtmlBrick();
             htmlBrick.Id = id;
             htmlBrick.WallId = wallId;
-            htmlBrick.X = x;
-            htmlBrick.Y = y;
-            htmlBrick.Width = width;
             htmlBrick.Title = title;
+            htmlBrick.Width = width;
+            htmlBrick.Order = order;
             return htmlBrick;
         }
 
@@ -502,19 +467,17 @@ namespace Bnh.Models
         /// </summary>
         /// <param name="id">Initial value of the Id property.</param>
         /// <param name="wallId">Initial value of the WallId property.</param>
-        /// <param name="x">Initial value of the X property.</param>
-        /// <param name="y">Initial value of the Y property.</param>
-        /// <param name="width">Initial value of the Width property.</param>
         /// <param name="title">Initial value of the Title property.</param>
-        public static MapBrick CreateMapBrick(global::System.Int64 id, global::System.Int64 wallId, global::System.Int32 x, global::System.Int32 y, global::System.Int32 width, global::System.String title)
+        /// <param name="width">Initial value of the Width property.</param>
+        /// <param name="order">Initial value of the Order property.</param>
+        public static MapBrick CreateMapBrick(global::System.Int64 id, global::System.Int64 wallId, global::System.String title, global::System.Single width, global::System.Byte order)
         {
             MapBrick mapBrick = new MapBrick();
             mapBrick.Id = id;
             mapBrick.WallId = wallId;
-            mapBrick.X = x;
-            mapBrick.Y = y;
-            mapBrick.Width = width;
             mapBrick.Title = title;
+            mapBrick.Width = width;
+            mapBrick.Order = order;
             return mapBrick;
         }
 
@@ -544,68 +507,6 @@ namespace Bnh.Models
         private global::System.String _GpsLocation;
         partial void OnGpsLocationChanging(global::System.String value);
         partial void OnGpsLocationChanged();
-
-        #endregion
-    
-    }
-    
-    /// <summary>
-    /// No Metadata Documentation available.
-    /// </summary>
-    [EdmEntityTypeAttribute(NamespaceName="bnhModel", Name="PictureBrick")]
-    [Serializable()]
-    [DataContractAttribute(IsReference=true)]
-    public partial class PictureBrick : Brick
-    {
-        #region Factory Method
-    
-        /// <summary>
-        /// Create a new PictureBrick object.
-        /// </summary>
-        /// <param name="id">Initial value of the Id property.</param>
-        /// <param name="wallId">Initial value of the WallId property.</param>
-        /// <param name="x">Initial value of the X property.</param>
-        /// <param name="y">Initial value of the Y property.</param>
-        /// <param name="width">Initial value of the Width property.</param>
-        /// <param name="title">Initial value of the Title property.</param>
-        public static PictureBrick CreatePictureBrick(global::System.Int64 id, global::System.Int64 wallId, global::System.Int32 x, global::System.Int32 y, global::System.Int32 width, global::System.String title)
-        {
-            PictureBrick pictureBrick = new PictureBrick();
-            pictureBrick.Id = id;
-            pictureBrick.WallId = wallId;
-            pictureBrick.X = x;
-            pictureBrick.Y = y;
-            pictureBrick.Width = width;
-            pictureBrick.Title = title;
-            return pictureBrick;
-        }
-
-        #endregion
-        #region Primitive Properties
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
-        [DataMemberAttribute()]
-        public global::System.String ImageUrl
-        {
-            get
-            {
-                return _ImageUrl;
-            }
-            set
-            {
-                OnImageUrlChanging(value);
-                ReportPropertyChanging("ImageUrl");
-                _ImageUrl = StructuralObject.SetValidValue(value, true);
-                ReportPropertyChanged("ImageUrl");
-                OnImageUrlChanged();
-            }
-        }
-        private global::System.String _ImageUrl;
-        partial void OnImageUrlChanging(global::System.String value);
-        partial void OnImageUrlChanged();
 
         #endregion
     

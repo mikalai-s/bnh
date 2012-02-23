@@ -21,9 +21,8 @@ namespace Bnh.Model
                 {
                     {"0", typeof(Brick)},
                     {"1", typeof(HtmlBrick)},
-                    {"2", typeof(MapBrick)},
-                    {"3", typeof(GalleryBrick)},
-                    {"4", typeof(PictureBrick)},
+                    {"2", typeof(GalleryBrick)},
+                    {"3", typeof(MapBrick)},
                 }
             }
         };

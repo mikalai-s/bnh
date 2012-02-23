@@ -23,13 +23,14 @@ GO
 CREATE TABLE [cm].[Brick](
 	[Id] [bigint] IDENTITY(1,1) NOT NULL,
 	[WallId] [bigint] NOT NULL,
-	[Width] [int] NOT NULL,
-	[Title] [nvarchar](50) NOT NULL,
 	[Type] [tinyint] NOT NULL,
+	[Title] [nvarchar](50) NOT NULL,
+	[Width] [real] not null default 100,
+	[Order] [tinyint] not null default 0,
 	[Html] [ntext] NULL,
-	[ImageUrl] [nvarchar](512) NULL,
-	[PicturesUrl] [nvarchar](512) NULL,
+	[ImageListId] [bigint] NULL,
 	[GpsLocation] [nvarchar](100) NULL,
+	
  CONSTRAINT [PK_Brick] PRIMARY KEY CLUSTERED 
 (
 	[Id] ASC
