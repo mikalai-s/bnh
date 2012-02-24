@@ -82,6 +82,8 @@ namespace Bnh.Controllers
         // NOTE: Currently it's called asynchronously
         public ActionResult Edit(Wall wall, Brick[] bricks)
         {
+            // TODO: use Request.IsAjaxRequest() to distinguish from usual postbacks
+
             if (ModelState.IsValid)
             {
                 // get real wall
