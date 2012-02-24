@@ -14,7 +14,7 @@ namespace Bnh.Entities
     public class BnhModelBinder : DefaultModelBinder
     {
         // type mapping
-        Dictionary<Type, TypeMap> typeMaps = new Dictionary<Type, TypeMap>
+        public static readonly Dictionary<Type, TypeMap> HierarchyTypeMap = new Dictionary<Type, TypeMap>
         {
             {
                 typeof(Brick), new TypeMap
@@ -32,13 +32,13 @@ namespace Bnh.Entities
             bool hasPrefix = bindingContext.ValueProvider.ContainsPrefix(bindingContext.ModelName);
             string prefix = ((hasPrefix) && (bindingContext.ModelName != "")) ? bindingContext.ModelName + "." : "";
 
-            if (!typeMaps.ContainsKey(modelType))
+            if (!HierarchyTypeMap.ContainsKey(modelType))
             {
                 return base.CreateModel(controllerContext, bindingContext, modelType);
             }
 
             // get the parameter species
-            var typeMap = typeMaps[modelType];
+            var typeMap = HierarchyTypeMap[modelType];
             var result = bindingContext.ValueProvider.GetValue(prefix + "Type");
             if (result == null || !typeMap.ContainsKey(result.AttemptedValue))
             {
