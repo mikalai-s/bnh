@@ -102,7 +102,7 @@
     function updateBrickText(brick) {
         var width = (brick.width() / brick.parent().width() * 100);
         $.data(brick[0], "width", width);
-        brick.children().first().text(width.toFixed(2));
+        brick.find(".brick-content").text(width.toFixed(2));
     }
 
 })();

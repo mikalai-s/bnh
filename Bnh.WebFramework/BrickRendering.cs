@@ -25,14 +25,25 @@ namespace Bnh.WebFramework
 
         public static MvcHtmlString Brick(this HtmlHelper htmlHelper, Brick brick)
         {
-            var brickDiv = new TagBuilder("div");
-            brickDiv.AddCssClass("brick");
+            var brickHeaderDiv = new TagBuilder("div");
+            brickHeaderDiv.AddCssClass("brick-header"); 
+
+            var brickContnetDiv = new TagBuilder("div");
+            brickContnetDiv.AddCssClass("brick-content");
 
             var htmlBrick = brick as HtmlBrick;
             if (htmlBrick != null)
             {
-                brickDiv.InnerHtml = htmlBrick.Html;
+                brickContnetDiv.InnerHtml = htmlBrick.Html;
             }
+
+            var brickFooterDiv = new TagBuilder("div");
+            brickFooterDiv.AddCssClass("brick-footer");
+
+            var brickDiv = new TagBuilder("div");
+            brickDiv.AddCssClass("brick");
+
+            brickDiv.InnerHtml = brickHeaderDiv.ToString() + brickContnetDiv.ToString() + brickFooterDiv.ToString();
 
             var wrapperDiv = new TagBuilder("div");
             wrapperDiv.AddCssClass("brick-wrapper");
