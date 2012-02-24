@@ -8,7 +8,7 @@
 
     $(function () {
 
-        $("#addRowButton").click(onAddRowButtonClicked);
+        $("#addBrickButton").click(onAddBrickButtonClicked);
 
         initBricks();
 
@@ -28,8 +28,7 @@
                     data.bricks[i] = {
                         Width: $.data(brickElements[i], "width"),
                         Title: "Title",
-                        Html: "Html",
-                        Type: 1
+                        Type: $.data(brickElements[i], "type").value
                     };
                 }
 
@@ -57,12 +56,14 @@
         }
     }
 
-
-    function onAddRowButtonClicked() {
+    function onAddBrickButtonClicked() {
 
         var wall = $("#wallScene");
         var brick = $("<div class='brick-wrapper'><div class='brick'/></div>");
         wall.append(brick);
+
+        var brickTypeDropDown = $("#brickType");
+        $.data(brick[0], "type", { value: brickTypeDropDown.val(), text: brickTypeDropDown.text() });
 
         makeBrickResizable(brick);
     }
@@ -95,5 +96,7 @@
         $.data(brick[0], "width", width);
         brick.children().first().text(width.toFixed(2));
     }
+    
+
 
 })();
