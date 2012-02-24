@@ -7,3 +7,11 @@
 {
     border: 1px dashed red;
 }
+
+.brick-header
+{
+    display: block;
+    width: 100%;
+    height: 20px;
+    background-color: Fuchsia;
+}
