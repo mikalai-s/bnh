@@ -5,6 +5,8 @@ using System.Web;
 using System.Web.Mvc;
 using System.Web.Mvc.Html;
 using System.Web.Routing;
+using Bnh.Entities;
+using System;
 
 namespace Bnh.WebFramework
 {
@@ -54,6 +56,21 @@ namespace Bnh.WebFramework
         public static MvcHtmlString ActionInputLink(this HtmlHelper htmlHelper, string linkText, string actionName)
         {
             return ActionInputLink(htmlHelper, linkText, actionName, null, new RouteValueDictionary(), new RouteValueDictionary());
+        }
+
+        private static readonly Dictionary<Type, string> BrickTypeNames = new Dictionary<Type, string>()
+                                                                     {
+                                                                         {typeof(Brick), "Empty"},
+                                                                         {typeof(HtmlBrick), "Rich Text"},
+                                                                         {typeof(GalleryBrick), "Gallery"},
+                                                                         {typeof(MapBrick), "Map"}
+                                                                     };
+
+        public static MvcHtmlString DropDownListForBrickTypes(this HtmlHelper htmlHelper, string name)
+        {
+            var items = BnhModelBinder.HierarchyTypeMap[typeof (Brick)]
+                .Select(e => new SelectListItem { Value = e.Key, Text = BrickTypeNames[e.Value] });
+            return htmlHelper.DropDownList(name, items);
         }
     }
 }

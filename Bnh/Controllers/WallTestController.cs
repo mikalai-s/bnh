@@ -91,7 +91,7 @@ namespace Bnh.Controllers
                 // apply client change to real wall
                 db.Walls.ApplyCurrentValues(wall);
                 // add new bricks to real wall
-                bricks.ToList().ForEach(b => b.Wall = realWall);                
+                bricks.ToList().ForEach(b => b.Wall = realWall);
                 // save changes
                 db.SaveChanges();
                 return PartialView("WallScene", bricks);

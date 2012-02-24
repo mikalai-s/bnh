@@ -39,7 +39,8 @@
 
 <div>
     <div id="wallToolbar">
-        <input id="addRowButton" type="button" value="Add Row" />
+        @Html.DropDownListForBrickTypes("brickType")
+        <input id="addBrickButton" type="button" value="Add Brick" />
     </div>
 
     @Html.Partial("WallScene", Model.Bricks)
