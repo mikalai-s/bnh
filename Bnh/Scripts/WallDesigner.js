@@ -53,15 +53,24 @@
     function initBricks() {
         var brickElements = $("#wallScene").children();
         for (var i = 0; i < brickElements.length; i++) {
-            makeBrickResizable($(brickElements[i]));
+            var brickElement = brickElements[i];
+
+            // parse and assign entity object to brick
+            var entity = $.parseJSON(brickElement.entity);
+            $.data(brickElement, "entity", entity);
+
+            // remove old entity attribute
+            //brickElement.re
+
+            // make the brick resizable
+            makeBrickResizable($(brickElement));
         }
     }
-
 
     function onAddRowButtonClicked() {
 
         var wall = $("#wallScene");
-        var brick = $("<div class='brick-wrapper'><div class='brick'/></div>");
+        var brick = $("#brickPrototype").children().first().clone();        
         wall.append(brick);
 
         makeBrickResizable(brick);

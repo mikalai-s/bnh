@@ -216,7 +216,7 @@
     <Content Include="Views\WallTest\Delete.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\WallTest\WallScene.cshtml" />
+    <Content Include="Views\Shared\WallScene.cshtml" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" />

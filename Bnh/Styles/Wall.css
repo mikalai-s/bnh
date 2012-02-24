@@ -20,3 +20,8 @@
     margin: 5px;    
     overflow: hidden;
 }
+
+#brickPrototype
+{
+    display: none;
+}
