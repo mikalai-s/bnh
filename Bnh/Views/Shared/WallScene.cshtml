@@ -1,8 +1,9 @@
-﻿@model IEnumerable<Bnh.Entities.Brick>
+﻿@using Bnh.Entities
+@model IEnumerable<Brick>
 <div id="wallScene">
     @foreach (var brick in Model)
     {
         @Html.Brick(brick)
     }
 </div>
-@Html.BrickPrototype()
+<div id="brickPrototype">@Html.BrickPrototype()</div>

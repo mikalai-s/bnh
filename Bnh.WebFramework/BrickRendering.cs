@@ -48,7 +48,7 @@ namespace Bnh.WebFramework
             var wrapperDiv = new TagBuilder("div");
             wrapperDiv.AddCssClass("brick-wrapper");
             wrapperDiv.Attributes["style"] = "width: " + brick.Width.ToString("F") + "%";
-            wrapperDiv.Attributes["entity"] = brick.ToJson();
+            wrapperDiv.Attributes["entity-data"] = brick.ToJson();
             wrapperDiv.InnerHtml = brickDiv.ToString();
 
             return MvcHtmlString.Create(wrapperDiv.ToString());
@@ -56,7 +56,8 @@ namespace Bnh.WebFramework
 
         public static string ToJson(this Brick brick)
         {
-            var properties = new Dictionary<string, string>();
+            var properties = new Dictionary<string, object>();
+
             foreach (var prop in brick.GetType().GetProperties(BindingFlags.Instance | BindingFlags.Public))
             {
                 // NOTE: for HtmlBrick we are not serializing Html property - it's too big
@@ -81,7 +82,7 @@ namespace Bnh.WebFramework
 
                 var value = prop.GetValue(brick, null);
                 if(value != null)
-                    properties.Add(prop.Name, value.ToString());
+                    properties.Add(prop.Name.ToLower(), value);
             }
             return new JavaScriptSerializer().Serialize(properties);
         }
