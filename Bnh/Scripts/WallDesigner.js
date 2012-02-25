@@ -23,14 +23,9 @@
                     bricks: []
                 };
 
-                var brickElements = $("#wallScene").children();
-                for (var i = 0; i < brickElements.length; i++) {
-                    data.bricks[i] = {
-                        Width: $.data(brickElements[i], "width"),
-                        Title: "Title",
-                        Type: $.data(brickElements[i], "type").value
-                    };
-                }
+                $("#wallScene").children().each(function(i, brick) {
+                    data.bricks[i] = $(brick).data("entity");
+                });
 
                 $.ajax({
                     url: form.action,
@@ -50,63 +45,59 @@
     });
 
     function initBricks() {
-        var brickElements = $("#wallScene").children();
-        for (var i = 0; i < brickElements.length; i++) {
-            var brickElement = brickElements[i];
-
-            // parse and assign entity object to brick
-            var entity = $.parseJSON(brickElement.entity);
-            $.data(brickElement, "entity", entity);
-
-            // remove old entity attribute
-            //brickElement.re
-
-            // make the brick resizable
-            makeBrickResizable($(brickElement));
-        }
-    }
-
-    function onAddBrickButtonClicked() {
-
-        var wall = $("#wallScene");
-        var brick = $("#brickPrototype").children().first().clone();        
-        wall.append(brick);
-
-        var brickTypeDropDown = $("#brickType");
-        $.data(brick[0], "type", { value: brickTypeDropDown.val(), text: brickTypeDropDown.text() });
-
-        makeBrickResizable(brick);
-    }
-
-    function makeBrickResizable(brick) {
-        updateBrickText(brick);
-
-        brick.resizable({
-            containment: 'parent',
-            handles: "e",
-            start: function (event, ui) { onBrickResizeStart(event, ui, brick); },
-            resize: function (event, ui) { onBrickResize(event, ui, brick); },
-            stop: function (event, ui) { onBrickResizeStop(event, ui, brick); }
+        $("#wallScene").children().each(function (i, brick) {
+            // initialize brick element
+            initializeBrick($(brick));
         });
     }
 
-    function onBrickResizeStart(event, ui, brick) {
+    function onAddBrickButtonClicked() {
+        // create brick from prototype and add into DOM
+        var brick = createBrick();
 
+        // initialize brick object
+        initializeBrick(brick, {
+            type: parseInt($("#brickType").val()),
+            title: $("#brickTitle").val()
+        });
+    }
+
+    // creates new brick element from prototype
+    function createBrick() {
+        return $("#brickPrototype").children().first().clone().appendTo($("#wallScene"));
+    }
+
+    function initializeBrick(brick, customData) {
+        // parse and assign entity object to brick
+        var data = $.parseJSON(brick.attr("entity-data"));
+
+        // extend result data with custom one
+        $.extend(data, customData);
+
+        // set brick entity data
+        brick.data("entity", data);
+
+        // update brick text
+        updateBrickText(brick);
+
+        // make brick resizable
+        brick.resizable({
+            containment: 'parent',
+            handles: "e",
+            resize: function (event, ui) { onBrickResize(event, ui, brick); },
+        });
     }
 
     function onBrickResize(event, ui, brick) {
+        var width = (brick.width() / brick.parent().width() * 100);
+        brick.data("entity").width = width;
+
         updateBrickText(brick);
     }
 
-    function onBrickResizeStop(event, ui, brick) {
-    }
-
     function updateBrickText(brick) {
-        var width = (brick.width() / brick.parent().width() * 100);
-        $.data(brick[0], "width", width);
+        var width = brick.data("entity").width;
         brick.find(".brick-content").text(width.toFixed(2));
     }
-    
-
 
 })();
