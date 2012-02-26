@@ -23,7 +23,7 @@
                     bricks: []
                 };
 
-                $("#wallScene").children().each(function(i, brick) {
+                getScene().children().each(function(i, brick) {
                     data.bricks[i] = $(brick).data("entity");
                     data.bricks[i].order = i;
                 });
@@ -34,7 +34,7 @@
                     contentType: "application/json",
                     data: jQuery.toJSON(data),
                     success: function (result) {
-                        $("wallScene").replaceWith(result);
+                        getScene().replaceWith(result);
                         initBricks();
                     },
                     error: function (result) {
@@ -45,8 +45,12 @@
 
     });
 
+    function getScene() {
+        return $("#wallScene");
+    }
+
     function initBricks() {
-        $("#wallScene").children().each(function (i, brick) {
+        getScene().children().each(function (i, brick) {
             // initialize brick element
             initializeBrick($(brick));
         });
@@ -65,7 +69,7 @@
 
     // creates new brick element from prototype
     function createBrick() {
-        return $("#brickPrototype").children().first().clone().appendTo($("#wallScene"));
+        return $("#brickPrototype").children().first().clone().appendTo(getScene());
     }
 
     function initializeBrick(brick, customData) {
