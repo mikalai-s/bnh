@@ -26,7 +26,8 @@ namespace Bnh.WebFramework
         public static MvcHtmlString Brick(this HtmlHelper htmlHelper, Brick brick)
         {
             var brickHeaderDiv = new TagBuilder("div");
-            brickHeaderDiv.AddCssClass("brick-header"); 
+            brickHeaderDiv.AddCssClass("brick-header");
+            brickHeaderDiv.InnerHtml = brick.Title;
 
             var brickContnetDiv = new TagBuilder("div");
             brickContnetDiv.AddCssClass("brick-content");
