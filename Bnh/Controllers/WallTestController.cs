@@ -80,7 +80,7 @@ namespace Bnh.Controllers
 
         [HttpPost]
         // NOTE: Currently it's called asynchronously
-        public ActionResult Edit(Wall wall, Brick[] bricks)
+        public ActionResult Edit(Wall wall, IEnumerable<Brick> bricks)
         {
             // TODO: use Request.IsAjaxRequest() to distinguish from usual postbacks
 
@@ -93,7 +93,10 @@ namespace Bnh.Controllers
                 // apply client change to real wall
                 db.Walls.ApplyCurrentValues(wall);
                 // add new bricks to real wall
-                bricks.ToList().ForEach(b => b.Wall = realWall);
+                if (bricks != null)
+                {
+                    bricks.ToList().ForEach(b => b.Wall = realWall);
+                }
                 // save changes
                 db.SaveChanges();
                 return PartialView("WallScene", bricks);

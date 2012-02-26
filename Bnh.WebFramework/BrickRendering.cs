@@ -15,44 +15,42 @@ namespace Bnh.WebFramework
 {
     public static class BrickRendering
     {
-        public static MvcHtmlString BrickPrototype(this HtmlHelper htmlHelper)
+        public static MvcHtmlString BrickPrototype(this HtmlHelper htmlHelper, bool design = false)
         {
             return htmlHelper.Brick(new Brick
             {
                 Width = 100.0F,
-            });
+            }, design);
         }
 
-        public static MvcHtmlString Brick(this HtmlHelper htmlHelper, Brick brick)
+        public static MvcHtmlString Brick(this HtmlHelper htmlHelper, Brick brick, bool design = false)
         {
-            var brickHeaderDiv = new TagBuilder("div");
-            brickHeaderDiv.AddCssClass("brick-header");
-            brickHeaderDiv.InnerHtml = brick.Title;
+            var htmlFormat = design ?
+@"<div class='brick-wrapper' style='width:{0}%' entity-data='{1}'>
+    <div class='brick'>
+        <div class='header'>
+            <span class='title'></span>
+            <a class='delete'>delete</a>
+        </div>
+        <div class='content'></div>
+        <div class='footer'></div>
+    </div>
+</div>"
+:
+@"<div class='brick-wrapper' style='width:{0}%' entity-data='{1}'>
+    <div class='brick'>
+        <div class='header'>
+            <span class='title'></span>
+        </div>
+        <div class='content'></div>
+        <div class='footer'></div>
+    </div>
+</div>";
 
-            var brickContnetDiv = new TagBuilder("div");
-            brickContnetDiv.AddCssClass("brick-content");
 
-            var htmlBrick = brick as HtmlBrick;
-            if (htmlBrick != null)
-            {
-                brickContnetDiv.InnerHtml = htmlBrick.Html;
-            }
+            var html = string.Format(htmlFormat, brick.Width.ToString("F"), brick.ToJson());
 
-            var brickFooterDiv = new TagBuilder("div");
-            brickFooterDiv.AddCssClass("brick-footer");
-
-            var brickDiv = new TagBuilder("div");
-            brickDiv.AddCssClass("brick");
-
-            brickDiv.InnerHtml = brickHeaderDiv.ToString() + brickContnetDiv.ToString() + brickFooterDiv.ToString();
-
-            var wrapperDiv = new TagBuilder("div");
-            wrapperDiv.AddCssClass("brick-wrapper");
-            wrapperDiv.Attributes["style"] = "width: " + brick.Width.ToString("F") + "%";
-            wrapperDiv.Attributes["entity-data"] = brick.ToJson();
-            wrapperDiv.InnerHtml = brickDiv.ToString();
-
-            return MvcHtmlString.Create(wrapperDiv.ToString());
+            return MvcHtmlString.Create(html);
         }
 
         public static string ToJson(this Brick brick)
