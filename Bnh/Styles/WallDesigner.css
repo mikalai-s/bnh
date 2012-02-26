@@ -8,11 +8,15 @@
     border: 1px dashed red;
 }
 
-.brick-header
+.brick .header
 {
     display: block;
     width: 100%;
-    height: 20px;
     background-color: #e5e5e5;
     border-bottom: 1px dashed gray;
+}
+
+.brick a.delete
+{
+    cursor: pointer;
 }

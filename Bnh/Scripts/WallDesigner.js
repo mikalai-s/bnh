@@ -9,6 +9,7 @@
     $(function () {
 
         $("#addBrickButton").click(onAddBrickButtonClicked);
+        $(".brick a.delete").click(onDeleteBrickButtonClicked);
 
         initBricks();
 
@@ -38,6 +39,7 @@
                         initBricks();
                     },
                     error: function (result) {
+                        $(document).replaceWith(result);
                     }
                 });
             }
@@ -83,7 +85,7 @@
         brick.data("entity", data);
 
         // update brick text
-        updateBrickText(brick);
+        updateBrickTitle(brick);
 
         // make brick resizable
         brick.resizable({
@@ -97,12 +99,16 @@
         var width = (brick.width() / brick.parent().width() * 100);
         brick.data("entity").width = width;
 
-        updateBrickText(brick);
+        updateBrickTitle(brick);
     }
 
-    function updateBrickText(brick) {
+    function updateBrickTitle(brick) {
         var entity = brick.data("entity");
-        brick.find(".brick-header").text(entity.title + " (" + entity.width.toFixed(2) + ")");
+        brick.find(".title").text(entity.title + " (" + entity.width.toFixed(2) + ")");
+    }
+
+    function onDeleteBrickButtonClicked() {
+        $(this).closest(".brick-wrapper").remove();
     }
 
 })();
