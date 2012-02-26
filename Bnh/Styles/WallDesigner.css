@@ -19,4 +19,5 @@
 .brick a.delete
 {
     cursor: pointer;
+    float: right;
 }
