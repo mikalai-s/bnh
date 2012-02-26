@@ -29,7 +29,7 @@ namespace Bnh.WebFramework
 @"<div class='brick-wrapper' style='width:{0}%' entity-data='{1}'>
     <div class='brick'>
         <div class='header'>
-            <span class='title'></span>
+            <span class='title'>{2}</span>
             <a class='delete'>delete</a>
         </div>
         <div class='content'></div>
@@ -40,7 +40,7 @@ namespace Bnh.WebFramework
 @"<div class='brick-wrapper' style='width:{0}%' entity-data='{1}'>
     <div class='brick'>
         <div class='header'>
-            <span class='title'></span>
+            <span class='title'>{2}</span>
         </div>
         <div class='content'></div>
         <div class='footer'></div>
@@ -48,7 +48,10 @@ namespace Bnh.WebFramework
 </div>";
 
 
-            var html = string.Format(htmlFormat, brick.Width.ToString("F"), brick.ToJson());
+            var html = string.Format(htmlFormat, 
+                brick.Width.ToString("F"), 
+                brick.ToJson(),
+                brick.Title);
 
             return MvcHtmlString.Create(html);
         }
