@@ -58,6 +58,9 @@ namespace Bnh.WebFramework
         {
             var properties = new Dictionary<string, object>();
 
+            properties.Add("type", BnhModelBinder.HierarchyTypeMap[typeof(Brick)]
+                .Where(v => v.Value == brick.GetType()).Select(e => e.Key).First());
+
             foreach (var prop in brick.GetType().GetProperties(BindingFlags.Instance | BindingFlags.Public))
             {
                 // NOTE: for HtmlBrick we are not serializing Html property - it's too big

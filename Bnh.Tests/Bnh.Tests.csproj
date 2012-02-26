@@ -40,6 +40,7 @@
     <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Data.Entity" />
     <Reference Include="System.Web" />
     <Reference Include="System.Web.ApplicationServices" />
     <Reference Include="System.Web.Extensions" />
@@ -56,6 +57,10 @@
     <Content Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Bnh.Entities\Bnh.Entities.csproj">
+      <Project>{A383D25F-9AB2-4EA2-B155-C4FB9827E9A5}</Project>
+      <Name>Bnh.Entities</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Bnh\Bnh.csproj">
       <Project>{5E4395ED-3D78-46B4-AD1F-8E723D00E08A}</Project>
       <Name>Bnh</Name>
