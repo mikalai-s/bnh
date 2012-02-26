@@ -25,6 +25,7 @@
 
                 $("#wallScene").children().each(function(i, brick) {
                     data.bricks[i] = $(brick).data("entity");
+                    data.bricks[i].order = i;
                 });
 
                 $.ajax({
