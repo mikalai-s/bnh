@@ -97,8 +97,8 @@
     }
 
     function updateBrickText(brick) {
-        var width = brick.data("entity").width;
-        brick.find(".brick-content").text(width.toFixed(2));
+        var entity = brick.data("entity");
+        brick.find(".brick-header").text(entity.title + " (" + entity.width.toFixed(2) + ")");
     }
 
 })();
