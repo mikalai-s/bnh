@@ -19,6 +19,9 @@
                     @*<h1 id="branding">
                         @Html.ActionLink("Brand New Home", "Index", "Home")
                     </h1>*@
+                    <div class="user-display" style="float:right">
+                        <span class="user-actions">@Html.Partial("_LogOnPartial")</span>
+                    </div>
                 </div>
             </div>
         </header>
@@ -63,9 +66,6 @@
                         <div class="credits">
                             <span class="poweredby">Powered by <a href="http://www.msilivonik.com" target="_blank">Me</a></span>
                             <span class="copyright">© Me 2012</span>
-                        </div>
-                        <div class="user-display">
-                            <span class="user-actions">@Html.Partial("_LogOnPartial")</span>
                         </div>
                     </div>
                 </div>

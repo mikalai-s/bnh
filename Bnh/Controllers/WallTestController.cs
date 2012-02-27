@@ -44,7 +44,7 @@ namespace Bnh.Controllers
         // POST: /WallTest/Create
 
         [HttpPost]
-        [Authorize(Roles="content-admin")]
+        [Authorize(Roles="content_manager")]
         public ActionResult Create(Wall wall)
         {
             if (ModelState.IsValid)
@@ -59,7 +59,7 @@ namespace Bnh.Controllers
         
         //
         // GET: /WallTest/Edit/5
-        [Authorize(Roles="content-admin")]
+        [Authorize(Roles="content_manager")]
         public ActionResult Edit(long id)
         {
             Wall wall = db.Walls.Single(w => w.Id == id);
@@ -80,7 +80,7 @@ namespace Bnh.Controllers
         // POST: /WallTest/Edit/5
 
         [HttpPost]
-        [Authorize(Roles="content-admin")]
+        [Authorize(Roles="content_manager")]
         // NOTE: Currently it's called asynchronously
         public ActionResult Edit(Wall wall, IEnumerable<Brick> bricks)
         {
@@ -101,14 +101,14 @@ namespace Bnh.Controllers
                 }
                 // save changes
                 db.SaveChanges();
-                return PartialView("WallScene", bricks);
+                return PartialView("WallSceneDesigner", bricks);
             }
-            return PartialView("WallScene", wall.Bricks);
+            return PartialView("WallSceneDesigner", wall.Bricks);
         }
 
         //
         // GET: /WallTest/Delete/5
-        [Authorize(Roles="content-admin")]
+        [Authorize(Roles="content_manager")]
         public ActionResult Delete(long id)
         {
             Wall wall = db.Walls.Single(w => w.Id == id);
@@ -119,7 +119,7 @@ namespace Bnh.Controllers
         // POST: /WallTest/Delete/5
 
         [HttpPost, ActionName("Delete")]
-        [Authorize(Roles="content-admin")]
+        [Authorize(Roles="content_manager")]
         public ActionResult DeleteConfirmed(long id)
         {            
             Wall wall = db.Walls.Single(w => w.Id == id);

@@ -179,7 +179,6 @@ label             { font-weight: normal; padding: 0 0 0.3em 0; }
 label.forcheckbox { margin:0 0 0 .4em; display:inline; }
 
 input[type="text"], input[type="password"] {
-    display: block;
     padding: 0.3em;
 }
 

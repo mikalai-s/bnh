@@ -6,14 +6,12 @@
 }
 <link href="@Url.Content("~/Styles/Wall.css")" rel="stylesheet" type="text/css" />
 <div class="page-view">
-    <div>
-        <h2>@Model.GetWall().Title</h2>
+    <h2>            
+        @Model.GetWall().Title
         @if (Context.User.IsInRole("content_manager"))
         {
-            <div id="wallToolbar">
-                @Html.ActionLink("Edit", "Edit", "WallTest", new { id = Model.GetWall().Id }, null)
-            </div>
+            <sup class="alter">@Html.ActionLink("edit", "Edit", "WallTest", new { id = Model.GetWall().Id }, null)</sup>
         }
-        @Html.Partial("WallScene", Model.GetWallBricks())
-    </div>
+    </h2>
+    @Html.Partial("WallScene", Model.GetWallBricks())
 </div>
