@@ -1,12 +1,9 @@
 ﻿@using Bnh.Entities
 @model IEnumerable<Brick>
-@{
-    var design = Context.User.IsInRole("content_manager");
-}
 <div id="wallScene">
-    @foreach (var brick in Model)
+    @foreach (var brick in Model.OrderBy(b => b.Order))
     {
-        @Html.Brick(brick, design)
+        @Html.Brick(brick)
     }
 </div>
-<div id="brickPrototype">@Html.BrickPrototype(design)</div>
+<div id="brickPrototype">@Html.BrickPrototype()</div>

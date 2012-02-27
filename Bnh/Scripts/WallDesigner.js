@@ -9,7 +9,6 @@
     $(function () {
 
         $("#addBrickButton").click(onAddBrickButtonClicked);
-        $(".brick a.delete").click(onDeleteBrickButtonClicked);
 
         initBricks();
 
@@ -44,7 +43,6 @@
                 });
             }
         });
-
     });
 
     function getScene() {
@@ -56,6 +54,18 @@
             // initialize brick element
             initializeBrick($(brick));
         });
+
+        getScene().sortable({
+            containment: "parent",
+            handle: ".brick .header",
+            tolerance: "pointer",
+            helper: function(e, brick) {
+                var width = brick.width();
+                brick.css({width: width + "px"})
+                return brick;
+            }
+        })
+        .disableSelection();
     }
 
     function onAddBrickButtonClicked() {
@@ -86,6 +96,9 @@
 
         // update brick text
         updateBrickTitle(brick);
+
+        // handle delete button
+        brick.find("a.delete").click(onDeleteBrickButtonClicked);
 
         // make brick resizable
         brick.resizable({

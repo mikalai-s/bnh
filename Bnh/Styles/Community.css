@@ -20,21 +20,15 @@
     font-weight: bold;
 }
 
-.page-view h2 sup
-{
-    color: #6c6c6c;
-    font-weight: bold;
-    font-size: 70%;
-}
-
-.page-view .list sup.alter a
+.page-view sup.alter a
 {
     color: #b60e00;
-    font-size: 130%;
+    font-size: 110%;
     font-family: Consolas;
+    font-weight: normal;
 }
 
 .page-view .alter input
 {
-    color: #b60e00;
+    color: #b60e00 !important;
 }
