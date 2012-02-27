@@ -42,9 +42,10 @@
                 <input id="addBrickButton" type="button" value="Add Brick" />
             </div>
 
-            <p class="alter">
+            <span class="alter">
                 <input type="submit" value="Save" />
-            </p>
+            </span>
+            @Html.ActionInputLink("View", "Details", "Community", new { id = Model.OwnerId }, null)
 
         </fieldset>
     }

@@ -7,7 +7,7 @@
 (function () {
 
     $(function () {
-
+        
         $("#addBrickButton").click(onAddBrickButtonClicked);
 
         initBricks();
