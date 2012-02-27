@@ -28,6 +28,11 @@ namespace Bnh.WebFramework
             return MvcHtmlString.Create(tag.ToString());
         }
 
+        public static MvcHtmlString ActionInputLink(this HtmlHelper htmlHelper, string linkText, string actionName, string controllerName, object routeValues, IDictionary<string, object> htmlAttributes)
+        {
+            return ActionInputLink(htmlHelper, linkText, actionName, controllerName, new RouteValueDictionary(routeValues), htmlAttributes);
+        }
+
         public static MvcHtmlString ActionInputLink(this HtmlHelper htmlHelper, string linkText, string actionName, string controllerName, RouteValueDictionary routeValues, IDictionary<string, object> htmlAttributes)
         {
             var inputBuilder = new TagBuilder("input");
