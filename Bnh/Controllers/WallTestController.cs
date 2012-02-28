@@ -11,12 +11,12 @@ using System.Data.Objects.DataClasses;
 
 namespace Bnh.Controllers
 { 
-    public class WallTestController : Controller
+    public class WallController : Controller
     {
         private CmEntities db = new CmEntities();
 
         //
-        // GET: /WallTest/
+        // GET: /Wall/
 
         public ViewResult Index()
         {
@@ -24,7 +24,7 @@ namespace Bnh.Controllers
         }
 
         //
-        // GET: /WallTest/Details/5
+        // GET: /Wall/Details/5
 
         public ViewResult Details(long id)
         {
@@ -33,7 +33,7 @@ namespace Bnh.Controllers
         }
 
         //
-        // GET: /WallTest/Create
+        // GET: /Wall/Create
 
         public ActionResult Create()
         {
@@ -41,7 +41,7 @@ namespace Bnh.Controllers
         } 
 
         //
-        // POST: /WallTest/Create
+        // POST: /Wall/Create
 
         [HttpPost]
         [Authorize(Roles="content_manager")]
@@ -58,7 +58,7 @@ namespace Bnh.Controllers
         }
         
         //
-        // GET: /WallTest/Edit/5
+        // GET: /Wall/Edit/5
         [Authorize(Roles="content_manager")]
         public ActionResult Edit(long id)
         {
@@ -77,7 +77,7 @@ namespace Bnh.Controllers
         //}
 
         //
-        // POST: /WallTest/Edit/5
+        // POST: /Wall/Edit/5
 
         [HttpPost]
         [Authorize(Roles="content_manager")]
@@ -107,7 +107,7 @@ namespace Bnh.Controllers
         }
 
         //
-        // GET: /WallTest/Delete/5
+        // GET: /Wall/Delete/5
         [Authorize(Roles="content_manager")]
         public ActionResult Delete(long id)
         {
@@ -116,7 +116,7 @@ namespace Bnh.Controllers
         }
 
         //
-        // POST: /WallTest/Delete/5
+        // POST: /Wall/Delete/5
 
         [HttpPost, ActionName("Delete")]
         [Authorize(Roles="content_manager")]
