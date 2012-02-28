@@ -30,6 +30,7 @@ namespace Bnh.WebFramework
     <div class='brick'>
         <div class='header'>
             <span class='title'>{2}</span>
+            <a class='edit'>edit</a>|
             <a class='delete'>delete</a>
         </div>
         <div class='content'></div>

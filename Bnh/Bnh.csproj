@@ -195,19 +195,19 @@
     <Content Include="Views\Community\Delete.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\WallTest\Index.cshtml" />
+    <Content Include="Views\Wall\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\WallTest\Details.cshtml" />
+    <Content Include="Views\Wall\Details.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\WallTest\Create.cshtml" />
+    <Content Include="Views\Wall\Create.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\WallTest\Edit.cshtml" />
+    <Content Include="Views\Wall\Edit.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\WallTest\Delete.cshtml" />
+    <Content Include="Views\Wall\Delete.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Shared\WallScene.cshtml" />
