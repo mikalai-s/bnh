@@ -16,7 +16,7 @@
 .brick-wrapper .brick
 {
     width: auto;
-    height: 62px;
+    min-height: 62px;
     margin: 5px;    
     overflow: hidden;
 }

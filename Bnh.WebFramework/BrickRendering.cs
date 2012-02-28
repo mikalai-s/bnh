@@ -10,6 +10,9 @@ using System.Runtime.Serialization;
 using System.Xml.Serialization;
 using System.Web.Script.Serialization;
 using System.ComponentModel;
+using System.Web.Routing;
+using System.Web.Mvc.Html;
+using System.Web;
 
 namespace Bnh.WebFramework
 {
@@ -30,10 +33,10 @@ namespace Bnh.WebFramework
     <div class='brick'>
         <div class='header'>
             <span class='title'>{2}</span>
-            <a class='edit'>edit</a>|
+            {3}
             <a class='delete'>delete</a>
         </div>
-        <div class='content'></div>
+        <div class='content'>{4}</div>
         <div class='footer'></div>
     </div>
 </div>"
@@ -43,26 +46,43 @@ namespace Bnh.WebFramework
         <div class='header'>
             <span class='title'>{2}</span>
         </div>
-        <div class='content'></div>
+        <div class='content'>{4}</div>
         <div class='footer'></div>
     </div>
 </div>";
 
 
-            var html = string.Format(htmlFormat, 
-                brick.Width.ToString("F"), 
+            var html = string.Format(htmlFormat,
+                brick.Width.ToString("F"),
                 brick.ToJson(),
-                brick.Title);
+                brick.Title,
+                htmlHelper.ActionLink("edit", "Edit", "Brick", new { id = brick.Id }, new { @class = "edit" }),
+                GetBrickContent(brick));
 
             return MvcHtmlString.Create(html);
+        }
+
+        private static object GetBrickContent(Brick brick)
+        {
+            var htmlBrick = brick as HtmlBrick;
+            if (htmlBrick != null)
+                return HttpUtility.HtmlDecode(htmlBrick.Html);
+            return string.Empty;
+        }
+
+        public static string GetDiscriminant(this Brick brick)
+        {
+            return BnhModelBinder.HierarchyTypeMap[typeof(Brick)]
+                .Where(v => v.Value == brick.GetType())
+                .Select(e => e.Key)
+                .First();
         }
 
         public static string ToJson(this Brick brick)
         {
             var properties = new Dictionary<string, object>();
 
-            properties.Add("type", BnhModelBinder.HierarchyTypeMap[typeof(Brick)]
-                .Where(v => v.Value == brick.GetType()).Select(e => e.Key).First());
+            properties.Add("type", brick.GetDiscriminant());
 
             foreach (var prop in brick.GetType().GetProperties(BindingFlags.Instance | BindingFlags.Public))
             {
