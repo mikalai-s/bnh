@@ -13,49 +13,13 @@ namespace Bnh.Controllers
     {
         private CmEntities db = new CmEntities();
 
-        //
-        // GET: /Brick/
-
-        public ViewResult Index()
+        private Dictionary<Type, string> BrickEditView = new Dictionary<Type, string>
         {
-            var bricks = db.Bricks.Include("Wall");
-            return View(bricks.ToList());
-        }
-
-        //
-        // GET: /Brick/Details/5
-
-        public ViewResult Details(long id)
-        {
-            Brick brick = db.Bricks.Single(b => b.Id == id);
-            return View(brick);
-        }
-
-        //
-        // GET: /Brick/Create
-
-        public ActionResult Create()
-        {
-            ViewBag.WallId = new SelectList(db.Walls, "Id", "Title");
-            return View();
-        } 
-
-        //
-        // POST: /Brick/Create
-
-        [HttpPost]
-        public ActionResult Create(Brick brick)
-        {
-            if (ModelState.IsValid)
-            {
-                db.Bricks.AddObject(brick);
-                db.SaveChanges();
-                return RedirectToAction("Index");  
-            }
-
-            ViewBag.WallId = new SelectList(db.Walls, "Id", "Title", brick.WallId);
-            return View(brick);
-        }
+            {typeof(Brick), "Edit"},
+            {typeof(HtmlBrick), "EditHtml"},
+            {typeof(GalleryBrick), "EditGallery"},
+            {typeof(MapBrick), "EditMap"},
+        };
         
         //
         // GET: /Brick/Edit/5
@@ -64,9 +28,11 @@ namespace Bnh.Controllers
         {
             Brick brick = db.Bricks.Single(b => b.Id == id);
             ViewBag.WallId = new SelectList(db.Walls, "Id", "Title", brick.WallId);
+            ViewBag.PartialView = BrickEditView[brick.GetType()];
             return View(brick);
         }
 
+        
         //
         // POST: /Brick/Edit/5
 
@@ -78,31 +44,10 @@ namespace Bnh.Controllers
                 db.Bricks.Attach(brick);
                 db.ObjectStateManager.ChangeObjectState(brick, EntityState.Modified);
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("Edit", "Wall", new { id = brick.WallId });
             }
             ViewBag.WallId = new SelectList(db.Walls, "Id", "Title", brick.WallId);
             return View(brick);
-        }
-
-        //
-        // GET: /Brick/Delete/5
- 
-        public ActionResult Delete(long id)
-        {
-            Brick brick = db.Bricks.Single(b => b.Id == id);
-            return View(brick);
-        }
-
-        //
-        // POST: /Brick/Delete/5
-
-        [HttpPost, ActionName("Delete")]
-        public ActionResult DeleteConfirmed(long id)
-        {            
-            Brick brick = db.Bricks.Single(b => b.Id == id);
-            db.Bricks.DeleteObject(brick);
-            db.SaveChanges();
-            return RedirectToAction("Index");
         }
 
         protected override void Dispose(bool disposing)

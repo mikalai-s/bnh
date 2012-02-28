@@ -15,14 +15,9 @@
         <legend>Brick</legend>
 
         @Html.HiddenFor(model => model.Id)
-
-        <div class="editor-label">
-            @Html.LabelFor(model => model.WallId, "Wall")
-        </div>
-        <div class="editor-field">
-            @Html.DropDownList("WallId", String.Empty)
-            @Html.ValidationMessageFor(model => model.WallId)
-        </div>
+        @Html.HiddenFor(model => model.Order)
+        @Html.HiddenFor(model => model.WallId)
+        @Html.Hidden("Type", Model.GetDiscriminant())
 
         <div class="editor-label">
             @Html.LabelFor(model => model.Title)
@@ -31,6 +26,8 @@
             @Html.EditorFor(model => model.Title)
             @Html.ValidationMessageFor(model => model.Title)
         </div>
+
+        @Html.Partial((string)ViewBag.PartialView, Model)
 
         <p>
             <input type="submit" value="Save" />
