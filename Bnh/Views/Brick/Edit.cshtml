@@ -1,4 +1,4 @@
-﻿@model Bnh.Entities.Builder
+﻿@model Bnh.Entities.Brick
 
 @{
     ViewBag.Title = "Edit";
@@ -12,16 +12,24 @@
 @using (Html.BeginForm()) {
     @Html.ValidationSummary(true)
     <fieldset>
-        <legend>Builder</legend>
+        <legend>Brick</legend>
 
         @Html.HiddenFor(model => model.Id)
 
         <div class="editor-label">
-            @Html.LabelFor(model => model.Name)
+            @Html.LabelFor(model => model.WallId, "Wall")
         </div>
         <div class="editor-field">
-            @Html.EditorFor(model => model.Name)
-            @Html.ValidationMessageFor(model => model.Name)
+            @Html.DropDownList("WallId", String.Empty)
+            @Html.ValidationMessageFor(model => model.WallId)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Title)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.Title)
+            @Html.ValidationMessageFor(model => model.Title)
         </div>
 
         <p>
