@@ -9,7 +9,7 @@
         @Model.GetWall().Title
         @if (Context.User.IsInRole("content_manager"))
         {
-            <sup class="alter">@Html.ActionLink("edit", "Edit", "Wall", new { id = Model.GetWall().Id }, null)</sup>
+            <sup class="alter">@Html.ActionLink("edit wall", "Edit", "Wall", new { id = Model.GetWall().Id }, null)</sup>
         }
     </h2>
     @Html.Partial("WallScene", Model.GetWallBricks())

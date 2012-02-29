@@ -20,12 +20,28 @@
                         OwnerId: form["OwnerId"].value,
                         Title: form["Title"].value
                     },
-                    bricks: []
+                    bricks: {
+                        "add": [],
+                        "delete": [],
+                        "edit": [],
+                    }
                 };
 
                 getScene().children().each(function(i, brick) {
-                    data.bricks[i] = $(brick).data("entity");
-                    data.bricks[i].order = i;
+                    // get entity
+                    var entity = $(brick).data("entity");
+
+                    // check for changed order
+                    if(entity.order != i) {
+                        entity.order = i;
+                        onProcessBrickAction(brick, "edit");
+                    }
+
+                    // put brick into appropriate action collection if need
+                    if(entity.action) {
+                        var bricks = data.bricks[entity.action];
+                        bricks[bricks.length] = entity;
+                    }
                 });
 
                 $.ajax({
@@ -38,7 +54,7 @@
                         initBricks();
                     },
                     error: function (result) {
-                        $(document).replaceWith(result);
+                        $("html").replaceWith(result.responseText);
                     }
                 });
             }
@@ -77,6 +93,8 @@
             type: parseInt($("#brickType").val()),
             title: $("#brickTitle").val()
         });
+
+        onProcessBrickAction(brick, "add");
     }
 
     // creates new brick element from prototype
@@ -113,6 +131,8 @@
         brick.data("entity").width = width;
 
         updateBrickTitle(brick);
+
+        onProcessBrickAction(brick, "edit");
     }
 
     function updateBrickTitle(brick) {
@@ -121,7 +141,30 @@
     }
 
     function onDeleteBrickButtonClicked() {
-        $(this).closest(".brick-wrapper").remove();
+        onProcessBrickAction($(this).closest(".brick-wrapper"), "delete");
+    }
+
+    function onProcessBrickAction(brick, action) {
+        var entity = brick.data("entity");
+
+        // if there is action set yet - just set it
+        if(!entity.action) {
+            entity.action = action;
+            return;
+        }
+
+        // if brick is being deleted
+        if(action == "delete") {
+            // if it was added recently - delete it from DOM
+            if(entity.action == "add") {
+                brick.remove();
+                return;
+            }
+
+            // otherwise mark as deleted 
+            entity.action = action;
+            return;
+        }
     }
 
 })();
