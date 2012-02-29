@@ -15,10 +15,16 @@
     width: 100%;
     background-color: #e5e5e5;
     border-bottom: 1px dashed gray;
+    cursor: move;
 }
 
 .brick a.delete, .brick a.edit
 {
     cursor: pointer;
     float: right;
+}
+
+#brickPrototype
+{
+   display: none;
 }
