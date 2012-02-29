@@ -66,7 +66,7 @@
     <Compile Include="Controllers\BuilderController.cs" />
     <Compile Include="Controllers\CommunityController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
-    <Compile Include="Controllers\WallTestController.cs" />
+    <Compile Include="Controllers\WallController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -370,6 +370,7 @@
     <Content Include="Scripts\tiny_mce\utils\validate.js" />
     <Content Include="Scripts\WallDesigner.js" />
     <Content Include="Styles\Community.css" />
+    <Content Include="Styles\BrickDesigner.css" />
     <Content Include="Styles\Wall.css" />
     <Content Include="Styles\WallDesigner.css" />
     <Content Include="Web.config">

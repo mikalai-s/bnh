@@ -18,12 +18,12 @@ namespace Bnh.WebFramework
 {
     public static class BrickRendering
     {
-        public static MvcHtmlString BrickPrototype(this HtmlHelper htmlHelper, bool design = false)
+        public static MvcHtmlString BrickPrototype(this HtmlHelper htmlHelper)
         {
             return htmlHelper.Brick(new Brick
             {
                 Width = 100.0F,
-            }, design);
+            }, true);
         }
 
         public static MvcHtmlString Brick(this HtmlHelper htmlHelper, Brick brick, bool design = false)
@@ -41,14 +41,8 @@ namespace Bnh.WebFramework
     </div>
 </div>"
 :
-@"<div class='brick-wrapper' style='width:{0}%' entity-data='{1}'>
-    <div class='brick'>
-        <div class='header'>
-            <span class='title'>{2}</span>
-        </div>
-        <div class='content'>{4}</div>
-        <div class='footer'></div>
-    </div>
+@"<div class='brick-wrapper' style='width:{0}%'>
+    {4}
 </div>";
 
 
@@ -66,7 +60,7 @@ namespace Bnh.WebFramework
         {
             var htmlBrick = brick as HtmlBrick;
             if (htmlBrick != null)
-                return HttpUtility.HtmlDecode(htmlBrick.Html);
+                return htmlBrick.Html;
             return string.Empty;
         }
 

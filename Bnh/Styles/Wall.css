@@ -21,12 +21,3 @@
     overflow: hidden;
 }
 
-.brick .header
-{
-    cursor: move;
-}
-
-#brickPrototype
-{
-    display: none;
-}
