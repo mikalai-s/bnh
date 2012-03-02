@@ -7,8 +7,9 @@
 (function () {
 
     $(function () {
-        
+
         $("#addBrickButton").click(onAddBrickButtonClicked);
+        $("#viewWall").click(onViewWallButtonClicked);
 
         initBricks();
 
@@ -18,7 +19,7 @@
             }
         });
     });
-    
+
     function saveWall(done) {
         var form = $("form")[0];
         var data = getSceneData(form);
@@ -27,12 +28,15 @@
             url: form.action,
             type: "POST",
             contentType: "application/json",
+            async: false,
             data: jQuery.toJSON(data),
             success: function (result) {
-                getScene().replaceWith(result);
-                initBricks();
-                if(done)
-                    done();
+                if (done) {
+                    done(result);
+                } else {
+                    getScene().replaceWith(result);
+                    initBricks();
+                }
             },
             error: function (result) {
                 document.write(result.responseText);
@@ -40,7 +44,7 @@
             }
         });
     }
-    
+
     // collect form data to submit
     function getSceneData(form) {
         var data = {
@@ -52,20 +56,20 @@
             add: [],
             edit: [],
             "delete": []
-        };        
+        };
 
-        getScene().children().each(function(i, brick) {
+        getScene().children().each(function (i, brick) {
             // get entity
-                var entity = $(brick).data("entity");
+            var entity = $(brick).data("entity");
 
             // check for changed order
-            if(entity.order != i) {
+            if (entity.order != i) {
                 entity.order = i;
                 onProcessBrickAction($(brick), "edit");
             }
 
             // put brick into appropriate action collection if need
-            if(entity.action) {
+            if (entity.action) {
                 var bricks = data[entity.action];
                 bricks[bricks.length] = entity;
             }
@@ -88,9 +92,9 @@
             containment: "parent",
             handle: ".brick .header",
             tolerance: "pointer",
-            helper: function(e, brick) {
+            helper: function (e, brick) {
                 var width = brick.width();
-                brick.css({width: width + "px"})
+                brick.css({ width: width + "px" })
                 return brick;
             }
         })
@@ -106,12 +110,12 @@
             type: parseInt($("#brickType").val()),
             title: $("#brickTitle").val()
         });
-        
+
         // move deleted bricks to the end of the wall
         getScene().find(".brick-wrapper:hidden").appendTo(getScene());
-        
+
         // handle edit button specifically for non-saved bricks
-        brick.find("a.edit").click(onEditNonSavedBrickClicked);
+        //brick.find("a.edit").click(onEditNonSavedBrickClicked);
 
         onProcessBrickAction(brick, "add");
     }
@@ -134,7 +138,8 @@
         // update brick text
         updateBrickTitle(brick);
 
-        // handle delete button
+        // handle action buttons
+        brick.find("a.edit").click(onEditBrickButtonClicked);
         brick.find("a.delete").click(onDeleteBrickButtonClicked);
 
         // make brick resizable
@@ -167,9 +172,9 @@
         var entity = brick.data("entity");
 
         // if brick is being deleted
-        if(action == "delete") {
+        if (action == "delete") {
             // if it was added recently - delete it from DOM
-            if(entity.action == "add") {
+            if (entity.action == "add") {
                 brick.remove();
                 return;
             }
@@ -179,33 +184,42 @@
 
             // movee brick to the end of the list (to make brick orders to be correct)
             brick.appendTo(brick.parent());
-            
+
             // hide brick (we need it to submit action to the server)
             brick.hide();
 
             return;
         }
-        
+
         // if there is no action set yet - just set it
-        if(!entity.action) {
+        if (!entity.action) {
             entity.action = action;
             return;
         }
     }
-    
-    function onEditNonSavedBrickClicked() {
+
+    function onEditBrickButtonClicked() {
         var brick = $(this).closest(".brick-wrapper");
-       
-        if(!confirm("This brick is no saved yet! Do you want to save entire the wall before editing the brick?"))
-            return false;
-        
+        var entity = brick.data("entity");
+
+        if (entity.action == "add" || entity.action == "edit")
+            if (!confirm("This brick is no saved yet! Do you want to save entire wall before processing?"))
+                return false;
+
+        // get brick index to identify
         var index = brick.index();
 
-        saveWall(function done() {
-            $(getScene().find(".brick-wrapper")[index]).find("a.edit").trigger("click");    
+        // we are sure that saving is not async
+        saveWall(function () {
+            var href = $(getScene().find(".brick-wrapper")[index]).find("a.edit").attr("href");
+            brick.find("a.edit").attr("href", href);
         });
 
-        return false;
+        return true;
+    }
+
+    function onViewWallButtonClicked() {
+        return true;
     }
 
 })();

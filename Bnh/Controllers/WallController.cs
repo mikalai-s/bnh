@@ -81,52 +81,60 @@ namespace Bnh.Controllers
 
         [HttpPost]
         [Authorize(Roles="content_manager")]
-        // NOTE: Currently it's called asynchronously
         public ActionResult Edit(Wall wall, List<Brick> add, List<Brick> edit, List<Brick> delete)
         {
-            // TODO: use Request.IsAjaxRequest() to distinguish from usual postbacks
-
             if (ModelState.IsValid)
             {
-                // get real wall
-                var realWall = db.Walls.Single(w => w.Id == wall.Id);
-
-                // apply client change to real wall
-                db.Walls.ApplyCurrentValues(wall);
-
-                // for edited brick we want to update some properties
-                if (edit != null)
-                {
-                    foreach (var freshBrick in edit)
-                    {
-                        var realBrick = realWall.Bricks.FirstOrDefault(b => b.Id == freshBrick.Id);
-
-                        // on wall designer we update only brick common properties 
-                        // that are editable on this screen
-                        ApplyNewBrickProperties(freshBrick, realBrick);
-                    }
-                }
-
-                if (delete != null)
-                {
-                    // delete bricks in real wall
-                    var realBricks = from realBrick in realWall.Bricks
-                                     from brickToDelete in delete
-                                     where realBrick.Id == brickToDelete.Id
-                                     select realBrick;
-                    realBricks.ToList().ForEach(db.Bricks.DeleteObject);
-                }
-
-                if (add != null)
-                {
-                    // add new bricks to real wall
-                    add.ToList().ForEach(b => b.Wall = realWall);
-                }
-                // save changes
-                db.SaveChanges();
-                return PartialView("WallSceneDesigner", realWall.Bricks);
+                wall = SaveWall(wall, add, edit, delete);
             }
-            return PartialView("WallSceneDesigner", wall.Bricks);
+
+            if (Request.IsAjaxRequest())
+            {
+                return PartialView("WallSceneDesigner", wall.Bricks);
+            }
+            
+            return View("WallSceneDesigner", wall.Bricks);
+        }
+
+        private Wall SaveWall(Wall wall, List<Brick> add, List<Brick> edit, List<Brick> delete)
+        {
+            // get real wall
+            var realWall = db.Walls.Single(w => w.Id == wall.Id);
+
+            // apply client change to real wall
+            db.Walls.ApplyCurrentValues(wall);
+
+            // for edited brick we want to update some properties
+            if (edit != null)
+            {
+                foreach (var freshBrick in edit)
+                {
+                    var realBrick = realWall.Bricks.FirstOrDefault(b => b.Id == freshBrick.Id);
+
+                    // on wall designer we update only brick common properties 
+                    // that are editable on this screen
+                    ApplyNewBrickProperties(freshBrick, realBrick);
+                }
+            }
+
+            if (delete != null)
+            {
+                // delete bricks in real wall
+                var realBricks = from realBrick in realWall.Bricks
+                                 from brickToDelete in delete
+                                 where realBrick.Id == brickToDelete.Id
+                                 select realBrick;
+                realBricks.ToList().ForEach(db.Bricks.DeleteObject);
+            }
+
+            if (add != null)
+            {
+                // add new bricks to real wall
+                add.ForEach(b => b.Wall = realWall);
+            }
+            // save changes
+            db.SaveChanges();
+            return realWall;
         }
 
         private void ApplyNewBrickProperties(Brick source, Brick target)
