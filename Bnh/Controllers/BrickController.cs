@@ -35,7 +35,7 @@ namespace Bnh.Controllers
         [HttpPost]
         public ActionResult Edit(Brick brick)
         {
-            var realBrick = db.Bricks.Where(b => b.Id == brick.Id).FirstOrDefault();
+            var realBrick = db.Bricks.FirstOrDefault(b => b.Id == brick.Id);
             realBrick.Title = brick.Title;
             db.SaveChanges();
             return RedirectToAction("Edit", "Wall", new { id = realBrick.WallId });
