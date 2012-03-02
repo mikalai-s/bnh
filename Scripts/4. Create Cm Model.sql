@@ -25,12 +25,13 @@ CREATE TABLE [cm].[Brick](
 	[WallId] [bigint] NOT NULL,
 	[Type] [tinyint] NOT NULL,
 	[Title] [nvarchar](50) NOT NULL,
-	[Width] [real] not null default 100,
-	[Order] [tinyint] not null default 0,
+	[Width] [real] NOT NULL,
+	[Order] [tinyint] NOT NULL,
 	[Html] [ntext] NULL,
 	[ImageListId] [bigint] NULL,
 	[GpsLocation] [nvarchar](100) NULL,
-	
+	[MapHeight] [int] NULL,
+	[MapZoom] [int] NULL,
  CONSTRAINT [PK_Brick] PRIMARY KEY CLUSTERED 
 (
 	[Id] ASC
@@ -49,6 +50,18 @@ ALTER TABLE [cm].[Brick] CHECK CONSTRAINT [FK_Brick_Wall]
 GO
 
 ALTER TABLE [cm].[Brick] ADD  CONSTRAINT [DF_Brick_Type]  DEFAULT ((0)) FOR [Type]
+GO
+
+ALTER TABLE [cm].[Brick] ADD  DEFAULT ((100)) FOR [Width]
+GO
+
+ALTER TABLE [cm].[Brick] ADD  DEFAULT ((0)) FOR [Order]
+GO
+
+ALTER TABLE [cm].[Brick] ADD  CONSTRAINT [DF_Brick_MapHeight]  DEFAULT ((0)) FOR [MapHeight]
+GO
+
+ALTER TABLE [cm].[Brick] ADD  CONSTRAINT [DF_Brick_MapZoom]  DEFAULT ((0)) FOR [MapZoom]
 GO
 
 
