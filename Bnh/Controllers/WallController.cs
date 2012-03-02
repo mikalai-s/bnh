@@ -66,26 +66,15 @@ namespace Bnh.Controllers
             return View(wall);
         }
 
-        //public ActionResult GetWallScene(Wall wall)
-        //{
-        //    return PartialView("WallScene", wall.Bricks);
-        //}
-
-        //public ActionResult GetWallScene(Community community)
-        //{
-        //    return PartialView("WallScene", community.GetWallBricks());
-        //}
-
-        //
         // POST: /Wall/Edit/5
 
         [HttpPost]
         [Authorize(Roles="content_manager")]
-        public ActionResult Edit(Wall wall, List<Brick> add, List<Brick> edit, List<Brick> delete)
+        public ActionResult Edit(Wall wall, List<Brick> added, List<Brick> edited, List<Brick> deleted)
         {
             if (ModelState.IsValid)
             {
-                wall = SaveWall(wall, add, edit, delete);
+                wall = SaveWall(wall, added, edited, deleted);
             }
 
             if (Request.IsAjaxRequest())
@@ -96,7 +85,7 @@ namespace Bnh.Controllers
             return View("WallSceneDesigner", wall.Bricks);
         }
 
-        private Wall SaveWall(Wall wall, List<Brick> add, List<Brick> edit, List<Brick> delete)
+        private Wall SaveWall(Wall wall, List<Brick> added, List<Brick> edited, List<Brick> deleted)
         {
             // get real wall
             var realWall = db.Walls.Single(w => w.Id == wall.Id);
@@ -105,9 +94,9 @@ namespace Bnh.Controllers
             db.Walls.ApplyCurrentValues(wall);
 
             // for edited brick we want to update some properties
-            if (edit != null)
+            if (edited != null)
             {
-                foreach (var freshBrick in edit)
+                foreach (var freshBrick in edited)
                 {
                     var realBrick = realWall.Bricks.FirstOrDefault(b => b.Id == freshBrick.Id);
 
@@ -117,20 +106,20 @@ namespace Bnh.Controllers
                 }
             }
 
-            if (delete != null)
+            if (deleted != null)
             {
                 // delete bricks in real wall
                 var realBricks = from realBrick in realWall.Bricks
-                                 from brickToDelete in delete
+                                 from brickToDelete in deleted
                                  where realBrick.Id == brickToDelete.Id
                                  select realBrick;
                 realBricks.ToList().ForEach(db.Bricks.DeleteObject);
             }
 
-            if (add != null)
+            if (added != null)
             {
                 // add new bricks to real wall
-                add.ForEach(b => b.Wall = realWall);
+                added.ForEach(b => b.Wall = realWall);
             }
             // save changes
             db.SaveChanges();
