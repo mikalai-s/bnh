@@ -507,6 +507,54 @@ namespace Bnh.Entities
         private global::System.String _GpsLocation;
         partial void OnGpsLocationChanging(global::System.String value);
         partial void OnGpsLocationChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Int32> Height
+        {
+            get
+            {
+                return _Height;
+            }
+            set
+            {
+                OnHeightChanging(value);
+                ReportPropertyChanging("Height");
+                _Height = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("Height");
+                OnHeightChanged();
+            }
+        }
+        private Nullable<global::System.Int32> _Height;
+        partial void OnHeightChanging(Nullable<global::System.Int32> value);
+        partial void OnHeightChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Int32> Zoom
+        {
+            get
+            {
+                return _Zoom;
+            }
+            set
+            {
+                OnZoomChanging(value);
+                ReportPropertyChanging("Zoom");
+                _Zoom = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("Zoom");
+                OnZoomChanged();
+            }
+        }
+        private Nullable<global::System.Int32> _Zoom;
+        partial void OnZoomChanging(Nullable<global::System.Int32> value);
+        partial void OnZoomChanged();
 
         #endregion
     
