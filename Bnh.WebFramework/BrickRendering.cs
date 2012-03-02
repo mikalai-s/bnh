@@ -18,6 +18,8 @@ namespace Bnh.WebFramework
 {
     public static class BrickRendering
     {
+        private const string googleMapsKey = "AIzaSyBXgUOTPfgbS4kHE7fm_xr2za_O1ApA_TM";
+
         public static MvcHtmlString BrickPrototype(this HtmlHelper htmlHelper)
         {
             return htmlHelper.Brick(new Brick
@@ -60,8 +62,50 @@ namespace Bnh.WebFramework
         {
             var htmlBrick = brick as HtmlBrick;
             if (htmlBrick != null)
-                return htmlBrick.Html;
+                return GetHtmlBrickContent(htmlBrick);
+            var mapBrick = brick as MapBrick;
+            if (mapBrick != null)
+                return GetMapBrickContent(mapBrick);
             return string.Empty;
+        }
+
+        private static object GetMapBrickContent(MapBrick mapBrick)
+        {
+            // NOTE: in case of HTTPS change the url
+            var html =
+                @"<style type=""text/css"">
+  html {{ height: 100% }}
+  body {{ height: 100%; margin: 0; padding: 0 }}
+  #map_canvas {{ height: 100% }}
+</style>
+<script type=""text/javascript""
+      src=""http://maps.googleapis.com/maps/api/js?key=AIzaSyBXgUOTPfgbS4kHE7fm_xr2za_O1ApA_TM&sensor=false"">
+</script>
+<script type=""text/javascript"">
+    $(function () {{
+        var myLatlng = new google.maps.LatLng({0});
+        var myOptions = {{
+            center: myLatlng,
+            zoom: {2},
+            mapTypeId: google.maps.MapTypeId.ROADMAP
+        }};
+        var map = new google.maps.Map(document.getElementById(""map_canvas""), myOptions);
+        var marker = new google.maps.Marker({{
+            position: myLatlng,
+            map: map
+        }});
+    }});
+</script>
+<div class=""map-canvas-wrapper"" style=""height: {1}px"">
+    <div id=""map_canvas""></div>
+</div>
+";
+            return string.Format(html, mapBrick.GpsLocation, mapBrick.Height, mapBrick.Zoom);
+        }
+
+        private static object GetHtmlBrickContent(HtmlBrick htmlBrick)
+        {
+            return htmlBrick.Html;
         }
 
         public static string GetDiscriminant(this Brick brick)

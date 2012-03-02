@@ -26,6 +26,8 @@
           <Property Name="Html" Type="ntext" />
           <Property Name="ImageListId" Type="bigint" />
           <Property Name="GpsLocation" Type="nvarchar" MaxLength="100" />
+          <Property Name="MapHeight" Type="int" />
+          <Property Name="MapZoom" Type="int" />
         </EntityType>
         <EntityType Name="Wall">
           <Key>
@@ -101,6 +103,8 @@
         </EntityType>
         <EntityType Name="MapBrick" BaseType="bnhModel.Brick" >
           <Property Type="String" Name="GpsLocation" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Type="Int32" Name="Height" />
+          <Property Type="Int32" Name="Zoom" />
         </EntityType>
         </Schema>
     </edmx:ConceptualModels>
@@ -143,6 +147,8 @@
             </EntityTypeMapping>
             <EntityTypeMapping TypeName="IsTypeOf(bnhModel.MapBrick)">
               <MappingFragment StoreEntitySet="Brick">
+                <ScalarProperty Name="Zoom" ColumnName="MapZoom" />
+                <ScalarProperty Name="Height" ColumnName="MapHeight" />
                 <ScalarProperty Name="Order" ColumnName="Order" />
                 <ScalarProperty Name="Width" ColumnName="Width" />
                 <ScalarProperty Name="Title" ColumnName="Title" />
@@ -190,20 +196,20 @@
           <ConnectorPoint PointX="3" PointY="2.3362939453125" />
         </AssociationConnector>
         <EntityTypeShape EntityType="bnhModel.HtmlBrick" Width="1.5" PointX="6" PointY="0.75" Height="1.0187792968750031" />
-        <InheritanceConnector EntityType="bnhModel.HtmlBrick" >
+        <InheritanceConnector EntityType="bnhModel.HtmlBrick" ManuallyRouted="false" >
           <ConnectorPoint PointX="4.5" PointY="1.4805403645833333" />
           <ConnectorPoint PointX="6" PointY="1.4805403645833333" />
         </InheritanceConnector>
         <EntityTypeShape EntityType="bnhModel.GalleryBrick" Width="1.5" PointX="6" PointY="2.375" Height="1.0187792968750031" />
-        <InheritanceConnector EntityType="bnhModel.GalleryBrick" >
+        <InheritanceConnector EntityType="bnhModel.GalleryBrick" ManuallyRouted="false" >
           <ConnectorPoint PointX="4.5" PointY="2.7737939453125" />
           <ConnectorPoint PointX="6" PointY="2.7737939453125" />
         </InheritanceConnector>
         <EntityTypeShape EntityType="bnhModel.MapBrick" Width="1.5" PointX="6.125" PointY="3.75" Height="1.0187792968750031" />
-        <InheritanceConnector EntityType="bnhModel.MapBrick" >
+        <InheritanceConnector EntityType="bnhModel.MapBrick" ManuallyRouted="false" >
           <ConnectorPoint PointX="3.75" PointY="3.172587890625" />
-          <ConnectorPoint PointX="3.75" PointY="4.3555403645833337" />
-          <ConnectorPoint PointX="6.125" PointY="4.3555403645833337" />
+          <ConnectorPoint PointX="3.75" PointY="4.4516910807291659" />
+          <ConnectorPoint PointX="6.125" PointY="4.4516910807291659" />
         </InheritanceConnector>
       </Diagram>
     </Diagrams>

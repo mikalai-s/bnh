@@ -54,6 +54,8 @@ namespace Bnh.Controllers
         {
             var realBrick = db.Bricks.Where(b => b.Id == brick.Id).OfType<MapBrick>().FirstOrDefault();
             realBrick.GpsLocation = brick.GpsLocation;
+            realBrick.Height = brick.Height;
+            realBrick.Zoom = brick.Zoom;
             return Edit(brick);
         }
 
