@@ -14,52 +14,65 @@
 
         $("form").validate({
             submitHandler: function (form) {
-                var data = {
-                    wall: {
-                        Id: form["Id"].value,
-                        OwnerId: form["OwnerId"].value,
-                        Title: form["Title"].value
-                    },
-                    add: [],
-                    edit: [],
-                    "delete": []
-                };        
-
-                getScene().children().each(function(i, brick) {
-                    // get entity
-                     var entity = $(brick).data("entity");
-
-                    // check for changed order
-                    if(entity.order != i) {
-                        entity.order = i;
-                        onProcessBrickAction($(brick), "edit");
-                    }
-
-                    // put brick into appropriate action collection if need
-                    if(entity.action) {
-                        var bricks = data[entity.action];
-                        bricks[bricks.length] = entity;
-                    }
-                });
-
-                $.ajax({
-                    url: form.action,
-                    type: "POST",
-                    contentType: "application/json",
-                    data: jQuery.toJSON(data),
-                    success: function (result) {
-                        getScene().replaceWith(result);
-                        initBricks();
-                    },
-                    error: function (result) {
-                       // document.open();
-                        document.write(result.responseText);
-                        document.close();
-                    }
-                });
+                saveWall();
             }
         });
     });
+    
+    function saveWall(done) {
+        var form = $("form")[0];
+        var data = getSceneData(form);
+
+        $.ajax({
+            url: form.action,
+            type: "POST",
+            contentType: "application/json",
+            data: jQuery.toJSON(data),
+            success: function (result) {
+                getScene().replaceWith(result);
+                initBricks();
+                if(done)
+                    done();
+            },
+            error: function (result) {
+                document.write(result.responseText);
+                document.close();
+            }
+        });
+    }
+    
+    // collect form data to submit
+    function getSceneData(form) {
+        var data = {
+            wall: {
+                Id: form["Id"].value,
+                OwnerId: form["OwnerId"].value,
+                Title: form["Title"].value
+            },
+            add: [],
+            edit: [],
+            "delete": []
+        };        
+
+        getScene().children().each(function(i, brick) {
+            // get entity
+                var entity = $(brick).data("entity");
+
+            // check for changed order
+            if(entity.order != i) {
+                entity.order = i;
+                onProcessBrickAction($(brick), "edit");
+            }
+
+            // put brick into appropriate action collection if need
+            if(entity.action) {
+                var bricks = data[entity.action];
+                bricks[bricks.length] = entity;
+            }
+        });
+
+        return data;
+    }
 
     function getScene() {
         return $("#wallScene");
@@ -93,6 +106,12 @@
             type: parseInt($("#brickType").val()),
             title: $("#brickTitle").val()
         });
+        
+        // move deleted bricks to the end of the wall
+        getScene().find(".brick-wrapper:hidden").appendTo(getScene());
+        
+        // handle edit button specifically for non-saved bricks
+        brick.find("a.edit").click(onEditNonSavedBrickClicked);
 
         onProcessBrickAction(brick, "add");
     }
@@ -122,7 +141,7 @@
         brick.resizable({
             containment: 'parent',
             handles: "e",
-            resize: function (event, ui) { onBrickResize(event, ui, brick); },
+            resize: function (event, ui) { onBrickResize(event, ui, brick); }
         });
     }
 
@@ -172,6 +191,21 @@
             entity.action = action;
             return;
         }
+    }
+    
+    function onEditNonSavedBrickClicked() {
+        var brick = $(this).closest(".brick-wrapper");
+       
+        if(!confirm("This brick is no saved yet! Do you want to save entire the wall before editing the brick?"))
+            return false;
+        
+        var index = brick.index();
+
+        saveWall(function done() {
+            $(getScene().find(".brick-wrapper")[index]).find("a.edit").trigger("click");    
+        });
+
+        return false;
     }
 
 })();

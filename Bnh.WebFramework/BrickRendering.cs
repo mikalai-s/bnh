@@ -35,8 +35,8 @@ namespace Bnh.WebFramework
     <div class='brick'>
         <div class='header'>
             <span class='title'>{2}</span>
-            {3}
             <a class='delete'>delete</a>
+            {3}
         </div>
         <div class='content'>{4}</div>
         <div class='footer'></div>

@@ -28,3 +28,12 @@
 {
    display: none;
 }
+
+.brick .content {
+    padding: 1px;   
+}
+
+.map-canvas-wrapper {
+    padding: 0;
+    border: none;
+}

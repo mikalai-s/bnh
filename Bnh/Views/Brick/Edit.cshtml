@@ -25,8 +25,11 @@
             @Html.EditorFor(model => model.Title)
             @Html.ValidationMessageFor(model => model.Title)
         </div>
-
-        @Html.Partial((string)ViewBag.PartialView, Model)
+        
+        @if (ViewBag.PartialView != "Edit")
+        {
+            @Html.Partial((string) ViewBag.PartialView, Model)
+        }
 
         <p>
             <input type="submit" value="Save" />
