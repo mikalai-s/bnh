@@ -2,7 +2,6 @@
 {
     width: 100%;
     min-height: 100px;
-    padding: 5px;
     height: auto;
     overflow: hidden;
 }
@@ -11,6 +10,8 @@
 {
     width: 100%;
     float: left;
+    max-width: 100%;
+    min-height: 1px;
 }
 
 .brick-wrapper .brick
@@ -22,7 +23,7 @@
 }
 
 .map-canvas-wrapper {
-    width: 100%;
+    width: auto;
     padding: 1px;
     border: solid black 1px;
 }
