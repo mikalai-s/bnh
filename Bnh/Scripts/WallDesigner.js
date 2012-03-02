@@ -20,26 +20,24 @@
                         OwnerId: form["OwnerId"].value,
                         Title: form["Title"].value
                     },
-                    bricks: {
-                        "add": [],
-                        "delete": [],
-                        "edit": [],
-                    }
-                };
+                    add: [],
+                    edit: [],
+                    "delete": []
+                };        
 
                 getScene().children().each(function(i, brick) {
                     // get entity
-                    var entity = $(brick).data("entity");
+                     var entity = $(brick).data("entity");
 
                     // check for changed order
                     if(entity.order != i) {
                         entity.order = i;
-                        onProcessBrickAction(brick, "edit");
+                        onProcessBrickAction($(brick), "edit");
                     }
 
                     // put brick into appropriate action collection if need
                     if(entity.action) {
-                        var bricks = data.bricks[entity.action];
+                        var bricks = data[entity.action];
                         bricks[bricks.length] = entity;
                     }
                 });
@@ -54,7 +52,9 @@
                         initBricks();
                     },
                     error: function (result) {
-                        $("html").replaceWith(result.responseText);
+                       // document.open();
+                        document.write(result.responseText);
+                        document.close();
                     }
                 });
             }
@@ -147,12 +147,6 @@
     function onProcessBrickAction(brick, action) {
         var entity = brick.data("entity");
 
-        // if there is action set yet - just set it
-        if(!entity.action) {
-            entity.action = action;
-            return;
-        }
-
         // if brick is being deleted
         if(action == "delete") {
             // if it was added recently - delete it from DOM
@@ -162,6 +156,19 @@
             }
 
             // otherwise mark as deleted 
+            entity.action = action;
+
+            // movee brick to the end of the list (to make brick orders to be correct)
+            brick.appendTo(brick.parent());
+            
+            // hide brick (we need it to submit action to the server)
+            brick.hide();
+
+            return;
+        }
+        
+        // if there is no action set yet - just set it
+        if(!entity.action) {
             entity.action = action;
             return;
         }
