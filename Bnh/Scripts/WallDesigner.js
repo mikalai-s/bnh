@@ -11,14 +11,19 @@
         $("#addBrickButton").click(onAddBrickButtonClicked);
         $("#viewWall").click(onViewWallButtonClicked);
 
-        initBricks();
-
         $("form").validate({
             submitHandler: function (form) {
                 saveWall();
             }
         });
+
+        // trigger scene initialization
+        initScene();
     });
+
+    function initScene() {
+        initBricks();
+    }
 
     function saveWall(done) {
         var form = $("form")[0];
@@ -32,7 +37,7 @@
             data: jQuery.toJSON(data),
             success: function (result) {
                 getScene().replaceWith(result);
-                initBricks();
+                initScene();
 
                 if (done) {
                     done();
@@ -113,9 +118,6 @@
 
         // move deleted bricks to the end of the wall
         getScene().find(".brick-wrapper:hidden").appendTo(getScene());
-
-        // handle edit button specifically for non-saved bricks
-        //brick.find("a.edit").click(onEditNonSavedBrickClicked);
 
         onProcessBrickAction(brick, "added");
     }
@@ -198,42 +200,40 @@
         }
     }
 
+    function ensureWallSaved() {
+        var entity = getSceneData($("form")[0]);
+        var modified = (entity.added != null && entity.added.length > 0)
+            || (entity.edited != null && entity.edited.length > 0)
+            || (entity.deleted != null && entity.deleted.length > 0);
+
+        if (modified && !confirm("There are unsaved changes on the wall! Do you want to save them before processing?"))
+            return false;
+
+        // save wall
+        saveWall();
+
+        return true;
+    }
+
     function onEditBrickButtonClicked() {
         var brick = $(this).closest(".brick-wrapper");
-        var entity = brick.data("entity");
-
-        if (entity.action == "added" || entity.action == "edited")
-            if (!confirm("This brick is no saved yet! Do you want to save entire wall before processing?"))
-                return false;
 
         // get brick index to identify
         var index = brick.index();
 
-        // we are sure that saving is not async
-        saveWall(function () {
-            // change currently clicked a.href to redirect to correct URL
-            var href = $(getScene().find(".brick-wrapper")[index]).find("a.edit").attr("href");
-            brick.find("a.edit").attr("href", href);
-        });
+        if (!ensureWallSaved())
+            return false;
+
+        // change currently clicked a.href to redirect to correct URL
+        var href = $(getScene().find(".brick-wrapper")[index]).find("a.edit").attr("href");
+        brick.find("a.edit").attr("href", href);
 
         // allow processing a.href
         return true;
     }
 
     function onViewWallButtonClicked() {
-        var entity = getSceneData($("form")[0]);
-        if ((entity.added != null && entity.added.length > 0)
-            || (entity.edited != null && entity.edited.length > 0)
-            || (entity.deleted != null && entity.deleted.length > 0)) {
-            
-            // in there are unsaved changes
-            if (!confirm("There are unsaved changes on the wall! Do you want to save them before processing?"))
-                return false;
-
-            // save wall
-            saveWall();
-        }
-        return true;
+        return ensureWallSaved();
     }
 
 })();

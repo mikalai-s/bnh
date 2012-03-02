@@ -1,7 +1,12 @@
-﻿#wallScene
-{
+﻿.wall-wrapper {
     border: 1px solid navy;
     margin: 20px 0px;
+    padding: 4px;
+}
+
+#wallScene
+{
+    
 }
 
 .brick-wrapper .brick
@@ -36,4 +41,8 @@
 .map-canvas-wrapper {
     padding: 0;
     border: none;
+}
+
+.ui-resizable-handle {
+    right: 0px !important;
 }
