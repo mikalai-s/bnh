@@ -42,6 +42,14 @@ namespace Bnh.WebFramework
 
             string href = UrlHelper.GenerateUrl(null, actionName, controllerName, null, null, null, routeValues, htmlHelper.RouteCollection, htmlHelper.ViewContext.RequestContext, true);
             inputBuilder.Attributes["onclick"] = "location.href='" + href + "'";
+
+            if(htmlAttributes != null)
+            {
+                foreach (var attr in htmlAttributes)
+                {
+                    inputBuilder.Attributes[attr.Key] = attr.Value.ToString();
+                }
+            }
             //var linkBuilder = GetLinkBuilder(linkText, htmlAttributes, href);
 
             //linkBuilder.InnerHtml = inputBuilder.ToString(TagRenderMode.Normal);

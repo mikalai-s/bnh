@@ -45,7 +45,7 @@
             <span class="alter">
                 <input type="submit" value="Save" />
             </span>
-            @Html.ActionInputLink("View", "Details", "Community", new { id = Model.OwnerId }, null)
+            @Html.ActionInputLink("View", "Details", "Community", new { id = Model.OwnerId }, new Dictionary<string, object> { {"id",  "viewWall"} })
 
         </fieldset>
     }

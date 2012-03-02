@@ -32,11 +32,8 @@
         }
 
         <p>
-            <input type="submit" value="Save" />
+            <span class="alter"><input type="submit" value="Save" /></span>
+            @Html.ActionInputLink("Cancel", "Edit", "Wall", new { id = Model.WallId }, null)
         </p>
     </fieldset>
 }
-
-<div>
-    @Html.ActionLink("Back to List", "Index")
-</div>
