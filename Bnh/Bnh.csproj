@@ -103,6 +103,7 @@
     <Content Include="Global.asax" />
     <Content Include="Images\BetaHomesLogo.gif" />
     <Content Include="Images\BetaHomesLogo.png" />
+    <Content Include="Scripts\Global.Encoding.js" />
     <Content Include="Scripts\jquery-1.5.1-vsdoc.js" />
     <Content Include="Scripts\jquery-1.5.1.js" />
     <Content Include="Scripts\jquery-1.5.1.min.js" />

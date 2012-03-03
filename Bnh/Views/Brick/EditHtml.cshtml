@@ -6,6 +6,7 @@
 
 <link href="@Url.Content("~/Styles/BrickDesigner.css")" rel="stylesheet" type="text/css" />
 <script src="@Url.Content("~/Scripts/tiny_mce/tiny_mce_src.js")" type="text/javascript"></script>
+<script src="@Url.Content("~/Scripts/Global.Encoding.js")" type="text/javascript"></script>
 
 
 <script type="text/javascript">
@@ -13,7 +14,6 @@
         mode: "textareas",
         pugins: "emotions,spellchecker,advhr,insertdatetime,preview",
         theme: "advanced",
-        encoding: "xml",
 
         plugins : "autolink,lists,spellchecker,pagebreak,style,layer,table,save,advhr,advimage,advlink,emotions,iespell,inlinepopups,insertdatetime,preview,media,searchreplace,print,contextmenu,paste,directionality,fullscreen,noneditable,visualchars,nonbreaking,xhtmlxtras,template",
 
@@ -40,6 +40,23 @@
 //        external_image_list_url : "js/image_list.js",
 //        media_external_list_url : "js/media_list.js",
 
+        setup: function (ed) {
+            ed.onSaveContent.add(function (ed, o) {
+                if(document.submitting) {
+                    o.content = Global.Encoding.encode64(o.content);
+                }
+            });
+        }
+    });
+
+    $(function () {
+        $("form").validate({
+            submitHandler: function (form) {
+                // NOTE: I didn't find a better way to prepare base64 string before submittion
+                document.submitting = true;
+                form.submit();
+            }
+        });
     });
 </script>
 
@@ -47,6 +64,6 @@
     @Html.LabelFor(model => model.Html)
 </div>
 <div class="editor-field">
-    @Html.TextAreaFor(model => model.Html)
+    @Html.TextAreaFor(model => model.Html, new { id = "htmlTextArea"})
     @*@Html.ValidationMessageFor(model => model.Html)*@
 </div>
