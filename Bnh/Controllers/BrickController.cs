@@ -6,6 +6,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using Bnh.Entities;
+using Bnh.WebFramework;
 
 namespace Bnh.Controllers
 { 
@@ -45,7 +46,7 @@ namespace Bnh.Controllers
         public ActionResult EditHtml(HtmlBrick brick)
         {
             var realBrick = db.Bricks.Where(b => b.Id == brick.Id).OfType<HtmlBrick>().FirstOrDefault();
-            realBrick.Html = HttpUtility.HtmlDecode(brick.Html);
+            realBrick.Html = brick.Html.FromBase64();
             return Edit(brick);
         }
 
