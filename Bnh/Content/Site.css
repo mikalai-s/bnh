@@ -36,7 +36,6 @@ body { line-height: 20px; color: black; background: white; }
 ol, ul { list-style: none; }
 
 /* Tables still need 'cellspacing="0"' in the markup */
-table { border-collapse: separate; border-spacing: 0; }
 caption { text-align: left; font-weight: normal; }
 
 blockquote:before, blockquote:after,
