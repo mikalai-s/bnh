@@ -36,6 +36,8 @@
           <Property Name="Id" Type="bigint" Nullable="false" StoreGeneratedPattern="Identity" />
           <Property Name="OwnerId" Type="uniqueidentifier" Nullable="false" />
           <Property Name="Title" Type="nvarchar" Nullable="false" MaxLength="50" />
+          <Property Name="Width" Type="real" Nullable="false" />
+          <Property Name="Order" Type="tinyint" Nullable="false" />
         </EntityType>
         <Association Name="FK_Brick_Wall">
           <End Role="Wall" Type="bnhModel.Store.Wall" Multiplicity="1">
@@ -82,6 +84,8 @@
           <Property Type="Guid" Name="OwnerId" Nullable="false" />
           <Property Type="String" Name="Title" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="Bricks" Relationship="bnhModel.FK_Brick_Wall" FromRole="Wall" ToRole="Brick" />
+          <Property Type="Single" Name="Width" Nullable="false" />
+          <Property Type="Byte" Name="Order" Nullable="false" />
         </EntityType>
         <Association Name="FK_Brick_Wall">
           <End Type="bnhModel.Wall" Role="Wall" Multiplicity="1" />
@@ -162,6 +166,8 @@
           <EntitySetMapping Name="Walls">
             <EntityTypeMapping TypeName="bnhModel.Wall">
               <MappingFragment StoreEntitySet="Wall">
+                <ScalarProperty Name="Order" ColumnName="Order" />
+                <ScalarProperty Name="Width" ColumnName="Width" />
                 <ScalarProperty Name="Title" ColumnName="Title" />
                 <ScalarProperty Name="OwnerId" ColumnName="OwnerId" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
