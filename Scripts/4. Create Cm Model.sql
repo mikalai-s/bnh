@@ -12,12 +12,38 @@ CREATE TABLE [cm].[Wall](
 	[Id] [bigint] IDENTITY(1,1) NOT NULL,
 	[OwnerId] [uniqueidentifier] NOT NULL,
 	[Title] [nvarchar](50) NOT NULL,
+	[Width] [real] NOT NULL,
+	[Order] [tinyint] NOT NULL,
  CONSTRAINT [PK_Wall] PRIMARY KEY CLUSTERED 
 (
 	[Id] ASC
 )WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 
+GO
+
+ALTER TABLE [cm].[Wall]  WITH CHECK ADD  CONSTRAINT [FK_Wall_Builder] FOREIGN KEY([OwnerId])
+REFERENCES [bl].[Builder] ([Id])
+ON UPDATE CASCADE
+ON DELETE CASCADE
+GO
+
+ALTER TABLE [cm].[Wall] CHECK CONSTRAINT [FK_Wall_Builder]
+GO
+
+ALTER TABLE [cm].[Wall]  WITH CHECK ADD  CONSTRAINT [FK_Wall_Community] FOREIGN KEY([OwnerId])
+REFERENCES [bl].[Community] ([Id])
+ON UPDATE CASCADE
+ON DELETE CASCADE
+GO
+
+ALTER TABLE [cm].[Wall] CHECK CONSTRAINT [FK_Wall_Community]
+GO
+
+ALTER TABLE [cm].[Wall] ADD  CONSTRAINT [DF_Wall_Width]  DEFAULT ((100)) FOR [Width]
+GO
+
+ALTER TABLE [cm].[Wall] ADD  CONSTRAINT [DF_Wall_Order]  DEFAULT ((0)) FOR [Order]
 GO
 
 CREATE TABLE [cm].[Brick](

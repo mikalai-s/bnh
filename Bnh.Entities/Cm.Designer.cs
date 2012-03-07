@@ -576,12 +576,16 @@ namespace Bnh.Entities
         /// <param name="id">Initial value of the Id property.</param>
         /// <param name="ownerId">Initial value of the OwnerId property.</param>
         /// <param name="title">Initial value of the Title property.</param>
-        public static Wall CreateWall(global::System.Int64 id, global::System.Guid ownerId, global::System.String title)
+        /// <param name="width">Initial value of the Width property.</param>
+        /// <param name="order">Initial value of the Order property.</param>
+        public static Wall CreateWall(global::System.Int64 id, global::System.Guid ownerId, global::System.String title, global::System.Single width, global::System.Byte order)
         {
             Wall wall = new Wall();
             wall.Id = id;
             wall.OwnerId = ownerId;
             wall.Title = title;
+            wall.Width = width;
+            wall.Order = order;
             return wall;
         }
 
@@ -662,6 +666,54 @@ namespace Bnh.Entities
         private global::System.String _Title;
         partial void OnTitleChanging(global::System.String value);
         partial void OnTitleChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Single Width
+        {
+            get
+            {
+                return _Width;
+            }
+            set
+            {
+                OnWidthChanging(value);
+                ReportPropertyChanging("Width");
+                _Width = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("Width");
+                OnWidthChanged();
+            }
+        }
+        private global::System.Single _Width;
+        partial void OnWidthChanging(global::System.Single value);
+        partial void OnWidthChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Byte Order
+        {
+            get
+            {
+                return _Order;
+            }
+            set
+            {
+                OnOrderChanging(value);
+                ReportPropertyChanging("Order");
+                _Order = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("Order");
+                OnOrderChanged();
+            }
+        }
+        private global::System.Byte _Order;
+        partial void OnOrderChanging(global::System.Byte value);
+        partial void OnOrderChanged();
 
         #endregion
     
