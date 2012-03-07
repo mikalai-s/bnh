@@ -1,9 +1,12 @@
 ﻿@using Bnh.Entities
-@model IEnumerable<Brick>
+@model IEnumerable<Wall>
 <div id="wallScene">
-    @foreach (var brick in Model.OrderBy(b => b.Order))
+    @foreach (var wall in Model)
     {
-        @Html.Brick(brick, true)
+        foreach (var brick in wall.Bricks.OrderBy(b => b.Order))
+        {
+            @Html.Brick(brick, true)
+        }
     }
 </div>
 <div id="brickPrototype">@Html.BrickPrototype()</div>

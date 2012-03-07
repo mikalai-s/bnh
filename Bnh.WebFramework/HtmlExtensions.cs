@@ -71,6 +71,11 @@ namespace Bnh.WebFramework
             return ActionInputLink(htmlHelper, linkText, actionName, null, new RouteValueDictionary(), new RouteValueDictionary());
         }
 
+        public static MvcHtmlString ActionInputLink(this HtmlHelper htmlHelper, string linkText, string actionName, object routeValues)
+        {
+            return ActionInputLink(htmlHelper, linkText, actionName, null, new RouteValueDictionary(routeValues), new RouteValueDictionary());
+        }
+
         private static readonly Dictionary<Type, string> BrickTypeNames = new Dictionary<Type, string>()
                                                                      {
                                                                          {typeof(Brick), "Empty"},

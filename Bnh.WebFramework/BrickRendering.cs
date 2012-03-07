@@ -25,13 +25,14 @@ namespace Bnh.WebFramework
             return htmlHelper.Brick(new Brick
             {
                 Width = 100.0F,
-            }, true);
+            });
         }
 
-        public static MvcHtmlString Brick(this HtmlHelper htmlHelper, Brick brick, bool design = false)
+        // Only design
+        public static MvcHtmlString Brick(this HtmlHelper htmlHelper, Brick brick)
         {
-            var htmlFormat = design ?
-@"<div class='brick-wrapper' style='width:{0}%' entity-data='{1}'>
+            var htmlFormat = 
+@"<div class='brick-wrapper' style='width:{0}' entity-data='{1}'>
     <div class='brick'>
         <div class='header'>
             <span class='title'>{2}</span>
@@ -41,35 +42,36 @@ namespace Bnh.WebFramework
         <div class='content'>{4}</div>
         <div class='footer'></div>
     </div>
-</div>"
-:
-@"<div class='brick-wrapper' style='width:{0}%'>
-    {4}
 </div>";
 
-
-            var html = string.Format(htmlFormat,
-                brick.Width.ToString("F"),
+            var html = string.Format(
+                htmlFormat,
+                brick.GetUiWidth(),
                 brick.ToJson(),
                 brick.Title,
-                htmlHelper.ActionLink("edit", "Edit", "Brick", new { id = brick.Id }, new { @class = "edit" }),
-                GetBrickContent(brick));
-
+                htmlHelper.ActionLink("edit", "Edit", "Brick", new {id = brick.Id}, new {@class = "edit"}),
+                brick.GetUiContent());
             return MvcHtmlString.Create(html);
         }
 
-        private static object GetBrickContent(Brick brick)
+        public static MvcHtmlString GetUiWidth(this Brick brick)
         {
-            var htmlBrick = brick as HtmlBrick;
-            if (htmlBrick != null)
-                return GetHtmlBrickContent(htmlBrick);
-            var mapBrick = brick as MapBrick;
-            if (mapBrick != null)
-                return GetMapBrickContent(mapBrick);
-            return string.Empty;
+            return MvcHtmlString.Create(brick.Width.ToString("F") + "%");
         }
 
-        private static object GetMapBrickContent(MapBrick mapBrick)
+        public static MvcHtmlString GetUiContent(this Brick brick)
+        {
+            var content = string.Empty;
+            var htmlBrick = brick as HtmlBrick;
+            if (htmlBrick != null)
+                content = GetHtmlBrickContent(htmlBrick);
+            var mapBrick = brick as MapBrick;
+            if (mapBrick != null)
+                content = GetMapBrickContent(mapBrick);
+            return MvcHtmlString.Create(content);
+        }
+
+        private static string GetMapBrickContent(MapBrick mapBrick)
         {
             // NOTE: in case of HTTPS change the url
             var html =
@@ -103,7 +105,7 @@ namespace Bnh.WebFramework
             return string.Format(html, mapBrick.GpsLocation, mapBrick.Height, mapBrick.Zoom);
         }
 
-        private static object GetHtmlBrickContent(HtmlBrick htmlBrick)
+        private static string GetHtmlBrickContent(HtmlBrick htmlBrick)
         {
             return htmlBrick.Html;
         }

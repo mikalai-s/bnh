@@ -451,19 +451,7 @@
     <Content Include="Views\Community\Delete.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\Wall\Index.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Views\Wall\Details.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Views\Wall\Create.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
     <Content Include="Views\Wall\Edit.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Views\Wall\Delete.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Shared\WallScene.cshtml" />

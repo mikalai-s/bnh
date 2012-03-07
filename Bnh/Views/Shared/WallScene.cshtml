@@ -1,8 +1,11 @@
 ﻿@using Bnh.Entities
-@model IEnumerable<Brick>
+@model IEnumerable<Wall>
 <div id="wallScene">
-    @foreach (var brick in Model.OrderBy(b => b.Order))
+    @foreach (var wall in Model)
     {
-        @Html.Brick(brick)
+        foreach (var brick in wall.Bricks.OrderBy(b => b.Order))
+        {
+            <div class='brick-wrapper' style='width:@brick.GetUiWidth()'>@brick.GetUiContent()</div>
+        }
     }
 </div>

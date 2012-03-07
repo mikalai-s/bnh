@@ -1,43 +1,54 @@
-﻿@model Bnh.Entities.Community
+﻿@using Bnh.Entities
+@model Bnh.Entities.Community
 
 @{
-    ViewBag.Title = "Edit";
+    ViewBag.Title = Model.Name + " community wall designer";
 }
 
-<h2>Edit</h2>
+<h2>@ViewBag.Title</h2>
+<script src="@Url.Content("~/Scripts/jquery-ui-1.8.11.js")" type="text/javascript"></script>
+<script src="@Url.Content("~/Scripts/jquery.json-2.3.js")" type="text/javascript"></script>
+<script src="@Url.Content("~/Scripts/jquery.validate.js")" type="text/javascript"></script>
+<script src="@Url.Content("~/Scripts/WallDesigner.js")" type="text/javascript"></script>
+<link href="@Url.Content("~/Styles/Wall.css")" rel="stylesheet" type="text/css" />
+<link href="@Url.Content("~/Styles/WallDesigner.css")" rel="stylesheet" type="text/css" />
+@*TODO: change theme to local one*@
+<link rel="stylesheet" type="text/css" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.7.1/themes/base/jquery-ui.css"/>
 
-<script src="@Url.Content("~/Scripts/jquery.validate.min.js")" type="text/javascript"></script>
-<script src="@Url.Content("~/Scripts/jquery.validate.unobtrusive.min.js")" type="text/javascript"></script>
+<div class="page-view">
+    @using (Html.BeginForm()) {
+        @Html.ValidationSummary(true)
 
-@using (Html.BeginForm()) {
-    @Html.ValidationSummary(true)
-    <fieldset>
-        <legend>Community</legend>
+        <fieldset>
+            <legend></legend>
 
-        @Html.HiddenFor(model => model.Id)
+            @Html.HiddenFor(model => model.Id)
 
-        <div class="editor-label">
-            @Html.LabelFor(model => model.Name)
-        </div>
-        <div class="editor-field">
-            @Html.EditorFor(model => model.Name)
-            @Html.ValidationMessageFor(model => model.Name)
-        </div>
+            <div class="editor-label">
+                @Html.LabelFor(model => model.Name)
+            </div>
+            <div class="editor-field">
+                @Html.EditorFor(model => model.Name)
+                @Html.ValidationMessageFor(model => model.Name)
+            </div>
+            
+            <div class="wall-wrapper">
+                @Html.Partial("WallSceneDesigner", Model.Walls)
+            </div>
 
-        <div class="editor-label">
-            @Html.LabelFor(model => model.ZoneId, "Zone")
-        </div>
-        <div class="editor-field">
-            @Html.DropDownList("ZoneId", String.Empty)
-            @Html.ValidationMessageFor(model => model.ZoneId)
-        </div>
+            <div class="editor-label">New brick</div>
+            <div class="editor-field">
+                @Html.TextBox("brickTitle")
+                @Html.DropDownListForBrickTypes("brickType")
+                <input id="addBrickButton" type="button" value="Add Brick" />
+            </div>
 
-        <p>
-            <input type="submit" value="Save" />
-        </p>
-    </fieldset>
-}
+            <span class="alter">
+                <input type="submit" value="Save" />
+            </span>
+            @Html.ActionInputLink("View", "Details", new { id = Model.Id })
 
-<div>
-    @Html.ActionLink("Back to List", "Index")
+        </fieldset>
+    }
 </div>
+
