@@ -68,6 +68,7 @@
     </Compile>
     <Compile Include="EntityConnectionHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="WallOwners.cs" />
   </ItemGroup>
   <ItemGroup>
     <EntityDeploy Include="Cm.edmx">

@@ -8,8 +8,8 @@
     <h2>            
         @if (Context.User.IsInRole("content_manager"))
         {
-            <sup class="alter">@Html.ActionLink("edit wall", "Edit", "Wall", new { id = Model.GetWall().Id }, null)</sup>
+            <sup class="alter">@Html.ActionLink("edit wall", "Edit", "Wall", new { id = Model.Id }, null)</sup>
         }
     </h2>
-    @Html.Partial("WallScene", Model.GetWallBricks())
+    @Html.Partial("WallScene", Model.Walls)
 </div>

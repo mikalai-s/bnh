@@ -15,62 +15,21 @@ namespace Bnh.Controllers
     {
         private CmEntities db = new CmEntities();
 
-        //
-        // GET: /Wall/
 
-        public ViewResult Index()
-        {
-            return View(db.Walls.ToList());
-        }
-
-        //
-        // GET: /Wall/Details/5
-
-        public ViewResult Details(long id)
-        {
-            Wall wall = db.Walls.Single(w => w.Id == id);
-            return View(wall);
-        }
-
-        //
-        // GET: /Wall/Create
-
-        public ActionResult Create()
-        {
-            return View();
-        } 
-
-        //
-        // POST: /Wall/Create
-
-        [HttpPost]
-        [Authorize(Roles="content_manager")]
-        public ActionResult Create(Wall wall)
-        {
-            if (ModelState.IsValid)
-            {
-                db.Walls.AddObject(wall);
-                db.SaveChanges();
-                return RedirectToAction("Index");  
-            }
-
-            return View(wall);
-        }
-        
-        //
         // GET: /Wall/Edit/5
         [Authorize(Roles="content_manager")]
-        public ActionResult Edit(long id)
+        public ActionResult Edit(Guid id)
         {
-            Wall wall = db.Walls.Single(w => w.Id == id);
-            return View(wall);
+            ViewBag.OwnerId = id;
+            var walls = db.Walls.Where(w => w.OwnerId == id);
+            return View(walls);
         }
 
         // POST: /Wall/Edit/5
 
         [HttpPost]
         [Authorize(Roles="content_manager")]
-        public ActionResult Edit(Wall wall, List<Brick> added, List<Brick> edited, List<Brick> deleted)
+        public ActionResult Edit(Guid ownerId, Wall wall, List<Brick> added, List<Brick> edited, List<Brick> deleted)
         {
             if (ModelState.IsValid)
             {
@@ -131,28 +90,6 @@ namespace Bnh.Controllers
             target.Title = source.Title;
             target.Order = source.Order;
             target.Width = source.Width;
-        }
-
-        //
-        // GET: /Wall/Delete/5
-        [Authorize(Roles="content_manager")]
-        public ActionResult Delete(long id)
-        {
-            Wall wall = db.Walls.Single(w => w.Id == id);
-            return View(wall);
-        }
-
-        //
-        // POST: /Wall/Delete/5
-
-        [HttpPost, ActionName("Delete")]
-        [Authorize(Roles="content_manager")]
-        public ActionResult DeleteConfirmed(long id)
-        {            
-            Wall wall = db.Walls.Single(w => w.Id == id);
-            db.Walls.DeleteObject(wall);
-            db.SaveChanges();
-            return RedirectToAction("Index");
         }
 
         protected override void Dispose(bool disposing)
