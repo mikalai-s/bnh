@@ -1,0 +1,12 @@
+﻿@model Bnh.Entities.Brick
+<div class='brick-wrapper' style='@Model.GetUiWidth()' entity-data='@Model.GetUiData()'>
+    <div class='brick'>
+        <div class='header'>
+            <span class='title'>@Model.Title</span>
+            <a class='delete'>delete</a>
+            @Html.ActionLink("edit", "Edit", "Brick", new { id = Model.Id }, new { @class = "edit" })
+        </div>
+        <div class='content'>@Model.GetUiContent()</div>
+        <div class='footer'></div>
+    </div>
+</div>

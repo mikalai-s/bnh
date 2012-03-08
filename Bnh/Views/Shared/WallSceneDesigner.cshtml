@@ -5,8 +5,10 @@
     {
         foreach (var brick in wall.Bricks.OrderBy(b => b.Order))
         {
-            @Html.Brick(brick, true)
+            @Html.Partial("DesignBrick", brick);
         }
     }
 </div>
-<div id="brickPrototype">@Html.BrickPrototype()</div>
+<div id="brickPrototype">
+    @Html.Partial("DesignBrick", new Brick { Width = 100.0F,})
+</div>
