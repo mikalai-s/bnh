@@ -20,43 +20,14 @@ namespace Bnh.WebFramework
     {
         private const string googleMapsKey = "AIzaSyBXgUOTPfgbS4kHE7fm_xr2za_O1ApA_TM";
 
-        public static MvcHtmlString BrickPrototype(this HtmlHelper htmlHelper)
-        {
-            return htmlHelper.Brick(new Brick
-            {
-                Width = 100.0F,
-            });
-        }
-
-        // Only design
-        public static MvcHtmlString Brick(this HtmlHelper htmlHelper, Brick brick)
-        {
-            var htmlFormat = 
-@"<div class='brick-wrapper' style='width:{0}' entity-data='{1}'>
-    <div class='brick'>
-        <div class='header'>
-            <span class='title'>{2}</span>
-            <a class='delete'>delete</a>
-            {3}
-        </div>
-        <div class='content'>{4}</div>
-        <div class='footer'></div>
-    </div>
-</div>";
-
-            var html = string.Format(
-                htmlFormat,
-                brick.GetUiWidth(),
-                brick.ToJson(),
-                brick.Title,
-                htmlHelper.ActionLink("edit", "Edit", "Brick", new {id = brick.Id}, new {@class = "edit"}),
-                brick.GetUiContent());
-            return MvcHtmlString.Create(html);
-        }
-
         public static MvcHtmlString GetUiWidth(this Brick brick)
         {
             return MvcHtmlString.Create(brick.Width.ToString("F") + "%");
+        }
+
+        public static MvcHtmlString GetUiData(this Brick brick)
+        {
+            return MvcHtmlString.Create(brick.ToJson());
         }
 
         public static MvcHtmlString GetUiContent(this Brick brick)
