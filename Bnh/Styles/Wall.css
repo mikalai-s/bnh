@@ -6,7 +6,7 @@
     overflow: hidden;
 }
 
-.brick-wrapper
+.wall-wrapper, .brick-wrapper
 {
     width: 100%;
     float: left;
@@ -14,7 +14,7 @@
     min-height: 1px;
 }
 
-.brick-wrapper .brick
+.wall-wrapper .wall, .brick-wrapper .brick
 {
     width: auto;
     min-height: 62px;

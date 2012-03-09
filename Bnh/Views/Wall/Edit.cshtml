@@ -1,5 +1,4 @@
-﻿@*Moving logic into community*@
-@using Bnh.Entities
+﻿@using Bnh.Entities
 @model IEnumerable<Wall>
 
 @{
@@ -26,23 +25,35 @@
             
             @Html.HiddenFor(model => ownerId)
             
-            <div class="wall-wrapper">
+            <div class="scene-wrapper">
                 @Html.Partial("WallSceneDesigner", Model)
             </div>
 
-            <div class="editor-label">New brick</div>
-            <div class="editor-field">
-                @Html.TextBox("brickTitle")
-                @Html.DropDownListForBrickTypes("brickType")
-                <input id="addBrickButton" type="button" value="Add Brick" />
-            </div>
+            <div class="control-panel">
+                <h3>Wall Control Panel</h3>
 
-            <span class="alter">
-                <input type="submit" value="Save" />
-            </span>
-            @Html.ActionInputLink("View", "Details", "Community", new { id = ownerId }, new Dictionary<string, object> { { "id", "viewWall" } })
+                <div class="editor-label">New brick</div>
+                <div class="editor-field">
+                    @Html.TextBox("brickTitle")
+                    @Html.DropDownListForBrickTypes("brickType")
+                    <input id="addBrickButton" type="button" value="Add Brick" />
+                </div>
+                
+                <div class="editor-label">New wall</div>
+                <div class="editor-field">
+                    @Html.TextBox("wallTitle")
+                    @Html.DropDownListForBrickTypes("wallType")
+                    <input id="addWallButton" type="button" value="Add Wall" />
+                </div>
+                
+                <div style="position:absolute; bottom: 0;">
+                    <span class="alter">
+                        <input type="submit" value="Save" />
+                    </span>
+                    @Html.ActionInputLink("View", "Details", "Community", new { id = ownerId }, new Dictionary<string, object> { { "id", "viewWall" } })
+                </div>
+            </div>
 
         </fieldset>
     }
 </div>
-

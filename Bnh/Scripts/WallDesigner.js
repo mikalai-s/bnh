@@ -22,7 +22,7 @@
     });
 
     function initScene() {
-        initBricks();
+        initWalls();
     }
 
     function saveWall(done) {
@@ -87,15 +87,57 @@
         return $("#wallScene");
     }
 
-    function initBricks() {
-        getScene().children().each(function (i, brick) {
+    function initWalls() {
+        getScene().children().each(function (i, wall) {
             // initialize brick element
-            initializeBrick($(brick));
+            initWall($(wall));
         });
 
         getScene().sortable({
             containment: "parent",
-            handle: ".brick .header",
+            handle: ".wall > .header",
+            tolerance: "pointer",
+            helper: function (e, brick) {
+                var width = brick.width();
+                brick.css({ width: width + "px" });
+                return brick;
+            }
+        })
+        .disableSelection();
+    }
+
+    function initWall(wall, customData) {
+        // parse and assign entity object to brick
+        var data = $.parseJSON(wall.attr("entity-data"));
+
+        // extend result data with custom one
+        $.extend(data, customData);
+
+        // set brick entity data
+        wall.data("entity", data);
+
+        // update brick text
+        updateWallTitle(wall);
+
+        // handle action buttons
+        wall.find(".wall > .header > a.delete").click(onDeleteWallButtonClicked);
+
+        // make brick resizable
+        wall.resizable({
+            containment: 'parent',
+            handles: "e",
+            animateDuration: "0",
+            resize: function (event, ui) { onWallResize(event, ui, wall); }
+        });
+
+        var wallContent = wall.find(".wall > .content");
+        wallContent.find(".brick-wrapper").each(function (i, brick) {
+            initializeBrick($(brick));
+        });
+
+        wallContent.sortable({
+            containment: "parent",
+            handle: ".brick > .header",
             tolerance: "pointer",
             helper: function (e, brick) {
                 var width = brick.width();
@@ -148,7 +190,13 @@
         brick.resizable({
             containment: 'parent',
             handles: "e",
-            resize: function (event, ui) { onBrickResize(event, ui, brick); }
+            resize: function (event, ui) {
+                onBrickResize(event, ui, brick);
+            },
+            stop: function (event, ui) {
+                var data = brick.data("entity");
+                brick.width(data.width + "%");
+            }
         });
     }
 
@@ -161,9 +209,28 @@
         onProcessBrickAction(brick, "edited");
     }
 
+    function onWallResize(event, ui, wall) {
+        var width = (wall.width() / wall.parent().width() * 100);
+        wall.data("entity").width = width;
+
+        updateWallTitle(wall);
+
+        // onProcessBrickAction(brick, "edited");
+    }
+
+    function updateWallTitle(wall) {
+        var entity = wall.data("entity");
+        wall.find(".wall > .header > .title").text(entity.title + " (" + entity.width.toFixed(2) + ")");
+    }
+
     function updateBrickTitle(brick) {
         var entity = brick.data("entity");
         brick.find(".title").text(entity.title + " (" + entity.width.toFixed(2) + ")");
+    }
+
+
+    function onDeleteWallButtonClicked() {
+        alert("No handler specified");
     }
 
     function onDeleteBrickButtonClicked() {
