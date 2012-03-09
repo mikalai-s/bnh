@@ -21,6 +21,12 @@
     border: 1px dashed red;
 }
 
+.header 
+{
+    white-space: nowrap;
+    overflow: hidden;   
+}
+
 .wall > .header, .brick > .header
 {
     display: block;

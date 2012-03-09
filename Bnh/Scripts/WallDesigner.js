@@ -9,6 +9,7 @@
     $(function () {
 
         $("#addBrickButton").click(onAddBrickButtonClicked);
+        $("#addWallButton").click(onAddWallButtonClicked);
         $("#viewWall").click(onViewWallButtonClicked);
 
         $("form").validate({
@@ -148,6 +149,21 @@
         .disableSelection();
     }
 
+    function onAddWallButtonClicked() {
+        // create brick from prototype and add into DOM
+        var wall = createWall();
+
+        // initialize brick object
+        initWall(wall, {
+            title: $("#wallTitle").val()
+        });
+
+        // move deleted bricks to the end of the wall
+        getScene().find(".wall-wrapper:hidden").appendTo(getScene());
+
+        onProcessBrickAction(wall, "added");
+    }
+
     function onAddBrickButtonClicked() {
         // create brick from prototype and add into DOM
         var brick = createBrick();
@@ -159,14 +175,20 @@
         });
 
         // move deleted bricks to the end of the wall
-        getScene().find(".brick-wrapper:hidden").appendTo(getScene());
+       // var wall = getScene().find(".wall > .content");
+       // .find(".brick-wrapper:hidden").appendTo(getScene());
 
         onProcessBrickAction(brick, "added");
     }
 
     // creates new brick element from prototype
+    function createWall() {
+        return $("#wallPrototype").children().first().clone().appendTo(getScene());
+    }
+
+    // creates new brick element from prototype
     function createBrick() {
-        return $("#brickPrototype").children().first().clone().appendTo(getScene());
+        return $("#brickPrototype").children().first().clone().appendTo(getScene().find(".wall > .content").first());
     }
 
     function initializeBrick(brick, customData) {
