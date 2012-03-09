@@ -3,12 +3,12 @@
 <div id="wallScene">
     @foreach (var wall in Model)
     {
-        foreach (var brick in wall.Bricks.OrderBy(b => b.Order))
-        {
-            @Html.Partial("DesignBrick", brick);
-        }
+        @Html.Partial("DesignWall", wall)
     }
 </div>
+<div id="wallPrototype">
+    @Html.Partial("DesignWall", new Wall { Width = 100.0F })
+</div>
 <div id="brickPrototype">
-    @Html.Partial("DesignBrick", new Brick { Width = 100.0F,})
+    @Html.Partial("DesignBrick", new Brick { Width = 100.0F })
 </div>

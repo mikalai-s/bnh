@@ -20,6 +20,16 @@ namespace Bnh.WebFramework
     {
         private const string googleMapsKey = "AIzaSyBXgUOTPfgbS4kHE7fm_xr2za_O1ApA_TM";
 
+        public static MvcHtmlString GetUiWidth(this Wall wall)
+        {
+            return MvcHtmlString.Create(wall.Width.ToString("F") + "%");
+        }
+
+        public static MvcHtmlString GetUiData(this Wall wall)
+        {
+            return MvcHtmlString.Create(wall.ToJson());
+        }
+
         public static MvcHtmlString GetUiWidth(this Brick brick)
         {
             return MvcHtmlString.Create(brick.Width.ToString("F") + "%");
@@ -119,6 +129,35 @@ namespace Bnh.WebFramework
 
                 var value = prop.GetValue(brick, null);
                 if(value != null)
+                    properties.Add(prop.Name.ToLower(), value);
+            }
+            return new JavaScriptSerializer().Serialize(properties);
+        }
+
+        public static string ToJson(this Wall brick)
+        {
+            var properties = new Dictionary<string, object>();
+
+            foreach (var prop in brick.GetType().GetProperties(BindingFlags.Instance | BindingFlags.Public))
+            {
+                var p = prop.GetCustomAttributes(typeof(DataMemberAttribute), false);
+                if (p.Length == 0)
+                    continue;
+
+                p = prop.GetCustomAttributes(typeof(XmlIgnoreAttribute), false);
+                if (p.Length > 0)
+                    continue;
+
+                p = prop.GetCustomAttributes(typeof(SoapIgnoreAttribute), false);
+                if (p.Length > 0)
+                    continue;
+
+                p = prop.GetCustomAttributes(typeof(BrowsableAttribute), false);
+                if (p.Length > 0 && !(p[0] as BrowsableAttribute).Browsable)
+                    continue;
+
+                var value = prop.GetValue(brick, null);
+                if (value != null)
                     properties.Add(prop.Name.ToLower(), value);
             }
             return new JavaScriptSerializer().Serialize(properties);

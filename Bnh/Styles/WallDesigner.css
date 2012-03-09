@@ -1,12 +1,19 @@
-﻿.wall-wrapper {
+﻿.scene-wrapper {
     border: 1px solid navy;
     margin: 20px 0px;
     padding: 4px;
 }
 
-#wallScene
-{
-    
+.wall-wrapper {
+    height: auto !important;
+}
+
+.wall-wrapper .wall {
+    border: 1px dodgerblue dashed;
+}
+
+.brick-wrapper {
+    height: auto !important;   
 }
 
 .brick-wrapper .brick
@@ -14,7 +21,7 @@
     border: 1px dashed red;
 }
 
-.brick .header
+.wall > .header, .brick > .header
 {
     display: block;
     width: 100%;
@@ -23,18 +30,25 @@
     cursor: move;
 }
 
-.brick a.delete, .brick a.edit
+.wall > .content {
+    height: 100%;
+}
+
+
+.wall a.delete, .wall a.edit
 {
     cursor: pointer;
     float: right;
 }
 
-#brickPrototype
+
+
+#wallPrototype, #brickPrototype
 {
-   display: none;
+    display: none;
 }
 
-.brick .content {
+.wall .content, .brick .content {
     padding: 1px;   
 }
 
@@ -45,4 +59,16 @@
 
 .ui-resizable-handle {
     right: 0px !important;
+}
+
+.control-panel {
+    position: fixed;
+    margin-bottom: -350px;
+    bottom: 50%;
+    left: 0;
+    width: 380px;
+    height: 700px;
+    border: 1px solid black;
+    background-color: white;
+    padding: 10px;
 }
