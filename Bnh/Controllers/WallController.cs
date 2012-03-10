@@ -29,19 +29,42 @@ namespace Bnh.Controllers
 
         [HttpPost]
         [Authorize(Roles="content_manager")]
-        public ActionResult Edit(Guid ownerId, Wall wall, List<Brick> added, List<Brick> edited, List<Brick> deleted)
+        public ActionResult Edit(Guid ownerId, List<Wall> walls)
         {
             if (ModelState.IsValid)
             {
-                wall = SaveWall(wall, added, edited, deleted);
+                // update existing
+                foreach(var wall in walls.Where(w => w.Id != 0))
+                {
+                    db.Walls.ApplyCurrentValues(wall);
+                }
+
+                // remove
+                foreach (var realWall in db.Walls.Where(w => w.OwnerId == ownerId))
+                {
+                    var ids = walls.Where(w => w.Id != 0).Select(w => w.Id).ToList();
+                    if (!ids.Contains(realWall.Id))
+                    {
+                        db.Walls.DeleteObject(realWall);
+                    }
+                }
+
+                // add new walls (and bricks??????)
+                foreach (var wall in walls.Where(w => w.Id == 0))
+                {
+                    wall.OwnerId = ownerId;
+                    db.AddToWalls(wall);
+                }
+
+                db.SaveChanges();
             }
 
             if (Request.IsAjaxRequest())
             {
-                return PartialView("WallSceneDesigner", wall.Bricks);
+                return PartialView("WallSceneDesigner", db.Walls.Where(w => w.OwnerId == ownerId));
             }
             
-            return View("WallSceneDesigner", wall.Bricks);
+            return View("WallSceneDesigner");//, wall.Bricks);
         }
 
         private Wall SaveWall(Wall wall, List<Brick> added, List<Brick> edited, List<Brick> deleted)

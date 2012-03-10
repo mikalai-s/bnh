@@ -2,15 +2,29 @@
 /// <reference path="jquery-ui-1.8.11.js" />
 /// <reference path="jquery.json-2.3.js" />
 /// <reference path="jquery.validate.js" />
+/// <reference path="Reorderable.js"/>
 
 
 (function () {
+    "use strict";
+
+    var lockWallsCheckbox,
+        lockBricksCheckbox,
+        hideBricksContentCheckbox;
 
     $(function () {
+
+        lockWallsCheckbox = $("#lockWallsCheckbox");
+        lockBricksCheckbox = $("#lockBricksCheckbox");
+        hideBricksContentCheckbox = $("#hideBricksContentCheckbox");
 
         $("#addBrickButton").click(onAddBrickButtonClicked);
         $("#addWallButton").click(onAddWallButtonClicked);
         $("#viewWall").click(onViewWallButtonClicked);
+
+        lockWallsCheckbox.click(onLockWallsCheckbox);
+        lockBricksCheckbox.click(onLockBricksCheckbox);
+        hideBricksContentCheckbox.click(onHideBricksContentCheckbox);
 
         $("form").validate({
             submitHandler: function (form) {
@@ -53,35 +67,32 @@
 
     // collect form data to submit
     function getSceneData(form) {
-        var data = {
-            wall: {
-                Id: form["Id"].value,
-                OwnerId: form["OwnerId"].value,
-                Title: form["Title"].value
-            },
-            added: [],
-            edited: [],
-            deleted: []
-        };
+        var walls = [];
 
-        getScene().children().each(function (i, brick) {
+        getScene().children().each(function (i, wall) {
+            wall = $(wall);
+
             // get entity
-            var entity = $(brick).data("entity");
+            var entity = wall.data("entity");
+            walls[walls.length] = entity;
 
-            // check for changed order
-            if (entity.order != i) {
-                entity.order = i;
-                onProcessBrickAction($(brick), "edited");
-            }
+            entity.bricks = [];
+            entity.order = i;
 
-            // put brick into appropriate action collection if need
-            if (entity.action) {
-                var bricks = data[entity.action];
-                bricks[bricks.length] = entity;
-            }
+            wall.find(".brick-wrapper").each(function (j, brick) {
+                brick = $(brick);
+
+                var entity2 = brick.data("entity");
+                entity.bricks[entity.bricks.length] = entity2;
+
+                entity2.order = j;
+            });
         });
 
-        return data;
+        return {
+            ownerId: form["ownerId"].value,
+            walls: walls
+        };
     }
 
     function getScene() {
@@ -131,15 +142,22 @@
             resize: function (event, ui) { onWallResize(event, ui, wall); }
         });
 
+        // reflect lock checkbox value
+        onLockWallsCheckbox();
+
         var wallContent = wall.find(".wall > .content");
         wallContent.find(".brick-wrapper").each(function (i, brick) {
             initializeBrick($(brick));
         });
 
         wallContent.sortable({
-            containment: "parent",
+            //containment: "parent",
             handle: ".brick > .header",
             tolerance: "pointer",
+            connectWith: ".wall > .content",
+            placeholder: "brick-placeholder",
+            forcePlaceholderSize: true, 
+            dropOnEmpty: true,
             helper: function (e, brick) {
                 var width = brick.width();
                 brick.css({ width: width + "px" });
@@ -161,7 +179,7 @@
         // move deleted bricks to the end of the wall
         getScene().find(".wall-wrapper:hidden").appendTo(getScene());
 
-        onProcessBrickAction(wall, "added");
+        //onProcessBrickAction(wall, "added");
     }
 
     function onAddBrickButtonClicked() {
@@ -175,10 +193,10 @@
         });
 
         // move deleted bricks to the end of the wall
-       // var wall = getScene().find(".wall > .content");
-       // .find(".brick-wrapper:hidden").appendTo(getScene());
+        // var wall = getScene().find(".wall > .content");
+        // .find(".brick-wrapper:hidden").appendTo(getScene());
 
-        onProcessBrickAction(brick, "added");
+        //onProcessBrickAction(brick, "added");
     }
 
     // creates new brick element from prototype
@@ -228,7 +246,7 @@
 
         updateBrickTitle(brick);
 
-        onProcessBrickAction(brick, "edited");
+        //onProcessBrickAction(brick, "edited");
     }
 
     function onWallResize(event, ui, wall) {
@@ -250,45 +268,45 @@
         brick.find(".title").text(entity.title + " (" + entity.width.toFixed(2) + ")");
     }
 
-
     function onDeleteWallButtonClicked() {
-        alert("No handler specified");
+        $(this).closest(".wall-wrapper").remove();
     }
 
     function onDeleteBrickButtonClicked() {
-        onProcessBrickAction($(this).closest(".brick-wrapper"), "deleted");
+        //onProcessBrickAction($(this).closest(".brick-wrapper"), "deleted");
+        $(this).closest(".brick-wrapper").remove();
     }
-
+    /*
     function onProcessBrickAction(brick, action) {
-        var entity = brick.data("entity");
+    var entity = brick.data("entity");
 
-        // if brick is being deleted
-        if (action == "deleted") {
-            // if it was added recently - delete it from DOM
-            if (entity.action == "added") {
-                brick.remove();
-                return;
-            }
-
-            // otherwise mark as deleted 
-            entity.action = action;
-
-            // movee brick to the end of the list (to make brick orders to be correct)
-            brick.appendTo(brick.parent());
-
-            // hide brick (we need it to submit action to the server)
-            brick.hide();
-
-            return;
-        }
-
-        // if there is no action set yet - just set it
-        if (!entity.action) {
-            entity.action = action;
-            return;
-        }
+    // if brick is being deleted
+    if (action == "deleted") {
+    // if it was added recently - delete it from DOM
+    if (entity.action == "added") {
+    brick.remove();
+    return;
     }
 
+    // otherwise mark as deleted 
+    entity.action = action;
+
+    // movee brick to the end of the list (to make brick orders to be correct)
+    brick.appendTo(brick.parent());
+
+    // hide brick (we need it to submit action to the server)
+    brick.hide();
+
+    return;
+    }
+
+    // if there is no action set yet - just set it
+    if (!entity.action) {
+    entity.action = action;
+    return;
+    }
+    }
+    */
     function ensureWallSaved() {
         var entity = getSceneData($("form")[0]);
         var modified = (entity.added != null && entity.added.length > 0)
@@ -323,6 +341,26 @@
 
     function onViewWallButtonClicked() {
         return ensureWallSaved();
+    }
+
+    function onLockWallsCheckbox() {
+        var checked = lockWallsCheckbox.attr("checked");
+        $(".wall-wrapper")
+            .toggleClass("locked", checked)
+            .resizable("option", "disabled", checked);
+    }
+
+    function onLockBricksCheckbox() {
+        var checked = lockBricksCheckbox.attr("checked");
+        $(".brick-wrapper")
+            .toggleClass("locked", checked)
+            .resizable("option", "disabled", checked);
+    }
+
+    function onHideBricksContentCheckbox() {
+        var checked = hideBricksContentCheckbox.attr("checked");
+        $(".brick-wrapper")
+            .toggleClass("hide-content", checked);
     }
 
 })();

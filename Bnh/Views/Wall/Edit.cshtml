@@ -11,6 +11,7 @@
 <script src="@Url.Content("~/Scripts/jquery.json-2.3.js")" type="text/javascript"></script>
 <script src="@Url.Content("~/Scripts/jquery.validate.js")" type="text/javascript"></script>
 <script src="@Url.Content("~/Scripts/WallDesigner.js")" type="text/javascript"></script>
+<script src="@Url.Content("~/Scripts/Reorderable.js")" type="text/javascript"></script>
 <link href="@Url.Content("~/Styles/Wall.css")" rel="stylesheet" type="text/css" />
 <link href="@Url.Content("~/Styles/WallDesigner.css")" rel="stylesheet" type="text/css" />
 @*TODO: change theme to local one*@
@@ -42,10 +43,19 @@
                 <div class="editor-label">New wall</div>
                 <div class="editor-field">
                     @Html.TextBox("wallTitle")
-                    @Html.DropDownListForBrickTypes("wallType")
                     <input id="addWallButton" type="button" value="Add Wall" />
                 </div>
                 
+                <div class="editor-field">
+                    <label>@Html.CheckBox("lockWallsCheckbox", true)Lock walls</label>
+                </div>
+                <div class="editor-field">
+                    <label>@Html.CheckBox("lockBricksCheckbox")Lock bricks</label>
+                </div>
+                <div class="editor-field">
+                    <label>@Html.CheckBox("hideBricksContentCheckbox")Hide bricks content</label>
+                </div>
+
                 <div style="position:absolute; bottom: 0;">
                     <span class="alter">
                         <input type="submit" value="Save" />
