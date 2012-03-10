@@ -10,6 +10,7 @@
 
 .wall-wrapper .wall {
     border: 1px dodgerblue dashed;
+    min-height: 200px;
 }
 
 .brick-wrapper {
@@ -36,10 +37,17 @@
     cursor: move;
 }
 
+.locked > .wall, .locked > .brick {
+    border-style: solid;
+}
+
+.locked > .wall > .header, .locked > .brick > .header {
+    display: none;   
+}
+
 .wall > .content {
     height: 100%;
 }
-
 
 .wall a.delete, .wall a.edit
 {
@@ -47,7 +55,9 @@
     float: right;
 }
 
-
+.brick-wrapper.hide-content > .brick > .content {
+    display: none;
+}
 
 #wallPrototype, #brickPrototype
 {
@@ -67,14 +77,28 @@
     right: 0px !important;
 }
 
+.ui-state-disabled {
+    filter: none !important;
+    opacity: 1 !important;
+}
+
+.brick-placeholder {
+    background-color: peachpuff; 
+}
+
 .control-panel {
     position: fixed;
     margin-bottom: -350px;
     bottom: 50%;
     left: 0;
-    width: 380px;
+    width: 360px;
     height: 700px;
     border: 1px solid black;
     background-color: white;
     padding: 10px;
+}
+
+.drop-target > .wall {
+    border: 1px solid green !important;
+    
 }
