@@ -78,10 +78,10 @@ namespace Bnh.WebFramework
 
         private static readonly Dictionary<Type, string> BrickTypeNames = new Dictionary<Type, string>()
                                                                      {
-                                                                         {typeof(Brick), "Empty"},
                                                                          {typeof(HtmlBrick), "Rich Text"},
                                                                          {typeof(GalleryBrick), "Gallery"},
-                                                                         {typeof(MapBrick), "Map"}
+                                                                         {typeof(MapBrick), "Map"},
+                                                                         {typeof(Brick), "Empty"},
                                                                      };
 
         public static MvcHtmlString DropDownListForBrickTypes(this HtmlHelper htmlHelper, string name)
