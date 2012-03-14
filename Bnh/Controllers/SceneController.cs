@@ -12,12 +12,12 @@ using System.Data.Objects.DataClasses;
 
 namespace Bnh.Controllers
 { 
-    public class WallController : Controller
+    public class SceneController : Controller
     {
         private CmEntities db = new CmEntities();
 
 
-        // GET: /Wall/Edit/5
+        // GET: /Scene/Edit/5
         [Authorize(Roles="content_manager")]
         public ActionResult Edit(Guid id)
         {
@@ -26,11 +26,11 @@ namespace Bnh.Controllers
             return View(walls);
         }
 
-        // POST: /Wall/Edit/5
+        // POST: /Scene/Edit/5
 
         [HttpPost]
         [Authorize(Roles="content_manager")]
-        public ActionResult SaveScene(Guid ownerId, List<Wall> walls)
+        public ActionResult Save(Guid ownerId, List<Wall> walls)
         {
             if (ModelState.IsValid)
             {
@@ -110,10 +110,10 @@ namespace Bnh.Controllers
 
             if (Request.IsAjaxRequest())
             {
-                return PartialView("WallSceneDesigner", db.Walls.Where(w => w.OwnerId == ownerId));
+                return PartialView("DesignScene", db.Walls.Where(w => w.OwnerId == ownerId));
             }
-            
-            return View("WallSceneDesigner");//, wall.Bricks);
+
+            return View("DesignScene");
         }
 
         // apply only properties that can be changed on scene designer
@@ -129,7 +129,7 @@ namespace Bnh.Controllers
 
         [HttpPost]
         [Authorize(Roles = "content_manager")]
-        public ActionResult ExportSceneTemplate(string title, List<Wall> walls)
+        public ActionResult ExportTemplate(string title, List<Wall> walls)
         {
             if (ModelState.IsValid)
             {

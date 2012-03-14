@@ -66,7 +66,7 @@
     <Compile Include="Controllers\BuilderController.cs" />
     <Compile Include="Controllers\CommunityController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
-    <Compile Include="Controllers\WallController.cs" />
+    <Compile Include="Controllers\SceneController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -369,11 +369,11 @@
     <Content Include="Scripts\tiny_mce\utils\form_utils.js" />
     <Content Include="Scripts\tiny_mce\utils\mctabs.js" />
     <Content Include="Scripts\tiny_mce\utils\validate.js" />
-    <Content Include="Scripts\WallDesigner.js" />
+    <Content Include="Scripts\DesignScene.js" />
     <Content Include="Styles\Community.css" />
-    <Content Include="Styles\BrickDesigner.css" />
-    <Content Include="Styles\Wall.css" />
-    <Content Include="Styles\WallDesigner.css" />
+    <Content Include="Styles\DesignBrick.css" />
+    <Content Include="Styles\Scene.css" />
+    <Content Include="Styles\DesignScene.css" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
@@ -451,13 +451,13 @@
     <Content Include="Views\Community\Delete.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\Wall\Edit.cshtml" />
+    <Content Include="Views\Scene\Edit.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\Shared\WallScene.cshtml" />
+    <Content Include="Views\Shared\Scene.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\Shared\WallSceneDesigner.cshtml" />
+    <Content Include="Views\Shared\DesignScene.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Brick\Edit.cshtml" />

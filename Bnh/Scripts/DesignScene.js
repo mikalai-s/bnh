@@ -43,7 +43,7 @@
         var data = getSceneData();
 
         $.ajax({
-            url: "/Wall/SaveScene", //form.action,
+            url: "/Scene/Save", //form.action,
             type: "POST",
             contentType: "application/json",
             async: false,
@@ -94,7 +94,7 @@
     }
 
     function getScene() {
-        return $("#wallScene");
+        return $("#scene");
     }
 
     function initWalls() {
@@ -337,7 +337,7 @@
         };
 
         $.ajax({
-            url: "/Wall/ExportSceneTemplate",
+            url: "/Scene/ExportTemplate",
             type: "POST",
             contentType: "application/json",
             async: true,
