@@ -1,6 +1,6 @@
 ﻿@using Bnh.Entities
 @model IEnumerable<Wall>
-<div id="wallScene">
+<div id="scene">
     @foreach (var wall in Model)
     {
         foreach (var brick in wall.Bricks.OrderBy(b => b.Order))

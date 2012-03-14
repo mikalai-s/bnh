@@ -9,15 +9,15 @@
 <script src="@Url.Content("~/Scripts/jquery-ui-1.8.11.js")" type="text/javascript"></script>
 <script src="@Url.Content("~/Scripts/jquery.json-2.3.js")" type="text/javascript"></script>
 <script src="@Url.Content("~/Scripts/jquery.validate.js")" type="text/javascript"></script>
-<script src="@Url.Content("~/Scripts/WallDesigner.js")" type="text/javascript"></script>
-<link href="@Url.Content("~/Styles/Wall.css")" rel="stylesheet" type="text/css" />
-<link href="@Url.Content("~/Styles/WallDesigner.css")" rel="stylesheet" type="text/css" />
+<script src="@Url.Content("~/Scripts/DesignScene.js")" type="text/javascript"></script>
+<link href="@Url.Content("~/Styles/Scene.css")" rel="stylesheet" type="text/css" />
+<link href="@Url.Content("~/Styles/DesignScene.css")" rel="stylesheet" type="text/css" />
 @*TODO: change theme to local one*@
 <link rel="stylesheet" type="text/css" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.7.1/themes/base/jquery-ui.css"/>
 
 <div class="page-view">
     <h2>
-        <sup class="alter">@Html.ActionLink("edit scene", "Edit", "Wall", new { id = Model.Id }, null)</sup>
+        <sup class="alter">@Html.ActionLink("edit scene", "Edit", "Scene", new { id = Model.Id }, null)</sup>
     </h2>
 
     @using (Html.BeginForm()) {

@@ -3,14 +3,14 @@
 @{
     ViewBag.Title = Model.Name;
 }
-<link href="@Url.Content("~/Styles/Wall.css")" rel="stylesheet" type="text/css" />
+<link href="@Url.Content("~/Styles/Scene.css")" rel="stylesheet" type="text/css" />
 <div class="page-view">
     <h2>            
         @if (Context.User.IsInRole("content_manager"))
         {
             <sup class="alter">@Html.ActionLink("edit properties", "Edit", new { id = Model.Id }, null)</sup><br />
-            <sup class="alter">@Html.ActionLink("edit scene", "Edit", "Wall", new { id = Model.Id }, null)</sup>
+            <sup class="alter">@Html.ActionLink("edit scene", "Edit", "Scene", new { id = Model.Id }, null)</sup>
         }
     </h2>
-    @Html.Partial("WallScene", Model.Walls)
+    @Html.Partial("Scene", Model.Walls)
 </div>

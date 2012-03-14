@@ -39,7 +39,7 @@ namespace Bnh.Controllers
             var realBrick = db.Bricks.FirstOrDefault(b => b.Id == brick.Id);
             realBrick.Title = brick.Title;
             db.SaveChanges();
-            return RedirectToAction("Edit", "Wall", new { id = realBrick.Wall.OwnerId });
+            return RedirectToAction("Edit", "Scene", new { id = realBrick.Wall.OwnerId });
         }
 
         [HttpPost]
