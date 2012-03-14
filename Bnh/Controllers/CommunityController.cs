@@ -37,6 +37,10 @@ namespace Bnh.Controllers
         public ActionResult Create()
         {
             ViewBag.ZoneId = new SelectList(db.Zones, "Id", "Name");
+            using(var cm = new CmEntities())
+            {
+                ViewBag.Templates = new SelectList(cm.SceneTemplates.ToList(), "Id", "Title");
+            }
             return View();
         } 
 
@@ -51,6 +55,13 @@ namespace Bnh.Controllers
                 community.Id = Guid.NewGuid();
                 db.Communities.AddObject(community);
                 db.SaveChanges();
+
+                using(var cm = new CmEntities())
+                {
+                    var sceneTemplateId = Guid.Parse(this.Request.Form["SceneTemplateId"]);
+                    var sceneTemplate = cm.SceneTemplates.FirstOrDefault(t => t.Id == sceneTemplateId);
+                    
+                }
                 return RedirectToAction("Index");  
             }
 
