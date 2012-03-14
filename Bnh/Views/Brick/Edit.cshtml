@@ -32,7 +32,7 @@
         }
 
         <span class="alter"><input type="submit" value="Save" /></span>
-        @Html.ActionInputLink("Cancel", "Edit", "Wall", new { id = Model.WallId }, null)
+        @Html.ActionInputLink("Cancel", "Edit", "Wall", new { id = Model.Wall.OwnerId }, null)
     </fieldset>
 }
 </div>

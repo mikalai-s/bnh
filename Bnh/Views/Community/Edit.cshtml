@@ -2,7 +2,7 @@
 @model Bnh.Entities.Community
 
 @{
-    ViewBag.Title = Model.Name + " community wall designer";
+    ViewBag.Title = Model.Name + " community";
 }
 
 <h2>@ViewBag.Title</h2>
@@ -16,6 +16,10 @@
 <link rel="stylesheet" type="text/css" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.7.1/themes/base/jquery-ui.css"/>
 
 <div class="page-view">
+    <h2>
+        <sup class="alter">@Html.ActionLink("edit scene", "Edit", "Wall", new { id = Model.Id }, null)</sup>
+    </h2>
+
     @using (Html.BeginForm()) {
         @Html.ValidationSummary(true)
 
@@ -23,7 +27,7 @@
             <legend></legend>
 
             @Html.HiddenFor(model => model.Id)
-
+            
             <div class="editor-label">
                 @Html.LabelFor(model => model.Name)
             </div>
@@ -31,16 +35,13 @@
                 @Html.EditorFor(model => model.Name)
                 @Html.ValidationMessageFor(model => model.Name)
             </div>
-            
-            <div class="wall-wrapper">
-                @Html.Partial("WallSceneDesigner", Model.Walls)
-            </div>
 
-            <div class="editor-label">New brick</div>
+            <div class="editor-label">
+                @Html.LabelFor(model => model.ZoneId, "Zone")
+            </div>
             <div class="editor-field">
-                @Html.TextBox("brickTitle")
-                @Html.DropDownListForBrickTypes("brickType")
-                <input id="addBrickButton" type="button" value="Add Brick" />
+                @Html.DropDownList("ZoneId", String.Empty)
+                @Html.ValidationMessageFor(model => model.ZoneId)
             </div>
 
             <span class="alter">

@@ -53,7 +53,8 @@ namespace Bnh.Controllers
                     var bricksToRemove = realWall.Bricks
                         .Select(b => b.Id)
                         .Except(movedBricks)
-                        .Except(wall.Bricks.Select(b => b.Id));
+                        .Except(wall.Bricks.Select(b => b.Id))
+                        .ToList();
                     foreach (var bid in bricksToRemove)
                     {
                         db.Bricks.DeleteObject(db.Bricks.FirstOrDefault(b => b.Id == bid));
@@ -68,14 +69,13 @@ namespace Bnh.Controllers
                     // updated bricks
                     foreach (var brick in wall.Bricks.Where(b => (b.Id != 0) && (!movedBricks.Contains(b.Id))))
                     {
-                        db.Bricks.ApplyCurrentValues(brick);
+                        ApplyCommonBrickValues(brick);
                     }
 
                     // moved bricks 
                     foreach (var brick in wall.Bricks.Where(b => movedBricks.Contains(b.Id)))
                     {
-                        var realBrick = db.Bricks.FirstOrDefault(b => b.Id == brick.Id);
-                        db.Bricks.ApplyCurrentValues(brick);
+                        var realBrick = ApplyCommonBrickValues(brick);
                         realBrick.Wall = realWall;
                     }
                 }
@@ -87,11 +87,9 @@ namespace Bnh.Controllers
                     foreach (var brick in wall.Bricks.Where(b => movedBricks.Contains(b.Id)).ToList())
                     {
                         wall.Bricks.Remove(brick);
-                        var realBrick = db.Bricks.FirstOrDefault(b => b.Id == brick.Id);
-                        db.Bricks.ApplyCurrentValues(brick);
+                        var realBrick = ApplyCommonBrickValues(brick);
                         realBrick.Wall = wall;
                     }
-
 
                     wall.OwnerId = ownerId;
                     db.Walls.AddObject(wall);
@@ -116,6 +114,17 @@ namespace Bnh.Controllers
             }
             
             return View("WallSceneDesigner");//, wall.Bricks);
+        }
+
+        // apply only properties that can be changed on scene designer
+        private Brick ApplyCommonBrickValues(Brick brick)
+        {
+            var realBrick = db.Bricks.FirstOrDefault(b => b.Id == brick.Id);
+            if (realBrick.Order != brick.Order)
+                realBrick.Order = brick.Order;
+            if (realBrick.Width != brick.Width)
+                realBrick.Width = brick.Width;
+            return realBrick;
         }
 
         [HttpPost]

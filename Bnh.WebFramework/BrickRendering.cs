@@ -83,7 +83,7 @@ namespace Bnh.WebFramework
     <div id=""map_canvas""></div>
 </div>
 ";
-            return string.Format(html, mapBrick.GpsLocation, mapBrick.Height, mapBrick.Zoom);
+            return string.Format(html, mapBrick.GpsLocation, mapBrick.Height, mapBrick.Zoom ?? 10);
         }
 
         private static string GetHtmlBrickContent(HtmlBrick htmlBrick)
