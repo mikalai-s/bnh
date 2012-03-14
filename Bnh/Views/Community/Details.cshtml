@@ -8,7 +8,8 @@
     <h2>            
         @if (Context.User.IsInRole("content_manager"))
         {
-            <sup class="alter">@Html.ActionLink("edit wall", "Edit", "Wall", new { id = Model.Id }, null)</sup>
+            <sup class="alter">@Html.ActionLink("edit properties", "Edit", new { id = Model.Id }, null)</sup><br />
+            <sup class="alter">@Html.ActionLink("edit scene", "Edit", "Wall", new { id = Model.Id }, null)</sup>
         }
     </h2>
     @Html.Partial("WallScene", Model.Walls)

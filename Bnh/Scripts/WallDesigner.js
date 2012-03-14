@@ -271,26 +271,34 @@
         var newData = jQuery.toJSON(getSceneData());
         var modified = (originalSceneData !== newData);
 
-        if (modified && !confirm("There are unsaved changes on the scene! Do you want to save them before processing?"))
-            return false;
+        if (modified) {
+            if (!confirm("There are unsaved changes on the scene! Do you want to save them before processing?")) {
+                return false;
+            }
 
-        // save wall
-        onSaveSceneButton();
-
+            // save wall
+            onSaveSceneButton();
+        }
         return true;
     }
 
     function onEditBrickButtonClicked() {
         var brick = $(this).closest(".brick-wrapper");
+        var wall = brick.closest(".wall-wrapper");
 
         // get brick index to identify
-        var index = brick.index();
+        var brickIndex = brick.index();
+        var wallIndex = wall.index();
 
         if (!ensureSceneSaved())
             return false;
 
         // change currently clicked a.href to redirect to correct URL
-        var href = $(getScene().find(".brick-wrapper")[index]).find("a.edit").attr("href");
+        var href = getScene()
+            .find(".wall-wrapper:eq(" + wallIndex + ") .brick-wrapper:eq(" + brickIndex + ") a.edit")
+            .attr("href");
+        
+        // replace clicked (old) brick href to proceed with correct url
         brick.find("a.edit").attr("href", href);
 
         // allow processing a.href
