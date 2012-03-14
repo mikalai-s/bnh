@@ -30,6 +30,11 @@
                 @Html.DropDownList("ZoneId", String.Empty)
                 @Html.ValidationMessageFor(model => model.ZoneId)
             </div>
+            
+            <div class="editor-label">Scene Template</div>
+            <div class="editor-field">
+                @Html.DropDownList("SceneTemplateId", (SelectList)ViewBag.Templates)
+            </div>
 
             <p>
                 <span class="alter"><input type="submit" value="Create" /></span>
