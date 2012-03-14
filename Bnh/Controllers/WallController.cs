@@ -30,7 +30,7 @@ namespace Bnh.Controllers
 
         [HttpPost]
         [Authorize(Roles="content_manager")]
-        public ActionResult Edit(Guid ownerId, List<Wall> walls)
+        public ActionResult SaveScene(Guid ownerId, List<Wall> walls)
         {
             if (ModelState.IsValid)
             {
@@ -98,7 +98,6 @@ namespace Bnh.Controllers
                 }
 
                 // remove walls
-                var removedWalls = new List<long>();
                 foreach (var realWall in db.Walls.Where(w => w.OwnerId == ownerId).ToList())
                 {
                     var ids = walls.Where(w => w.Id != 0).Select(w => w.Id).ToList();
@@ -117,6 +116,26 @@ namespace Bnh.Controllers
             }
             
             return View("WallSceneDesigner");//, wall.Bricks);
+        }
+
+        [HttpPost]
+        [Authorize(Roles = "content_manager")]
+        public ActionResult ExportSceneTemplate(string title, List<Wall> walls)
+        {
+            if (ModelState.IsValid)
+            {
+                var template = db.SceneTemplates.CreateObject();
+                template.Id = Guid.NewGuid();
+                template.Title = title;
+                foreach (var wall in walls)
+                {
+                    template.Walls.Add(wall);
+                }
+                db.SceneTemplates.AddObject(template);
+                db.SaveChanges();
+            }
+
+            return View("Empty");
         }
 
         protected override void Dispose(bool disposing)

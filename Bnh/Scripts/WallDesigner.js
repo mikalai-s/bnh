@@ -10,7 +10,8 @@
 
     var lockWallsCheckbox,
         lockBricksCheckbox,
-        hideBricksContentCheckbox;
+        hideBricksContentCheckbox,
+        originalSceneData;
 
     $(function () {
 
@@ -20,17 +21,13 @@
 
         $("#addBrickButton").click(onAddBrickButtonClicked);
         $("#addWallButton").click(onAddWallButtonClicked);
-        $("#viewWall").click(onViewWallButtonClicked);
+        $("#viewScene").click(onViewSceneButtonClicked);
+        $("#exportSceneTemplateButton").click(onExportSceneTemplateButtonClicked);
+        $("#saveSceneButton").click(onSaveSceneButton);
 
         lockWallsCheckbox.click(onLockWallsCheckbox);
         lockBricksCheckbox.click(onLockBricksCheckbox);
         hideBricksContentCheckbox.click(onHideBricksContentCheckbox);
-
-        $("form").validate({
-            submitHandler: function (form) {
-                saveWall();
-            }
-        });
 
         // trigger scene initialization
         initScene();
@@ -38,14 +35,15 @@
 
     function initScene() {
         initWalls();
+
+        originalSceneData = jQuery.toJSON(getSceneData());
     }
 
-    function saveWall(done) {
-        var form = $("form")[0];
-        var data = getSceneData(form);
+    function onSaveSceneButton(done) {
+        var data = getSceneData();
 
         $.ajax({
-            url: form.action,
+            url: "/Wall/SaveScene", //form.action,
             type: "POST",
             contentType: "application/json",
             async: false,
@@ -66,7 +64,7 @@
     }
 
     // collect form data to submit
-    function getSceneData(form) {
+    function getSceneData() {
         var walls = [];
 
         getScene().children().each(function (i, wall) {
@@ -90,7 +88,7 @@
         });
 
         return {
-            ownerId: form["ownerId"].value,
+            ownerId: $("#ownerId").val(),
             walls: walls
         };
     }
@@ -156,7 +154,7 @@
             tolerance: "pointer",
             connectWith: ".wall > .content",
             placeholder: "brick-placeholder",
-            forcePlaceholderSize: true, 
+            forcePlaceholderSize: true,
             dropOnEmpty: true,
             helper: function (e, brick) {
                 var width = brick.width();
@@ -171,32 +169,29 @@
         // create brick from prototype and add into DOM
         var wall = createWall();
 
+        var wallTitle = $("#wallTitle");
+
         // initialize brick object
         initWall(wall, {
-            title: $("#wallTitle").val()
+            title: wallTitle.val()
         });
 
-        // move deleted bricks to the end of the wall
-        getScene().find(".wall-wrapper:hidden").appendTo(getScene());
-
-        //onProcessBrickAction(wall, "added");
+        wallTitle.val("");
     }
 
     function onAddBrickButtonClicked() {
         // create brick from prototype and add into DOM
         var brick = createBrick();
 
+        var brickTitle = $("#brickTitle");
+
         // initialize brick object
         initializeBrick(brick, {
             type: parseInt($("#brickType").val()),
-            title: $("#brickTitle").val()
+            title: brickTitle.val()
         });
 
-        // move deleted bricks to the end of the wall
-        // var wall = getScene().find(".wall > .content");
-        // .find(".brick-wrapper:hidden").appendTo(getScene());
-
-        //onProcessBrickAction(brick, "added");
+        brickTitle.val("");
     }
 
     // creates new brick element from prototype
@@ -245,8 +240,6 @@
         brick.data("entity").width = width;
 
         updateBrickTitle(brick);
-
-        //onProcessBrickAction(brick, "edited");
     }
 
     function onWallResize(event, ui, wall) {
@@ -254,8 +247,6 @@
         wall.data("entity").width = width;
 
         updateWallTitle(wall);
-
-        // onProcessBrickAction(brick, "edited");
     }
 
     function updateWallTitle(wall) {
@@ -273,51 +264,18 @@
     }
 
     function onDeleteBrickButtonClicked() {
-        //onProcessBrickAction($(this).closest(".brick-wrapper"), "deleted");
         $(this).closest(".brick-wrapper").remove();
     }
-    /*
-    function onProcessBrickAction(brick, action) {
-    var entity = brick.data("entity");
 
-    // if brick is being deleted
-    if (action == "deleted") {
-    // if it was added recently - delete it from DOM
-    if (entity.action == "added") {
-    brick.remove();
-    return;
-    }
+    function ensureSceneSaved() {
+        var newData = jQuery.toJSON(getSceneData());
+        var modified = (originalSceneData !== newData);
 
-    // otherwise mark as deleted 
-    entity.action = action;
-
-    // movee brick to the end of the list (to make brick orders to be correct)
-    brick.appendTo(brick.parent());
-
-    // hide brick (we need it to submit action to the server)
-    brick.hide();
-
-    return;
-    }
-
-    // if there is no action set yet - just set it
-    if (!entity.action) {
-    entity.action = action;
-    return;
-    }
-    }
-    */
-    function ensureWallSaved() {
-        var entity = getSceneData($("form")[0]);
-        var modified = (entity.added != null && entity.added.length > 0)
-            || (entity.edited != null && entity.edited.length > 0)
-            || (entity.deleted != null && entity.deleted.length > 0);
-
-        if (modified && !confirm("There are unsaved changes on the wall! Do you want to save them before processing?"))
+        if (modified && !confirm("There are unsaved changes on the scene! Do you want to save them before processing?"))
             return false;
 
         // save wall
-        saveWall();
+        onSaveSceneButton();
 
         return true;
     }
@@ -328,7 +286,7 @@
         // get brick index to identify
         var index = brick.index();
 
-        if (!ensureWallSaved())
+        if (!ensureSceneSaved())
             return false;
 
         // change currently clicked a.href to redirect to correct URL
@@ -339,8 +297,8 @@
         return true;
     }
 
-    function onViewWallButtonClicked() {
-        return ensureWallSaved();
+    function onViewSceneButtonClicked() {
+        return ensureSceneSaved();
     }
 
     function onLockWallsCheckbox() {
@@ -361,6 +319,29 @@
         var checked = hideBricksContentCheckbox.attr("checked");
         $(".brick-wrapper")
             .toggleClass("hide-content", checked);
+    }
+
+    function onExportSceneTemplateButtonClicked() {
+        var sceneTemplateTitle = $("#sceneTemplateTitle");
+        var data = {
+            walls: getSceneData().walls,
+            title: sceneTemplateTitle.val()
+        };
+
+        $.ajax({
+            url: "/Wall/ExportSceneTemplate",
+            type: "POST",
+            contentType: "application/json",
+            async: true,
+            data: jQuery.toJSON(data),
+            success: function () {
+                sceneTemplateTitle.val("");
+            },
+            error: function (result) {
+                document.write(result.responseText);
+                document.close();
+            }
+        });
     }
 
 })();

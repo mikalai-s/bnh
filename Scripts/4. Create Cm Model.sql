@@ -8,6 +8,20 @@ GO
 SET QUOTED_IDENTIFIER ON
 GO
 
+CREATE TABLE [cm].[SceneTemplate](
+	[Id] [uniqueidentifier] NOT NULL,
+	[Title] [nvarchar](50) NOT NULL,
+	[IconUrl] [nvarchar](256) NULL,
+ CONSTRAINT [PK_SceneTemplate] PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+GO
+
+
+
 CREATE TABLE [cm].[Wall](
 	[Id] [bigint] IDENTITY(1,1) NOT NULL,
 	[OwnerId] [uniqueidentifier] NOT NULL,
@@ -38,6 +52,15 @@ ON DELETE CASCADE
 GO
 
 ALTER TABLE [cm].[Wall] NOCHECK CONSTRAINT [FK_Wall_Community]
+GO
+
+ALTER TABLE [cm].[Wall]  WITH NOCHECK ADD  CONSTRAINT [FK_Wall_SceneTemplate] FOREIGN KEY([OwnerId])
+REFERENCES [cm].[SceneTemplate] ([Id])
+ON UPDATE CASCADE
+ON DELETE CASCADE
+GO
+
+ALTER TABLE [cm].[Wall] NOCHECK CONSTRAINT [FK_Wall_SceneTemplate]
 GO
 
 ALTER TABLE [cm].[Wall] ADD  CONSTRAINT [DF_Wall_Width]  DEFAULT ((100)) FOR [Width]
