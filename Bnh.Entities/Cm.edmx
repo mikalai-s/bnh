@@ -7,10 +7,15 @@
     <Schema Namespace="bnhModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/02/edm/ssdl">
         <EntityContainer Name="bnhModelStoreContainer">
           <EntitySet Name="Brick" EntityType="bnhModel.Store.Brick" store:Type="Tables" Schema="cm" />
+          <EntitySet Name="SceneTemplate" EntityType="bnhModel.Store.SceneTemplate" store:Type="Tables" Schema="cm" />
           <EntitySet Name="Wall" EntityType="bnhModel.Store.Wall" store:Type="Tables" Schema="cm" />
           <AssociationSet Name="FK_Brick_Wall" Association="bnhModel.Store.FK_Brick_Wall">
             <End Role="Wall" EntitySet="Wall" />
             <End Role="Brick" EntitySet="Brick" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Wall_SceneTemplate" Association="bnhModel.Store.FK_Wall_SceneTemplate">
+            <End Role="SceneTemplate" EntitySet="SceneTemplate" />
+            <End Role="Wall" EntitySet="Wall" />
           </AssociationSet>
         </EntityContainer>
         <EntityType Name="Brick">
@@ -28,6 +33,14 @@
           <Property Name="GpsLocation" Type="nvarchar" MaxLength="100" />
           <Property Name="MapHeight" Type="int" />
           <Property Name="MapZoom" Type="int" />
+        </EntityType>
+        <EntityType Name="SceneTemplate">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="Title" Type="nvarchar" Nullable="false" MaxLength="50" />
+          <Property Name="IconUrl" Type="nvarchar" MaxLength="256" />
         </EntityType>
         <EntityType Name="Wall">
           <Key>
@@ -53,6 +66,20 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Wall_SceneTemplate">
+          <End Role="SceneTemplate" Type="bnhModel.Store.SceneTemplate" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Wall" Type="bnhModel.Store.Wall" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SceneTemplate">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Wall">
+              <PropertyRef Name="OwnerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
@@ -63,6 +90,11 @@
           <AssociationSet Name="FK_Brick_Wall" Association="bnhModel.FK_Brick_Wall">
             <End Role="Wall" EntitySet="Walls" />
             <End Role="Brick" EntitySet="Bricks" />
+          </AssociationSet>
+          <EntitySet Name="SceneTemplates" EntityType="bnhModel.SceneTemplate" />
+          <AssociationSet Name="FK_Wall_SceneTemplate" Association="bnhModel.FK_Wall_SceneTemplate">
+            <End Role="SceneTemplate" EntitySet="SceneTemplates" />
+            <End Role="Wall" EntitySet="Walls" />
           </AssociationSet>
         </EntityContainer>
         <EntityType Name="Brick">
@@ -110,6 +142,27 @@
           <Property Type="Int32" Name="Height" />
           <Property Type="Int32" Name="Zoom" />
         </EntityType>
+        <EntityType Name="SceneTemplate">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Type="Guid" Name="Id" Nullable="false" />
+          <Property Type="String" Name="Title" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="IconUrl" MaxLength="256" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Walls" Relationship="bnhModel.FK_Wall_SceneTemplate" FromRole="SceneTemplate" ToRole="Wall" />
+        </EntityType>
+        <Association Name="FK_Wall_SceneTemplate">
+          <End Type="bnhModel.SceneTemplate" Role="SceneTemplate" Multiplicity="1" />
+          <End Type="bnhModel.Wall" Role="Wall" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SceneTemplate">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Wall">
+              <PropertyRef Name="OwnerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -174,6 +227,15 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="SceneTemplates">
+            <EntityTypeMapping TypeName="bnhModel.SceneTemplate">
+              <MappingFragment StoreEntitySet="SceneTemplate">
+                <ScalarProperty Name="IconUrl" ColumnName="IconUrl" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
@@ -196,7 +258,7 @@
     <Diagrams>
       <Diagram Name="Cm">
         <EntityTypeShape EntityType="bnhModel.Brick" Width="1.5" PointX="3" PointY="1" Height="2.172587890625" />
-        <EntityTypeShape EntityType="bnhModel.Wall" Width="1.5" PointX="0.75" PointY="1.5" Height="1.7879850260416674" />
+        <EntityTypeShape EntityType="bnhModel.Wall" Width="1.5" PointX="0.75" PointY="1.5" Height="2.172587890625" />
         <AssociationConnector Association="bnhModel.FK_Brick_Wall" >
           <ConnectorPoint PointX="2.25" PointY="2.3362939453125" />
           <ConnectorPoint PointX="3" PointY="2.3362939453125" />
@@ -217,6 +279,11 @@
           <ConnectorPoint PointX="3.75" PointY="4.4516910807291659" />
           <ConnectorPoint PointX="6.125" PointY="4.4516910807291659" />
         </InheritanceConnector>
+        <EntityTypeShape EntityType="bnhModel.SceneTemplate" Width="1.5" PointX="0.75" PointY="4.875" Height="1.7879850260416657" />
+        <AssociationConnector Association="bnhModel.FK_Wall_SceneTemplate" >
+          <ConnectorPoint PointX="1.5" PointY="4.875" />
+          <ConnectorPoint PointX="1.5" PointY="3.672587890625" />
+        </AssociationConnector>
       </Diagram>
     </Diagrams>
   </Designer>

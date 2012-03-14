@@ -3,7 +3,7 @@
 
 @{
     var ownerId = (Guid)ViewBag.OwnerId;
-    ViewBag.Title = "wall designer";
+    ViewBag.Title = "Scene designer";
 }
 
 <h2>@ViewBag.Title</h2>
@@ -18,52 +18,55 @@
 <link rel="stylesheet" type="text/css" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.7.1/themes/base/jquery-ui.css"/>
 
 <div class="page-view">
-    @using (Html.BeginForm()) {
-        @Html.ValidationSummary(true)
 
-        <fieldset>
-            <legend></legend>
+    <fieldset>
+        <legend></legend>
             
-            @Html.HiddenFor(model => ownerId)
+        @Html.HiddenFor(model => ownerId)
             
-            <div class="scene-wrapper">
-                @Html.Partial("WallSceneDesigner", Model)
+        <div class="scene-wrapper">
+            @Html.Partial("WallSceneDesigner", Model)
+        </div>
+
+        <div class="control-panel">
+            <h3>Wall Control Panel</h3>
+            
+            <div class="editor-label">New wall</div>
+            <div class="editor-field">
+                @Html.TextBox("wallTitle")
+                <input id="addWallButton" type="button" value="Add Wall" />
             </div>
 
-            <div class="control-panel">
-                <h3>Wall Control Panel</h3>
-
-                <div class="editor-label">New brick</div>
-                <div class="editor-field">
-                    @Html.TextBox("brickTitle")
-                    @Html.DropDownListForBrickTypes("brickType")
-                    <input id="addBrickButton" type="button" value="Add Brick" />
-                </div>
+            <div class="editor-label">New brick</div>
+            <div class="editor-field">
+                @Html.TextBox("brickTitle")
+                @Html.DropDownListForBrickTypes("brickType")
+                <input id="addBrickButton" type="button" value="Add Brick" />
+            </div>
                 
-                <div class="editor-label">New wall</div>
-                <div class="editor-field">
-                    @Html.TextBox("wallTitle")
-                    <input id="addWallButton" type="button" value="Add Wall" />
-                </div>
+            <div class="editor-field">
+                <label>@Html.CheckBox("lockWallsCheckbox", true)Lock walls</label>
+            </div>
+            <div class="editor-field">
+                <label>@Html.CheckBox("lockBricksCheckbox")Lock bricks</label>
+            </div>
+            <div class="editor-field">
+                <label>@Html.CheckBox("hideBricksContentCheckbox")Hide bricks content</label>
+            </div>
                 
-                <div class="editor-field">
-                    <label>@Html.CheckBox("lockWallsCheckbox", true)Lock walls</label>
-                </div>
-                <div class="editor-field">
-                    <label>@Html.CheckBox("lockBricksCheckbox")Lock bricks</label>
-                </div>
-                <div class="editor-field">
-                    <label>@Html.CheckBox("hideBricksContentCheckbox")Hide bricks content</label>
-                </div>
-
-                <div style="position:absolute; bottom: 0;">
-                    <span class="alter">
-                        <input type="submit" value="Save" />
-                    </span>
-                    @Html.ActionInputLink("View", "Details", "Community", new { id = ownerId }, new Dictionary<string, object> { { "id", "viewWall" } })
-                </div>
+            <div class="editor-field">
+                @Html.TextBox("sceneTemplateTitle")
+                <input type="button" id="exportSceneTemplateButton" value="Export Scene Template"/>
             </div>
 
-        </fieldset>
-    }
+            <div style="position:absolute; bottom: 0;">
+                <span class="alter">
+                    <input type="button" id="saveSceneButton" value="Save" />
+                </span>
+                @Html.ActionInputLink("View", "Details", "Community", new { id = ownerId }, new Dictionary<string, object> { { "id", "viewScene" } })
+            </div>
+        </div>
+
+    </fieldset>
+
 </div>

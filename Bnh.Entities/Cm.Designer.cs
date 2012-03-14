@@ -8,17 +8,19 @@
 //------------------------------------------------------------------------------
 
 using System;
+using System.ComponentModel;
+using System.Data.EntityClient;
 using System.Data.Objects;
 using System.Data.Objects.DataClasses;
-using System.Data.EntityClient;
-using System.ComponentModel;
-using System.Xml.Serialization;
+using System.Linq;
 using System.Runtime.Serialization;
+using System.Xml.Serialization;
 
 [assembly: EdmSchemaAttribute()]
 #region EDM Relationship Metadata
 
 [assembly: EdmRelationshipAttribute("bnhModel", "FK_Brick_Wall", "Wall", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(Bnh.Entities.Wall), "Brick", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(Bnh.Entities.Brick), true)]
+[assembly: EdmRelationshipAttribute("bnhModel", "FK_Wall_SceneTemplate", "SceneTemplate", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(Bnh.Entities.SceneTemplate), "Wall", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(Bnh.Entities.Wall), true)]
 
 #endregion
 
@@ -101,8 +103,25 @@ namespace Bnh.Entities
             }
         }
         private ObjectSet<Wall> _Walls;
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        public ObjectSet<SceneTemplate> SceneTemplates
+        {
+            get
+            {
+                if ((_SceneTemplates == null))
+                {
+                    _SceneTemplates = base.CreateObjectSet<SceneTemplate>("SceneTemplates");
+                }
+                return _SceneTemplates;
+            }
+        }
+        private ObjectSet<SceneTemplate> _SceneTemplates;
 
         #endregion
+
         #region AddTo Methods
     
         /// <summary>
@@ -120,13 +139,21 @@ namespace Bnh.Entities
         {
             base.AddObject("Walls", wall);
         }
+    
+        /// <summary>
+        /// Deprecated Method for adding a new object to the SceneTemplates EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
+        /// </summary>
+        public void AddToSceneTemplates(SceneTemplate sceneTemplate)
+        {
+            base.AddObject("SceneTemplates", sceneTemplate);
+        }
 
         #endregion
+
     }
-    
 
     #endregion
-    
+
     #region Entities
     
     /// <summary>
@@ -162,6 +189,7 @@ namespace Bnh.Entities
         }
 
         #endregion
+
         #region Primitive Properties
     
         /// <summary>
@@ -288,6 +316,7 @@ namespace Bnh.Entities
         partial void OnOrderChanged();
 
         #endregion
+
     
         #region Navigation Properties
     
@@ -330,6 +359,7 @@ namespace Bnh.Entities
         }
 
         #endregion
+
     }
     
     /// <summary>
@@ -362,6 +392,7 @@ namespace Bnh.Entities
         }
 
         #endregion
+
         #region Primitive Properties
     
         /// <summary>
@@ -389,6 +420,7 @@ namespace Bnh.Entities
         partial void OnImageListIdChanged();
 
         #endregion
+
     
     }
     
@@ -422,6 +454,7 @@ namespace Bnh.Entities
         }
 
         #endregion
+
         #region Primitive Properties
     
         /// <summary>
@@ -449,6 +482,7 @@ namespace Bnh.Entities
         partial void OnHtmlChanged();
 
         #endregion
+
     
     }
     
@@ -482,6 +516,7 @@ namespace Bnh.Entities
         }
 
         #endregion
+
         #region Primitive Properties
     
         /// <summary>
@@ -557,7 +592,141 @@ namespace Bnh.Entities
         partial void OnZoomChanged();
 
         #endregion
+
     
+    }
+    
+    /// <summary>
+    /// No Metadata Documentation available.
+    /// </summary>
+    [EdmEntityTypeAttribute(NamespaceName="bnhModel", Name="SceneTemplate")]
+    [Serializable()]
+    [DataContractAttribute(IsReference=true)]
+    public partial class SceneTemplate : EntityObject
+    {
+        #region Factory Method
+    
+        /// <summary>
+        /// Create a new SceneTemplate object.
+        /// </summary>
+        /// <param name="id">Initial value of the Id property.</param>
+        /// <param name="title">Initial value of the Title property.</param>
+        public static SceneTemplate CreateSceneTemplate(global::System.Guid id, global::System.String title)
+        {
+            SceneTemplate sceneTemplate = new SceneTemplate();
+            sceneTemplate.Id = id;
+            sceneTemplate.Title = title;
+            return sceneTemplate;
+        }
+
+        #endregion
+
+        #region Primitive Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Guid Id
+        {
+            get
+            {
+                return _Id;
+            }
+            set
+            {
+                if (_Id != value)
+                {
+                    OnIdChanging(value);
+                    ReportPropertyChanging("Id");
+                    _Id = StructuralObject.SetValidValue(value);
+                    ReportPropertyChanged("Id");
+                    OnIdChanged();
+                }
+            }
+        }
+        private global::System.Guid _Id;
+        partial void OnIdChanging(global::System.Guid value);
+        partial void OnIdChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.String Title
+        {
+            get
+            {
+                return _Title;
+            }
+            set
+            {
+                OnTitleChanging(value);
+                ReportPropertyChanging("Title");
+                _Title = StructuralObject.SetValidValue(value, false);
+                ReportPropertyChanged("Title");
+                OnTitleChanged();
+            }
+        }
+        private global::System.String _Title;
+        partial void OnTitleChanging(global::System.String value);
+        partial void OnTitleChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String IconUrl
+        {
+            get
+            {
+                return _IconUrl;
+            }
+            set
+            {
+                OnIconUrlChanging(value);
+                ReportPropertyChanging("IconUrl");
+                _IconUrl = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("IconUrl");
+                OnIconUrlChanged();
+            }
+        }
+        private global::System.String _IconUrl;
+        partial void OnIconUrlChanging(global::System.String value);
+        partial void OnIconUrlChanged();
+
+        #endregion
+
+    
+        #region Navigation Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("bnhModel", "FK_Wall_SceneTemplate", "Wall")]
+        public EntityCollection<Wall> Walls
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<Wall>("bnhModel.FK_Wall_SceneTemplate", "Wall");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<Wall>("bnhModel.FK_Wall_SceneTemplate", "Wall", value);
+                }
+            }
+        }
+
+        #endregion
+
     }
     
     /// <summary>
@@ -590,6 +759,7 @@ namespace Bnh.Entities
         }
 
         #endregion
+
         #region Primitive Properties
     
         /// <summary>
@@ -716,6 +886,7 @@ namespace Bnh.Entities
         partial void OnOrderChanged();
 
         #endregion
+
     
         #region Navigation Properties
     
@@ -742,8 +913,10 @@ namespace Bnh.Entities
         }
 
         #endregion
+
     }
 
     #endregion
+
     
 }
