@@ -8,6 +8,10 @@ GO
 SET QUOTED_IDENTIFIER ON
 GO
 
+CREATE SCHEMA [cm] AUTHORIZATION [dbo]
+
+go
+
 CREATE TABLE [cm].[SceneTemplate](
 	[Id] [uniqueidentifier] NOT NULL,
 	[Title] [nvarchar](50) NOT NULL,
