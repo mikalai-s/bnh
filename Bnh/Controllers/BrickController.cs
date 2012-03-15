@@ -16,7 +16,7 @@ namespace Bnh.Controllers
 
         private Dictionary<Type, string> BrickEditView = new Dictionary<Type, string>
         {
-            {typeof(Brick), "Edit"},
+            {typeof(EmptyBrick), "Edit"},
             {typeof(HtmlBrick), "EditHtml"},
             {typeof(GalleryBrick), "EditGallery"},
             {typeof(MapBrick), "EditMap"},

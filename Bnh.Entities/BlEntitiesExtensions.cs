@@ -18,21 +18,5 @@ namespace Bnh.Entities
                 return walls;
             }
         }
-
-        public static Community GetCommunity(this Wall wall)
-        {
-            using (var db = new BlEntities())
-            {
-                return db.Communities.FirstOrDefault(c => c.Id == wall.OwnerId);
-            }
-        }
-
-        public static Builder GetBuilder(this Wall wall)
-        {
-            using (var db = new BlEntities())
-            {
-                return db.Builders.FirstOrDefault(b => b.Id == wall.OwnerId);
-            }
-        }
     }
 }

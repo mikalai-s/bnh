@@ -8,13 +8,12 @@
 //------------------------------------------------------------------------------
 
 using System;
-using System.ComponentModel;
-using System.Data.EntityClient;
 using System.Data.Objects;
 using System.Data.Objects.DataClasses;
-using System.Linq;
-using System.Runtime.Serialization;
+using System.Data.EntityClient;
+using System.ComponentModel;
 using System.Xml.Serialization;
+using System.Runtime.Serialization;
 
 [assembly: EdmSchemaAttribute()]
 #region EDM Relationship Metadata
@@ -121,7 +120,6 @@ namespace Bnh.Entities
         private ObjectSet<SceneTemplate> _SceneTemplates;
 
         #endregion
-
         #region AddTo Methods
     
         /// <summary>
@@ -149,11 +147,11 @@ namespace Bnh.Entities
         }
 
         #endregion
-
     }
+    
 
     #endregion
-
+    
     #region Entities
     
     /// <summary>
@@ -165,31 +163,9 @@ namespace Bnh.Entities
     [KnownTypeAttribute(typeof(HtmlBrick))]
     [KnownTypeAttribute(typeof(GalleryBrick))]
     [KnownTypeAttribute(typeof(MapBrick))]
-    public partial class Brick : EntityObject
+    [KnownTypeAttribute(typeof(EmptyBrick))]
+    public abstract partial class Brick : EntityObject
     {
-        #region Factory Method
-    
-        /// <summary>
-        /// Create a new Brick object.
-        /// </summary>
-        /// <param name="id">Initial value of the Id property.</param>
-        /// <param name="wallId">Initial value of the WallId property.</param>
-        /// <param name="title">Initial value of the Title property.</param>
-        /// <param name="width">Initial value of the Width property.</param>
-        /// <param name="order">Initial value of the Order property.</param>
-        public static Brick CreateBrick(global::System.Int64 id, global::System.Int64 wallId, global::System.String title, global::System.Single width, global::System.Byte order)
-        {
-            Brick brick = new Brick();
-            brick.Id = id;
-            brick.WallId = wallId;
-            brick.Title = title;
-            brick.Width = width;
-            brick.Order = order;
-            return brick;
-        }
-
-        #endregion
-
         #region Primitive Properties
     
         /// <summary>
@@ -316,7 +292,6 @@ namespace Bnh.Entities
         partial void OnOrderChanged();
 
         #endregion
-
     
         #region Navigation Properties
     
@@ -359,7 +334,39 @@ namespace Bnh.Entities
         }
 
         #endregion
+    }
+    
+    /// <summary>
+    /// No Metadata Documentation available.
+    /// </summary>
+    [EdmEntityTypeAttribute(NamespaceName="bnhModel", Name="EmptyBrick")]
+    [Serializable()]
+    [DataContractAttribute(IsReference=true)]
+    public partial class EmptyBrick : Brick
+    {
+        #region Factory Method
+    
+        /// <summary>
+        /// Create a new EmptyBrick object.
+        /// </summary>
+        /// <param name="id">Initial value of the Id property.</param>
+        /// <param name="wallId">Initial value of the WallId property.</param>
+        /// <param name="title">Initial value of the Title property.</param>
+        /// <param name="width">Initial value of the Width property.</param>
+        /// <param name="order">Initial value of the Order property.</param>
+        public static EmptyBrick CreateEmptyBrick(global::System.Int64 id, global::System.Int64 wallId, global::System.String title, global::System.Single width, global::System.Byte order)
+        {
+            EmptyBrick emptyBrick = new EmptyBrick();
+            emptyBrick.Id = id;
+            emptyBrick.WallId = wallId;
+            emptyBrick.Title = title;
+            emptyBrick.Width = width;
+            emptyBrick.Order = order;
+            return emptyBrick;
+        }
 
+        #endregion
+    
     }
     
     /// <summary>
@@ -392,7 +399,6 @@ namespace Bnh.Entities
         }
 
         #endregion
-
         #region Primitive Properties
     
         /// <summary>
@@ -420,7 +426,6 @@ namespace Bnh.Entities
         partial void OnImageListIdChanged();
 
         #endregion
-
     
     }
     
@@ -454,7 +459,6 @@ namespace Bnh.Entities
         }
 
         #endregion
-
         #region Primitive Properties
     
         /// <summary>
@@ -482,7 +486,6 @@ namespace Bnh.Entities
         partial void OnHtmlChanged();
 
         #endregion
-
     
     }
     
@@ -516,7 +519,6 @@ namespace Bnh.Entities
         }
 
         #endregion
-
         #region Primitive Properties
     
         /// <summary>
@@ -592,7 +594,6 @@ namespace Bnh.Entities
         partial void OnZoomChanged();
 
         #endregion
-
     
     }
     
@@ -620,7 +621,6 @@ namespace Bnh.Entities
         }
 
         #endregion
-
         #region Primitive Properties
     
         /// <summary>
@@ -699,7 +699,6 @@ namespace Bnh.Entities
         partial void OnIconUrlChanged();
 
         #endregion
-
     
         #region Navigation Properties
     
@@ -726,7 +725,6 @@ namespace Bnh.Entities
         }
 
         #endregion
-
     }
     
     /// <summary>
@@ -759,7 +757,6 @@ namespace Bnh.Entities
         }
 
         #endregion
-
         #region Primitive Properties
     
         /// <summary>
@@ -886,7 +883,6 @@ namespace Bnh.Entities
         partial void OnOrderChanged();
 
         #endregion
-
     
         #region Navigation Properties
     
@@ -913,10 +909,8 @@ namespace Bnh.Entities
         }
 
         #endregion
-
     }
 
     #endregion
-
     
 }

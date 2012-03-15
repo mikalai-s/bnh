@@ -22,7 +22,7 @@ namespace Bnh.Entities
                     {"1", typeof(HtmlBrick)},
                     {"2", typeof(GalleryBrick)},
                     {"3", typeof(MapBrick)},
-                    {"0", typeof(Brick)},
+                    {"0", typeof(EmptyBrick)},
                 }
             }
         };

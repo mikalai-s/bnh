@@ -6,6 +6,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using Bnh.Entities;
+using System.Data.Objects.DataClasses;
 
 namespace Bnh.Controllers
 { 
@@ -60,7 +61,20 @@ namespace Bnh.Controllers
                 {
                     var sceneTemplateId = Guid.Parse(this.Request.Form["SceneTemplateId"]);
                     var sceneTemplate = cm.SceneTemplates.FirstOrDefault(t => t.Id == sceneTemplateId);
-                    
+
+                    foreach (var wall in sceneTemplate.Walls)
+                    {
+                        var newWall = wall.Clone();
+                        newWall.Bricks = null;                        
+
+                        foreach (var brick in wall.Bricks)
+                        {
+                            var newBrick = brick.Clone();
+                            newBrick.Wall = newWall;                            
+                        }
+
+                        cm.Walls.AddObject(newWall);
+                    }
                 }
                 return RedirectToAction("Index");  
             }
