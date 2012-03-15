@@ -81,7 +81,7 @@ namespace Bnh.WebFramework
                                                                          {typeof(HtmlBrick), "Rich Text"},
                                                                          {typeof(GalleryBrick), "Gallery"},
                                                                          {typeof(MapBrick), "Map"},
-                                                                         {typeof(Brick), "Empty"},
+                                                                         {typeof(EmptyBrick), "Empty"},
                                                                      };
 
         public static MvcHtmlString DropDownListForBrickTypes(this HtmlHelper htmlHelper, string name)

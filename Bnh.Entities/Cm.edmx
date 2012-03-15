@@ -97,7 +97,7 @@
             <End Role="Wall" EntitySet="Walls" />
           </AssociationSet>
         </EntityContainer>
-        <EntityType Name="Brick">
+        <EntityType Name="Brick" Abstract="true">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
@@ -163,6 +163,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="EmptyBrick" BaseType="bnhModel.Brick" />
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -172,31 +173,13 @@
           <EntitySetMapping Name="Bricks">
             <EntityTypeMapping TypeName="IsTypeOf(bnhModel.HtmlBrick)">
               <MappingFragment StoreEntitySet="Brick">
-                <ScalarProperty Name="Order" ColumnName="Order" />
-                <ScalarProperty Name="Width" ColumnName="Width" />
-                <ScalarProperty Name="Title" ColumnName="Title" />
-                <ScalarProperty Name="WallId" ColumnName="WallId" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="Html" ColumnName="Html" />
                 <Condition ColumnName="Type" Value="1" />
               </MappingFragment>
             </EntityTypeMapping>
-            <EntityTypeMapping TypeName="bnhModel.Brick">
-              <MappingFragment StoreEntitySet="Brick">
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="Order" ColumnName="Order" />
-                <ScalarProperty Name="Width" ColumnName="Width" />
-                <ScalarProperty Name="Title" ColumnName="Title" />
-                <ScalarProperty Name="WallId" ColumnName="WallId" />
-                <Condition ColumnName="Type" Value="0" />
-              </MappingFragment>
-            </EntityTypeMapping>
             <EntityTypeMapping TypeName="IsTypeOf(bnhModel.GalleryBrick)">
               <MappingFragment StoreEntitySet="Brick">
-                <ScalarProperty Name="Order" ColumnName="Order" />
-                <ScalarProperty Name="Width" ColumnName="Width" />
-                <ScalarProperty Name="Title" ColumnName="Title" />
-                <ScalarProperty Name="WallId" ColumnName="WallId" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="ImageListId" ColumnName="ImageListId" />
                 <Condition ColumnName="Type" Value="2" />
@@ -206,13 +189,24 @@
               <MappingFragment StoreEntitySet="Brick">
                 <ScalarProperty Name="Zoom" ColumnName="MapZoom" />
                 <ScalarProperty Name="Height" ColumnName="MapHeight" />
-                <ScalarProperty Name="Order" ColumnName="Order" />
-                <ScalarProperty Name="Width" ColumnName="Width" />
-                <ScalarProperty Name="Title" ColumnName="Title" />
-                <ScalarProperty Name="WallId" ColumnName="WallId" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="GpsLocation" ColumnName="GpsLocation" />
                 <Condition ColumnName="Type" Value="3" />
+              </MappingFragment>
+            </EntityTypeMapping>
+            <EntityTypeMapping TypeName="IsTypeOf(bnhModel.EmptyBrick)">
+              <MappingFragment StoreEntitySet="Brick">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <Condition ColumnName="Type" Value="0" />
+              </MappingFragment>
+            </EntityTypeMapping>
+            <EntityTypeMapping TypeName="IsTypeOf(bnhModel.Brick)">
+              <MappingFragment StoreEntitySet="Brick">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="WallId" ColumnName="WallId" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="Width" ColumnName="Width" />
+                <ScalarProperty Name="Order" ColumnName="Order" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -263,27 +257,33 @@
           <ConnectorPoint PointX="2.25" PointY="2.3362939453125" />
           <ConnectorPoint PointX="3" PointY="2.3362939453125" />
         </AssociationConnector>
-        <EntityTypeShape EntityType="bnhModel.HtmlBrick" Width="1.5" PointX="6" PointY="0.75" Height="1.0187792968750031" />
+        <EntityTypeShape EntityType="bnhModel.HtmlBrick" Width="1.5" PointX="6" PointY="1.625" Height="1.2110807291666668" />
         <InheritanceConnector EntityType="bnhModel.HtmlBrick" ManuallyRouted="false" >
-          <ConnectorPoint PointX="4.5" PointY="1.4805403645833333" />
-          <ConnectorPoint PointX="6" PointY="1.4805403645833333" />
+          <ConnectorPoint PointX="4.5" PointY="2.2305403645833333" />
+          <ConnectorPoint PointX="6" PointY="2.2305403645833333" />
         </InheritanceConnector>
-        <EntityTypeShape EntityType="bnhModel.GalleryBrick" Width="1.5" PointX="6" PointY="2.375" Height="1.0187792968750031" />
+        <EntityTypeShape EntityType="bnhModel.GalleryBrick" Width="1.5" PointX="6" PointY="3" Height="1.211080729166667" />
         <InheritanceConnector EntityType="bnhModel.GalleryBrick" ManuallyRouted="false" >
-          <ConnectorPoint PointX="4.5" PointY="2.7737939453125" />
-          <ConnectorPoint PointX="6" PointY="2.7737939453125" />
+          <ConnectorPoint PointX="3.75" PointY="3.172587890625" />
+          <ConnectorPoint PointX="3.75" PointY="3.6055403645833337" />
+          <ConnectorPoint PointX="6" PointY="3.6055403645833337" />
         </InheritanceConnector>
-        <EntityTypeShape EntityType="bnhModel.MapBrick" Width="1.5" PointX="6.125" PointY="3.75" Height="1.0187792968750031" />
+        <EntityTypeShape EntityType="bnhModel.MapBrick" Width="1.5" PointX="6" PointY="4.375" Height="1.5956835937499996" />
         <InheritanceConnector EntityType="bnhModel.MapBrick" ManuallyRouted="false" >
           <ConnectorPoint PointX="3.75" PointY="3.172587890625" />
-          <ConnectorPoint PointX="3.75" PointY="4.4516910807291659" />
-          <ConnectorPoint PointX="6.125" PointY="4.4516910807291659" />
+          <ConnectorPoint PointX="3.75" PointY="5.172841796875" />
+          <ConnectorPoint PointX="6" PointY="5.172841796875" />
         </InheritanceConnector>
         <EntityTypeShape EntityType="bnhModel.SceneTemplate" Width="1.5" PointX="0.75" PointY="4.875" Height="1.7879850260416657" />
         <AssociationConnector Association="bnhModel.FK_Wall_SceneTemplate" >
           <ConnectorPoint PointX="1.5" PointY="4.875" />
           <ConnectorPoint PointX="1.5" PointY="3.672587890625" />
         </AssociationConnector>
+        <EntityTypeShape EntityType="bnhModel.EmptyBrick" Width="1.5" PointX="6" PointY="0.5" Height="1.0187792968749996" />
+        <InheritanceConnector EntityType="bnhModel.EmptyBrick" >
+          <ConnectorPoint PointX="4.5" PointY="1.2593896484374998" />
+          <ConnectorPoint PointX="6" PointY="1.2593896484374998" />
+        </InheritanceConnector>
       </Diagram>
     </Diagrams>
   </Designer>
