@@ -297,7 +297,7 @@
         var href = getScene()
             .find(".wall-wrapper:eq(" + wallIndex + ") .brick-wrapper:eq(" + brickIndex + ") a.edit")
             .attr("href");
-        
+
         // replace clicked (old) brick href to proceed with correct url
         brick.find("a.edit").attr("href", href);
 
@@ -330,6 +330,10 @@
     }
 
     function onExportSceneTemplateButtonClicked() {
+        if (!ensureSceneSaved()) {
+            return;
+        }
+
         var sceneTemplateTitle = $("#sceneTemplateTitle");
         var data = {
             walls: getSceneData().walls,
