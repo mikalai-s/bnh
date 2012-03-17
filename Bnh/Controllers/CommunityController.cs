@@ -60,21 +60,10 @@ namespace Bnh.Controllers
                 using(var cm = new CmEntities())
                 {
                     var sceneTemplateId = Guid.Parse(this.Request.Form["SceneTemplateId"]);
-                    var sceneTemplate = cm.SceneTemplates.FirstOrDefault(t => t.Id == sceneTemplateId);
 
-                    foreach (var wall in sceneTemplate.Walls)
-                    {
-                        var newWall = wall.Clone();
-                        newWall.Bricks = null;                        
+                    SceneTemplating.CloneScene(sceneTemplateId, community.Id, cm);
 
-                        foreach (var brick in wall.Bricks)
-                        {
-                            var newBrick = brick.Clone();
-                            newBrick.Wall = newWall;                            
-                        }
-
-                        cm.Walls.AddObject(newWall);
-                    }
+                    cm.SaveChanges();
                 }
                 return RedirectToAction("Index");  
             }

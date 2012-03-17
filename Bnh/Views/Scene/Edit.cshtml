@@ -46,7 +46,7 @@
                 @Html.DropDownListForBrickTypes("brickType")
                 <input id="addBrickButton" type="button" value="Add Brick" />
             </div>
-                
+
             <div class="editor-field">
                 <label>@Html.CheckBox("lockWallsCheckbox", true)Lock walls</label>
             </div>
@@ -56,10 +56,15 @@
             <div class="editor-field">
                 <label>@Html.CheckBox("hideBricksContentCheckbox")Hide bricks content</label>
             </div>
-                
+
             <div class="editor-field">
-                @Html.TextBox("sceneTemplateTitle")
-                <input type="button" id="exportSceneTemplateButton" value="Export Scene Template"/>
+                @Html.TextBox("templateTitle")
+                <input type="button" id="exportTemplateButton" value="Export Template"/>
+            </div>
+
+            <div class="editor-field">
+                @Html.DropDownList("templateId", (SelectList)ViewBag.Templates)
+                <input type="button" id="applyTemplateButton" value="Apply Template"/>
             </div>
 
             <div style="position:absolute; bottom: 0;">

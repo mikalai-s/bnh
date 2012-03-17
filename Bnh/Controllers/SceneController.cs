@@ -22,7 +22,8 @@ namespace Bnh.Controllers
         public ActionResult Edit(Guid id)
         {
             ViewBag.OwnerId = id;
-            var walls = db.Walls.Where(w => w.OwnerId == id);
+            var walls = db.Walls.Where(w => w.OwnerId == id);            
+            ViewBag.Templates = new SelectList(db.SceneTemplates.ToList(), "Id", "Title");
             return View(walls);
         }
 
@@ -101,6 +102,8 @@ namespace Bnh.Controllers
                     var ids = walls.Where(w => w.Id != 0).Select(w => w.Id).ToList();
                     if (!ids.Contains(realWall.Id))
                     {
+                        realWall.Bricks.ToList().ForEach(db.Bricks.DeleteObject);
+
                         db.Walls.DeleteObject(realWall);
                     }
                 }
@@ -129,22 +132,36 @@ namespace Bnh.Controllers
 
         [HttpPost]
         [Authorize(Roles = "content_manager")]
-        public ActionResult ExportTemplate(string title, List<Wall> walls)
+        public ActionResult ExportTemplate(string title, Guid ownerId)
         {
             if (ModelState.IsValid)
             {
                 var template = db.SceneTemplates.CreateObject();
                 template.Id = Guid.NewGuid();
                 template.Title = title;
-                foreach (var wall in walls)
-                {
-                    template.Walls.Add(wall);
-                }
+
+                SceneTemplating.CloneScene(ownerId, template.Id, db);
+
                 db.SceneTemplates.AddObject(template);
+
                 db.SaveChanges();
             }
 
             return View("Empty");
+        }
+
+        [HttpPost]
+        [Authorize(Roles = "content_manager")]
+        public ActionResult ApplyTemplate(Guid ownerId, Guid templateId)
+        {
+            // delete obsolete scene
+            db.Walls.Where(w => w.OwnerId == ownerId).ToList().ForEach(db.Walls.DeleteObject);
+
+            SceneTemplating.CloneScene(templateId, ownerId, db);
+
+            db.SaveChanges();
+
+            return PartialView("DesignScene", db.Walls.Where(w => w.OwnerId == ownerId));
         }
 
         protected override void Dispose(bool disposing)

@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Reflection;
+using System.Runtime.Serialization;
+using System.Xml.Serialization;
+using System.ComponentModel;
 
 namespace Bnh.Entities
 {
@@ -31,7 +34,25 @@ namespace Bnh.Entities
             {
                 if (property.CanRead && property.CanWrite)
                 {
-                    property.SetValue(clone, property.GetValue(this, null), null);
+                    var p = property.GetCustomAttributes(typeof(DataMemberAttribute), false);
+                    if (p.Length == 0)
+                        continue;
+
+                    p = property.GetCustomAttributes(typeof(XmlIgnoreAttribute), false);
+                    if (p.Length > 0)
+                        continue;
+
+                    p = property.GetCustomAttributes(typeof(SoapIgnoreAttribute), false);
+                    if (p.Length > 0)
+                        continue;
+
+                    p = property.GetCustomAttributes(typeof(BrowsableAttribute), false);
+                    if (p.Length > 0 && !(p[0] as BrowsableAttribute).Browsable)
+                        continue;
+
+                    var value = property.GetValue(this, null);
+                    if(value != null)
+                        property.SetValue(clone, value, null);
                 }
             }
 
