@@ -468,9 +468,7 @@ nav ul
 .bottom     { margin-bottom:0; padding-bottom:0; }
 
 .credits { float: left; }
-.user-display { float: left; padding: 0 12px; }
-.user-display .welcome {}
-.user-display .user-actions {}
+
 
 .login-form { margin: 24px 0 0 0; }
 

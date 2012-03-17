@@ -1,5 +1,5 @@
-﻿/// <reference path="jquery-1.5.1-vsdoc.js" />
-/// <reference path="jquery-ui-1.8.11.js" />
+﻿/// <reference path="jquery-1.7.1-vsdoc.js" />
+/// <reference path="jquery-ui-1.8.18.js" />
 /// <reference path="jquery.json-2.3.js" />
 /// <reference path="jquery.validate.js" />
 /// <reference path="Reorderable.js"/>
@@ -111,6 +111,9 @@
             }
         })
         .disableSelection();
+
+        // reflect lock checkbox value
+    //    onLockWallsCheckbox();
     }
 
     function initWall(wall, customData) {
@@ -135,10 +138,7 @@
             handles: "e",
             animateDuration: "0",
             resize: function (event, ui) { onWallResize(event, ui, wall); }
-        });
-
-        // reflect lock checkbox value
-        onLockWallsCheckbox();
+        });        
 
         var wallContent = wall.find(".wall > .content");
         wallContent.find(".brick-wrapper").each(function (i, brick) {
@@ -325,21 +325,21 @@
     }
 
     function onLockWallsCheckbox() {
-        var checked = lockWallsCheckbox.attr("checked");
+        var checked = lockWallsCheckbox.attr("checked") === "checked";
         $(".wall-wrapper")
             .toggleClass("locked", checked)
             .resizable("option", "disabled", checked);
     }
 
     function onLockBricksCheckbox() {
-        var checked = lockBricksCheckbox.attr("checked");
+        var checked = lockBricksCheckbox.attr("checked") === "checked";
         $(".brick-wrapper")
             .toggleClass("locked", checked)
             .resizable("option", "disabled", checked);
     }
 
     function onHideBricksContentCheckbox() {
-        var checked = hideBricksContentCheckbox.attr("checked");
+        var checked = hideBricksContentCheckbox.attr("checked") === "checked";
         $(".brick-wrapper")
             .toggleClass("hide-content", checked);
     }
