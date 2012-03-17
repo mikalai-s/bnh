@@ -69,6 +69,7 @@
     </Compile>
     <Compile Include="EntityConnectionHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SceneTemplating.cs" />
     <Compile Include="WallOwners.cs" />
   </ItemGroup>
   <ItemGroup>

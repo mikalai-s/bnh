@@ -22,7 +22,8 @@
         $("#addBrickButton").click(onAddBrickButtonClicked);
         $("#addWallButton").click(onAddWallButtonClicked);
         $("#viewScene").click(onViewSceneButtonClicked);
-        $("#exportSceneTemplateButton").click(onExportSceneTemplateButtonClicked);
+        $("#exportTemplateButton").click(onExportTemplateButtonClicked);
+        $("#applyTemplateButton").click(onApplyTemplateButtonClicked);
         $("#saveSceneButton").click(onSaveSceneButton);
 
         lockWallsCheckbox.click(onLockWallsCheckbox);
@@ -39,7 +40,7 @@
         originalSceneData = jQuery.toJSON(getSceneData());
     }
 
-    function onSaveSceneButton(done) {
+    function onSaveSceneButton() {
         var data = getSceneData();
 
         $.ajax({
@@ -51,10 +52,6 @@
             success: function (result) {
                 getScene().replaceWith(result);
                 initScene();
-
-                if (done) {
-                    done();
-                }
             },
             error: function (result) {
                 document.write(result.responseText);
@@ -166,24 +163,42 @@
     }
 
     function onAddWallButtonClicked() {
+        var wallTitle = $("#wallTitle");
+        var title = wallTitle.val();
+
+        if (!title) {
+            alert("Wall title is required!");
+            wallTitle.focus();
+            return;
+        }
+
         // create brick from prototype and add into DOM
         var wall = createWall();
 
-        var wallTitle = $("#wallTitle");
+        
 
         // initialize brick object
         initWall(wall, {
-            title: wallTitle.val()
+            title: title
         });
 
         wallTitle.val("");
     }
 
     function onAddBrickButtonClicked() {
+        var brickTitle = $("#brickTitle");
+        var title = brickTitle.val();
+
+        if (!title) {
+            alert("Brick title is required!");
+            brickTitle.focus();
+            return;
+        }
+
         // create brick from prototype and add into DOM
         var brick = createBrick();
 
-        var brickTitle = $("#brickTitle");
+        
 
         // initialize brick object
         initializeBrick(brick, {
@@ -329,15 +344,15 @@
             .toggleClass("hide-content", checked);
     }
 
-    function onExportSceneTemplateButtonClicked() {
+    function onExportTemplateButtonClicked() {
         if (!ensureSceneSaved()) {
-            return;
+            return false;
         }
 
-        var sceneTemplateTitle = $("#sceneTemplateTitle");
+        var templateTitle = $("#templateTitle");
         var data = {
-            walls: getSceneData().walls,
-            title: sceneTemplateTitle.val()
+            title: templateTitle.val(),
+            ownerId: $("#ownerId").val()
         };
 
         $.ajax({
@@ -347,11 +362,34 @@
             async: true,
             data: jQuery.toJSON(data),
             success: function () {
-                sceneTemplateTitle.val("");
+                templateTitle.val("");
             },
             error: function (result) {
                 document.write(result.responseText);
                 document.close();
+            }
+        });
+    }
+
+    function onApplyTemplateButtonClicked() {
+        if (!confirm("Are you sure you want to replace entire scene with template data?"))
+            return false;
+
+        var data = {
+            ownerId: $("#ownerId").val(),
+            templateId: $("#templateId").val()
+        };
+
+        $.ajax({
+            url: "/Scene/ApplyTemplate",
+            type: "POST",
+            contentType: "application/json",
+            data: jQuery.toJSON(data),
+            success: function (result) {
+                getScene().replaceWith(result);
+                initScene();
+            },
+            error: function (result) {
             }
         });
     }
