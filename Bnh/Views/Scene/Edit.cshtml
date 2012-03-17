@@ -7,7 +7,7 @@
 }
 
 <h2>@ViewBag.Title</h2>
-<script src="@Url.Content("~/Scripts/jquery-ui-1.8.11.js")" type="text/javascript"></script>
+<script src="@Url.Content("~/Scripts/jquery-ui-1.8.18.js")" type="text/javascript"></script>
 <script src="@Url.Content("~/Scripts/jquery.json-2.3.js")" type="text/javascript"></script>
 <script src="@Url.Content("~/Scripts/jquery.validate.js")" type="text/javascript"></script>
 <script src="@Url.Content("~/Scripts/DesignScene.js")" type="text/javascript"></script>
@@ -48,7 +48,7 @@
             </div>
 
             <div class="editor-field">
-                <label>@Html.CheckBox("lockWallsCheckbox", true)Lock walls</label>
+                <label>@Html.CheckBox("lockWallsCheckbox", (bool)ViewBag.LockWalls)Lock walls</label>
             </div>
             <div class="editor-field">
                 <label>@Html.CheckBox("lockBricksCheckbox")Lock bricks</label>

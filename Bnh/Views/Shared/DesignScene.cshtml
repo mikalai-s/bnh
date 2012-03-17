@@ -1,7 +1,7 @@
 ﻿@using Bnh.Entities
 @model IEnumerable<Wall>
 <div id="scene">
-    @foreach (var wall in Model)
+    @foreach (var wall in Model.OrderBy(w => w.Order))
     {
         @Html.Partial("DesignWall", wall)
     }

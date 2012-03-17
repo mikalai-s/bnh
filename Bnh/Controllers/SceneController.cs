@@ -24,6 +24,7 @@ namespace Bnh.Controllers
             ViewBag.OwnerId = id;
             var walls = db.Walls.Where(w => w.OwnerId == id);            
             ViewBag.Templates = new SelectList(db.SceneTemplates.ToList(), "Id", "Title");
+            ViewBag.LockWalls = true;
             return View(walls);
         }
 

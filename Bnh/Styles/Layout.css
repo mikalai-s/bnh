@@ -1,0 +1,40 @@
+﻿
+#layout-wrapper
+{
+    background-image: url(/Images/background.png);
+    background-position: center 10px;
+    background-repeat: repeat-x;
+}
+
+#logo
+{
+    background-image: url(/Images/logo.png);
+    width:  314px;
+    height: 99px;
+    margin-top: 35px;
+    margin-bottom: 25px;
+    float: left;
+}
+
+.user-display
+{
+    float: left;
+    margin-top: 30px;
+}
+
+.zone-header
+{
+    padding: 0px;
+}
+
+nav ul a
+{
+    padding: 0px 5px;
+}
+
+nav ul li.separator
+{
+    background: none;
+    border:  none;
+    margin:  0px;
+}
