@@ -111,8 +111,8 @@
     <Content Include="Content\themes\base\jquery.ui.tabs.css" />
     <Content Include="Content\themes\base\jquery.ui.theme.css" />
     <Content Include="Global.asax" />
-    <Content Include="Images\BetaHomesLogo.gif" />
-    <Content Include="Images\BetaHomesLogo.png" />
+    <Content Include="Images\background.png" />
+    <Content Include="Images\logo.png" />
     <Content Include="README.jQuery.vsdoc.txt" />
     <Content Include="Scripts\Global.Encoding.js" />
     <Content Include="Scripts\jquery-1.7.1-vsdoc.js" />
@@ -484,6 +484,9 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Shared\Empty.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Properties\PublishProfiles\bnh.pubxml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
