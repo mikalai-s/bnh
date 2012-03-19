@@ -40,6 +40,9 @@ namespace Bnh.Controllers
                 db.Refresh(RefreshMode.StoreWins, db.Walls);
                 db.Refresh(RefreshMode.StoreWins, db.Bricks);
 
+                // ensure walls collection is not null
+                walls = walls ?? new List<Wall>();
+
                 // get moved bricks
                 var movedBricks = (from wall in walls 
                                    from brick in wall.Bricks 
