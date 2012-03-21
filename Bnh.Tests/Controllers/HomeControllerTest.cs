@@ -4,9 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Web.Mvc;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Bnh;
-using Bnh.Controllers;
-using Bnh.Entities;
+using Bnh.Web;
+using Bnh.Web.Controllers;
 
 namespace Bnh.Tests.Controllers
 {
@@ -16,9 +15,6 @@ namespace Bnh.Tests.Controllers
         [TestMethod]
         public void Index()
         {
-            CmEntities e = new CmEntities("metadata=res://*/Cm.csdl|res://*/Cm.ssdl|res://*/Cm.msl;provider=System.Data.SqlClient;provider connection string=\"data source=localhost\\sqlserver;initial catalog=bnh;integrated security=True;multipleactiveresultsets=True;App=EntityFramework\"");
-            var bricks = e.Bricks.ToList();
-
             // Arrange
             HomeController controller = new HomeController();
 
@@ -26,7 +22,7 @@ namespace Bnh.Tests.Controllers
             ViewResult result = controller.Index() as ViewResult;
 
             // Assert
-            Assert.AreEqual("Welcome to ASP.NET MVC!", result.ViewBag.Message);
+            Assert.AreEqual("Modify this template to jump-start your ASP.NET MVC application.", result.ViewBag.Message);
         }
 
         [TestMethod]
@@ -37,6 +33,19 @@ namespace Bnh.Tests.Controllers
 
             // Act
             ViewResult result = controller.About() as ViewResult;
+
+            // Assert
+            Assert.IsNotNull(result);
+        }
+
+        [TestMethod]
+        public void Contact()
+        {
+            // Arrange
+            HomeController controller = new HomeController();
+
+            // Act
+            ViewResult result = controller.Contact() as ViewResult;
 
             // Assert
             Assert.IsNotNull(result);

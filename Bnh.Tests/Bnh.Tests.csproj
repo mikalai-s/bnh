@@ -6,7 +6,7 @@
     <ProductVersion>
     </ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{6577E3DB-B75D-4528-904E-CBE7CF68A773}</ProjectGuid>
+    <ProjectGuid>{60CF4AAD-7085-4A3E-B2D8-D1E77EF8E5BE}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Bnh.Tests</RootNamespace>
@@ -40,12 +40,11 @@
     <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Data" />
-    <Reference Include="System.Data.Entity" />
     <Reference Include="System.Web" />
     <Reference Include="System.Web.ApplicationServices" />
     <Reference Include="System.Web.Extensions" />
     <Reference Include="System.Web.Abstractions" />
-    <Reference Include="System.Web.Mvc, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
+    <Reference Include="System.Web.Mvc, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
     <Reference Include="System.Web.Routing" />
     <Reference Include="System.Xml" />
   </ItemGroup>
@@ -57,13 +56,9 @@
     <Content Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Bnh.Entities\Bnh.Entities.csproj">
-      <Project>{A383D25F-9AB2-4EA2-B155-C4FB9827E9A5}</Project>
-      <Name>Bnh.Entities</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Bnh\Bnh.csproj">
-      <Project>{5E4395ED-3D78-46B4-AD1F-8E723D00E08A}</Project>
-      <Name>Bnh</Name>
+    <ProjectReference Include="..\Bnh.Web\Bnh.Web.csproj">
+      <Project>{0A805134-A1F2-4A14-84A7-16C701FB95AA}</Project>
+      <Name>Bnh.Web</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
