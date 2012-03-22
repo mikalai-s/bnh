@@ -97,7 +97,7 @@ Pixels     EMs         Percent Points
 */
 
 body { 
-  font-size: 15px;
+  font-size: 13px;
   color: #434343; 
   background: #fff;
   font-family: Tahoma, "Helvetica Neue", Arial, Helvetica, sans-serif;
@@ -194,15 +194,15 @@ fieldset ol li  { margin: 0 0 6px 0; }
 ***************************************************************/
 #layout-wrapper { }
 
-#layout-header, #layout-featured, #layout-before-main, #layout-main, #layout-footer, #layout-after-main, #layout-tripel {
-    width:960px;
+#layout-header, #layout-featured, #layout-before-main, #layout-main, #layout-footer, #layout-after-main, #layout-tripel, #layout-navigation {
+    width:55%;
+    min-width: 500px;
     margin:0 auto;
 }
 
 /* Navigation */
 #layout-navigation 
-{
-    width: 960px;
+{   
     margin: 0 auto;
     display: block;
     border-bottom: 1px solid #dbdbdb;
