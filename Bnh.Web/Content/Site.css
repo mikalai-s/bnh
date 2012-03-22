@@ -32,7 +32,7 @@ body
 /* Remember focus styles! */
 :focus { outline: 0; }
 
-body { line-height: 20px; color: black; background: white; }
+body { color: black; background: white; }
 ol, ul { list-style: none; }
 
 /* Tables still need 'cellspacing="0"' in the markup */
