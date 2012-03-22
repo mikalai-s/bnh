@@ -39,23 +39,13 @@
 //        external_link_list_url : "js/link_list.js",
 //        external_image_list_url : "js/image_list.js",
 //        media_external_list_url : "js/media_list.js",
-
-        setup: function (ed) {
-            ed.onSaveContent.add(function (ed, o) {
-                if(document.submitting) {
-                    o.content = Global.Encoding.encode64(o.content);
-                }
-            });
-        }
+        
     });
 
     $(function () {
-        $("form").validate({
-            submitHandler: function (form) {
-                // NOTE: I didn't find a better way to prepare base64 string before submittion
-                document.submitting = true;
-                form.submit();
-            }
+        $("form").submit(function (form) {
+            var textarea = $("#htmlTextArea");
+            textarea.val(Global.Encoding.encode64(textarea.val()));           
         });
     });
 </script>
