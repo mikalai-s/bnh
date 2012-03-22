@@ -46,7 +46,7 @@ namespace Bnh.Controllers
         public ActionResult EditHtml(HtmlBrick brick)
         {
             var realBrick = db.Bricks.Where(b => b.Id == brick.Id).OfType<HtmlBrick>().FirstOrDefault();
-            realBrick.Html = brick.Html.FromBase64();
+            realBrick.Html = HttpUtility.HtmlDecode(brick.Html);
             return Edit(brick);
         }
 

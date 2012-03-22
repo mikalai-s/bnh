@@ -13,6 +13,7 @@
     tinyMCE.init({
         mode: "textareas",
         pugins: "emotions,spellchecker,advhr,insertdatetime,preview",
+        encoding : "xml",
         theme: "advanced",
 
         plugins : "autolink,lists,spellchecker,pagebreak,style,layer,table,save,advhr,advimage,advlink,emotions,iespell,inlinepopups,insertdatetime,preview,media,searchreplace,print,contextmenu,paste,directionality,fullscreen,noneditable,visualchars,nonbreaking,xhtmlxtras,template",
@@ -41,13 +42,7 @@
 //        media_external_list_url : "js/media_list.js",
         
     });
-
-    $(function () {
-        $("form").submit(function (form) {
-            var textarea = $("#htmlTextArea");
-            textarea.val(Global.Encoding.encode64(textarea.val()));           
-        });
-    });
+   
 </script>
 
 <div class="editor-label">Content</div>
