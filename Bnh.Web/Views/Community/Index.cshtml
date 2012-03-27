@@ -1,52 +1,61 @@
 ﻿@model IEnumerable<Bnh.Entities.Community>
-
 @{
     ViewBag.Title = "Communities in Calgary";
 }
+@section Styles
+{
+    <link href="@Url.Content("~/Styles/CommunityIndex.css")" rel="stylesheet" type="text/css" />
+}
 
-<div class="page-view">
-    <h2>
-        @ViewBag.Title
-        @if (Context.User.IsInRole("content_manager"))
-        {
-            <sup class="alter">@Html.ActionLink("create new", "Create", null, new { title = "Create new community" })</sup>
-        }
-    </h2>
+<h2>
+    @ViewBag.Title
+    @if (Context.User.IsInRole("content_manager"))
+    {
+        <sup class="alter">@Html.ActionLink("create new", "Create", null, new { title = "Create new community" })</sup>
+    }
+</h2>
+<table class="main">
+    <tr>
+        <td>
+            <table class="zones">
+                @{
+                    var rowCount = 2;
+                    var zones = Model.Select(c => c.Zone).Distinct().OrderBy(z => z.Order).ToList();
 
-    <div style="float: left">
-        @{
-            var colNumber = 2;
-            var zoneOrder = new List<int> { 1, 2, 4, 3 }; // TODO: remove that
-            var zones = Model.Select(c => c.Zone).Distinct().OrderBy(z => zoneOrder.IndexOf(z.Order)).ToList();
-            
-            <table>
-            @for (int i = 0; i < zones.Count / colNumber; i ++)
-            {
-                <tr>
-                @foreach(var zone in zones.GetRange(i * colNumber, colNumber))
-                {
-                    <td>
-                        <div class="list-header">@zone.Name</div>
-                        @foreach (var community in Model.Where(c => c.Zone == zone).OrderBy(c => c.Name)) 
-                        {
-                            <div class="list">
-                                @if (Context.User.IsInRole("content_manager"))
-                                {
-                                    <sup class="alter">@Html.ActionLink("x", "Delete", new { id = community.Id }, new { title = "Delete " + community.Name })</sup>
-                                }
-                                <span>@Html.ActionLink(community.Name, "Details", new { id = community.Id })</span>
-                            </div>
-                        }
-                    </td>
+                    for (var i = 0; i < zones.Count / rowCount; i++)
+                    { 
+                    <tr>
+                        <td>
+                            @foreach (var zone in zones.GetRange(i * rowCount, rowCount))
+                            {
+                                <div class="zone">
+                                    <div class="zone-header">@zone.Name</div>
+                                    @foreach (var community in zone.Communities)
+                                    {
+                                        <div class="zone-community">
+                                            @if (Context.User.IsInRole("content_manager"))
+                                            {
+                                                <sup class="alter">@Html.ActionLink("x", "Delete", new { id = community.Id }, new { title = "Delete " + community.Name })</sup>
+                                            }
+                                            <span>@Html.ActionLink(community.Name, "Details", new { id = community.Id })</span>
+                                        </div>
+                                    }
+                                </div>
+                            }
+                        </td>
+                    </tr>
+                    }        
                 }
-                </tr>
-            }
             </table>
-        }
-    </div>
-    <div style="float: right; text-align: center; height:  100%">
-        <iframe width="600" height="800" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" style="border: 1px solid black; display: block" src="http://maps.google.com/?ie=UTF8&amp;ll=51.02844,-114.071045&amp;spn=0.448696,0.958557&amp;t=m&amp;z=11&amp;output=embed"></iframe>
-        <small><a href="http://maps.google.com/?ie=UTF8&amp;ll=51.02844,-114.071045&amp;spn=0.448696,0.958557&amp;t=m&amp;z=11&amp;source=embed">View Larger Map</a></small>
-    </div>
-</div>
-
+        </td>
+        <td>
+            <div class="map">
+                <iframe width="600" height="800" frameborder="0" scrolling="no" marginheight="0"
+                    marginwidth="0" style="border: 1px solid black; display: block" src="http://maps.google.com/?ie=UTF8&amp;ll=51.02844,-114.071045&amp;spn=0.448696,0.958557&amp;t=m&amp;z=11&amp;output=embed">
+                </iframe>
+                <small><a href="http://maps.google.com/?ie=UTF8&amp;ll=51.02844,-114.071045&amp;spn=0.448696,0.958557&amp;t=m&amp;z=11&amp;source=embed">
+                    View Larger Map</a></small>
+            </div>
+        </td>
+    </tr>
+</table>

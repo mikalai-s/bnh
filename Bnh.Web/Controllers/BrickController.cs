@@ -9,7 +9,8 @@ using Bnh.Entities;
 using Bnh.WebFramework;
 
 namespace Bnh.Controllers
-{ 
+{
+    [Authorize(Roles = "content_manager")]
     public class BrickController : Controller
     {
         private CmEntities db = new CmEntities();
@@ -24,7 +25,6 @@ namespace Bnh.Controllers
         
         //
         // GET: /Brick/Edit/5
- 
         public ActionResult Edit(long id)
         {
             Brick brick = db.Bricks.Single(b => b.Id == id);

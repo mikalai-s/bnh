@@ -1,0 +1,55 @@
+﻿table.main
+{
+    width: 100%;
+}
+
+table.main > tbody > tr > td
+{
+    vertical-align: top;
+    width: 99%;
+}
+
+table.zones
+{
+    width: 100%;
+}
+
+table.zones td
+{
+    vertical-align: top;
+
+}
+
+table.zones .zone
+{
+    float: left;
+    display: table-row;
+    width: 50%;
+}
+
+table .zone-header, table .zone-community
+{
+    padding: 3px;
+}
+
+table .zone-header
+{
+    padding-left: 10px;
+    font-weight: bold;
+}
+
+sup.alter a
+{
+    color: #b60e00;
+    font-size: 110%;
+}
+
+.alter input
+{
+    color: #b60e00 !important;
+}
+
+.map
+{
+    float: right;
+}
