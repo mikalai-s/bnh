@@ -9,14 +9,14 @@ using Bnh.Entities;
 using System.Data.Objects.DataClasses;
 
 namespace Bnh.Controllers
-{ 
+{
+    [Authorize]
     public class CommunityController : Controller
     {
         private BlEntities db = new BlEntities();
 
         //
         // GET: /Community/
-
         public ViewResult Index()
         {
             var communities = db.Communities.Include("Zone");
@@ -25,7 +25,6 @@ namespace Bnh.Controllers
 
         //
         // GET: /Community/Details/5
-
         public ViewResult Details(Guid id)
         {
             Community community = db.Communities.Single(c => c.Id == id);
@@ -34,7 +33,7 @@ namespace Bnh.Controllers
 
         //
         // GET: /Community/Create
-
+        [Authorize(Roles = "content_manager")]
         public ActionResult Create()
         {
             ViewBag.ZoneId = new SelectList(db.Zones, "Id", "Name");
@@ -49,6 +48,7 @@ namespace Bnh.Controllers
         // POST: /Community/Create
 
         [HttpPost]
+        [Authorize(Roles = "content_manager")]
         public ActionResult Create(Community community)
         {
             if (ModelState.IsValid)
@@ -74,7 +74,7 @@ namespace Bnh.Controllers
         
         //
         // GET: /Community/Edit/5
- 
+        [Authorize(Roles = "content_manager")]
         public ActionResult Edit(Guid id)
         {
             Community community = db.Communities.Single(c => c.Id == id);
@@ -86,6 +86,7 @@ namespace Bnh.Controllers
         // POST: /Community/Edit/5
 
         [HttpPost]
+        [Authorize(Roles = "content_manager")]
         public ActionResult Edit(Community community)
         {
             if (ModelState.IsValid)
@@ -101,7 +102,7 @@ namespace Bnh.Controllers
 
         //
         // GET: /Community/Delete/5
- 
+        [Authorize(Roles = "content_manager")]
         public ActionResult Delete(Guid id)
         {
             Community community = db.Communities.Single(c => c.Id == id);
@@ -112,6 +113,7 @@ namespace Bnh.Controllers
         // POST: /Community/Delete/5
 
         [HttpPost, ActionName("Delete")]
+        [Authorize(Roles = "content_manager")]
         public ActionResult DeleteConfirmed(Guid id)
         {            
             Community community = db.Communities.Single(c => c.Id == id);

@@ -194,7 +194,8 @@ fieldset ol li  { margin: 0 0 6px 0; }
 ***************************************************************/
 #layout-wrapper { }
 
-#layout-header, #layout-featured, #layout-before-main, #layout-main, #layout-footer, #layout-after-main, #layout-tripel, #layout-navigation {
+#layout-header, #layout-featured, #layout-before-main, #layout-main, #layout-footer, #layout-after-main, #layout-tripel, #layout-navigation
+{
     width:55%;
     min-width: 500px;
     margin:0 auto;

@@ -3,7 +3,12 @@
 @{
     ViewBag.Title = Model.Name;
 }
-<link href="@Url.Content("~/Styles/Scene.css")" rel="stylesheet" type="text/css" />
+
+@section Styles
+{
+    <link href="@Url.Content("~/Styles/Scene.css")" rel="stylesheet" type="text/css" />
+}
+
 <div class="page-view">
     <h2>            
         @if (Context.User.IsInRole("content_manager"))

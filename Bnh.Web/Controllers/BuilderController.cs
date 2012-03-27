@@ -9,6 +9,7 @@ using Bnh.Entities;
 
 namespace Bnh.Controllers
 { 
+    [Authorize]
     public class BuilderController : Controller
     {
         private BlEntities db = new BlEntities();
@@ -32,7 +33,7 @@ namespace Bnh.Controllers
 
         //
         // GET: /Builder/Create
-
+        [Authorize(Roles = "content_manager")]
         public ActionResult Create()
         {
             return View();
@@ -42,6 +43,7 @@ namespace Bnh.Controllers
         // POST: /Builder/Create
 
         [HttpPost]
+        [Authorize(Roles = "content_manager")]
         public ActionResult Create(Builder builder)
         {
             if (ModelState.IsValid)
@@ -57,7 +59,7 @@ namespace Bnh.Controllers
         
         //
         // GET: /Builder/Edit/5
- 
+        [Authorize(Roles = "content_manager")]
         public ActionResult Edit(Guid id)
         {
             Builder builder = db.Builders.Single(b => b.Id == id);
@@ -68,6 +70,7 @@ namespace Bnh.Controllers
         // POST: /Builder/Edit/5
 
         [HttpPost]
+        [Authorize(Roles = "content_manager")]
         public ActionResult Edit(Builder builder)
         {
             if (ModelState.IsValid)
@@ -82,7 +85,7 @@ namespace Bnh.Controllers
 
         //
         // GET: /Builder/Delete/5
- 
+        [Authorize(Roles = "content_manager")]
         public ActionResult Delete(Guid id)
         {
             Builder builder = db.Builders.Single(b => b.Id == id);
@@ -93,6 +96,7 @@ namespace Bnh.Controllers
         // POST: /Builder/Delete/5
 
         [HttpPost, ActionName("Delete")]
+        [Authorize(Roles = "content_manager")]
         public ActionResult DeleteConfirmed(Guid id)
         {            
             Builder builder = db.Builders.Single(b => b.Id == id);

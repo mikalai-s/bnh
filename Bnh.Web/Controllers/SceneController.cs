@@ -11,14 +11,14 @@ using System.Web.Script.Serialization;
 using System.Data.Objects.DataClasses;
 
 namespace Bnh.Controllers
-{ 
+{
+    [Authorize(Roles = "content_manager")]
     public class SceneController : Controller
     {
         private CmEntities db = new CmEntities();
 
 
         // GET: /Scene/Edit/5
-        [Authorize(Roles="content_manager")]
         public ActionResult Edit(Guid id)
         {
             ViewBag.OwnerId = id;
@@ -31,7 +31,6 @@ namespace Bnh.Controllers
         // POST: /Scene/Edit/5
 
         [HttpPost]
-        [Authorize(Roles="content_manager")]
         public ActionResult Save(Guid ownerId, List<Wall> walls)
         {
             if (ModelState.IsValid)
@@ -135,7 +134,6 @@ namespace Bnh.Controllers
         }
 
         [HttpPost]
-        [Authorize(Roles = "content_manager")]
         public ActionResult ExportTemplate(string title, Guid ownerId)
         {
             if (ModelState.IsValid)
@@ -155,7 +153,6 @@ namespace Bnh.Controllers
         }
 
         [HttpPost]
-        [Authorize(Roles = "content_manager")]
         public ActionResult ApplyTemplate(Guid ownerId, Guid templateId)
         {
             // delete obsolete scene

@@ -4,9 +4,12 @@
     ViewBag.Title = "Edit";
 }
 
-<h2>Edit</h2>
+@section Scripts
+{
+    <script src="@Url.Content("~/Scripts/jquery.validate.js")" type="text/javascript"></script>
+}
 
-<script src="@Url.Content("~/Scripts/jquery.validate.js")" type="text/javascript"></script>
+<h2>Edit</h2>
 
 <div class="page-view">
 @using (Html.BeginForm((string)ViewBag.PartialView, "Brick", new { id = Model.Id }))
