@@ -8,12 +8,13 @@
 //------------------------------------------------------------------------------
 
 using System;
+using System.ComponentModel;
+using System.Data.EntityClient;
 using System.Data.Objects;
 using System.Data.Objects.DataClasses;
-using System.Data.EntityClient;
-using System.ComponentModel;
-using System.Xml.Serialization;
+using System.Linq;
 using System.Runtime.Serialization;
+using System.Xml.Serialization;
 
 [assembly: EdmSchemaAttribute()]
 #region EDM Relationship Metadata
@@ -38,7 +39,7 @@ namespace Bnh.Entities
         /// <summary>
         /// Initializes a new BlEntities object using the connection string found in the 'BlEntities' section of the application configuration file.
         /// </summary>
-        public BlEntities() : this(EntityConnectionHelper.Get("Bl"))
+        public BlEntities() : base("name=BlEntities", "BlEntities")
         {
             this.ContextOptions.LazyLoadingEnabled = true;
             OnContextCreated();
@@ -137,6 +138,7 @@ namespace Bnh.Entities
         private ObjectSet<Zone> _Zones;
 
         #endregion
+
         #region AddTo Methods
     
         /// <summary>
@@ -172,11 +174,11 @@ namespace Bnh.Entities
         }
 
         #endregion
+
     }
-    
 
     #endregion
-    
+
     #region Entities
     
     /// <summary>
@@ -194,15 +196,18 @@ namespace Bnh.Entities
         /// </summary>
         /// <param name="id">Initial value of the Id property.</param>
         /// <param name="name">Initial value of the Name property.</param>
-        public static Builder CreateBuilder(global::System.Guid id, global::System.String name)
+        /// <param name="urlId">Initial value of the UrlId property.</param>
+        public static Builder CreateBuilder(global::System.Guid id, global::System.String name, global::System.String urlId)
         {
             Builder builder = new Builder();
             builder.Id = id;
             builder.Name = name;
+            builder.UrlId = urlId;
             return builder;
         }
 
         #endregion
+
         #region Primitive Properties
     
         /// <summary>
@@ -255,8 +260,33 @@ namespace Bnh.Entities
         private global::System.String _Name;
         partial void OnNameChanging(global::System.String value);
         partial void OnNameChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.String UrlId
+        {
+            get
+            {
+                return _UrlId;
+            }
+            set
+            {
+                OnUrlIdChanging(value);
+                ReportPropertyChanging("UrlId");
+                _UrlId = StructuralObject.SetValidValue(value, false);
+                ReportPropertyChanged("UrlId");
+                OnUrlIdChanged();
+            }
+        }
+        private global::System.String _UrlId;
+        partial void OnUrlIdChanging(global::System.String value);
+        partial void OnUrlIdChanged();
 
         #endregion
+
     
         #region Navigation Properties
     
@@ -283,6 +313,7 @@ namespace Bnh.Entities
         }
 
         #endregion
+
     }
     
     /// <summary>
@@ -300,15 +331,18 @@ namespace Bnh.Entities
         /// </summary>
         /// <param name="id">Initial value of the Id property.</param>
         /// <param name="name">Initial value of the Name property.</param>
-        public static City CreateCity(global::System.Guid id, global::System.String name)
+        /// <param name="urlId">Initial value of the UrlId property.</param>
+        public static City CreateCity(global::System.Guid id, global::System.String name, global::System.String urlId)
         {
             City city = new City();
             city.Id = id;
             city.Name = name;
+            city.UrlId = urlId;
             return city;
         }
 
         #endregion
+
         #region Primitive Properties
     
         /// <summary>
@@ -361,8 +395,33 @@ namespace Bnh.Entities
         private global::System.String _Name;
         partial void OnNameChanging(global::System.String value);
         partial void OnNameChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.String UrlId
+        {
+            get
+            {
+                return _UrlId;
+            }
+            set
+            {
+                OnUrlIdChanging(value);
+                ReportPropertyChanging("UrlId");
+                _UrlId = StructuralObject.SetValidValue(value, false);
+                ReportPropertyChanged("UrlId");
+                OnUrlIdChanged();
+            }
+        }
+        private global::System.String _UrlId;
+        partial void OnUrlIdChanging(global::System.String value);
+        partial void OnUrlIdChanged();
 
         #endregion
+
     
         #region Navigation Properties
     
@@ -389,6 +448,7 @@ namespace Bnh.Entities
         }
 
         #endregion
+
     }
     
     /// <summary>
@@ -407,16 +467,19 @@ namespace Bnh.Entities
         /// <param name="id">Initial value of the Id property.</param>
         /// <param name="name">Initial value of the Name property.</param>
         /// <param name="zoneId">Initial value of the ZoneId property.</param>
-        public static Community CreateCommunity(global::System.Guid id, global::System.String name, global::System.Guid zoneId)
+        /// <param name="urlId">Initial value of the UrlId property.</param>
+        public static Community CreateCommunity(global::System.Guid id, global::System.String name, global::System.Guid zoneId, global::System.String urlId)
         {
             Community community = new Community();
             community.Id = id;
             community.Name = name;
             community.ZoneId = zoneId;
+            community.UrlId = urlId;
             return community;
         }
 
         #endregion
+
         #region Primitive Properties
     
         /// <summary>
@@ -493,8 +556,33 @@ namespace Bnh.Entities
         private global::System.Guid _ZoneId;
         partial void OnZoneIdChanging(global::System.Guid value);
         partial void OnZoneIdChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.String UrlId
+        {
+            get
+            {
+                return _UrlId;
+            }
+            set
+            {
+                OnUrlIdChanging(value);
+                ReportPropertyChanging("UrlId");
+                _UrlId = StructuralObject.SetValidValue(value, false);
+                ReportPropertyChanged("UrlId");
+                OnUrlIdChanged();
+            }
+        }
+        private global::System.String _UrlId;
+        partial void OnUrlIdChanging(global::System.String value);
+        partial void OnUrlIdChanged();
 
         #endregion
+
     
         #region Navigation Properties
     
@@ -559,6 +647,7 @@ namespace Bnh.Entities
         }
 
         #endregion
+
     }
     
     /// <summary>
@@ -578,17 +667,20 @@ namespace Bnh.Entities
         /// <param name="name">Initial value of the Name property.</param>
         /// <param name="cityId">Initial value of the CityId property.</param>
         /// <param name="order">Initial value of the Order property.</param>
-        public static Zone CreateZone(global::System.Guid id, global::System.String name, global::System.Guid cityId, global::System.Int32 order)
+        /// <param name="urlId">Initial value of the UrlId property.</param>
+        public static Zone CreateZone(global::System.Guid id, global::System.String name, global::System.Guid cityId, global::System.Int32 order, global::System.String urlId)
         {
             Zone zone = new Zone();
             zone.Id = id;
             zone.Name = name;
             zone.CityId = cityId;
             zone.Order = order;
+            zone.UrlId = urlId;
             return zone;
         }
 
         #endregion
+
         #region Primitive Properties
     
         /// <summary>
@@ -689,8 +781,33 @@ namespace Bnh.Entities
         private global::System.Int32 _Order;
         partial void OnOrderChanging(global::System.Int32 value);
         partial void OnOrderChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.String UrlId
+        {
+            get
+            {
+                return _UrlId;
+            }
+            set
+            {
+                OnUrlIdChanging(value);
+                ReportPropertyChanging("UrlId");
+                _UrlId = StructuralObject.SetValidValue(value, false);
+                ReportPropertyChanged("UrlId");
+                OnUrlIdChanged();
+            }
+        }
+        private global::System.String _UrlId;
+        partial void OnUrlIdChanging(global::System.String value);
+        partial void OnUrlIdChanged();
 
         #endregion
+
     
         #region Navigation Properties
     
@@ -755,8 +872,10 @@ namespace Bnh.Entities
         }
 
         #endregion
+
     }
 
     #endregion
+
     
 }
