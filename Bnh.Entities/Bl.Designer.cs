@@ -39,7 +39,7 @@ namespace Bnh.Entities
         /// <summary>
         /// Initializes a new BlEntities object using the connection string found in the 'BlEntities' section of the application configuration file.
         /// </summary>
-        public BlEntities() : base("name=BlEntities", "BlEntities")
+        public BlEntities() : this(EntityConnectionHelper.Get("Bl"))
         {
             this.ContextOptions.LazyLoadingEnabled = true;
             OnContextCreated();
