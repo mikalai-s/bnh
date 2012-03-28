@@ -39,6 +39,7 @@
           </Key>
           <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
           <Property Name="Name" Type="nvarchar" Nullable="false" MaxLength="100" />
+          <Property Name="UrlId" Type="nvarchar" Nullable="false" MaxLength="100" />
         </EntityType>
         <EntityType Name="City">
           <Key>
@@ -46,6 +47,7 @@
           </Key>
           <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
           <Property Name="Name" Type="nvarchar" Nullable="false" MaxLength="100" />
+          <Property Name="UrlId" Type="nvarchar" Nullable="false" MaxLength="100" />
         </EntityType>
         <EntityType Name="Community">
           <Key>
@@ -54,9 +56,10 @@
           <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
           <Property Name="Name" Type="nvarchar" Nullable="false" MaxLength="100" />
           <Property Name="ZoneId" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="UrlId" Type="nvarchar" Nullable="false" MaxLength="100" />
         </EntityType>
         <!--Errors Found During Generation:
-      warning 6002: The table/view 'bnh-test.bl.Community_Builders' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
+      warning 6002: The table/view 'bnh.bl.Community_Builders' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
       -->
         <EntityType Name="Community_Builders">
           <Key>
@@ -73,7 +76,8 @@
           <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
           <Property Name="Name" Type="nvarchar" Nullable="false" MaxLength="50" />
           <Property Name="CityId" Type="uniqueidentifier" Nullable="false" />
-          <Property Name="Order" Type="int" Nullable="false" />
+          <Property Name="Order" Type="int" />
+          <Property Name="UrlId" Type="nvarchar" Nullable="false" MaxLength="50" />
         </EntityType>
         <Association Name="FK_Community_Builders_TO_Builder">
           <End Role="Builder" Type="BlModel.Store.Builder" Multiplicity="1">
@@ -160,6 +164,7 @@
           <Property Type="Guid" Name="Id" Nullable="false" />
           <Property Type="String" Name="Name" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="Communities" Relationship="BlModel.Community_Builders" FromRole="Builder" ToRole="Community" />
+          <Property Type="String" Name="UrlId" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="City">
           <Key>
@@ -168,6 +173,7 @@
           <Property Type="Guid" Name="Id" Nullable="false" />
           <Property Type="String" Name="Name" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="Zones" Relationship="BlModel.FK_Zone_City" FromRole="City" ToRole="Zone" />
+          <Property Type="String" Name="UrlId" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="Community">
           <Key>
@@ -178,6 +184,7 @@
           <Property Type="Guid" Name="ZoneId" Nullable="false" />
           <NavigationProperty Name="Zone" Relationship="BlModel.FK_Community_Zone" FromRole="Community" ToRole="Zone" />
           <NavigationProperty Name="Builders" Relationship="BlModel.Community_Builders" FromRole="Community" ToRole="Builder" />
+          <Property Type="String" Name="UrlId" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="Zone">
           <Key>
@@ -189,6 +196,7 @@
           <NavigationProperty Name="City" Relationship="BlModel.FK_Zone_City" FromRole="Zone" ToRole="City" />
           <NavigationProperty Name="Communities" Relationship="BlModel.FK_Community_Zone" FromRole="Zone" ToRole="Community" />
           <Property Type="Int32" Name="Order" Nullable="false" />
+          <Property Type="String" Name="UrlId" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
         </EntityType>
         <Association Name="FK_Zone_City">
           <End Type="BlModel.City" Role="City" Multiplicity="1" />
@@ -227,6 +235,7 @@
           <EntitySetMapping Name="Builders">
             <EntityTypeMapping TypeName="BlModel.Builder">
               <MappingFragment StoreEntitySet="Builder">
+                <ScalarProperty Name="UrlId" ColumnName="UrlId" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
@@ -235,6 +244,7 @@
           <EntitySetMapping Name="Cities">
             <EntityTypeMapping TypeName="BlModel.City">
               <MappingFragment StoreEntitySet="City">
+                <ScalarProperty Name="UrlId" ColumnName="UrlId" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
@@ -243,6 +253,7 @@
           <EntitySetMapping Name="Communities">
             <EntityTypeMapping TypeName="BlModel.Community">
               <MappingFragment StoreEntitySet="Community">
+                <ScalarProperty Name="UrlId" ColumnName="UrlId" />
                 <ScalarProperty Name="ZoneId" ColumnName="ZoneId" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
@@ -252,6 +263,7 @@
           <EntitySetMapping Name="Zones">
             <EntityTypeMapping TypeName="BlModel.Zone">
               <MappingFragment StoreEntitySet="Zone">
+                <ScalarProperty Name="UrlId" ColumnName="UrlId" />
                 <ScalarProperty Name="Order" ColumnName="Order" />
                 <ScalarProperty Name="CityId" ColumnName="CityId" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
