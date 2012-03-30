@@ -37,7 +37,7 @@
                                             {
                                                 <sup class="alter">@Html.ActionLink("x", "Delete", new { id = community.Id }, new { title = "Delete " + community.Name })</sup>
                                             }
-                                            <span>@Html.ActionLink(community.Name, "Details", new { id = community.Id })</span>
+                                            <span>@Html.ActionLink(community.Name, "Details", new { id = community.UrlId })</span>
                                         </div>
                                     }
                                 </div>

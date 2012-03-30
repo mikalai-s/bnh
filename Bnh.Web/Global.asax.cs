@@ -27,15 +27,38 @@ namespace Bnh.Web
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
 
             routes.MapHttpRoute(
-                name: "DefaultApi",
-                routeTemplate: "api/{controller}/{id}",
-                defaults: new { id = RouteParameter.Optional }
+                "DefaultApi",
+                "api/{controller}/{id}",
+                new { id = RouteParameter.Optional }
+            );
+
+            MapControllerInvertRoutes(routes, "Community");
+
+            routes.MapRoute(
+                "Default",
+                "{controller}/{action}/{id}",
+                new { controller = "Home", action = "Index", id = UrlParameter.Optional }
+            );
+        }
+
+        private static void MapControllerInvertRoutes(RouteCollection routes, string controller)
+        {
+            routes.MapRoute(
+                controller + 1,
+                controller,
+                new { controller = controller, action = "Index" }
             );
 
             routes.MapRoute(
-                name: "Default",
-                url: "{controller}/{action}/{id}",
-                defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional }
+                controller + 2,
+                controller + "/Create",
+                new { controller = controller, action = "Create" }
+            );
+
+            routes.MapRoute(
+                controller + 3,
+                controller + "/{id}/{action}",
+                new { controller = controller, action = "Details" }
             );
         }
 
