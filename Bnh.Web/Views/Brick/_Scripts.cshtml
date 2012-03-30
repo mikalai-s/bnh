@@ -1,0 +1,14 @@
+﻿@model string
+@switch (Model)
+{
+    case "EditGallery":
+    <script src="@Url.Content("~/Scripts/jquery.validate.min.js")" type="text/javascript"></script>
+            break;
+
+    case "EditHtml":
+    <script src="@Url.Content("~/Scripts/jquery.validate.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/tiny_mce/tiny_mce_src.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/EditHtmlBrick.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/Global.Encoding.js")" type="text/javascript"></script>
+            break;
+}
