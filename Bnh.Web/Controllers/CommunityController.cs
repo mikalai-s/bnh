@@ -23,11 +23,9 @@ namespace Bnh.Controllers
             return View(communities.ToList());
         }
 
-        //
-        // GET: /Community/Details/5
-        public ViewResult Details(Guid id)
+        public ViewResult Details(string id)
         {
-            Community community = db.Communities.Single(c => c.Id == id);
+            Community community = db.Communities.Single(c => c.UrlId == id);
             return View(community);
         }
 
@@ -57,13 +55,15 @@ namespace Bnh.Controllers
                 db.Communities.AddObject(community);
                 db.SaveChanges();
 
-                using(var cm = new CmEntities())
+                var sceneTemplateIdString = this.Request.Form["SceneTemplateId"];
+                if (!string.IsNullOrEmpty(sceneTemplateIdString))
                 {
-                    var sceneTemplateId = Guid.Parse(this.Request.Form["SceneTemplateId"]);
+                    using (var cm = new CmEntities())
+                    {
+                        SceneTemplating.CloneScene(Guid.Parse(sceneTemplateIdString), community.Id, cm);
 
-                    SceneTemplating.CloneScene(sceneTemplateId, community.Id, cm);
-
-                    cm.SaveChanges();
+                        cm.SaveChanges();
+                    }
                 }
                 return RedirectToAction("Index");  
             }
