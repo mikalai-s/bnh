@@ -521,6 +521,8 @@
     <Content Include="Views\Shared\DesignWall.cshtml" />
     <Content Include="Views\Shared\Empty.cshtml" />
     <Content Include="Views\Shared\Scene.cshtml" />
+    <Content Include="Views\Brick\_Scripts.cshtml" />
+    <Content Include="Views\Brick\_Styles.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
