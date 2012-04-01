@@ -45,19 +45,19 @@ namespace Bnh.Web
         {
             routes.MapRoute(
                 controller + 1,
-                controller,
+                "Calgary/" + controller,
                 new { controller = controller, action = "Index" }
             );
 
             routes.MapRoute(
                 controller + 2,
-                controller + "/Create",
+                "Calgary/" + controller + "/Create",
                 new { controller = controller, action = "Create" }
             );
 
             routes.MapRoute(
                 controller + 3,
-                controller + "/{id}/{action}",
+                "Calgary/" + controller + "/{id}/{action}",
                 new { controller = controller, action = "Details" }
             );
         }

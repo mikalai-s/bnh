@@ -14,7 +14,7 @@ body
 .page
 {
     width: 55%;
-    min-width: 800px;
+    min-width: 960px;
     margin: 0px auto; /* centering */
 }
 
