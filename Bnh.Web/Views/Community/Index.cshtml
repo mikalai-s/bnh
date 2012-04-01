@@ -6,6 +6,12 @@
 {
     <link href="@Url.Content("~/Styles/CommunityIndex.css")" rel="stylesheet" type="text/css" />
 }
+@section Scripts
+{
+    <script type="text/javascript" src="//maps.googleapis.com/maps/api/js?sensor=false"></script>
+    @*<script src="http://maps.googleapis.com/maps/api/js?key=AIzaSyBXgUOTPfgbS4kHE7fm_xr2za_O1ApA_TM&sensor=false" type="text/javascript"></script>*@
+    <script src="@Url.Content("/Scripts/Map.js")" type="text/javascript"></script>
+}
 
 <h2>
     @ViewBag.Title
@@ -30,7 +36,7 @@
                             {
                                 <div class="zone">
                                     <div class="zone-header">@zone.Name</div>
-                                    @foreach (var community in zone.Communities)
+                                    @foreach (var community in zone.Communities.OrderBy(c => c.Name))
                                     {
                                         <div class="zone-community">
                                             @if (Context.User.IsInRole("content_manager"))
@@ -50,11 +56,7 @@
         </td>
         <td>
             <div class="map">
-                <iframe width="600" height="800" frameborder="0" scrolling="no" marginheight="0"
-                    marginwidth="0" style="border: 1px solid black; display: block" src="http://maps.google.com/?ie=UTF8&amp;ll=51.02844,-114.071045&amp;spn=0.448696,0.958557&amp;t=m&amp;z=11&amp;output=embed">
-                </iframe>
-                <small><a href="http://maps.google.com/?ie=UTF8&amp;ll=51.02844,-114.071045&amp;spn=0.448696,0.958557&amp;t=m&amp;z=11&amp;source=embed">
-                    View Larger Map</a></small>
+                <div id="mapCanvas" style="width: 600px; height: 800px;"></div>
             </div>
         </td>
     </tr>

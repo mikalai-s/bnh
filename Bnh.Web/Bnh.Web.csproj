@@ -197,6 +197,7 @@
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\knockout.debug.js" />
     <Content Include="Scripts\knockout.js" />
+    <Content Include="Scripts\Map.js" />
     <Content Include="Scripts\modernizr-2.5.3.js" />
     <Content Include="Scripts\tiny_mce\langs\en.js" />
     <Content Include="Scripts\tiny_mce\license.txt" />
