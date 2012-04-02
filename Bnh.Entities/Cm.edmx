@@ -143,8 +143,6 @@
           <Property Type="String" Name="GpsLocation" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Type="Int32" Name="Height" />
           <Property Type="Int32" Name="Zoom" />
-          <Property Type="String" Name="Polygon" MaxLength="1000" FixedLength="false" Unicode="true" />
-          <Property Type="String" Name="PolygonColor" MaxLength="6" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="SceneTemplate">
           <Key>
@@ -191,8 +189,6 @@
             </EntityTypeMapping>
             <EntityTypeMapping TypeName="IsTypeOf(bnhModel.MapBrick)">
               <MappingFragment StoreEntitySet="Brick">
-                <ScalarProperty Name="PolygonColor" ColumnName="MapPolygonColor" />
-                <ScalarProperty Name="Polygon" ColumnName="MapPolygon" />
                 <ScalarProperty Name="Zoom" ColumnName="MapZoom" />
                 <ScalarProperty Name="Height" ColumnName="MapHeight" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
@@ -277,8 +273,8 @@
         <EntityTypeShape EntityType="bnhModel.MapBrick" Width="1.5" PointX="6" PointY="4.375" Height="1.5956835937499996" />
         <InheritanceConnector EntityType="bnhModel.MapBrick" ManuallyRouted="false" >
           <ConnectorPoint PointX="3.75" PointY="3.172587890625" />
-          <ConnectorPoint PointX="3.75" PointY="5.2689925130208337" />
-          <ConnectorPoint PointX="6" PointY="5.2689925130208337" />
+          <ConnectorPoint PointX="3.75" PointY="5.172841796875" />
+          <ConnectorPoint PointX="6" PointY="5.172841796875" />
         </InheritanceConnector>
         <EntityTypeShape EntityType="bnhModel.SceneTemplate" Width="1.5" PointX="0.75" PointY="4.875" Height="1.7879850260416657" />
         <AssociationConnector Association="bnhModel.FK_Wall_SceneTemplate" >

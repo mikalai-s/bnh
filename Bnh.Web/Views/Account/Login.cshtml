@@ -33,7 +33,7 @@
             <tr>
                 <td></td>
                 <td colspan="2">
-                    @Html.CheckBoxFor(m => m.RememberMe)
+                    @Html.CheckBoxFor(m => m.RememberMe, new { @checked = "checked" })
                     @Html.LabelFor(m => m.RememberMe, new { @class = "checkbox" })
                 </td>
             </tr>

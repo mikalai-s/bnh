@@ -602,54 +602,6 @@ namespace Bnh.Entities
         private Nullable<global::System.Int32> _Zoom;
         partial void OnZoomChanging(Nullable<global::System.Int32> value);
         partial void OnZoomChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
-        [DataMemberAttribute()]
-        public global::System.String Polygon
-        {
-            get
-            {
-                return _Polygon;
-            }
-            set
-            {
-                OnPolygonChanging(value);
-                ReportPropertyChanging("Polygon");
-                _Polygon = StructuralObject.SetValidValue(value, true);
-                ReportPropertyChanged("Polygon");
-                OnPolygonChanged();
-            }
-        }
-        private global::System.String _Polygon;
-        partial void OnPolygonChanging(global::System.String value);
-        partial void OnPolygonChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
-        [DataMemberAttribute()]
-        public global::System.String PolygonColor
-        {
-            get
-            {
-                return _PolygonColor;
-            }
-            set
-            {
-                OnPolygonColorChanging(value);
-                ReportPropertyChanging("PolygonColor");
-                _PolygonColor = StructuralObject.SetValidValue(value, true);
-                ReportPropertyChanged("PolygonColor");
-                OnPolygonColorChanged();
-            }
-        }
-        private global::System.String _PolygonColor;
-        partial void OnPolygonColorChanging(global::System.String value);
-        partial void OnPolygonColorChanged();
 
         #endregion
 
