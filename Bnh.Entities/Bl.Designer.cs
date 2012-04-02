@@ -22,6 +22,7 @@ using System.Xml.Serialization;
 [assembly: EdmRelationshipAttribute("BlModel", "FK_Zone_City", "City", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(Bnh.Entities.City), "Zone", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(Bnh.Entities.Zone), true)]
 [assembly: EdmRelationshipAttribute("BlModel", "FK_Community_Zone", "Zone", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(Bnh.Entities.Zone), "Community", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(Bnh.Entities.Community), true)]
 [assembly: EdmRelationshipAttribute("BlModel", "Community_Builders", "Builder", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(Bnh.Entities.Builder), "Community", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(Bnh.Entities.Community))]
+[assembly: EdmRelationshipAttribute("BlModel", "FK_Builder_City", "City", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(Bnh.Entities.City), "Builder", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(Bnh.Entities.Builder), true)]
 
 #endregion
 
@@ -197,12 +198,14 @@ namespace Bnh.Entities
         /// <param name="id">Initial value of the Id property.</param>
         /// <param name="name">Initial value of the Name property.</param>
         /// <param name="urlId">Initial value of the UrlId property.</param>
-        public static Builder CreateBuilder(global::System.Guid id, global::System.String name, global::System.String urlId)
+        /// <param name="cityId">Initial value of the CityId property.</param>
+        public static Builder CreateBuilder(global::System.Guid id, global::System.String name, global::System.String urlId, global::System.Guid cityId)
         {
             Builder builder = new Builder();
             builder.Id = id;
             builder.Name = name;
             builder.UrlId = urlId;
+            builder.CityId = cityId;
             return builder;
         }
 
@@ -284,6 +287,30 @@ namespace Bnh.Entities
         private global::System.String _UrlId;
         partial void OnUrlIdChanging(global::System.String value);
         partial void OnUrlIdChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Guid CityId
+        {
+            get
+            {
+                return _CityId;
+            }
+            set
+            {
+                OnCityIdChanging(value);
+                ReportPropertyChanging("CityId");
+                _CityId = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("CityId");
+                OnCityIdChanged();
+            }
+        }
+        private global::System.Guid _CityId;
+        partial void OnCityIdChanging(global::System.Guid value);
+        partial void OnCityIdChanged();
 
         #endregion
 
@@ -308,6 +335,44 @@ namespace Bnh.Entities
                 if ((value != null))
                 {
                     ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<Community>("BlModel.Community_Builders", "Community", value);
+                }
+            }
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("BlModel", "FK_Builder_City", "City")]
+        public City City
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<City>("BlModel.FK_Builder_City", "City").Value;
+            }
+            set
+            {
+                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<City>("BlModel.FK_Builder_City", "City").Value = value;
+            }
+        }
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [BrowsableAttribute(false)]
+        [DataMemberAttribute()]
+        public EntityReference<City> CityReference
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<City>("BlModel.FK_Builder_City", "City");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<City>("BlModel.FK_Builder_City", "City", value);
                 }
             }
         }
@@ -446,6 +511,28 @@ namespace Bnh.Entities
                 }
             }
         }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("BlModel", "FK_Builder_City", "Builder")]
+        public EntityCollection<Builder> Builders
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<Builder>("BlModel.FK_Builder_City", "Builder");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<Builder>("BlModel.FK_Builder_City", "Builder", value);
+                }
+            }
+        }
 
         #endregion
 
@@ -580,6 +667,54 @@ namespace Bnh.Entities
         private global::System.String _UrlId;
         partial void OnUrlIdChanging(global::System.String value);
         partial void OnUrlIdChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String GpsLocation
+        {
+            get
+            {
+                return _GpsLocation;
+            }
+            set
+            {
+                OnGpsLocationChanging(value);
+                ReportPropertyChanging("GpsLocation");
+                _GpsLocation = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("GpsLocation");
+                OnGpsLocationChanged();
+            }
+        }
+        private global::System.String _GpsLocation;
+        partial void OnGpsLocationChanging(global::System.String value);
+        partial void OnGpsLocationChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String GpsBounds
+        {
+            get
+            {
+                return _GpsBounds;
+            }
+            set
+            {
+                OnGpsBoundsChanging(value);
+                ReportPropertyChanging("GpsBounds");
+                _GpsBounds = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("GpsBounds");
+                OnGpsBoundsChanged();
+            }
+        }
+        private global::System.String _GpsBounds;
+        partial void OnGpsBoundsChanging(global::System.String value);
+        partial void OnGpsBoundsChanged();
 
         #endregion
 

@@ -164,3 +164,20 @@ button:focus, .button:focus {
 }
 
 /* end buttons */
+
+
+/* editor fields */
+
+.editor-field
+{
+    margin-bottom: 15px;
+}
+
+/* end editor fields */
+
+
+/* misc */
+
+.hide       { display: none; }
+
+/* end misc */

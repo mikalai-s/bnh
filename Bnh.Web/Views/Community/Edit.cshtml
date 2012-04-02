@@ -6,54 +6,74 @@
 }
 
 @section Styles {
-    <link href="@Url.Content("~/Styles/Scene.css")" rel="stylesheet" type="text/css" />
+    <link href="@Url.Content("/Content/themes/base/jquery.ui.all.css")" rel="stylesheet" type="text/css" />
+    <link href="@Url.Content("/Styles/MapEditor.css")" rel="stylesheet" type="text/css" />
+}
+
+@section Scripts {
+    <script src="@Url.Content("/Scripts/jquery.validate.js")" type="text/javascript"></script>
+    <script type="text/javascript" src="//maps.googleapis.com/maps/api/js?sensor=false&libraries=drawing"></script>
+    <script src="@Url.Content("/Scripts/MapEditor.js")" type="text/javascript"></script>
+    <script src="@Url.Content("/Scripts/CommunityEdit.js")" type="text/javascript"></script>
+    <script src="@Url.Content("/Scripts/jquery.json-2.3.js")" type="text/javascript"></script>    
 }
 
 <h2>@ViewBag.Title</h2>
 
-<div class="page-view">
-    <h2>
-        <sup class="alter">@Html.ActionLink("edit scene", "Edit", "Scene", new { id = Model.Id }, null)</sup>
-    </h2>
+<h2>
+    <sup class="alter">@Html.ActionLink("edit scene", "Edit", "Scene", new { id = Model.Id }, null)</sup>
+</h2>
 
-    @using (Html.BeginForm()) {
+<div>
+    @using (Html.BeginForm())
+    {
         @Html.ValidationSummary(true)
 
         <fieldset>
             <legend></legend>
 
             @Html.HiddenFor(model => model.Id)
-            
-            <div class="editor-label">
-                @Html.LabelFor(model => model.Name)
-            </div>
-            <div class="editor-field">
-                @Html.EditorFor(model => model.Name)
-                @Html.ValidationMessageFor(model => model.Name)
+            @Html.HiddenFor(model => model.GpsLocation)
+            @Html.HiddenFor(model => model.GpsBounds)
+
+            <div style="float: left;">            
+                <div class="editor-label">
+                    @Html.LabelFor(model => model.Name)
+                </div>
+                <div class="editor-field">
+                    @Html.EditorFor(model => model.Name)
+                    @Html.ValidationMessageFor(model => model.Name)
+                </div>
+
+                <div class="editor-label">
+                    @Html.LabelFor(model => model.UrlId)
+                </div>
+                <div class="editor-field">
+                    @Html.EditorFor(model => model.UrlId)
+                    @Html.ValidationMessageFor(model => model.UrlId)
+                </div>
+
+                <div class="editor-label">
+                    @Html.LabelFor(model => model.ZoneId, "Zone")
+                </div>
+                <div class="editor-field">
+                    @Html.DropDownList("ZoneId", String.Empty)
+                    @Html.ValidationMessageFor(model => model.ZoneId)
+                </div>
+              
             </div>
 
-            <div class="editor-label">
-                @Html.LabelFor(model => model.UrlId)
-            </div>
-            <div class="editor-field">
-                @Html.EditorFor(model => model.UrlId)
-                @Html.ValidationMessageFor(model => model.UrlId)
+            <div id="mapEditor" style="float: right;">
+                <div id="mapCanvas" style="width: 600px; height: 600px;"></div>
             </div>
 
-            <div class="editor-label">
-                @Html.LabelFor(model => model.ZoneId, "Zone")
+            <div style="clear: both;">
+                <span class="alter">
+                    <input type="submit" value="Save" />
+                </span>
+                @Html.ActionInputLink("View", "Details", new { id = Model.UrlId })
             </div>
-            <div class="editor-field">
-                @Html.DropDownList("ZoneId", String.Empty)
-                @Html.ValidationMessageFor(model => model.ZoneId)
-            </div>
-
-            <span class="alter">
-                <input type="submit" value="Save" />
-            </span>
-            @Html.ActionInputLink("View", "Details", new { id = Model.UrlId })
 
         </fieldset>
     }
 </div>
-

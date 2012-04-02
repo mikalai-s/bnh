@@ -11,6 +11,7 @@
     <script type="text/javascript" src="//maps.googleapis.com/maps/api/js?sensor=false"></script>
     @*<script src="http://maps.googleapis.com/maps/api/js?key=AIzaSyBXgUOTPfgbS4kHE7fm_xr2za_O1ApA_TM&sensor=false" type="text/javascript"></script>*@
     <script src="@Url.Content("/Scripts/Map.js")" type="text/javascript"></script>
+    <script src="@Url.Content("/Scripts/CommunityIndex.js")" type="text/javascript"></script>
 }
 
 <h2>
@@ -43,7 +44,7 @@
                                             {
                                                 <sup class="alter">@Html.ActionLink("x", "Delete", new { id = community.Id }, new { title = "Delete " + community.Name })</sup>
                                             }
-                                            <span>@Html.ActionLink(community.Name, "Details", new { id = community.UrlId })</span>
+                                            <span>@Html.ActionLink(community.Name, "Details", new { id = community.UrlId }, new { @class="community", gpsLocation = community.GpsLocation, gpsBounds = community.GpsBounds })</span>
                                         </div>
                                     }
                                 </div>

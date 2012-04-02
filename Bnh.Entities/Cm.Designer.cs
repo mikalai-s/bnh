@@ -8,12 +8,13 @@
 //------------------------------------------------------------------------------
 
 using System;
+using System.ComponentModel;
+using System.Data.EntityClient;
 using System.Data.Objects;
 using System.Data.Objects.DataClasses;
-using System.Data.EntityClient;
-using System.ComponentModel;
-using System.Xml.Serialization;
+using System.Linq;
 using System.Runtime.Serialization;
+using System.Xml.Serialization;
 
 [assembly: EdmSchemaAttribute()]
 #region EDM Relationship Metadata
@@ -120,6 +121,7 @@ namespace Bnh.Entities
         private ObjectSet<SceneTemplate> _SceneTemplates;
 
         #endregion
+
         #region AddTo Methods
     
         /// <summary>
@@ -147,11 +149,11 @@ namespace Bnh.Entities
         }
 
         #endregion
+
     }
-    
 
     #endregion
-    
+
     #region Entities
     
     /// <summary>
@@ -292,6 +294,7 @@ namespace Bnh.Entities
         partial void OnOrderChanged();
 
         #endregion
+
     
         #region Navigation Properties
     
@@ -334,6 +337,7 @@ namespace Bnh.Entities
         }
 
         #endregion
+
     }
     
     /// <summary>
@@ -366,6 +370,7 @@ namespace Bnh.Entities
         }
 
         #endregion
+
     
     }
     
@@ -399,6 +404,7 @@ namespace Bnh.Entities
         }
 
         #endregion
+
         #region Primitive Properties
     
         /// <summary>
@@ -426,6 +432,7 @@ namespace Bnh.Entities
         partial void OnImageListIdChanged();
 
         #endregion
+
     
     }
     
@@ -459,6 +466,7 @@ namespace Bnh.Entities
         }
 
         #endregion
+
         #region Primitive Properties
     
         /// <summary>
@@ -486,6 +494,7 @@ namespace Bnh.Entities
         partial void OnHtmlChanged();
 
         #endregion
+
     
     }
     
@@ -519,6 +528,7 @@ namespace Bnh.Entities
         }
 
         #endregion
+
         #region Primitive Properties
     
         /// <summary>
@@ -592,8 +602,57 @@ namespace Bnh.Entities
         private Nullable<global::System.Int32> _Zoom;
         partial void OnZoomChanging(Nullable<global::System.Int32> value);
         partial void OnZoomChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String Polygon
+        {
+            get
+            {
+                return _Polygon;
+            }
+            set
+            {
+                OnPolygonChanging(value);
+                ReportPropertyChanging("Polygon");
+                _Polygon = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("Polygon");
+                OnPolygonChanged();
+            }
+        }
+        private global::System.String _Polygon;
+        partial void OnPolygonChanging(global::System.String value);
+        partial void OnPolygonChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String PolygonColor
+        {
+            get
+            {
+                return _PolygonColor;
+            }
+            set
+            {
+                OnPolygonColorChanging(value);
+                ReportPropertyChanging("PolygonColor");
+                _PolygonColor = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("PolygonColor");
+                OnPolygonColorChanged();
+            }
+        }
+        private global::System.String _PolygonColor;
+        partial void OnPolygonColorChanging(global::System.String value);
+        partial void OnPolygonColorChanged();
 
         #endregion
+
     
     }
     
@@ -621,6 +680,7 @@ namespace Bnh.Entities
         }
 
         #endregion
+
         #region Primitive Properties
     
         /// <summary>
@@ -699,6 +759,7 @@ namespace Bnh.Entities
         partial void OnIconUrlChanged();
 
         #endregion
+
     
         #region Navigation Properties
     
@@ -725,6 +786,7 @@ namespace Bnh.Entities
         }
 
         #endregion
+
     }
     
     /// <summary>
@@ -757,6 +819,7 @@ namespace Bnh.Entities
         }
 
         #endregion
+
         #region Primitive Properties
     
         /// <summary>
@@ -883,6 +946,7 @@ namespace Bnh.Entities
         partial void OnOrderChanged();
 
         #endregion
+
     
         #region Navigation Properties
     
@@ -909,8 +973,10 @@ namespace Bnh.Entities
         }
 
         #endregion
+
     }
 
     #endregion
+
     
 }
