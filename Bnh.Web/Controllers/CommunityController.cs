@@ -25,7 +25,9 @@ namespace Bnh.Controllers
 
         public ViewResult Details(string id)
         {
-            Community community = db.Communities.Single(c => c.UrlId == id);
+            Guid guid;
+            var isGuid = Guid.TryParse(id, out guid);
+            Community community = db.Communities.Single(c => (isGuid && c.Id == guid) || (c.UrlId == id));
             return View(community);
         }
 
@@ -94,7 +96,7 @@ namespace Bnh.Controllers
                 db.Communities.Attach(community);
                 db.ObjectStateManager.ChangeObjectState(community, EntityState.Modified);
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("Details", new { id = community.UrlId });
             }
             ViewBag.ZoneId = new SelectList(db.Zones, "Id", "Name", community.ZoneId);
             return View(community);

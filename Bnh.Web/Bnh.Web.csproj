@@ -179,6 +179,8 @@
     <Content Include="Images\background.png" />
     <Content Include="Images\logo.png" />
     <Content Include="Properties\PublishProfiles\bnh.pubxml.user" />
+    <Content Include="Scripts\CommunityEdit.js" />
+    <Content Include="Scripts\CommunityIndex.js" />
     <Content Include="Scripts\DesignScene.js" />
     <Content Include="Scripts\Global.Encoding.js" />
     <Content Include="Scripts\jquery-1.7.1-vsdoc.js" />
@@ -195,6 +197,7 @@
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
+    <Content Include="Scripts\MapEditor.js" />
     <Content Include="Scripts\knockout.debug.js" />
     <Content Include="Scripts\knockout.js" />
     <Content Include="Scripts\Map.js" />
@@ -456,6 +459,7 @@
     <Content Include="Styles\DesignBrick.css" />
     <Content Include="Styles\DesignScene.css" />
     <Content Include="Styles\Layout.css" />
+    <Content Include="Styles\MapEditor.css" />
     <Content Include="Styles\Scene.css" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>

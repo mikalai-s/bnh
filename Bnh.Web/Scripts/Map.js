@@ -1,80 +1,104 @@
-﻿(function () {
+﻿var Global = Global || { };
+
+(function () {
     "use strict"
 
-    var myLatLng = new google.maps.LatLng(51.02844, -114.071045);
-    var myOptions = {
-        zoom: 11,
-        center: myLatLng,
-        mapTypeId: google.maps.MapTypeId.TERRAIN
+    Global.Map = Global.Map || function(mapCanvas, options) {
+        var polygon;
+
+        var myLatLng = new google.maps.LatLng(options.center.Ta, options.center.Ua);
+        var myOptions = {
+            zoom: options.zoom,
+            center: myLatLng,
+            mapTypeId: google.maps.MapTypeId.TERRAIN
+        };
+        var map = new google.maps.Map($(mapCanvas)[0], myOptions);
+
+        var namedOverlays = [];
+        if(options.overlays) {
+            for(var i = 0; i < options.overlays.length; i ++) {
+                var coords = [];
+                for(var j = 0; j < options.overlays[i].polygons.length; j ++) {
+                    coords.push(new google.maps.LatLng(options.overlays[i].polygons[j].Ta, options.overlays[i].polygons[j].Ua))
+                }
+
+                namedOverlays[options.overlays[i].name] = addPolygon(options.overlays[i].name, map, coords, options.polygonClick);
+            }
+        }
+
+        return {
+            highlight: function(name) {
+                highlightPolygon(namedOverlays[name]);
+            },
+            dehighlight: function(name) {
+                dehighlightPolygon(namedOverlays[name]);
+            }
+        };
+
+        
+        
+//        var infowindow = new google.maps.InfoWindow({
+//            content: "Silverado"
     };
-
-    var bermudaTriangle;
-
-    var map = new google.maps.Map(document.getElementById("mapCanvas"), myOptions);
-
-    var triangleCoords = [
-        new google.maps.LatLng(50.890176, -114.088511),
-        new google.maps.LatLng(50.88912, -114.074049),
-        new google.maps.LatLng(50.879129, -114.085894)
-    ];
-
-    // Construct the polygon
-    bermudaTriangle = new google.maps.Polygon({
-        paths: triangleCoords,
-        strokeColor: "#FF3333",
-        strokeOpacity: 0.8,
-        strokeWeight: 1,
-        fillColor: "#FFaaaa",
-        fillOpacity: 0.35,
-        editable: true,
-        map: map
-    });
-
-    var infowindow = new google.maps.InfoWindow({
-        content: "Silverado"
-    });
 
 //    google.maps.event.addListener(bermudaTriangle, 'click', function (event) {
 //        infowindow.setPosition(event.latLng);
 //        infowindow.open(map);
 //    });
+/* 
+    };
 
-    google.maps.event.addListener(bermudaTriangle, 'mouseover', function (event) {
-        highlightCommunity();
-    });
+    */
 
-    google.maps.event.addListener(bermudaTriangle, 'mouseout', function (event) {
-        dehighlightCommunity();
-    });
+    function addPolygon(name, map, coords, clickHandler) {
+        var polygon = new google.maps.Polygon({
+            paths: coords,
+            strokeColor: "#FF3333",
+            strokeOpacity: 0.8,
+            strokeWeight: 2,
+            fillColor: "#FFaaaa",
+            fillOpacity: 0.35,
+            map: map
+        });
 
+        google.maps.event.addListener(polygon, 'mouseover', function (event) {
+            highlightPolygon(polygon);
+        });
 
+        google.maps.event.addListener(polygon, 'mouseout', function (event) {
+            dehighlightPolygon(polygon);
+        });
 
-    $(".zone-community a").on("mousemove", function() {
-        if(this.innerText === "Silverado") {
-            highlightCommunity();
-        }        
-    });
+        if(clickHandler) {
+            google.maps.event.addListener(polygon, 'click', function (event) {
+                clickHandler(name);
+            });
+        }
 
-    $(".zone-community a").on("mouseout", function() {
-        dehighlightCommunity();
-    });
+        return polygon;
+    }
 
-    function highlightCommunity() {
-     infowindow.setPosition(triangleCoords[0]);
-        infowindow.open(map);
-        bermudaTriangle.setOptions({
+    function highlightPolygon(polygon) {
+        if(!polygon)
+            return;
+    // infowindow.setPosition(triangleCoords[0]);
+       // infowindow.open(map);
+        polygon.setOptions({
                 strokeWeight: 2,
                 fillOpacity: 0.75,
             });
     }
 
-    function dehighlightCommunity() {
-    infowindow.close();
+    function dehighlightPolygon(polygon) {
+        if(!polygon)
+            return;
+
+       // infowindow.close();
         
-        bermudaTriangle.setOptions({
+        polygon.setOptions({
             strokeWeight: 1,
             fillOpacity: 0.35
         });   
     }
-
+    
 })();
