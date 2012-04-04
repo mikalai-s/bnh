@@ -31,9 +31,9 @@ namespace Bnh.Web.Controllers
         {
             if (ModelState.IsValid)
             {
-                if (Membership.ValidateUser(model.UserName, model.Password))
+                if (Membership.ValidateUser(model.Email, model.Password))
                 {
-                    FormsAuthentication.SetAuthCookie(model.UserName, model.RememberMe);
+                    FormsAuthentication.SetAuthCookie(model.Email, model.RememberMe);
                     return Json(new { success = true, redirect = returnUrl });
                 }
                 else
@@ -55,9 +55,9 @@ namespace Bnh.Web.Controllers
         {
             if (ModelState.IsValid)
             {
-                if (Membership.ValidateUser(model.UserName, model.Password))
+                if (Membership.ValidateUser(model.Email, model.Password))
                 {
-                    FormsAuthentication.SetAuthCookie(model.UserName, model.RememberMe);
+                    FormsAuthentication.SetAuthCookie(model.Email, model.RememberMe);
                     if (Url.IsLocalUrl(returnUrl))
                     {
                         return Redirect(returnUrl);
@@ -107,11 +107,11 @@ namespace Bnh.Web.Controllers
             {
                 // Attempt to register the user
                 MembershipCreateStatus createStatus;
-                Membership.CreateUser(model.UserName, model.Password, model.Email, passwordQuestion: null, passwordAnswer: null, isApproved: true, providerUserKey: null, status: out createStatus);
+                Membership.CreateUser(model.Email, model.Password, model.Email, passwordQuestion: null, passwordAnswer: null, isApproved: true, providerUserKey: null, status: out createStatus);
 
                 if (createStatus == MembershipCreateStatus.Success)
                 {
-                    FormsAuthentication.SetAuthCookie(model.UserName, createPersistentCookie: false);
+                    FormsAuthentication.SetAuthCookie(model.Email, createPersistentCookie: false);
                     return Json(new { success = true });
                 }
                 else
@@ -135,11 +135,19 @@ namespace Bnh.Web.Controllers
             {
                 // Attempt to register the user
                 MembershipCreateStatus createStatus;
-                Membership.CreateUser(model.UserName, model.Password, model.Email, passwordQuestion: null, passwordAnswer: null, isApproved: true, providerUserKey: null, status: out createStatus);
+                Membership.CreateUser(model.Email, model.Password, model.Email, passwordQuestion: null, passwordAnswer: null, isApproved: true, providerUserKey: null, status: out createStatus);
 
                 if (createStatus == MembershipCreateStatus.Success)
                 {
-                    FormsAuthentication.SetAuthCookie(model.UserName, createPersistentCookie: false);
+                    // save profile properties
+                    var userProfile = UserProfile.GetProfile(model.Email);
+                    userProfile.FirstName = model.FirstName;
+                    userProfile.LastName = model.LastName;
+                    userProfile.Birthday = model.Birthday;
+                    userProfile.Gender = model.Gender;
+                    userProfile.Save();
+
+                    FormsAuthentication.SetAuthCookie(model.Email, createPersistentCookie: false);
                     return RedirectToAction("Index", "Home");
                 }
                 else
@@ -157,7 +165,15 @@ namespace Bnh.Web.Controllers
 
         public ActionResult ChangePassword()
         {
-            return View();
+            var profile = UserProfile.Current;
+            var changePasswordModel = new ChangePasswordModel
+            {
+                FirstName = profile.FirstName,
+                LastName = profile.LastName,
+                Birthday = profile.Birthday,
+                Gender = profile.Gender
+            };
+            return View(changePasswordModel);
         }
 
         //
@@ -176,6 +192,45 @@ namespace Bnh.Web.Controllers
                 {
                     MembershipUser currentUser = Membership.GetUser(User.Identity.Name, userIsOnline: true);
                     changePasswordSucceeded = currentUser.ChangePassword(model.OldPassword, model.NewPassword);
+                }
+                catch (Exception)
+                {
+                    changePasswordSucceeded = false;
+                }
+
+                if (changePasswordSucceeded)
+                {
+                    return RedirectToAction("ChangePasswordSuccess");
+                }
+                else
+                {
+                    ModelState.AddModelError("", "The current password is incorrect or the new password is invalid.");
+                }
+            }
+
+            // If we got this far, something failed, redisplay form
+            return View(model);
+        }
+
+        [HttpPost]
+        public ActionResult Update(ChangePasswordModel model)
+        {
+            if (ModelState.IsValid)
+            {
+
+                // ChangePassword will throw an exception rather
+                // than return false in certain failure scenarios.
+                bool changePasswordSucceeded;
+                try
+                {
+                    MembershipUser currentUser = Membership.GetUser(User.Identity.Name, userIsOnline: true);
+                    var userProfile = UserProfile.Current;
+                    userProfile.FirstName = model.FirstName;
+                    userProfile.LastName = model.LastName;
+                    userProfile.Birthday = model.Birthday;
+                    userProfile.Gender = model.Gender;
+                    userProfile.Save();
+                    changePasswordSucceeded = true;
                 }
                 catch (Exception)
                 {
@@ -232,7 +287,7 @@ namespace Bnh.Web.Controllers
             switch (createStatus)
             {
                 case MembershipCreateStatus.DuplicateUserName:
-                    return "User name already exists. Please enter a different user name.";
+                    return "E-mail address already exists. Please enter a different e-mail address.";
 
                 case MembershipCreateStatus.DuplicateEmail:
                     return "A user name for that e-mail address already exists. Please enter a different e-mail address.";
@@ -250,7 +305,7 @@ namespace Bnh.Web.Controllers
                     return "The password retrieval question provided is invalid. Please check the value and try again.";
 
                 case MembershipCreateStatus.InvalidUserName:
-                    return "The user name provided is invalid. Please check the value and try again.";
+                    return "The e-mail provided is invalid. Please check the value and try again.";
 
                 case MembershipCreateStatus.ProviderError:
                     return "The authentication provider returned an error. Please verify your entry and try again. If the problem persists, please contact your system administrator.";

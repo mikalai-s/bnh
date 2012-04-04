@@ -1,2 +1,4 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<publishData />
+<publishData>
+  <publishProfile publishUrl="bnh.msilivonik.com" deleteExistingFiles="False" ftpAnonymousLogin="False" ftpPassiveMode="True" msdeploySite="bnh.msilivonik.com" msdeploySiteID="" msdeployRemoteSitePhysicalPath="" msdeployAllowUntrustedCertificate="True" msdeploySkipExtraFilesOnServer="True" msdeployMarkAsApp="False" profileName="bnh" publishMethod="MSDeploy" replaceMatchingFiles="True" userName="bnh.msilivonik.c_pub" savePWD="True" userPWD="AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAAgPoMG1IuB0WJ4BdGzo58kQAAAAACAAAAAAAQZgAAAAEAACAAAACWhjGNm+OOqpWDBk9uKrob67WJW+riM5RVqZ6U3exiFwAAAAAOgAAAAAIAACAAAABwp1RhWMq/zj/AXLck/CVQrPtRnPORvnAGqkKytBqdUxAAAABf4I0TF/BQiYVeREOhejfeQAAAAAv2hzYfT8BpeGyBmjwOg+xO4hF78KJwB5Db3i5ns+Ndn8eAcmwjg1rIJciwlz0J7d0+LASzQDIICjY0kYHzNBA=" SelectedForPublish="True" />
+</publishData>
