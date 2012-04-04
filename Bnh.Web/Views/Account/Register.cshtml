@@ -2,6 +2,12 @@
 
 @{
     ViewBag.Title = "Register";
+    var genderItems = new[]
+    {
+        new SelectListItem { Selected = true, Text = string.Empty, Value = string.Empty},
+        new SelectListItem { Text = "Male", Value = "0" },
+        new SelectListItem { Text = "Femail", Value = "1" },
+    };
 }
 
 <hgroup class="title">
@@ -15,8 +21,8 @@
 
 @section Scripts
 {
-<script src="~/Scripts/jquery.validate.min.js"></script>
-<script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+<script src="@Url.Content("~/Scripts/jquery.validate.min.js")" type="text/javascript"></script>
+<script src="@Url.Content("~/Scripts/jquery.validate.unobtrusive.min.js")" type="text/javascript"></script>
 }
 
 
@@ -27,9 +33,14 @@
         <legend>Registration Form</legend>
         <table>
             <tr>
-                <td>@Html.LabelFor(m => m.UserName)</td>
-                <td>@Html.TextBoxFor(m => m.UserName)</td>
-                <td>@Html.ValidationMessageFor(m => m.UserName)</td>
+                <td>@Html.LabelFor(m => m.FirstName)</td>
+                <td>@Html.TextBoxFor(m => m.FirstName)</td>
+                <td>@Html.ValidationMessageFor(m => m.FirstName)</td>
+            </tr>
+            <tr>
+                <td>@Html.LabelFor(m => m.LastName)</td>
+                <td>@Html.TextBoxFor(m => m.LastName)</td>
+                <td>@Html.ValidationMessageFor(m => m.LastName)</td>
             </tr>
             <tr>
                 <td>@Html.LabelFor(m => m.Email)</td>
@@ -45,6 +56,16 @@
                 <td>@Html.LabelFor(m => m.ConfirmPassword)</td>
                 <td>@Html.PasswordFor(m => m.ConfirmPassword)</td>
                 <td>@Html.ValidationMessageFor(m => m.ConfirmPassword)</td>
+            </tr>
+            <tr>
+                <td>@Html.LabelFor(m => m.Birthday)</td>
+                <td>@Html.TextBoxFor(m => m.Birthday)</td>
+                <td>@Html.ValidationMessageFor(m => m.Birthday)</td>
+            </tr>
+            <tr>
+                <td>@Html.LabelFor(m => m.Gender)</td>
+                <td>@Html.DropDownListFor(m => m.Gender, genderItems)</td>
+                <td>@Html.ValidationMessageFor(m => m.Gender)</td>
             </tr>
         </table>
         <input type="submit" value="Register" />

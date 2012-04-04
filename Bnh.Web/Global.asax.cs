@@ -39,6 +39,8 @@ namespace Bnh.Web
                 "{controller}/{action}/{id}",
                 new { controller = "Home", action = "Index", id = UrlParameter.Optional }
             );
+
+
         }
 
         private static void MapControllerInvertRoutes(RouteCollection routes, string controller)
