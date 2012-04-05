@@ -7,8 +7,7 @@ using System.Web.Security;
 
 namespace Bnh.Web.Models
 {
-
-    public class ChangePasswordModel
+    public class AccountModel
     {
         [Required]
         [Display(Name = "First name")]
@@ -19,14 +18,18 @@ namespace Bnh.Web.Models
         public string LastName { get; set; }
 
         [Required]
-        [DataType(DataType.Date)]
+        //[DataType(DataType.Date)]
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:MM/dd/yyyy}")]
         [Display(Name = "Birthday")]
         public DateTime Birthday { get; set; }
 
         [Required]
         [Display(Name = "Gender")]
-        public UserProfile.GenderEnum Gender { get; set; }
+        public AccountProfile.GenderEnum Gender { get; set; }
+    }
 
+    public class ChangePasswordModel
+    {
         [Required]
         [DataType(DataType.Password)]
         [Display(Name = "Current password")]
@@ -93,6 +96,6 @@ namespace Bnh.Web.Models
 
         [Required]
         [Display(Name = "Gender")]
-        public UserProfile.GenderEnum Gender { get; set; }
+        public AccountProfile.GenderEnum Gender { get; set; }
     }
 }

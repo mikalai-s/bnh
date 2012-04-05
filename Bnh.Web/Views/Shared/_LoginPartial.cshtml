@@ -1,6 +1,6 @@
 ﻿@if (Request.IsAuthenticated) {
     <p>
-        @Html.ActionLink(Bnh.Web.Models.UserProfile.Current.FullName, "ChangePassword", "Account", routeValues: null, htmlAttributes: new { @class = "username", title = "Change password" })
+        @Html.ActionLink(Bnh.Web.Models.AccountProfile.Current.FullName, "Update", "Account", routeValues: null, htmlAttributes: new { @class = "username", title = "Update account information" })
         |
         @Html.ActionLink("Log off", "LogOff", "Account")
     </p>
