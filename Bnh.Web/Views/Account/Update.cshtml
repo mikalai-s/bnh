@@ -1,0 +1,54 @@
+﻿@model Bnh.Web.Models.AccountModel
+
+@{
+    ViewBag.Title = "Update Information";
+    var genderItems = new[]
+    {
+        new SelectListItem { Selected = true, Text = string.Empty },
+        new SelectListItem { Text = "Male" },
+        new SelectListItem { Text = "Female" },
+    };
+}
+
+@section Scripts
+{
+    <script src="~/Scripts/jquery.validate.min.js"></script>
+    <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+}
+
+<hgroup class="title">
+    <h1>@ViewBag.Title</h1>
+    <h2>Use the form below to change your information.</h2>
+</hgroup>
+
+@using (Html.BeginForm()) {
+    @Html.ValidationSummary(true, "Entered information is not valid. Please correct the errors and try again.")
+
+    <fieldset>
+        <legend>Account Information</legend>
+        <table>
+            <tr>                    
+                <td>@Html.LabelFor(m => m.FirstName)</td>
+                <td>@Html.TextBoxFor(m => m.FirstName)</td>
+                <td>@Html.ValidationMessageFor(m => m.FirstName)</td>
+            </tr>
+            <tr>
+                <td>@Html.LabelFor(m => m.LastName)</td>
+                <td>@Html.TextBoxFor(m => m.LastName)</td>
+                <td>@Html.ValidationMessageFor(m => m.LastName)</td>
+            </tr>
+            <tr>
+                <td>@Html.LabelFor(m => m.Birthday)</td>
+                <td>@Html.EditorFor(m => m.Birthday)</td>
+                <td>@Html.ValidationMessageFor(m => m.Birthday)</td>
+            </tr>
+            <tr>
+                <td>@Html.LabelFor(m => m.Gender)</td>
+                <td>@Html.DropDownListFor(m => m.Gender, genderItems)</td>
+                <td>@Html.ValidationMessageFor(m => m.Gender)</td>
+            </tr>
+        </table>
+        <input type="submit" value="Update" />
+        @Html.ActionInputLink("Change Password", "ChangePassword")
+    </fieldset>
+}

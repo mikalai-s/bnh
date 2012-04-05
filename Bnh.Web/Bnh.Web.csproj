@@ -143,7 +143,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\AccountModels.cs" />
-    <Compile Include="Models\UserProfile.cs" />
+    <Compile Include="Models\AccountProfile.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -529,6 +529,7 @@
     <Content Include="Views\Shared\Scene.cshtml" />
     <Content Include="Views\Brick\_Scripts.cshtml" />
     <Content Include="Views\Brick\_Styles.cshtml" />
+    <Content Include="Views\Account\Update.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

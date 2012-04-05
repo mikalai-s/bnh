@@ -4,16 +4,17 @@ using System.Linq;
 using System.Web;
 using System.Web.Profile;
 using System.Web.Security;
+using System.ComponentModel.DataAnnotations;
 
 namespace Bnh.Web.Models
 {
-    public class UserProfile : ProfileBase
+    public class AccountProfile : ProfileBase
     {
-        static public UserProfile Current
+        static public AccountProfile Current
         {
             get { return GetProfile(Membership.GetUser().UserName); }
         }
-
+       
         public string FirstName
         {
             get { return ((string)(base["FirstName"])); }
@@ -31,7 +32,7 @@ namespace Bnh.Web.Models
             get { return ((DateTime)(base["Birthday"])); }
             set { base["Birthday"] = value; }
         }
-
+       
         public GenderEnum Gender
         {
             get { return ((GenderEnum)(base["Gender"])); }
@@ -43,16 +44,16 @@ namespace Bnh.Web.Models
             get { return this.FirstName + " " + this.LastName; }
         }
 
-        public static UserProfile GetProfile(string username)
+        public static AccountProfile GetProfile(string username)
         {
-            return Create(username) as UserProfile;
+            return Create(username) as AccountProfile;
         }
 
 
         public enum GenderEnum
         {
-            Male,
-            Female
+            Male = 0,
+            Female = 1
         }
     }
 }

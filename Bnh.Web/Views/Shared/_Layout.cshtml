@@ -27,7 +27,6 @@
                         @Html.ActionMenuItem("Search", "About", "Home")
                     </ul>
                     <ul class="right">
-                        @Html.ActionMenuItem(HttpContext.Current.User.Identity.IsAuthenticated ? "Account" : "Login", "Login", "Account")
                         @Html.ActionMenuItem("About", "About", "Home")
                     </ul>
                 </nav>

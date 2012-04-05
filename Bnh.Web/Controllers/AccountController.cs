@@ -140,7 +140,7 @@ namespace Bnh.Web.Controllers
                 if (createStatus == MembershipCreateStatus.Success)
                 {
                     // save profile properties
-                    var userProfile = UserProfile.GetProfile(model.Email);
+                    var userProfile = AccountProfile.GetProfile(model.Email);
                     userProfile.FirstName = model.FirstName;
                     userProfile.LastName = model.LastName;
                     userProfile.Birthday = model.Birthday;
@@ -165,15 +165,7 @@ namespace Bnh.Web.Controllers
 
         public ActionResult ChangePassword()
         {
-            var profile = UserProfile.Current;
-            var changePasswordModel = new ChangePasswordModel
-            {
-                FirstName = profile.FirstName,
-                LastName = profile.LastName,
-                Birthday = profile.Birthday,
-                Gender = profile.Gender
-            };
-            return View(changePasswordModel);
+            return View();
         }
 
         //
@@ -212,39 +204,31 @@ namespace Bnh.Web.Controllers
             return View(model);
         }
 
+        public ActionResult Update()
+        {
+            var profile = AccountProfile.Current;
+            var model = new AccountModel
+            {
+                FirstName = profile.FirstName,
+                LastName = profile.LastName,
+                Birthday = profile.Birthday,
+                Gender = profile.Gender
+            };
+            return View(model);
+        }
+
         [HttpPost]
-        public ActionResult Update(ChangePasswordModel model)
+        public ActionResult Update(AccountModel model)
         {
             if (ModelState.IsValid)
             {
-
-                // ChangePassword will throw an exception rather
-                // than return false in certain failure scenarios.
-                bool changePasswordSucceeded;
-                try
-                {
-                    MembershipUser currentUser = Membership.GetUser(User.Identity.Name, userIsOnline: true);
-                    var userProfile = UserProfile.Current;
-                    userProfile.FirstName = model.FirstName;
-                    userProfile.LastName = model.LastName;
-                    userProfile.Birthday = model.Birthday;
-                    userProfile.Gender = model.Gender;
-                    userProfile.Save();
-                    changePasswordSucceeded = true;
-                }
-                catch (Exception)
-                {
-                    changePasswordSucceeded = false;
-                }
-
-                if (changePasswordSucceeded)
-                {
-                    return RedirectToAction("ChangePasswordSuccess");
-                }
-                else
-                {
-                    ModelState.AddModelError("", "The current password is incorrect or the new password is invalid.");
-                }
+                var profile = AccountProfile.Current;
+                profile.FirstName = model.FirstName;
+                profile.LastName = model.LastName;
+                profile.Birthday = model.Birthday;
+                profile.Gender = model.Gender;
+                
+                profile.Save();
             }
 
             // If we got this far, something failed, redisplay form
