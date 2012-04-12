@@ -11,7 +11,7 @@
         };
 
         var center = overlays.marker ? 
-            new google.maps.LatLng(overlays.marker.Ta, overlays.marker.Ua) : 
+            new deserializeCoord(overlays.marker) : 
             new google.maps.LatLng(51.02844, -114.071045);  // Calgary by default
 
         // create map object
@@ -34,7 +34,7 @@
         if(overlays.polygon) {
             var coords = [];
             for(var i = 0; i < overlays.polygon.length; i ++) {
-                coords.push(new google.maps.LatLng(overlays.polygon[i].Ta, overlays.polygon[i].Ua))
+                coords.push(deserializeCoord(overlays.polygon[i]))
             }
             currentValues.polygon = new google.maps.Polygon({
                 paths: coords,
@@ -83,14 +83,37 @@
 
         return {
             getLocation: function() {
-                return currentValues.marker ? currentValues.marker.getPosition() : null;
+                return serializeCoord(currentValues.marker ? currentValues.marker.getPosition() : null);
             },
             getBounds: function() {
-                return currentValues.polygon ? currentValues.polygon.getPath() : null;
+                var path = currentValues.polygon ? currentValues.polygon.getPath().getArray() : null;
+                var points = [];
+                for(var i = 0; i < path.length; i ++) {
+                    points[i] = serializeCoord(path[i]);
+                }
+                return points;
             }
         }
-     };
+    };
 
+
+    
+    function serializeCoord(latLng) {
+        if(!latLng)
+            return;
+
+        return {
+            lat: latLng.lat(),
+            lng: latLng.lng()
+        };
+    }
+
+    function deserializeCoord(coord) {
+        if(!coord || !coord.lat || !coord.lng)
+            return;
+
+        return new google.maps.LatLng(coord.lat, coord.lng);
+    }
 
 
 

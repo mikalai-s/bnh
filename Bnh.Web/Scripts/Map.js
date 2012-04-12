@@ -6,7 +6,7 @@
     Global.Map = Global.Map || function(mapCanvas, options) {
         var polygon;
 
-        var myLatLng = new google.maps.LatLng(options.center.Ta, options.center.Ua);
+        var myLatLng = deserializeCoord(options.center);
         var myOptions = {
             zoom: options.zoom,
             center: myLatLng,
@@ -19,7 +19,7 @@
             for(var i = 0; i < options.overlays.length; i ++) {
                 var coords = [];
                 for(var j = 0; j < options.overlays[i].polygons.length; j ++) {
-                    coords.push(new google.maps.LatLng(options.overlays[i].polygons[j].Ta, options.overlays[i].polygons[j].Ua))
+                    coords.push(deserializeCoord(options.overlays[i].polygons[j]))
                 }
 
                 namedOverlays[options.overlays[i].name] = addPolygon(options.overlays[i].name, map, coords, options.polygonClick);
@@ -49,6 +49,15 @@
     };
 
     */
+
+
+    function deserializeCoord(coord) {
+        if(!coord || !coord.lat || !coord.lng)
+            return;
+
+        return new google.maps.LatLng(coord.lat, coord.lng);
+    }
+
 
     function addPolygon(name, map, coords, clickHandler) {
         var polygon = new google.maps.Polygon({
