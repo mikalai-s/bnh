@@ -64,6 +64,13 @@
           <Property Name="UrlId" Type="nvarchar" Nullable="false" MaxLength="100" />
           <Property Name="GpsLocation" Type="nvarchar" MaxLength="100" />
           <Property Name="GpsBounds" Type="nvarchar" MaxLength="1000" />
+          <Property Name="Remoteness" Type="int" />
+          <Property Name="HasLake" Type="bit" />
+          <Property Name="HasWaterFeature" Type="bit" />
+          <Property Name="HasClubOrFacility" Type="bit" />
+          <Property Name="HasMountainView" Type="bit" />
+          <Property Name="HasParksAndPathways" Type="bit" />
+          <Property Name="HasShoppingPlaza" Type="bit" />
         </EntityType>
         <!--Errors Found During Generation:
       warning 6002: The table/view 'bnh.bl.Community_Builders' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
@@ -209,6 +216,13 @@
           <Property Type="String" Name="UrlId" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Type="String" Name="GpsLocation" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Type="String" Name="GpsBounds" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Type="Int32" Name="Remoteness" />
+          <Property Type="Boolean" Name="HasLake" />
+          <Property Type="Boolean" Name="HasWaterFeature" />
+          <Property Type="Boolean" Name="HasClubOrFacility" />
+          <Property Type="Boolean" Name="HasMountainView" />
+          <Property Type="Boolean" Name="HasParksAndPathways" />
+          <Property Type="Boolean" Name="HasShoppingPlaza" />
         </EntityType>
         <EntityType Name="Zone">
           <Key>
@@ -290,6 +304,13 @@
           <EntitySetMapping Name="Communities">
             <EntityTypeMapping TypeName="BlModel.Community">
               <MappingFragment StoreEntitySet="Community">
+                <ScalarProperty Name="HasShoppingPlaza" ColumnName="HasShoppingPlaza" />
+                <ScalarProperty Name="HasParksAndPathways" ColumnName="HasParksAndPathways" />
+                <ScalarProperty Name="HasMountainView" ColumnName="HasMountainView" />
+                <ScalarProperty Name="HasClubOrFacility" ColumnName="HasClubOrFacility" />
+                <ScalarProperty Name="HasWaterFeature" ColumnName="HasWaterFeature" />
+                <ScalarProperty Name="HasLake" ColumnName="HasLake" />
+                <ScalarProperty Name="Remoteness" ColumnName="Remoteness" />
                 <ScalarProperty Name="GpsBounds" ColumnName="GpsBounds" />
                 <ScalarProperty Name="GpsLocation" ColumnName="GpsLocation" />
                 <ScalarProperty Name="UrlId" ColumnName="UrlId" />
@@ -341,7 +362,7 @@
       <Diagram Name="Bl">
         <EntityTypeShape EntityType="BlModel.Builder" Width="1.5" PointX="3" PointY="4.125" Height="1.5956835937499996" />
         <EntityTypeShape EntityType="BlModel.City" Width="1.5" PointX="0.75" PointY="1.125" Height="1.5956835937499994" />
-        <EntityTypeShape EntityType="BlModel.Community" Width="1.5" PointX="5.25" PointY="0.875" Height="1.9802864583333317" />
+        <EntityTypeShape EntityType="BlModel.Community" Width="1.5" PointX="5.375" PointY="0.875" Height="3.9033007812499996" />
         <EntityTypeShape EntityType="BlModel.Zone" Width="1.5" PointX="3" PointY="0.875" Height="1.9802864583333317" />
         <AssociationConnector Association="BlModel.FK_Zone_City" >
           <ConnectorPoint PointX="2.25" PointY="2.1151432291666667" />
@@ -349,12 +370,11 @@
         </AssociationConnector>
         <AssociationConnector Association="BlModel.FK_Community_Zone" >
           <ConnectorPoint PointX="4.5" PointY="2.0574446614583328" />
-          <ConnectorPoint PointX="5.25" PointY="2.0574446614583328" />
+          <ConnectorPoint PointX="5.375" PointY="2.0574446614583328" />
         </AssociationConnector>
         <AssociationConnector Association="BlModel.Community_Builders" >
-          <ConnectorPoint PointX="4.5" PointY="5.2112939453125" />
-          <ConnectorPoint PointX="6" PointY="5.2112939453125" />
-          <ConnectorPoint PointX="6" PointY="3.4321907552083331" />
+          <ConnectorPoint PointX="4.5" PointY="4.451650390625" />
+          <ConnectorPoint PointX="5.375" PointY="4.451650390625" />
         </AssociationConnector>
         <AssociationConnector Association="BlModel.FK_Builder_City" >
           <ConnectorPoint PointX="1.5" PointY="3.1052864583333331" />
