@@ -26,8 +26,8 @@
         overlays: overlays,
         zoom: 11,
         center: {
-            Ta: 51.02844,
-            Ua: -114.071045
+            lat: 51.02844,
+            lng: -114.071045
         },
         polygonClick: onCommunityClicked
     });

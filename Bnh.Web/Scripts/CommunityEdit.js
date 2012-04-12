@@ -15,7 +15,7 @@
     $("form").validate({
         submitHandler: function (form) {
             gpsLocationField.val($.toJSON(mapEditor.getLocation()));
-            gpsBoundsField.val($.toJSON(mapEditor.getBounds().getArray()));
+            gpsBoundsField.val($.toJSON(mapEditor.getBounds()));
 
             // do other stuff for a valid form
             form.submit();
