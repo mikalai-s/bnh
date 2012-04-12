@@ -715,6 +715,174 @@ namespace Bnh.Entities
         private global::System.String _GpsBounds;
         partial void OnGpsBoundsChanging(global::System.String value);
         partial void OnGpsBoundsChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Int32> Remoteness
+        {
+            get
+            {
+                return _Remoteness;
+            }
+            set
+            {
+                OnRemotenessChanging(value);
+                ReportPropertyChanging("Remoteness");
+                _Remoteness = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("Remoteness");
+                OnRemotenessChanged();
+            }
+        }
+        private Nullable<global::System.Int32> _Remoteness;
+        partial void OnRemotenessChanging(Nullable<global::System.Int32> value);
+        partial void OnRemotenessChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Boolean> HasLake
+        {
+            get
+            {
+                return _HasLake;
+            }
+            set
+            {
+                OnHasLakeChanging(value);
+                ReportPropertyChanging("HasLake");
+                _HasLake = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("HasLake");
+                OnHasLakeChanged();
+            }
+        }
+        private Nullable<global::System.Boolean> _HasLake;
+        partial void OnHasLakeChanging(Nullable<global::System.Boolean> value);
+        partial void OnHasLakeChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Boolean> HasWaterFeature
+        {
+            get
+            {
+                return _HasWaterFeature;
+            }
+            set
+            {
+                OnHasWaterFeatureChanging(value);
+                ReportPropertyChanging("HasWaterFeature");
+                _HasWaterFeature = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("HasWaterFeature");
+                OnHasWaterFeatureChanged();
+            }
+        }
+        private Nullable<global::System.Boolean> _HasWaterFeature;
+        partial void OnHasWaterFeatureChanging(Nullable<global::System.Boolean> value);
+        partial void OnHasWaterFeatureChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Boolean> HasClubOrFacility
+        {
+            get
+            {
+                return _HasClubOrFacility;
+            }
+            set
+            {
+                OnHasClubOrFacilityChanging(value);
+                ReportPropertyChanging("HasClubOrFacility");
+                _HasClubOrFacility = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("HasClubOrFacility");
+                OnHasClubOrFacilityChanged();
+            }
+        }
+        private Nullable<global::System.Boolean> _HasClubOrFacility;
+        partial void OnHasClubOrFacilityChanging(Nullable<global::System.Boolean> value);
+        partial void OnHasClubOrFacilityChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Boolean> HasMountainView
+        {
+            get
+            {
+                return _HasMountainView;
+            }
+            set
+            {
+                OnHasMountainViewChanging(value);
+                ReportPropertyChanging("HasMountainView");
+                _HasMountainView = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("HasMountainView");
+                OnHasMountainViewChanged();
+            }
+        }
+        private Nullable<global::System.Boolean> _HasMountainView;
+        partial void OnHasMountainViewChanging(Nullable<global::System.Boolean> value);
+        partial void OnHasMountainViewChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Boolean> HasParksAndPathways
+        {
+            get
+            {
+                return _HasParksAndPathways;
+            }
+            set
+            {
+                OnHasParksAndPathwaysChanging(value);
+                ReportPropertyChanging("HasParksAndPathways");
+                _HasParksAndPathways = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("HasParksAndPathways");
+                OnHasParksAndPathwaysChanged();
+            }
+        }
+        private Nullable<global::System.Boolean> _HasParksAndPathways;
+        partial void OnHasParksAndPathwaysChanging(Nullable<global::System.Boolean> value);
+        partial void OnHasParksAndPathwaysChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Boolean> HasShoppingPlaza
+        {
+            get
+            {
+                return _HasShoppingPlaza;
+            }
+            set
+            {
+                OnHasShoppingPlazaChanging(value);
+                ReportPropertyChanging("HasShoppingPlaza");
+                _HasShoppingPlaza = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("HasShoppingPlaza");
+                OnHasShoppingPlazaChanged();
+            }
+        }
+        private Nullable<global::System.Boolean> _HasShoppingPlaza;
+        partial void OnHasShoppingPlazaChanging(Nullable<global::System.Boolean> value);
+        partial void OnHasShoppingPlazaChanged();
 
         #endregion
 
