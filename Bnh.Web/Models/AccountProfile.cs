@@ -12,19 +12,7 @@ namespace Bnh.Web.Models
     {
         public static AccountProfile Current
         {
-            get
-            {
-                var user = Membership.GetUser();
-                if (user == null)
-                {
-                    var profile = GetProfile(HttpContext.Current.User.Identity.Name);
-                    profile.FirstName = HttpContext.Current.User.Identity.Name;
-                    profile.Save();
-                    return profile;
-                }
-
-                return GetProfile(user.UserName);
-            }
+            get { return GetProfile(HttpContext.Current.User.Identity.Name); }
         }
        
         public string FirstName
