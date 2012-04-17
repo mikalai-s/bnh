@@ -3,7 +3,10 @@
 
     var overlays = [];
 
-    var communities = $(".community")
+    var communities = $(".community");
+    var filterLegend = $("#filterLegend");
+    var filterParameters = $("#filterParameters");
+
 
     communities.each(function (i, elem) {
         elem = $(elem);
@@ -40,9 +43,19 @@
         map.dehighlight($(e.srcElement).text());
     });
 
+    filterLegend.click(function () {
+        if (filterParameters.is(":visible")) {
+            filterParameters.hide("fast");
+            filterLegend.text("[show]");
+        } else {
+            filterParameters.show("fast");
+            filterLegend.text("[hide]");
+        }
+    });
+
     function onCommunityClicked(name) {
         var href = $(".community:contains(" + name + ")").attr("href");
-        if(href) {
+        if (href) {
             window.location.href = href;
         }
     }

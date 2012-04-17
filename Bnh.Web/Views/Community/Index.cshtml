@@ -21,6 +21,20 @@
         <sup class="alter">@Html.ActionLink("create new", "Create", null, new { title = "Create new community" })</sup>
     }
 </h2>
+
+<fieldset>
+    <legend>Filter <a id="filterLegend" href="javascript:void">[show]</a></legend>
+    <div id="filterParameters">
+        <div>Remoteness </div>
+        <div><input id="hasLake" type="checkbox" /> Has Lake</div>
+        <div><input id="hasWaterFeature" type="checkbox" /> Has Water Feature</div>
+        <div><input id="hasClubOrFacility" type="checkbox" /> Has Club Or Facility</div>
+        <div><input id="hasMountainView" type="checkbox" /> Has Mountain View</div>
+        <div><input id="hasParksAndPathways" type="checkbox" /> Has Parks And Pathways</div>
+        <div><input id="hasShoppingPlaza" type="checkbox" /> Has Shopping Plaza</div>
+    </div>
+</fieldset>
+
 <table class="main">
     <tr>
         <td>
