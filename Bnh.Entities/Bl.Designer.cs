@@ -19,10 +19,10 @@ using System.Xml.Serialization;
 [assembly: EdmSchemaAttribute()]
 #region EDM Relationship Metadata
 
+[assembly: EdmRelationshipAttribute("BlModel", "FK_Builder_City", "City", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(Bnh.Entities.City), "Builder", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(Bnh.Entities.Builder), true)]
+[assembly: EdmRelationshipAttribute("BlModel", "Community_Builders", "Builder", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(Bnh.Entities.Builder), "Community", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(Bnh.Entities.Community))]
 [assembly: EdmRelationshipAttribute("BlModel", "FK_Zone_City", "City", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(Bnh.Entities.City), "Zone", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(Bnh.Entities.Zone), true)]
 [assembly: EdmRelationshipAttribute("BlModel", "FK_Community_Zone", "Zone", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(Bnh.Entities.Zone), "Community", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(Bnh.Entities.Community), true)]
-[assembly: EdmRelationshipAttribute("BlModel", "Community_Builders", "Builder", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(Bnh.Entities.Builder), "Community", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(Bnh.Entities.Community))]
-[assembly: EdmRelationshipAttribute("BlModel", "FK_Builder_City", "City", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(Bnh.Entities.City), "Builder", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(Bnh.Entities.Builder), true)]
 
 #endregion
 
@@ -40,7 +40,7 @@ namespace Bnh.Entities
         /// <summary>
         /// Initializes a new BlEntities object using the connection string found in the 'BlEntities' section of the application configuration file.
         /// </summary>
-        public BlEntities() : this(EntityConnectionHelper.Get("Bl"))
+        public BlEntities() : base("name=BlEntities", "BlEntities")
         {
             this.ContextOptions.LazyLoadingEnabled = true;
             OnContextCreated();
@@ -197,15 +197,15 @@ namespace Bnh.Entities
         /// </summary>
         /// <param name="id">Initial value of the Id property.</param>
         /// <param name="name">Initial value of the Name property.</param>
-        /// <param name="urlId">Initial value of the UrlId property.</param>
         /// <param name="cityId">Initial value of the CityId property.</param>
-        public static Builder CreateBuilder(global::System.Guid id, global::System.String name, global::System.String urlId, global::System.Guid cityId)
+        /// <param name="urlId">Initial value of the UrlId property.</param>
+        public static Builder CreateBuilder(global::System.Guid id, global::System.String name, global::System.Guid cityId, global::System.String urlId)
         {
             Builder builder = new Builder();
             builder.Id = id;
             builder.Name = name;
-            builder.UrlId = urlId;
             builder.CityId = cityId;
+            builder.UrlId = urlId;
             return builder;
         }
 
@@ -269,30 +269,6 @@ namespace Bnh.Entities
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
         [DataMemberAttribute()]
-        public global::System.String UrlId
-        {
-            get
-            {
-                return _UrlId;
-            }
-            set
-            {
-                OnUrlIdChanging(value);
-                ReportPropertyChanging("UrlId");
-                _UrlId = StructuralObject.SetValidValue(value, false);
-                ReportPropertyChanged("UrlId");
-                OnUrlIdChanged();
-            }
-        }
-        private global::System.String _UrlId;
-        partial void OnUrlIdChanging(global::System.String value);
-        partial void OnUrlIdChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
-        [DataMemberAttribute()]
         public global::System.Guid CityId
         {
             get
@@ -311,33 +287,35 @@ namespace Bnh.Entities
         private global::System.Guid _CityId;
         partial void OnCityIdChanging(global::System.Guid value);
         partial void OnCityIdChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.String UrlId
+        {
+            get
+            {
+                return _UrlId;
+            }
+            set
+            {
+                OnUrlIdChanging(value);
+                ReportPropertyChanging("UrlId");
+                _UrlId = StructuralObject.SetValidValue(value, false);
+                ReportPropertyChanged("UrlId");
+                OnUrlIdChanged();
+            }
+        }
+        private global::System.String _UrlId;
+        partial void OnUrlIdChanging(global::System.String value);
+        partial void OnUrlIdChanged();
 
         #endregion
 
     
         #region Navigation Properties
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [XmlIgnoreAttribute()]
-        [SoapIgnoreAttribute()]
-        [DataMemberAttribute()]
-        [EdmRelationshipNavigationPropertyAttribute("BlModel", "Community_Builders", "Community")]
-        public EntityCollection<Community> Communities
-        {
-            get
-            {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<Community>("BlModel.Community_Builders", "Community");
-            }
-            set
-            {
-                if ((value != null))
-                {
-                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<Community>("BlModel.Community_Builders", "Community", value);
-                }
-            }
-        }
     
         /// <summary>
         /// No Metadata Documentation available.
@@ -373,6 +351,28 @@ namespace Bnh.Entities
                 if ((value != null))
                 {
                     ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<City>("BlModel.FK_Builder_City", "City", value);
+                }
+            }
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("BlModel", "Community_Builders", "Community")]
+        public EntityCollection<Community> Communities
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<Community>("BlModel.Community_Builders", "Community");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<Community>("BlModel.Community_Builders", "Community", value);
                 }
             }
         }
@@ -496,28 +496,6 @@ namespace Bnh.Entities
         [XmlIgnoreAttribute()]
         [SoapIgnoreAttribute()]
         [DataMemberAttribute()]
-        [EdmRelationshipNavigationPropertyAttribute("BlModel", "FK_Zone_City", "Zone")]
-        public EntityCollection<Zone> Zones
-        {
-            get
-            {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<Zone>("BlModel.FK_Zone_City", "Zone");
-            }
-            set
-            {
-                if ((value != null))
-                {
-                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<Zone>("BlModel.FK_Zone_City", "Zone", value);
-                }
-            }
-        }
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [XmlIgnoreAttribute()]
-        [SoapIgnoreAttribute()]
-        [DataMemberAttribute()]
         [EdmRelationshipNavigationPropertyAttribute("BlModel", "FK_Builder_City", "Builder")]
         public EntityCollection<Builder> Builders
         {
@@ -530,6 +508,28 @@ namespace Bnh.Entities
                 if ((value != null))
                 {
                     ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<Builder>("BlModel.FK_Builder_City", "Builder", value);
+                }
+            }
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("BlModel", "FK_Zone_City", "Zone")]
+        public EntityCollection<Zone> Zones
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<Zone>("BlModel.FK_Zone_City", "Zone");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<Zone>("BlModel.FK_Zone_City", "Zone", value);
                 }
             }
         }
@@ -555,13 +555,27 @@ namespace Bnh.Entities
         /// <param name="name">Initial value of the Name property.</param>
         /// <param name="zoneId">Initial value of the ZoneId property.</param>
         /// <param name="urlId">Initial value of the UrlId property.</param>
-        public static Community CreateCommunity(global::System.Guid id, global::System.String name, global::System.Guid zoneId, global::System.String urlId)
+        /// <param name="remoteness">Initial value of the Remoteness property.</param>
+        /// <param name="hasLake">Initial value of the HasLake property.</param>
+        /// <param name="hasWaterFeature">Initial value of the HasWaterFeature property.</param>
+        /// <param name="hasClubOrFacility">Initial value of the HasClubOrFacility property.</param>
+        /// <param name="hasMountainView">Initial value of the HasMountainView property.</param>
+        /// <param name="hasParksAndPathways">Initial value of the HasParksAndPathways property.</param>
+        /// <param name="hasShoppingPlaza">Initial value of the HasShoppingPlaza property.</param>
+        public static Community CreateCommunity(global::System.Guid id, global::System.String name, global::System.Guid zoneId, global::System.String urlId, global::System.Int32 remoteness, global::System.Boolean hasLake, global::System.Boolean hasWaterFeature, global::System.Boolean hasClubOrFacility, global::System.Boolean hasMountainView, global::System.Boolean hasParksAndPathways, global::System.Boolean hasShoppingPlaza)
         {
             Community community = new Community();
             community.Id = id;
             community.Name = name;
             community.ZoneId = zoneId;
             community.UrlId = urlId;
+            community.Remoteness = remoteness;
+            community.HasLake = hasLake;
+            community.HasWaterFeature = hasWaterFeature;
+            community.HasClubOrFacility = hasClubOrFacility;
+            community.HasMountainView = hasMountainView;
+            community.HasParksAndPathways = hasParksAndPathways;
+            community.HasShoppingPlaza = hasShoppingPlaza;
             return community;
         }
 
@@ -719,9 +733,9 @@ namespace Bnh.Entities
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
         [DataMemberAttribute()]
-        public Nullable<global::System.Int32> Remoteness
+        public global::System.Int32 Remoteness
         {
             get
             {
@@ -736,16 +750,16 @@ namespace Bnh.Entities
                 OnRemotenessChanged();
             }
         }
-        private Nullable<global::System.Int32> _Remoteness;
-        partial void OnRemotenessChanging(Nullable<global::System.Int32> value);
+        private global::System.Int32 _Remoteness;
+        partial void OnRemotenessChanging(global::System.Int32 value);
         partial void OnRemotenessChanged();
     
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
         [DataMemberAttribute()]
-        public Nullable<global::System.Boolean> HasLake
+        public global::System.Boolean HasLake
         {
             get
             {
@@ -760,16 +774,16 @@ namespace Bnh.Entities
                 OnHasLakeChanged();
             }
         }
-        private Nullable<global::System.Boolean> _HasLake;
-        partial void OnHasLakeChanging(Nullable<global::System.Boolean> value);
+        private global::System.Boolean _HasLake;
+        partial void OnHasLakeChanging(global::System.Boolean value);
         partial void OnHasLakeChanged();
     
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
         [DataMemberAttribute()]
-        public Nullable<global::System.Boolean> HasWaterFeature
+        public global::System.Boolean HasWaterFeature
         {
             get
             {
@@ -784,16 +798,16 @@ namespace Bnh.Entities
                 OnHasWaterFeatureChanged();
             }
         }
-        private Nullable<global::System.Boolean> _HasWaterFeature;
-        partial void OnHasWaterFeatureChanging(Nullable<global::System.Boolean> value);
+        private global::System.Boolean _HasWaterFeature;
+        partial void OnHasWaterFeatureChanging(global::System.Boolean value);
         partial void OnHasWaterFeatureChanged();
     
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
         [DataMemberAttribute()]
-        public Nullable<global::System.Boolean> HasClubOrFacility
+        public global::System.Boolean HasClubOrFacility
         {
             get
             {
@@ -808,16 +822,16 @@ namespace Bnh.Entities
                 OnHasClubOrFacilityChanged();
             }
         }
-        private Nullable<global::System.Boolean> _HasClubOrFacility;
-        partial void OnHasClubOrFacilityChanging(Nullable<global::System.Boolean> value);
+        private global::System.Boolean _HasClubOrFacility;
+        partial void OnHasClubOrFacilityChanging(global::System.Boolean value);
         partial void OnHasClubOrFacilityChanged();
     
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
         [DataMemberAttribute()]
-        public Nullable<global::System.Boolean> HasMountainView
+        public global::System.Boolean HasMountainView
         {
             get
             {
@@ -832,16 +846,16 @@ namespace Bnh.Entities
                 OnHasMountainViewChanged();
             }
         }
-        private Nullable<global::System.Boolean> _HasMountainView;
-        partial void OnHasMountainViewChanging(Nullable<global::System.Boolean> value);
+        private global::System.Boolean _HasMountainView;
+        partial void OnHasMountainViewChanging(global::System.Boolean value);
         partial void OnHasMountainViewChanged();
     
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
         [DataMemberAttribute()]
-        public Nullable<global::System.Boolean> HasParksAndPathways
+        public global::System.Boolean HasParksAndPathways
         {
             get
             {
@@ -856,16 +870,16 @@ namespace Bnh.Entities
                 OnHasParksAndPathwaysChanged();
             }
         }
-        private Nullable<global::System.Boolean> _HasParksAndPathways;
-        partial void OnHasParksAndPathwaysChanging(Nullable<global::System.Boolean> value);
+        private global::System.Boolean _HasParksAndPathways;
+        partial void OnHasParksAndPathwaysChanging(global::System.Boolean value);
         partial void OnHasParksAndPathwaysChanged();
     
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
         [DataMemberAttribute()]
-        public Nullable<global::System.Boolean> HasShoppingPlaza
+        public global::System.Boolean HasShoppingPlaza
         {
             get
             {
@@ -880,14 +894,36 @@ namespace Bnh.Entities
                 OnHasShoppingPlazaChanged();
             }
         }
-        private Nullable<global::System.Boolean> _HasShoppingPlaza;
-        partial void OnHasShoppingPlazaChanging(Nullable<global::System.Boolean> value);
+        private global::System.Boolean _HasShoppingPlaza;
+        partial void OnHasShoppingPlazaChanging(global::System.Boolean value);
         partial void OnHasShoppingPlazaChanged();
 
         #endregion
 
     
         #region Navigation Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("BlModel", "Community_Builders", "Builder")]
+        public EntityCollection<Builder> Builders
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<Builder>("BlModel.Community_Builders", "Builder");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<Builder>("BlModel.Community_Builders", "Builder", value);
+                }
+            }
+        }
     
         /// <summary>
         /// No Metadata Documentation available.
@@ -926,28 +962,6 @@ namespace Bnh.Entities
                 }
             }
         }
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [XmlIgnoreAttribute()]
-        [SoapIgnoreAttribute()]
-        [DataMemberAttribute()]
-        [EdmRelationshipNavigationPropertyAttribute("BlModel", "Community_Builders", "Builder")]
-        public EntityCollection<Builder> Builders
-        {
-            get
-            {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<Builder>("BlModel.Community_Builders", "Builder");
-            }
-            set
-            {
-                if ((value != null))
-                {
-                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<Builder>("BlModel.Community_Builders", "Builder", value);
-                }
-            }
-        }
 
         #endregion
 
@@ -969,15 +983,13 @@ namespace Bnh.Entities
         /// <param name="id">Initial value of the Id property.</param>
         /// <param name="name">Initial value of the Name property.</param>
         /// <param name="cityId">Initial value of the CityId property.</param>
-        /// <param name="order">Initial value of the Order property.</param>
         /// <param name="urlId">Initial value of the UrlId property.</param>
-        public static Zone CreateZone(global::System.Guid id, global::System.String name, global::System.Guid cityId, global::System.Int32 order, global::System.String urlId)
+        public static Zone CreateZone(global::System.Guid id, global::System.String name, global::System.Guid cityId, global::System.String urlId)
         {
             Zone zone = new Zone();
             zone.Id = id;
             zone.Name = name;
             zone.CityId = cityId;
-            zone.Order = order;
             zone.UrlId = urlId;
             return zone;
         }
@@ -1064,9 +1076,9 @@ namespace Bnh.Entities
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
         [DataMemberAttribute()]
-        public global::System.Int32 Order
+        public Nullable<global::System.Int32> Order
         {
             get
             {
@@ -1081,8 +1093,8 @@ namespace Bnh.Entities
                 OnOrderChanged();
             }
         }
-        private global::System.Int32 _Order;
-        partial void OnOrderChanging(global::System.Int32 value);
+        private Nullable<global::System.Int32> _Order;
+        partial void OnOrderChanging(Nullable<global::System.Int32> value);
         partial void OnOrderChanged();
     
         /// <summary>

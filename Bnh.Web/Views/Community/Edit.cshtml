@@ -60,6 +60,62 @@
                     @Html.DropDownList("ZoneId", String.Empty)
                     @Html.ValidationMessageFor(model => model.ZoneId)
                 </div>
+
+                <div class="editor-label">
+                    @Html.LabelFor(model => model.Remoteness)
+                </div>
+                <div class="editor-field">
+                    @Html.EditorFor(model => model.Remoteness)
+                    @Html.ValidationMessageFor(model => model.Remoteness)
+                </div>
+
+                <div class="editor-label">
+                    @Html.LabelFor(model => model.HasLake)
+                </div>
+                <div class="editor-field">
+                    @Html.EditorFor(model => model.HasLake)
+                    @Html.ValidationMessageFor(model => model.HasLake)
+                </div>
+
+                <div class="editor-label">
+                    @Html.LabelFor(model => model.HasWaterFeature)
+                </div>
+                <div class="editor-field">
+                    @Html.EditorFor(model => model.HasWaterFeature)
+                    @Html.ValidationMessageFor(model => model.HasWaterFeature)
+                </div>
+
+                <div class="editor-label">
+                    @Html.LabelFor(model => model.HasClubOrFacility)
+                </div>
+                <div class="editor-field">
+                    @Html.EditorFor(model => model.HasClubOrFacility)
+                    @Html.ValidationMessageFor(model => model.HasClubOrFacility)
+                </div>
+
+                <div class="editor-label">
+                    @Html.LabelFor(model => model.HasMountainView)
+                </div>
+                <div class="editor-field">
+                    @Html.EditorFor(model => model.HasMountainView)
+                    @Html.ValidationMessageFor(model => model.HasMountainView)
+                </div>
+
+                <div class="editor-label">
+                    @Html.LabelFor(model => model.HasParksAndPathways)
+                </div>
+                <div class="editor-field">
+                    @Html.EditorFor(model => model.HasParksAndPathways)
+                    @Html.ValidationMessageFor(model => model.HasParksAndPathways)
+                </div>
+
+                <div class="editor-label">
+                    @Html.LabelFor(model => model.HasShoppingPlaza)
+                </div>
+                <div class="editor-field">
+                    @Html.EditorFor(model => model.HasShoppingPlaza)
+                    @Html.ValidationMessageFor(model => model.HasShoppingPlaza)
+                </div>
               
             </div>
 
