@@ -64,13 +64,13 @@
           <Property Name="UrlId" Type="nvarchar" Nullable="false" MaxLength="100" />
           <Property Name="GpsLocation" Type="nvarchar" MaxLength="100" />
           <Property Name="GpsBounds" Type="nvarchar" MaxLength="1000" />
-          <Property Name="Remoteness" Type="int" />
-          <Property Name="HasLake" Type="bit" />
-          <Property Name="HasWaterFeature" Type="bit" />
-          <Property Name="HasClubOrFacility" Type="bit" />
-          <Property Name="HasMountainView" Type="bit" />
-          <Property Name="HasParksAndPathways" Type="bit" />
-          <Property Name="HasShoppingPlaza" Type="bit" />
+          <Property Name="Remoteness" Type="int" Nullable="false" />
+          <Property Name="HasLake" Type="bit" Nullable="false" />
+          <Property Name="HasWaterFeature" Type="bit" Nullable="false" />
+          <Property Name="HasClubOrFacility" Type="bit" Nullable="false" />
+          <Property Name="HasMountainView" Type="bit" Nullable="false" />
+          <Property Name="HasParksAndPathways" Type="bit" Nullable="false" />
+          <Property Name="HasShoppingPlaza" Type="bit" Nullable="false" />
         </EntityType>
         <!--Errors Found During Generation:
       warning 6002: The table/view 'bnh.bl.Community_Builders' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
@@ -165,6 +165,14 @@
           <EntitySet Name="Builders" EntityType="BlModel.Builder" />
           <EntitySet Name="Cities" EntityType="BlModel.City" />
           <EntitySet Name="Communities" EntityType="BlModel.Community" />
+          <AssociationSet Name="FK_Builder_City" Association="BlModel.FK_Builder_City">
+            <End Role="City" EntitySet="Cities" />
+            <End Role="Builder" EntitySet="Builders" />
+          </AssociationSet>
+          <AssociationSet Name="Community_Builders" Association="BlModel.Community_Builders">
+            <End Role="Builder" EntitySet="Builders" />
+            <End Role="Community" EntitySet="Communities" />
+          </AssociationSet>
           <EntitySet Name="Zones" EntityType="BlModel.Zone" />
           <AssociationSet Name="FK_Zone_City" Association="BlModel.FK_Zone_City">
             <End Role="City" EntitySet="Cities" />
@@ -174,14 +182,6 @@
             <End Role="Zone" EntitySet="Zones" />
             <End Role="Community" EntitySet="Communities" />
           </AssociationSet>
-          <AssociationSet Name="Community_Builders" Association="BlModel.Community_Builders">
-            <End Role="Builder" EntitySet="Builders" />
-            <End Role="Community" EntitySet="Communities" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Builder_City" Association="BlModel.FK_Builder_City">
-            <End Role="City" EntitySet="Cities" />
-            <End Role="Builder" EntitySet="Builders" />
-          </AssociationSet>
         </EntityContainer>
         <EntityType Name="Builder">
           <Key>
@@ -189,10 +189,10 @@
           </Key>
           <Property Type="Guid" Name="Id" Nullable="false" />
           <Property Type="String" Name="Name" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="Communities" Relationship="BlModel.Community_Builders" FromRole="Builder" ToRole="Community" />
-          <Property Type="String" Name="UrlId" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Type="Guid" Name="CityId" Nullable="false" />
+          <Property Type="String" Name="UrlId" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="City" Relationship="BlModel.FK_Builder_City" FromRole="Builder" ToRole="City" />
+          <NavigationProperty Name="Communities" Relationship="BlModel.Community_Builders" FromRole="Builder" ToRole="Community" />
         </EntityType>
         <EntityType Name="City">
           <Key>
@@ -200,9 +200,9 @@
           </Key>
           <Property Type="Guid" Name="Id" Nullable="false" />
           <Property Type="String" Name="Name" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="Zones" Relationship="BlModel.FK_Zone_City" FromRole="City" ToRole="Zone" />
           <Property Type="String" Name="UrlId" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="Builders" Relationship="BlModel.FK_Builder_City" FromRole="City" ToRole="Builder" />
+          <NavigationProperty Name="Zones" Relationship="BlModel.FK_Zone_City" FromRole="City" ToRole="Zone" />
         </EntityType>
         <EntityType Name="Community">
           <Key>
@@ -211,19 +211,35 @@
           <Property Type="Guid" Name="Id" Nullable="false" />
           <Property Type="String" Name="Name" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Type="Guid" Name="ZoneId" Nullable="false" />
-          <NavigationProperty Name="Zone" Relationship="BlModel.FK_Community_Zone" FromRole="Community" ToRole="Zone" />
-          <NavigationProperty Name="Builders" Relationship="BlModel.Community_Builders" FromRole="Community" ToRole="Builder" />
           <Property Type="String" Name="UrlId" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Type="String" Name="GpsLocation" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Type="String" Name="GpsBounds" MaxLength="1000" FixedLength="false" Unicode="true" />
-          <Property Type="Int32" Name="Remoteness" />
-          <Property Type="Boolean" Name="HasLake" />
-          <Property Type="Boolean" Name="HasWaterFeature" />
-          <Property Type="Boolean" Name="HasClubOrFacility" />
-          <Property Type="Boolean" Name="HasMountainView" />
-          <Property Type="Boolean" Name="HasParksAndPathways" />
-          <Property Type="Boolean" Name="HasShoppingPlaza" />
+          <Property Type="Int32" Name="Remoteness" Nullable="false" />
+          <Property Type="Boolean" Name="HasLake" Nullable="false" />
+          <Property Type="Boolean" Name="HasWaterFeature" Nullable="false" />
+          <Property Type="Boolean" Name="HasClubOrFacility" Nullable="false" />
+          <Property Type="Boolean" Name="HasMountainView" Nullable="false" />
+          <Property Type="Boolean" Name="HasParksAndPathways" Nullable="false" />
+          <Property Type="Boolean" Name="HasShoppingPlaza" Nullable="false" />
+          <NavigationProperty Name="Builders" Relationship="BlModel.Community_Builders" FromRole="Community" ToRole="Builder" />
+          <NavigationProperty Name="Zone" Relationship="BlModel.FK_Community_Zone" FromRole="Community" ToRole="Zone" />
         </EntityType>
+        <Association Name="FK_Builder_City">
+          <End Type="BlModel.City" Role="City" Multiplicity="1" />
+          <End Type="BlModel.Builder" Role="Builder" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="City">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Builder">
+              <PropertyRef Name="CityId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Community_Builders">
+          <End Type="BlModel.Builder" Role="Builder" Multiplicity="*" />
+          <End Type="BlModel.Community" Role="Community" Multiplicity="*" />
+        </Association>
         <EntityType Name="Zone">
           <Key>
             <PropertyRef Name="Id" />
@@ -231,10 +247,10 @@
           <Property Type="Guid" Name="Id" Nullable="false" />
           <Property Type="String" Name="Name" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Type="Guid" Name="CityId" Nullable="false" />
+          <Property Type="Int32" Name="Order" />
+          <Property Type="String" Name="UrlId" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="City" Relationship="BlModel.FK_Zone_City" FromRole="Zone" ToRole="City" />
           <NavigationProperty Name="Communities" Relationship="BlModel.FK_Community_Zone" FromRole="Zone" ToRole="Community" />
-          <Property Type="Int32" Name="Order" Nullable="false" />
-          <Property Type="String" Name="UrlId" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
         </EntityType>
         <Association Name="FK_Zone_City">
           <End Type="BlModel.City" Role="City" Multiplicity="1" />
@@ -260,23 +276,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="Community_Builders">
-          <End Type="BlModel.Builder" Role="Builder" Multiplicity="*" />
-          <End Type="BlModel.Community" Role="Community" Multiplicity="*" />
-        </Association>
-        <Association Name="FK_Builder_City">
-          <End Type="BlModel.City" Role="City" Multiplicity="1" />
-          <End Type="BlModel.Builder" Role="Builder" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="City">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="Builder">
-              <PropertyRef Name="CityId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-      </Schema>
+        </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
@@ -285,8 +285,8 @@
           <EntitySetMapping Name="Builders">
             <EntityTypeMapping TypeName="BlModel.Builder">
               <MappingFragment StoreEntitySet="Builder">
-                <ScalarProperty Name="CityId" ColumnName="CityId" />
                 <ScalarProperty Name="UrlId" ColumnName="UrlId" />
+                <ScalarProperty Name="CityId" ColumnName="CityId" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
@@ -320,6 +320,14 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <AssociationSetMapping Name="Community_Builders" TypeName="BlModel.Community_Builders" StoreEntitySet="Community_Builders">
+            <EndProperty Name="Community">
+              <ScalarProperty Name="Id" ColumnName="CommunityId" />
+            </EndProperty>
+            <EndProperty Name="Builder">
+              <ScalarProperty Name="Id" ColumnName="BuilderId" />
+            </EndProperty>
+          </AssociationSetMapping>
           <EntitySetMapping Name="Zones">
             <EntityTypeMapping TypeName="BlModel.Zone">
               <MappingFragment StoreEntitySet="Zone">
@@ -331,14 +339,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <AssociationSetMapping Name="Community_Builders" TypeName="BlModel.Community_Builders" StoreEntitySet="Community_Builders">
-            <EndProperty Name="Community">
-              <ScalarProperty Name="Id" ColumnName="CommunityId" />
-            </EndProperty>
-            <EndProperty Name="Builder">
-              <ScalarProperty Name="Id" ColumnName="BuilderId" />
-            </EndProperty>
-          </AssociationSetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
@@ -360,26 +360,27 @@
     <!-- Diagram content (shape and connector positions) -->
     <Diagrams>
       <Diagram Name="Bl">
-        <EntityTypeShape EntityType="BlModel.Builder" Width="1.5" PointX="3" PointY="4.125" Height="1.5956835937499996" />
-        <EntityTypeShape EntityType="BlModel.City" Width="1.5" PointX="0.75" PointY="1.125" Height="1.5956835937499994" />
-        <EntityTypeShape EntityType="BlModel.Community" Width="1.5" PointX="5.375" PointY="0.875" Height="3.9033007812499996" />
-        <EntityTypeShape EntityType="BlModel.Zone" Width="1.5" PointX="3" PointY="0.875" Height="1.9802864583333317" />
-        <AssociationConnector Association="BlModel.FK_Zone_City" >
-          <ConnectorPoint PointX="2.25" PointY="2.1151432291666667" />
-          <ConnectorPoint PointX="3" PointY="2.1151432291666667" />
-        </AssociationConnector>
-        <AssociationConnector Association="BlModel.FK_Community_Zone" >
-          <ConnectorPoint PointX="4.5" PointY="2.0574446614583328" />
-          <ConnectorPoint PointX="5.375" PointY="2.0574446614583328" />
+        <EntityTypeShape EntityType="BlModel.Builder" Width="1.5" PointX="4" PointY="1.25" Height="2.1725878906249996" />
+        <EntityTypeShape EntityType="BlModel.City" Width="1.5" PointX="1.75" PointY="1.5" Height="1.9802864583333331" />
+        <EntityTypeShape EntityType="BlModel.Community" Width="1.5" PointX="6.25" PointY="0.5" Height="3.9033007812499996" />
+        <AssociationConnector Association="BlModel.FK_Builder_City" >
+          <ConnectorPoint PointX="3.25" PointY="2.4612939453125" />
+          <ConnectorPoint PointX="4" PointY="2.4612939453125" />
         </AssociationConnector>
         <AssociationConnector Association="BlModel.Community_Builders" >
-          <ConnectorPoint PointX="4.5" PointY="4.451650390625" />
-          <ConnectorPoint PointX="5.375" PointY="4.451650390625" />
+          <ConnectorPoint PointX="5.5" PointY="2.3362939453125" />
+          <ConnectorPoint PointX="6.25" PointY="2.3362939453125" />
         </AssociationConnector>
-        <AssociationConnector Association="BlModel.FK_Builder_City" >
-          <ConnectorPoint PointX="1.5" PointY="3.1052864583333331" />
-          <ConnectorPoint PointX="1.5" PointY="5.2112939453125" />
-          <ConnectorPoint PointX="3" PointY="5.2112939453125" />
+        <EntityTypeShape EntityType="BlModel.Zone" Width="1.5" PointX="4" PointY="4.25" Height="2.3648893229166674" />
+        <AssociationConnector Association="BlModel.FK_Zone_City" >
+          <ConnectorPoint PointX="2.5" PointY="3.4802864583333331" />
+          <ConnectorPoint PointX="2.5" PointY="5.4324446614583337" />
+          <ConnectorPoint PointX="4" PointY="5.4324446614583337" />
+        </AssociationConnector>
+        <AssociationConnector Association="BlModel.FK_Community_Zone" >
+          <ConnectorPoint PointX="5.5" PointY="5.509095552083334" />
+          <ConnectorPoint PointX="7" PointY="5.509095552083334" />
+          <ConnectorPoint PointX="7" PointY="4.40330078125" />
         </AssociationConnector>
       </Diagram>
     </Diagrams>
