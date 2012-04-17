@@ -53,3 +53,13 @@ sup.alter a
 {
     float: right;
 }
+
+#filterLegend
+{
+    cursor: pointer;
+}
+
+#filterParameters
+{
+    display: none;
+}

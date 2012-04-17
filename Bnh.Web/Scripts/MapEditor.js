@@ -87,6 +87,10 @@
             },
             getBounds: function() {
                 var path = currentValues.polygon ? currentValues.polygon.getPath().getArray() : null;
+                if(!path) {
+                    return null;
+                }
+
                 var points = [];
                 for(var i = 0; i < path.length; i ++) {
                     points[i] = serializeCoord(path[i]);
