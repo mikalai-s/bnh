@@ -10,9 +10,9 @@ namespace Bnh.Web.Models
 {
     public class AccountProfile : ProfileBase
     {
-        static public AccountProfile Current
+        public static AccountProfile Current
         {
-            get { return GetProfile(Membership.GetUser().UserName); }
+            get { return GetProfile(HttpContext.Current.User.Identity.Name); }
         }
        
         public string FirstName
@@ -39,7 +39,7 @@ namespace Bnh.Web.Models
             set { base["Gender"] = value; }
         }
 
-        public string FullName
+        public virtual string FullName
         {
             get { return this.FirstName + " " + this.LastName; }
         }
@@ -54,6 +54,14 @@ namespace Bnh.Web.Models
         {
             Male = 0,
             Female = 1
+        }
+    }
+
+    public class EmptyAccountProfile : AccountProfile
+    {
+        public override string FullName
+        {
+            get { return "[No Profile!]"; }
         }
     }
 }

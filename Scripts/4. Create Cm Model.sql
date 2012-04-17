@@ -1,5 +1,3 @@
-USE [bnh]
-GO
 
 /****** Object:  Table [cm].[Wall]    Script Date: 02/21/2012 22:18:09 ******/
 SET ANSI_NULLS ON
