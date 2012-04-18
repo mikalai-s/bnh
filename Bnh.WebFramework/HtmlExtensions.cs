@@ -7,6 +7,8 @@ using System.Web.Mvc.Html;
 using System.Web.Routing;
 using Bnh.Entities;
 using System;
+using System.Reflection;
+using System.Text;
 
 namespace Bnh.WebFramework
 {
@@ -89,6 +91,29 @@ namespace Bnh.WebFramework
             var items = BnhModelBinder.HierarchyTypeMap[typeof (Brick)]
                 .Select(e => new SelectListItem { Value = e.Key, Text = BrickTypeNames[e.Value] });
             return htmlHelper.DropDownList(name, items);
+        }
+
+
+        public static MvcHtmlString CommunityFilter(this HtmlHelper htmlHelper)
+        {
+            var builder = new StringBuilder();
+            var properties = typeof(Community).GetProperties(BindingFlags.Public | BindingFlags.Instance);
+            foreach (var property in properties)
+            {
+                if (!Attribute.IsDefined(property, typeof(FilterablePropertyAttribute)))
+                {
+                    continue;
+                }
+
+                if (property.PropertyType == typeof(bool))
+                {
+                    builder.AppendFormat("<div><input id=\"hasLake\" type=\"checkbox\" class=\"filter\" data-bind=\"checked: {0}\" /> {1}</div>\r\n",
+                        property.Name.First().ToString().ToLower() + string.Join("", property.Name.Skip(1)),
+                        property.Name);
+                }
+            }
+
+            return MvcHtmlString.Create(builder.ToString());
         }
     }
 }
