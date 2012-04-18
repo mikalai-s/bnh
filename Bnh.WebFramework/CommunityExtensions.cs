@@ -12,6 +12,7 @@ namespace Bnh.WebFramework
     {
         public static string IsVisibleKoExpression(this Community community)
         {
+            var serializer = new JavaScriptSerializer();
             var builder = new StringBuilder();
             var properties = typeof(Community).GetProperties(BindingFlags.Public | BindingFlags.Instance);
             foreach(var property in properties)
@@ -23,7 +24,6 @@ namespace Bnh.WebFramework
 
                 var name = property.Name.First().ToString().ToLower() + string.Join("", property.Name.Skip(1));
                 var value = property.GetValue(community, null);
-                var serializer = new JavaScriptSerializer();
 
                 builder.AppendFormat("(!{0}() || {0}()==={1})&&", name, serializer.Serialize(value));
             }
