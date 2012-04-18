@@ -735,6 +735,7 @@ namespace Bnh.Entities
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
         [DataMemberAttribute()]
+        //[FilterableProperty()]
         public global::System.Int32 Remoteness
         {
             get
@@ -759,6 +760,7 @@ namespace Bnh.Entities
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
         [DataMemberAttribute()]
+        [FilterableProperty()]
         public global::System.Boolean HasLake
         {
             get
@@ -783,6 +785,7 @@ namespace Bnh.Entities
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
         [DataMemberAttribute()]
+        [FilterableProperty()]
         public global::System.Boolean HasWaterFeature
         {
             get
@@ -807,6 +810,7 @@ namespace Bnh.Entities
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
         [DataMemberAttribute()]
+        [FilterableProperty()]
         public global::System.Boolean HasClubOrFacility
         {
             get
@@ -831,6 +835,7 @@ namespace Bnh.Entities
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
         [DataMemberAttribute()]
+        [FilterableProperty()]
         public global::System.Boolean HasMountainView
         {
             get
@@ -855,6 +860,7 @@ namespace Bnh.Entities
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
         [DataMemberAttribute()]
+        [FilterableProperty()]
         public global::System.Boolean HasParksAndPathways
         {
             get
@@ -879,6 +885,7 @@ namespace Bnh.Entities
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
         [DataMemberAttribute()]
+        [FilterableProperty()]
         public global::System.Boolean HasShoppingPlaza
         {
             get

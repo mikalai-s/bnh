@@ -6,6 +6,7 @@
     var communities = $(".community");
     var filterLegend = $("#filterLegend");
     var filterParameters = $("#filterParameters");
+    var filters = $(".filter");
 
 
     communities.each(function (i, elem) {
@@ -53,10 +54,32 @@
         }
     });
 
+    //    filters.change(function () {
+
+    //    });
+
     function onCommunityClicked(name) {
         var href = $(".community:contains(" + name + ")").attr("href");
         if (href) {
             window.location.href = href;
         }
     }
+
+    function FiltersViewModel() {
+        var self = this;
+
+        this.remoteness = ko.observable();
+        this.hasLake = ko.observable(false);
+        this.hasWaterFeature = ko.observable(false);
+        this.hasClubOrFacility = ko.observable(false);
+        this.hasMountainView = ko.observable(false);
+        this.hasParksAndPathways = ko.observable(false);
+        this.hasShoppingPlaza = ko.observable(false);
+        /*
+        this.checkVisiblity = ko.computed(function (hcof) {
+            return !self.hasClubOrFacility || self.hasClubOrFacility === hcof;
+        });*/
+    }
+
+    ko.applyBindings(new FiltersViewModel());
 })();

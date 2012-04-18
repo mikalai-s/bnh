@@ -47,6 +47,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BrickRendering.cs" />
+    <Compile Include="CommunityExtensions.cs" />
     <Compile Include="Encoding.cs" />
     <Compile Include="HtmlExtensions.cs" />
     <Compile Include="NavigationMenu.cs" />
