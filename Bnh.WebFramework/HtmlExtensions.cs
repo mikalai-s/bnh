@@ -97,6 +97,12 @@ namespace Bnh.WebFramework
         public static MvcHtmlString CommunityFilter(this HtmlHelper htmlHelper)
         {
             var builder = new StringBuilder();
+            var scriptBuilder = new StringBuilder();
+
+            scriptBuilder.AppendLine("<script type=\"text/javascript\">");
+            scriptBuilder.AppendLine("    function communityFilterViewModel() {");
+            scriptBuilder.AppendLine("        var self = this;");
+
             var properties = typeof(Community).GetProperties(BindingFlags.Public | BindingFlags.Instance);
             foreach (var property in properties)
             {
@@ -105,15 +111,22 @@ namespace Bnh.WebFramework
                     continue;
                 }
 
+                var csName = property.Name;
+                var jsName = csName[0].ToString().ToLower() + csName.Substring(1);
+
                 if (property.PropertyType == typeof(bool))
                 {
                     builder.AppendFormat("<div><input id=\"hasLake\" type=\"checkbox\" class=\"filter\" data-bind=\"checked: {0}\" /> {1}</div>\r\n",
-                        property.Name.First().ToString().ToLower() + string.Join("", property.Name.Skip(1)),
-                        property.Name);
+                        jsName, csName);
+
+                    scriptBuilder.AppendFormat("        self.{0} = ko.observable(false);\r\n", jsName);
                 }
             }
+            
+            scriptBuilder.AppendLine("    }");
+            scriptBuilder.AppendLine("</script>");
 
-            return MvcHtmlString.Create(builder.ToString());
+            return MvcHtmlString.Create(builder.ToString() + Environment.NewLine + scriptBuilder.ToString());
         }
     }
 }
