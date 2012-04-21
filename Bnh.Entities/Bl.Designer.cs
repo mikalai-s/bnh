@@ -760,7 +760,7 @@ namespace Bnh.Entities
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
         [DataMemberAttribute()]
-        [FilterableProperty()]
+        [FilterableProperty(Title="Has Lake")]
         public global::System.Boolean HasLake
         {
             get
@@ -785,7 +785,7 @@ namespace Bnh.Entities
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
         [DataMemberAttribute()]
-        [FilterableProperty()]
+        [FilterableProperty(Title = "Has Water Feature")]
         public global::System.Boolean HasWaterFeature
         {
             get
@@ -810,7 +810,7 @@ namespace Bnh.Entities
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
         [DataMemberAttribute()]
-        [FilterableProperty()]
+        [FilterableProperty(Title = "Has Club Or Facility")]
         public global::System.Boolean HasClubOrFacility
         {
             get
@@ -835,7 +835,7 @@ namespace Bnh.Entities
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
         [DataMemberAttribute()]
-        [FilterableProperty()]
+        [FilterableProperty(Title = "Has Mountain View")]
         public global::System.Boolean HasMountainView
         {
             get
@@ -860,7 +860,7 @@ namespace Bnh.Entities
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
         [DataMemberAttribute()]
-        [FilterableProperty()]
+        [FilterableProperty(Title = "Has Parks And Pathways")]
         public global::System.Boolean HasParksAndPathways
         {
             get
@@ -885,7 +885,7 @@ namespace Bnh.Entities
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
         [DataMemberAttribute()]
-        [FilterableProperty()]
+        [FilterableProperty(Title = "Has Shopping Plaza")]
         public global::System.Boolean HasShoppingPlaza
         {
             get

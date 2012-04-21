@@ -5,16 +5,18 @@ using System.Text;
 using Bnh.Entities;
 using System.Reflection;
 using System.Web.Script.Serialization;
+using System.Web;
 
 namespace Bnh.WebFramework
 {
     public static class CommunityExtensions
     {
-        public static string IsVisibleKoExpression(this Community community)
+        public static string GetClientProperties(this Community community)
         {
             var serializer = new JavaScriptSerializer();
-            var builder = new StringBuilder();
+            var clientProperties = new List<string>();
             var properties = typeof(Community).GetProperties(BindingFlags.Public | BindingFlags.Instance);
+            var builder = new StringBuilder("{");
             foreach(var property in properties)
             {
                 if (!Attribute.IsDefined(property, typeof(FilterablePropertyAttribute)))
@@ -22,12 +24,14 @@ namespace Bnh.WebFramework
                     continue;
                 }
 
-                var name = property.Name.First().ToString().ToLower() + string.Join("", property.Name.Skip(1));
+                var name = property.Name[0].ToString().ToLower() + property.Name.Substring(1);
                 var value = property.GetValue(community, null);
 
-                builder.AppendFormat("(!{0}() || {0}()==={1})&&", name, serializer.Serialize(value));
+                builder.AppendFormat("{0}:{1},", name, serializer.Serialize(value));
             }
-            builder.Append("true");
+
+            builder.Append("}");
+
             return builder.ToString();
         }
     }
