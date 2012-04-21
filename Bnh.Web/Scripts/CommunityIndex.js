@@ -54,16 +54,12 @@
         }
     });
 
-    //    filters.change(function () {
-
-    //    });
-
     function onCommunityClicked(name) {
         var href = $(".community:contains(" + name + ")").attr("href");
         if (href) {
             window.location.href = href;
         }
     }
-
+    
     ko.applyBindings(new communityFilterViewModel());
 })();

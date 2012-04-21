@@ -25,16 +25,7 @@
 
 <fieldset>
     <legend>Filter <a id="filterLegend" href="javascript:void">[show]</a></legend>
-    <div id="filterParameters">
-        @Html.CommunityFilter()
-        @*<div>Remoteness <input id="remoteness" type="text" class="filter" data-bind="value: remoteness" /></div>
-        <div><input id="hasLake" type="checkbox" class="filter" data-bind="checked: hasLake" /> Has Lake</div>
-        <div><input id="hasWaterFeature" type="checkbox" class="filter" data-bind="checked: hasWaterFeature" /> Has Water Feature</div>
-        <div><input id="hasClubOrFacility" type="checkbox" class="filter" data-bind="checked: hasClubOrFacility" /> Has Club Or Facility</div>
-        <div><input id="hasMountainView" type="checkbox" class="filter" data-bind="checked: hasMountainView" /> Has Mountain View</div>
-        <div><input id="hasParksAndPathways" type="checkbox" class="filter" data-bind="checked: hasParksAndPathways" /> Has Parks And Pathways</div>
-        <div><input id="hasShoppingPlaza" type="checkbox" class="filter" data-bind="checked: hasShoppingPlaza" /> Has Shopping Plaza</div>*@
-    </div>
+    @Html.Partial("CommunityFilterPartial")
 </fieldset>
 
 <table class="main">
@@ -55,7 +46,7 @@
                                     <div class="zone-header">@zone.Name</div>
                                     @foreach (var community in zone.Communities.OrderBy(c => c.Name))
                                     {
-                                        <div class="zone-community" data-bind="visible: @community.IsVisibleKoExpression()">
+                                        <div class="zone-community" data-bind='visible: isCommunityVisible(@community.GetClientProperties())'>
                                             @if (Context.User.IsInRole("content_manager"))
                                             {
                                                 <sup class="alter">@Html.ActionLink("x", "Delete", new { id = community.Id }, new { title = "Delete " + community.Name })</sup>

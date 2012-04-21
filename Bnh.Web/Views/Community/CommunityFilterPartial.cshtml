@@ -1,0 +1,42 @@
+﻿@using System.Reflection
+@using System.Linq;
+@using Bnh.Entities
+
+@{
+    var properties = from property in typeof(Community).GetProperties(BindingFlags.Public | BindingFlags.Instance)
+                     where Attribute.IsDefined(property, typeof(FilterablePropertyAttribute))
+                     let name = property.Name[0].ToString().ToLower() + property.Name.Substring(1)
+                     select new
+                     {
+                         jsName = name,
+                         title = (property.GetCustomAttributes(typeof(FilterablePropertyAttribute), false).First() as FilterablePropertyAttribute).Title
+                     };
+    properties = properties.ToList();
+}
+
+<div id="filterParameters">
+    @foreach (var property in properties)
+    { 
+    <div><input id="hasLake" type="checkbox" class="filter" data-bind="checked: @property.jsName" /> @property.title</div>
+    }
+
+    <script type="text/javascript">
+        function communityFilterViewModel(config) {
+            var me = this;
+            @foreach (var property in properties)
+            {
+            @:me.@property.jsName = ko.observable(false);
+            }
+
+            this.isCommunityVisible = function(cp) {
+                var visible = 
+                    @foreach (var property in properties)
+                    { 
+                    @:(!(me.@(property.jsName)()) || me.@(property.jsName)() === cp.@(property.jsName)) &&
+                    }
+                    true;
+                return visible;
+            }           
+        }
+    </script>
+</div>

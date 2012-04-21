@@ -7,6 +7,6 @@ namespace Bnh.Entities
 {
     public class FilterablePropertyAttribute : Attribute
     {
-
+        public string Title { get; set; }
     }
 }

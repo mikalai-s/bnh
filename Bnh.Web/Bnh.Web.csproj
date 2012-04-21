@@ -531,6 +531,7 @@
     <Content Include="Views\Brick\_Scripts.cshtml" />
     <Content Include="Views\Brick\_Styles.cshtml" />
     <Content Include="Views\Account\Update.cshtml" />
+    <Content Include="Views\Community\CommunityFilterPartial.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
