@@ -6,18 +6,28 @@
     var properties = from property in typeof(Community).GetProperties(BindingFlags.Public | BindingFlags.Instance)
                      where Attribute.IsDefined(property, typeof(FilterablePropertyAttribute))
                      let name = property.Name[0].ToString().ToLower() + property.Name.Substring(1)
+                     let attr = (property.GetCustomAttributes(typeof(FilterablePropertyAttribute), false).First() as FilterablePropertyAttribute)
                      select new
                      {
                          jsName = name,
-                         title = (property.GetCustomAttributes(typeof(FilterablePropertyAttribute), false).First() as FilterablePropertyAttribute).Title
+                         title = attr.Title,
+                         op = attr.GetJsOperator(),
+                         type = property.PropertyType
                      };
     properties = properties.ToList();
 }
 
 <div id="filterParameters">
     @foreach (var property in properties)
-    { 
-    <div><input id="hasLake" type="checkbox" class="filter" data-bind="checked: @property.jsName" /> @property.title</div>
+    {
+        if (property.type == typeof(bool))
+        { 
+    <div><input id="@property.jsName" type="checkbox" class="filter" data-bind="checked: @property.jsName" /> @property.title</div>
+        }
+        else
+        { 
+    <div>@property.title<input id="@property.jsName" type="input" class="filter" data-bind="value: @property.jsName" /></div>
+        }
     }
 
     <script type="text/javascript">
@@ -32,7 +42,7 @@
                 var visible = 
                     @foreach (var property in properties)
                     { 
-                    @:(!(me.@(property.jsName)()) || me.@(property.jsName)() === cp.@(property.jsName)) &&
+                    @:(!(me.@(property.jsName)()) || me.@(property.jsName)() @(property.op) cp.@(property.jsName)) &&
                     }
                     true;
                 return visible;
