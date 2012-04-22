@@ -735,7 +735,7 @@ namespace Bnh.Entities
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
         [DataMemberAttribute()]
-        //[FilterableProperty()]
+        [FilterableProperty(Title="To city center", Operator=FilterOperator.LessOrEqual)]
         public global::System.Int32 Remoteness
         {
             get
