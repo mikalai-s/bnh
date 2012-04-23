@@ -1,48 +1,38 @@
 ﻿@using System.Reflection
-@using System.Linq;
+@using System.Linq
 @using Bnh.Entities
+@using Bnh.WebFramework
 
 @{
-    var properties = from property in typeof(Community).GetProperties(BindingFlags.Public | BindingFlags.Instance)
-                     where Attribute.IsDefined(property, typeof(FilterablePropertyAttribute))
-                     let name = property.Name[0].ToString().ToLower() + property.Name.Substring(1)
-                     let attr = (property.GetCustomAttributes(typeof(FilterablePropertyAttribute), false).First() as FilterablePropertyAttribute)
-                     select new
-                     {
-                         jsName = name,
-                         title = attr.Title,
-                         op = attr.GetJsOperator(),
-                         type = property.PropertyType
-                     };
-    properties = properties.ToList();
+    var properties = CommunityExtensions.JsProperty.Get(typeof(Community));
 }
 
 <div id="filterParameters">
-    @foreach (var property in properties)
+    @foreach (var jsp in properties)
     {
-        if (property.type == typeof(bool))
+        if (jsp.Property.PropertyType == typeof(bool))
         { 
-    <div><input id="@property.jsName" type="checkbox" class="filter" data-bind="checked: @property.jsName" /> @property.title</div>
+    <div><input id="@jsp.Name" type="checkbox" class="filter" data-bind="checked: @jsp.Name" /> @jsp.Title</div>
         }
         else
         { 
-    <div>@property.title<input id="@property.jsName" type="input" class="filter" data-bind="value: @property.jsName" /></div>
+    <div>@jsp.Title<input id="@jsp.Name" type="input" class="filter" data-bind="value: @jsp.Name" /></div>
         }
     }
 
     <script type="text/javascript">
         function communityFilterViewModel(config) {
             var me = this;
-            @foreach (var property in properties)
+            @foreach (var jsp in properties)
             {
-            @:me.@property.jsName = ko.observable(false);
+            @:me.@jsp.Name = ko.observable(false);
             }
 
             this.isCommunityVisible = function(cp) {
                 var visible = 
-                    @foreach (var property in properties)
+                    @foreach (var jsp in properties)
                     { 
-                    @:(!(me.@(property.jsName)()) || me.@(property.jsName)() @(property.op) cp.@(property.jsName)) &&
+                    @:(!(me.@(jsp.Name)()) || me.@(jsp.Name)() @(jsp.Operator) cp.@(jsp.Name)) &&
                     }
                     true;
                 return visible;
