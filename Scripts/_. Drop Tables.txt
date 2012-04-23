@@ -13,3 +13,7 @@ GO
 DROP TABLE bl.zone
 GO
 DROP TABLE bl.city
+GO
+drop schema bl
+go
+drop schema cm
