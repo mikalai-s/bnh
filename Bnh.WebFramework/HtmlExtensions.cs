@@ -82,7 +82,7 @@ namespace Bnh.WebFramework
                                                                      {
                                                                          {typeof(HtmlBrick), "Rich Text"},
                                                                          {typeof(GalleryBrick), "Gallery"},
-                                                                         {typeof(MapBrick), "Map"},
+                                                                         //{typeof(MapBrick), "Map"},
                                                                          {typeof(EmptyBrick), "Empty"},
                                                                      };
 
