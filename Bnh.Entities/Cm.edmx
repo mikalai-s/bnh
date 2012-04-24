@@ -33,8 +33,6 @@
           <Property Name="GpsLocation" Type="nvarchar" MaxLength="100" />
           <Property Name="MapHeight" Type="int" />
           <Property Name="MapZoom" Type="int" />
-          <Property Name="MapPolygon" Type="nvarchar" MaxLength="1000" />
-          <Property Name="MapPolygonColor" Type="nvarchar" MaxLength="6" />
         </EntityType>
         <EntityType Name="SceneTemplate">
           <Key>
