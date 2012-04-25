@@ -61,7 +61,6 @@
       <DesignTime>True</DesignTime>
     </Compile>
     <Compile Include="BlEntitiesExtensions.cs" />
-    <Compile Include="BnhModelBinder.cs" />
     <Compile Include="Clonable.cs" />
     <Compile Include="Cm.Designer.cs">
       <DependentUpon>Cm.edmx</DependentUpon>

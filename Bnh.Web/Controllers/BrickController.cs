@@ -21,6 +21,7 @@ namespace Bnh.Controllers
             {typeof(HtmlBrick), "EditHtml"},
             {typeof(GalleryBrick), "EditGallery"},
             {typeof(MapBrick), "EditMap"},
+            {typeof(RazorBrick), "EditHtml"},
         };
         
         //

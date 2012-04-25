@@ -40,16 +40,29 @@ namespace Bnh.WebFramework
             return MvcHtmlString.Create(brick.ToJson());
         }
 
-        public static MvcHtmlString GetUiContent(this Brick brick)
+        public static MvcHtmlString GetUiContent(this Brick brick, WebViewPage page)
         {
             var content = string.Empty;
+            var razorBrick = brick as RazorBrick;
+            if (razorBrick != null)
+                return GetRazorBrickContent(razorBrick, page).ToHtmlString();
             var htmlBrick = brick as HtmlBrick;
             if (htmlBrick != null)
-                content = GetHtmlBrickContent(htmlBrick);
+                return GetHtmlBrickContent(htmlBrick).ToHtmlString();
             var mapBrick = brick as MapBrick;
             if (mapBrick != null)
-                content = GetMapBrickContent(mapBrick);
-            return MvcHtmlString.Create(content);
+                return GetMapBrickContent(mapBrick).ToHtmlString();
+            return string.Empty.ToHtmlString();
+        }
+
+        private static MvcHtmlString ToHtmlString(this string str)
+        {
+            return MvcHtmlString.Create(str);
+        }
+
+        private static string GetRazorBrickContent(RazorBrick brick, WebViewPage page)
+        {
+            return RazorEngine.GetContent(brick.Html, page.ViewBag.GlobalModel);
         }
 
         private static string GetMapBrickContent(MapBrick mapBrick)

@@ -81,8 +81,9 @@ namespace Bnh.WebFramework
         private static readonly Dictionary<Type, string> BrickTypeNames = new Dictionary<Type, string>()
                                                                      {
                                                                          {typeof(HtmlBrick), "Rich Text"},
+                                                                         {typeof(RazorBrick), "Razor Template"},
                                                                          {typeof(GalleryBrick), "Gallery"},
-                                                                         //{typeof(MapBrick), "Map"},
+                                                                         {typeof(MapBrick), "Map"},
                                                                          {typeof(EmptyBrick), "Empty"},
                                                                      };
 

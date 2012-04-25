@@ -442,6 +442,7 @@ namespace Bnh.Entities
     [EdmEntityTypeAttribute(NamespaceName="bnhModel", Name="HtmlBrick")]
     [Serializable()]
     [DataContractAttribute(IsReference=true)]
+    [KnownTypeAttribute(typeof(RazorBrick))]
     public partial class HtmlBrick : Brick
     {
         #region Factory Method
@@ -602,6 +603,40 @@ namespace Bnh.Entities
         private Nullable<global::System.Int32> _Zoom;
         partial void OnZoomChanging(Nullable<global::System.Int32> value);
         partial void OnZoomChanged();
+
+        #endregion
+
+    
+    }
+    
+    /// <summary>
+    /// No Metadata Documentation available.
+    /// </summary>
+    [EdmEntityTypeAttribute(NamespaceName="bnhModel", Name="RazorBrick")]
+    [Serializable()]
+    [DataContractAttribute(IsReference=true)]
+    public partial class RazorBrick : HtmlBrick
+    {
+        #region Factory Method
+    
+        /// <summary>
+        /// Create a new RazorBrick object.
+        /// </summary>
+        /// <param name="id">Initial value of the Id property.</param>
+        /// <param name="wallId">Initial value of the WallId property.</param>
+        /// <param name="title">Initial value of the Title property.</param>
+        /// <param name="width">Initial value of the Width property.</param>
+        /// <param name="order">Initial value of the Order property.</param>
+        public static RazorBrick CreateRazorBrick(global::System.Int64 id, global::System.Int64 wallId, global::System.String title, global::System.Single width, global::System.Byte order)
+        {
+            RazorBrick razorBrick = new RazorBrick();
+            razorBrick.Id = id;
+            razorBrick.WallId = wallId;
+            razorBrick.Title = title;
+            razorBrick.Width = width;
+            razorBrick.Order = order;
+            return razorBrick;
+        }
 
         #endregion
 

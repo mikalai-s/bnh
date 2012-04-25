@@ -9,7 +9,7 @@ using System.Data.Objects.DataClasses;
 using Bnh.Entities;
 using TypeMap = System.Collections.Generic.Dictionary<string, System.Type>;
 
-namespace Bnh.Entities
+namespace Bnh.WebFramework
 {
     public class BnhModelBinder : DefaultModelBinder
     {
@@ -19,10 +19,11 @@ namespace Bnh.Entities
             {
                 typeof(Brick), new TypeMap
                 {
+                    {"0", typeof(EmptyBrick)},
                     {"1", typeof(HtmlBrick)},
                     {"2", typeof(GalleryBrick)},
-                    {"3", typeof(MapBrick)},
-                    {"0", typeof(EmptyBrick)},
+                    //{"3", typeof(MapBrick)},
+                    {"4", typeof(RazorBrick)}
                 }
             }
         };
