@@ -6,7 +6,7 @@
         <div class='wall-wrapper' style='width:@wall.GetUiWidth()'>
         @foreach (var brick in wall.Bricks.OrderBy(b => b.Order))
         {
-            <div class='brick-wrapper' style='width:@brick.GetUiWidth()'>@brick.GetUiContent()</div>
+            <div class='brick-wrapper' style='width:@brick.GetUiWidth()'>@brick.GetUiContent(this)</div>
         }
         </div>
     }

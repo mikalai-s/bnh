@@ -1,10 +1,11 @@
 ﻿@using Bnh.Entities
 @using Bnh.WebFramework
 
-@model Bnh.Entities.Community
+@model Community
 
 @{
     ViewBag.Title = Model.Name + " community";
+    ViewBag.GlobalModel = Model;
 }
 
 @section Styles {

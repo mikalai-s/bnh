@@ -164,6 +164,7 @@
           </ReferentialConstraint>
         </Association>
         <EntityType Name="EmptyBrick" BaseType="bnhModel.Brick" />
+        <EntityType Name="RazorBrick" BaseType="bnhModel.HtmlBrick" />
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -171,13 +172,6 @@
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2008/09/mapping/cs">
         <EntityContainerMapping StorageEntityContainer="bnhModelStoreContainer" CdmEntityContainer="CmEntities">
           <EntitySetMapping Name="Bricks">
-            <EntityTypeMapping TypeName="IsTypeOf(bnhModel.HtmlBrick)">
-              <MappingFragment StoreEntitySet="Brick">
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="Html" ColumnName="Html" />
-                <Condition ColumnName="Type" Value="1" />
-              </MappingFragment>
-            </EntityTypeMapping>
             <EntityTypeMapping TypeName="IsTypeOf(bnhModel.GalleryBrick)">
               <MappingFragment StoreEntitySet="Brick">
                 <ScalarProperty Name="Id" ColumnName="Id" />
@@ -207,6 +201,24 @@
                 <ScalarProperty Name="Title" ColumnName="Title" />
                 <ScalarProperty Name="Width" ColumnName="Width" />
                 <ScalarProperty Name="Order" ColumnName="Order" />
+              </MappingFragment>
+            </EntityTypeMapping>
+            <EntityTypeMapping TypeName="bnhModel.HtmlBrick">
+              <MappingFragment StoreEntitySet="Brick">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Html" ColumnName="Html" />
+                <Condition ColumnName="Type" Value="1" />
+              </MappingFragment>
+            </EntityTypeMapping>
+            <EntityTypeMapping TypeName="IsTypeOf(bnhModel.RazorBrick)">
+              <MappingFragment StoreEntitySet="Brick">
+                <ScalarProperty Name="Order" ColumnName="Order" />
+                <ScalarProperty Name="Width" ColumnName="Width" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="WallId" ColumnName="WallId" />
+                <ScalarProperty Name="Html" ColumnName="Html" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <Condition ColumnName="Type" Value="4" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -283,6 +295,11 @@
         <InheritanceConnector EntityType="bnhModel.EmptyBrick" ManuallyRouted="false" >
           <ConnectorPoint PointX="4.5" PointY="1.2593896484374998" />
           <ConnectorPoint PointX="6" PointY="1.2593896484374998" />
+        </InheritanceConnector>
+        <EntityTypeShape EntityType="bnhModel.RazorBrick" Width="1.5" PointX="8.75" PointY="1.75" Height="1.0187792968749996" />
+        <InheritanceConnector EntityType="bnhModel.RazorBrick" >
+          <ConnectorPoint PointX="7.5" PointY="2.2593896484375" />
+          <ConnectorPoint PointX="8.75" PointY="2.2593896484375" />
         </InheritanceConnector>
       </Diagram>
     </Diagrams>

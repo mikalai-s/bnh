@@ -6,6 +6,6 @@
             <a class='delete'>delete</a>
             @Html.ActionLink("edit", "Edit", "Brick", new { id = Model.Id }, new { @class = "edit" })
         </div>
-        <div class='content'>@Model.GetUiContent()</div>
+        <div class='content'>@Model.GetUiContent(this)</div>
     </div>
 </div>

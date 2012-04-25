@@ -8,7 +8,7 @@ using System.Web.Http;
 using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
-using Bnh.Entities;
+using Bnh.WebFramework;
 
 namespace Bnh.Web
 {
