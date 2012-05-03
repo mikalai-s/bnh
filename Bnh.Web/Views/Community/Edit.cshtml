@@ -6,6 +6,8 @@
 @{
     ViewBag.Title = Model.Name + " community";
     ViewBag.GlobalModel = Model;
+    var propertiesToSkip = new List<string> { "Name", "Zone" };
+    var externalProperties = ExternalProperty.Get(typeof(Community)).Where(p => !propertiesToSkip.Contains(p.Property.Name));
 }
 
 @section Styles {
@@ -33,47 +35,49 @@
         @Html.ValidationSummary(true)
 
         <fieldset>
-            <legend></legend>
+            <legend>Properties</legend>
 
             @Html.HiddenFor(model => model.Id)
             @Html.HiddenFor(model => model.GpsLocation)
             @Html.HiddenFor(model => model.GpsBounds)
 
             <div style="float: left;">            
-                <div class="editor-label">
-                    @Html.LabelFor(model => model.Name)
-                </div>
                 <div class="editor-field">
+                    @Html.LabelFor(model => model.Name)
                     @Html.EditorFor(model => model.Name)
                     @Html.ValidationMessageFor(model => model.Name)
                 </div>
 
-                <div class="editor-label">
-                    @Html.LabelFor(model => model.UrlId)
-                </div>
                 <div class="editor-field">
+                    @Html.LabelFor(model => model.UrlId)
                     @Html.EditorFor(model => model.UrlId)
                     @Html.ValidationMessageFor(model => model.UrlId)
                 </div>
 
-                <div class="editor-label">
-                    @Html.LabelFor(model => model.ZoneId, "Zone")
-                </div>
                 <div class="editor-field">
+                    @Html.LabelFor(model => model.ZoneId, "Zone")
                     @Html.DropDownList("ZoneId", String.Empty)
                     @Html.ValidationMessageFor(model => model.ZoneId)
                 </div>
 
-                @foreach (var jsp in CommunityExtensions.JsProperty.Get(typeof(Community)))
+                @foreach (var property in externalProperties)
                 {
-                <div class="editor-label">
-                    @Html.Label(jsp.Title.ToString())
-                </div>
+                    if (property.TypeName == "Boolean")
+                    {
                 <div class="editor-field">
-                    @Html.Editor(jsp.Property.Name)
-                    @Html.ValidationMessage(jsp.Property.Name)
+                    @Html.Editor(property.Property.Name)
+                    @Html.Label(property.Title.ToString())
                 </div>
-                }              
+                    }
+                    else
+                    {
+                <div class="editor-field">
+                    @Html.Label(property.Title.ToString())
+                    @Html.Editor(property.Property.Name)
+                    @Html.ValidationMessage(property.Property.Name)
+                </div>
+                    }
+                } 
             </div>
 
             <div id="mapEditor" style="float: right;">

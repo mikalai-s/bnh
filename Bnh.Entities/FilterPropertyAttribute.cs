@@ -15,13 +15,11 @@ namespace Bnh.Entities
         NotEqual
     }
 
-    public class FilterablePropertyAttribute : Attribute
+    public class FilterPropertyAttribute : ExternalPropertyAttribute
     {
-        public string Title { get; set; }
-
         public FilterOperator Operator { get; set; }
 
-        public FilterablePropertyAttribute ()
+        public FilterPropertyAttribute()
         {
             Operator = FilterOperator.Equal;
         }

@@ -16,7 +16,7 @@ namespace Bnh.WebFramework
     {
         public static string GetContent(string template, dynamic model)
         {
-            if(string.IsNullOrEmpty(template)) { return string.Empty; }
+            if (string.IsNullOrEmpty(template)) { return string.Empty; }
 
             const string dynamicallyGeneratedClassName = "DynamicContentTemplate";
             const string namespaceForDynamicClasses = "bnh";
@@ -47,15 +47,22 @@ namespace Bnh.WebFramework
             CompilerResults compilerResults = new CSharpCodeProvider().CompileAssemblyFromDom(compilerParameters, razorTemplate.GeneratedCode);
             if (compilerResults.Errors.Count > 0)
             {
-                return "Error: " + compilerResults.Errors[1].ToString();
+                return "Error: " + string.Join("\r\nError: ", compilerResults.Errors.Cast<CompilerError>().Select(e => e.ErrorText));
             }
             var compiledAssembly = compilerResults.CompiledAssembly;
 
             var templateInstance = (DynamicContentGeneratorBase)compiledAssembly.CreateInstance(dynamicClassFullName);
 
-            templateInstance.DynModel = model;
+            templateInstance.Model = model;
 
-            return templateInstance.GetContent();
+            try
+            {
+                return templateInstance.GetContent();
+            }
+            catch(Exception e)
+            {
+                return "Error: " + e.Message;
+            }
         }        
     }
 
@@ -64,13 +71,13 @@ namespace Bnh.WebFramework
         private StringBuilder buffer;
         protected DynamicContentGeneratorBase()
         {
-            DynModel = new ExpandoObject();
+            Model = new ExpandoObject();
         }
 
         /// <summary>
         /// This is just a custom property
         /// </summary>
-        public dynamic DynModel { get; set; }
+        public dynamic Model { get; set; }
 
         /// <summary>
         /// This method is required and have to be exactly as declared here.
@@ -100,15 +107,7 @@ namespace Bnh.WebFramework
         public string GetContent()
         {
             buffer = new StringBuilder(1024);
-            try
-            {
-                Execute();
-            }
-            catch (Exception e)
-            {
-                WriteLiteral("Error: " + e.Message);
-            }
-            
+            Execute();
             return buffer.ToString();
         }
     }

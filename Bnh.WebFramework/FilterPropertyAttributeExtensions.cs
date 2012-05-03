@@ -8,9 +8,9 @@ using System.Web.Mvc;
 
 namespace Bnh.WebFramework
 {
-    public static class FilterablePropertyAttributeExtensions
+    public static class FilterPropertyAttributeExtensions
     {
-        public static IHtmlString GetJsOperator(this FilterablePropertyAttribute attr)
+        public static IHtmlString GetJsOperator(this FilterPropertyAttribute attr)
         {
             switch(attr.Operator)
             {
