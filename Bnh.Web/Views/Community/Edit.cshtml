@@ -13,6 +13,7 @@
 @section Styles {
     <link href="@Url.Content("/Content/themes/base/jquery.ui.all.css")" rel="stylesheet" type="text/css" />
     <link href="@Url.Content("/Styles/MapEditor.css")" rel="stylesheet" type="text/css" />
+    <link href="@Url.Content("/Styles/CommunityEdit.css")" rel="stylesheet" type="text/css" />
 }
 
 @section Scripts {
@@ -41,43 +42,55 @@
             @Html.HiddenFor(model => model.GpsLocation)
             @Html.HiddenFor(model => model.GpsBounds)
 
-            <div style="float: left;">            
-                <div class="editor-field">
-                    @Html.LabelFor(model => model.Name)
-                    @Html.EditorFor(model => model.Name)
-                    @Html.ValidationMessageFor(model => model.Name)
-                </div>
+            <div style="float: left;">
+                <table class="properties">
+                    <tr>
+                        <td>@Html.LabelFor(model => model.Name)</td>
+                        <td>
+                            @Html.EditorFor(model => model.Name)
+                            @Html.ValidationMessageFor(model => model.Name)
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>@Html.LabelFor(model => model.UrlId)</td>
+                        <td>
+                            @Html.EditorFor(model => model.UrlId)
+                            @Html.ValidationMessageFor(model => model.UrlId)
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>@Html.LabelFor(model => model.ZoneId, "Zone")</td>
+                        <td>
+                            @Html.DropDownList("ZoneId", String.Empty)
+                            @Html.ValidationMessageFor(model => model.ZoneId)
+                        </td>
+                    </tr>             
 
-                <div class="editor-field">
-                    @Html.LabelFor(model => model.UrlId)
-                    @Html.EditorFor(model => model.UrlId)
-                    @Html.ValidationMessageFor(model => model.UrlId)
-                </div>
-
-                <div class="editor-field">
-                    @Html.LabelFor(model => model.ZoneId, "Zone")
-                    @Html.DropDownList("ZoneId", String.Empty)
-                    @Html.ValidationMessageFor(model => model.ZoneId)
-                </div>
-
-                @foreach (var property in externalProperties)
-                {
-                    if (property.TypeName == "Boolean")
+                    @foreach (var property in externalProperties)
                     {
-                <div class="editor-field">
-                    @Html.Editor(property.Property.Name)
-                    @Html.Label(property.Title.ToString())
-                </div>
-                    }
-                    else
-                    {
-                <div class="editor-field">
-                    @Html.Label(property.Title.ToString())
-                    @Html.Editor(property.Property.Name)
-                    @Html.ValidationMessage(property.Property.Name)
-                </div>
-                    }
-                } 
+                        if (property.TypeName == "Boolean")
+                        {
+                    <tr>
+                        <td>
+                            @Html.Editor(property.Property.Name)
+                        </td>
+                        <td>
+                            @Html.Label(property.Title.ToString())
+                        </td>
+                    </tr>
+                        }
+                        else
+                        {
+                    <tr>
+                        <td>@Html.Label(property.Title.ToString())</td>
+                        <td>
+                            @Html.Editor(property.Property.Name)
+                            @Html.ValidationMessage(property.Property.Name)
+                        </td>
+                    </tr>
+                        }
+                    } 
+                </table>
             </div>
 
             <div id="mapEditor" style="float: right;">
