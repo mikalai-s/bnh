@@ -457,6 +457,7 @@
     <Content Include="Scripts\tiny_mce\utils\form_utils.js" />
     <Content Include="Scripts\tiny_mce\utils\mctabs.js" />
     <Content Include="Scripts\tiny_mce\utils\validate.js" />
+    <Content Include="Styles\CommunityEdit.css" />
     <Content Include="Styles\CommunityIndex.css" />
     <Content Include="Styles\DesignBrick.css" />
     <Content Include="Styles\DesignScene.css" />
