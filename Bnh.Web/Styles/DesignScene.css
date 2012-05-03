@@ -1,9 +1,9 @@
-﻿.scene-wrapper {
+﻿/*.scene-wrapper {
     border: 1px solid navy;
     margin: 20px 0px;
     padding: 4px;
 }
-
+*/
 .wall-wrapper {
     height: auto !important;
 }
