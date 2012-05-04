@@ -32,6 +32,9 @@
             },
             dehighlight: function(name) {
                 dehighlightPolygon(namedOverlays[name]);
+            },
+            setVisible: function(name, visible) {
+                setPolygonVisible(namedOverlays[name], visible);
             }
         };
 
@@ -109,5 +112,12 @@
             fillOpacity: 0.35
         });   
     }
-    
+
+    function setPolygonVisible(polygon, visible) {
+        if(!polygon)
+            return;
+
+        polygon.setVisible(visible);
+    }
+
 })();

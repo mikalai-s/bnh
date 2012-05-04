@@ -60,6 +60,29 @@
             window.location.href = href;
         }
     }
-    
-    ko.applyBindings(new communityFilterViewModel());
+
+    ko.bindingHandlers.slideVisible = {
+        update: function (element, valueAccessor, allBindingsAccessor) {
+            // First get the latest data that we're bound to
+            var value = valueAccessor(), allBindings = allBindingsAccessor();
+
+            // Next, whether or not the supplied model property is observable, get its current value
+            var valueUnwrapped = ko.utils.unwrapObservable(value);
+
+            element = $(element);
+
+            // Now manipulate the DOM element
+            if (valueUnwrapped == true)
+                element.show(); // Make the element visible
+            else
+                element.hide();   // Make the element invisible
+
+            map.setVisible(element.find(".community").text(), valueUnwrapped);
+        }
+    };
+
+    var filterViewModel = new CommunityFilterViewModel();
+    // filterViewModel
+
+    ko.applyBindings(filterViewModel);
 })();
