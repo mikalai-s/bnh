@@ -21,10 +21,10 @@ body
 .page .header .logo
 {
     background-image: url(../Images/logo.png);
-    width:  314px;
-    height: 99px;
-    margin-top: 35px;
-    margin-bottom: 25px;
+    width:  289px;
+    height: 70px;
+    margin-top: 17px;
+    margin-bottom: 15px;
     float: left;
 }
 
@@ -100,7 +100,7 @@ nav ul li.separator
 .content
 {
     clear: both;
-    padding: 30px 12px;
+    padding: 20px 12px;
 }
 
 /* end content */
