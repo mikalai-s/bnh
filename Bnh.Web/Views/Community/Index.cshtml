@@ -46,7 +46,7 @@
                                     <div class="zone-header">@zone.Name</div>
                                     @foreach (var community in zone.Communities.OrderBy(c => c.Name))
                                     {
-                                        <div class="zone-community" data-bind='visible: isCommunityVisible(@community.GetClientProperties())'>
+                                        <div class="zone-community" data-bind='slideVisible: isCommunityVisible(@community.GetClientProperties())'>
                                             @if (Context.User.IsInRole("content_manager"))
                                             {
                                                 <sup class="alter">@Html.ActionLink("x", "Delete", new { id = community.Id }, new { title = "Delete " + community.Name })</sup>
