@@ -147,11 +147,11 @@ namespace Bnh.WebFramework
             return new JavaScriptSerializer().Serialize(properties);
         }
 
-        public static string ToJson(this Wall brick)
+        public static string ToJson(this Wall wall)
         {
             var properties = new Dictionary<string, object>();
 
-            foreach (var prop in brick.GetType().GetProperties(BindingFlags.Instance | BindingFlags.Public))
+            foreach (var prop in wall.GetType().GetProperties(BindingFlags.Instance | BindingFlags.Public))
             {
                 var p = prop.GetCustomAttributes(typeof(DataMemberAttribute), false);
                 if (p.Length == 0)
@@ -169,7 +169,7 @@ namespace Bnh.WebFramework
                 if (p.Length > 0 && !(p[0] as BrowsableAttribute).Browsable)
                     continue;
 
-                var value = prop.GetValue(brick, null);
+                var value = prop.GetValue(wall, null);
                 if (value != null)
                     properties.Add(prop.Name.ToLower(), value);
             }
