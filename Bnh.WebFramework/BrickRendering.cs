@@ -20,49 +20,9 @@ namespace Bnh.WebFramework
     {
         private const string googleMapsKey = "AIzaSyBXgUOTPfgbS4kHE7fm_xr2za_O1ApA_TM";
 
-        public static MvcHtmlString GetUiWidth(this Wall wall)
-        {
-            return MvcHtmlString.Create(wall.Width.ToString("F") + "%");
-        }
-
-        public static MvcHtmlString GetUiData(this Wall wall)
-        {
-            return MvcHtmlString.Create(wall.ToJson());
-        }
-
-        public static MvcHtmlString GetUiWidth(this Brick brick)
-        {
-            return MvcHtmlString.Create(brick.Width.ToString("F") + "%");
-        }
-
-        public static MvcHtmlString GetUiData(this Brick brick)
-        {
-            return MvcHtmlString.Create(brick.ToJson());
-        }
-
-        public static MvcHtmlString GetUiContent(this Brick brick, WebViewPage page)
-        {
-            var content = string.Empty;
-            var razorBrick = brick as RazorBrick;
-            if (razorBrick != null)
-                return GetRazorBrickContent(razorBrick, page).ToHtmlString();
-            var htmlBrick = brick as HtmlBrick;
-            if (htmlBrick != null)
-                return GetHtmlBrickContent(htmlBrick).ToHtmlString();
-            var mapBrick = brick as MapBrick;
-            if (mapBrick != null)
-                return GetMapBrickContent(mapBrick).ToHtmlString();
-            return string.Empty.ToHtmlString();
-        }
-
         private static MvcHtmlString ToHtmlString(this string str)
         {
             return MvcHtmlString.Create(str);
-        }
-
-        private static string GetRazorBrickContent(RazorBrick brick, WebViewPage page)
-        {
-            return RazorEngine.GetContent(brick.Html, page.ViewBag.GlobalModel);
         }
 
         private static string GetMapBrickContent(MapBrick mapBrick)
@@ -97,11 +57,6 @@ namespace Bnh.WebFramework
 </div>
 ";
             return string.Format(html, mapBrick.GpsLocation, mapBrick.Height, mapBrick.Zoom ?? 10);
-        }
-
-        private static string GetHtmlBrickContent(HtmlBrick htmlBrick)
-        {
-            return htmlBrick.Html;
         }
 
         public static string GetDiscriminant(this Brick brick)

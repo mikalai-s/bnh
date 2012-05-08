@@ -3,11 +3,6 @@
 <div id="scene">
     @foreach (var wall in Model.OrderBy(w => w.Order))
     {
-        <div class='wall-wrapper' style='width:@wall.GetUiWidth()'>
-        @foreach (var brick in wall.Bricks.OrderBy(b => b.Order))
-        {
-            <div class='brick-wrapper' style='width:@brick.GetUiWidth()'>@brick.GetUiContent(this)</div>
-        }
-        </div>
+        @Html.Partial("~/Views/Brick/Wall.cshtml", wall)
     }
 </div>

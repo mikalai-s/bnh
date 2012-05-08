@@ -3,7 +3,7 @@
     var locked = (bool?)ViewBag.LockWalls ?? false;
     var lockedClass = locked ? "locked" : string.Empty;                 
 }
-<div class='wall-wrapper @lockedClass' style='width:@Model.GetUiWidth()' entity-data='@Model.GetUiData()'>
+<div class='wall-wrapper @lockedClass' style='width:@Model.Width.ToString("F")%' entity-data='@Model.ToJson()'>
     <div class='wall'>
         <div class='header'>
             <span class='title'>Wall</span>
