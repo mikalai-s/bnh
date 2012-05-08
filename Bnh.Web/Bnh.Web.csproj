@@ -184,6 +184,7 @@
     <Content Include="Scripts\CommunityEdit.js" />
     <Content Include="Scripts\CommunityIndex.js" />
     <Content Include="Scripts\DesignScene.js" />
+    <Content Include="Scripts\EditHtmlBrick.js" />
     <Content Include="Scripts\Global.Encoding.js" />
     <Content Include="Scripts\jquery-1.7.1-vsdoc.js" />
     <Content Include="Scripts\jquery-1.7.1.js" />
