@@ -1,0 +1,11 @@
+﻿@model Bnh.Entities.Brick
+@{
+    string suffix =
+        (Model is Bnh.Entities.RazorBrick) ? "Razor" :
+        (Model is Bnh.Entities.HtmlBrick) ? "Html" :
+        (Model is Bnh.Entities.MapBrick) ? "Map" : null;
+}
+@if (!string.IsNullOrEmpty(suffix))
+{ 
+    @Html.Partial("~/Views/Brick/BrickContent_" + suffix + ".cshtml", Model);
+}

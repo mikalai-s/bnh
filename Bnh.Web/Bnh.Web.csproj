@@ -182,7 +182,9 @@
     <Content Include="Images\logo.png" />
     <Content Include="Properties\PublishProfiles\bnh.pubxml.user" />
     <Content Include="Scripts\CommunityEdit.js" />
-    <Content Include="Scripts\CommunityIndex.js" />
+    <Content Include="Scripts\CommunityIndex.js">
+      <DependentUpon>Index.cshtml</DependentUpon>
+    </Content>
     <Content Include="Scripts\DesignScene.js" />
     <Content Include="Scripts\EditHtmlBrick.js" />
     <Content Include="Scripts\Global.Encoding.js" />
@@ -459,7 +461,9 @@
     <Content Include="Scripts\tiny_mce\utils\mctabs.js" />
     <Content Include="Scripts\tiny_mce\utils\validate.js" />
     <Content Include="Styles\CommunityEdit.css" />
-    <Content Include="Styles\CommunityIndex.css" />
+    <Content Include="Styles\CommunityIndex.css">
+      <DependentUpon>Index.cshtml</DependentUpon>
+    </Content>
     <Content Include="Styles\DesignBrick.css" />
     <Content Include="Styles\DesignScene.css" />
     <Content Include="Styles\Layout.css" />
@@ -534,6 +538,13 @@
     <Content Include="Views\Brick\_Styles.cshtml" />
     <Content Include="Views\Account\Update.cshtml" />
     <Content Include="Views\Community\CommunityFilterPartial.cshtml" />
+    <Content Include="Views\Brick\_CommunityMap.cshtml" />
+    <Content Include="Views\Brick\Wall.cshtml" />
+    <Content Include="Views\Brick\Brick.cshtml" />
+    <Content Include="Views\Brick\BrickContent_Razor.cshtml" />
+    <Content Include="Views\Brick\BrickContent_Html.cshtml" />
+    <Content Include="Views\Brick\BrickContent_Map.cshtml" />
+    <Content Include="Views\Brick\BrickContent.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
