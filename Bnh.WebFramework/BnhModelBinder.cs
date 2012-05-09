@@ -22,7 +22,7 @@ namespace Bnh.WebFramework
                     {"0", typeof(EmptyBrick)},
                     {"1", typeof(HtmlBrick)},
                     {"2", typeof(GalleryBrick)},
-                    //{"3", typeof(MapBrick)},
+                    {"3", typeof(MapBrick)},
                     {"4", typeof(RazorBrick)}
                 }
             }

@@ -181,6 +181,9 @@
     <Content Include="Images\background.png" />
     <Content Include="Images\logo.png" />
     <Content Include="Properties\PublishProfiles\bnh.pubxml.user" />
+    <Content Include="Scripts\BrickContent_Map.js">
+      <DependentUpon>BrickContent_Map.cshtml</DependentUpon>
+    </Content>
     <Content Include="Scripts\CommunityEdit.js" />
     <Content Include="Scripts\CommunityIndex.js">
       <DependentUpon>Index.cshtml</DependentUpon>
