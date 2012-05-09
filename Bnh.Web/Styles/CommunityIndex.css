@@ -49,8 +49,9 @@ sup.alter a
     color: #b60e00 !important;
 }
 
-.map
-{
+.map-canvas-wrapper {
+    width: auto;
+    border: solid lightgray 1px;
     float: right;
 }
 

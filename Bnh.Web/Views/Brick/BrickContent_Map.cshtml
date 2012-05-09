@@ -1,3 +1,14 @@
 ﻿@model Bnh.Entities.MapBrick
-
-Map will go here!
+@{
+    var community = ViewBag.GlobalModel as Bnh.Entities.Community;
+}
+@if (community != null)
+{ 
+<div class="map-canvas-wrapper" style="height: @(Model.Height)px" zoom="@Model.Zoom" gpsLocation="@community.GpsLocation" gpsBounds="@community.GpsBounds">
+    <div id="mapCanvas"></div>
+</div>
+}
+else
+{
+    @:No community entity available
+}

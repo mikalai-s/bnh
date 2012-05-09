@@ -25,10 +25,10 @@
 .map-canvas-wrapper {
     width: auto;
     padding: 1px;
-    border: solid black 1px;
+    border: solid lightgray 1px;
 }
 
-#map_canvas 
+#mapCanvas 
 {
     width: 100%;
     height: 100%;
