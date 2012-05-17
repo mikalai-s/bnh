@@ -548,6 +548,7 @@
     <Content Include="Views\Brick\BrickContent_Html.cshtml" />
     <Content Include="Views\Brick\BrickContent_Map.cshtml" />
     <Content Include="Views\Brick\BrickContent.cshtml" />
+    <Content Include="Views\Brick\EditShared.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
@@ -571,7 +572,7 @@
         <WebProjectProperties>
           <UseIIS>False</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
-          <DevelopmentServerPort>9283</DevelopmentServerPort>
+          <DevelopmentServerPort>58042</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
           <IISUrl>http://localhost:11275/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>

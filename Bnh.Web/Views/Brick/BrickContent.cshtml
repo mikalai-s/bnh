@@ -1,11 +1,16 @@
 ﻿@model Bnh.Entities.Brick
+@using Bnh.Entities
 @{
+    var sharedBrick = (Model as SharedBrick);
+    var model = (sharedBrick == null) ? Model : sharedBrick.Share;
     string suffix =
-        (Model is Bnh.Entities.RazorBrick) ? "Razor" :
-        (Model is Bnh.Entities.HtmlBrick) ? "Html" :
-        (Model is Bnh.Entities.MapBrick) ? "Map" : null;
+        (model is RazorBrick) ? "Razor" :
+        (model is HtmlBrick) ? "Html" :
+        (model is MapBrick) ? "Map" :
+        (model is SharedBrick) ? "Map" : 
+        null;
 }
 @if (!string.IsNullOrEmpty(suffix))
 { 
-    @Html.Partial("~/Views/Brick/BrickContent_" + suffix + ".cshtml", Model);
+    @Html.Partial("~/Views/Brick/BrickContent_" + suffix + ".cshtml", model);
 }

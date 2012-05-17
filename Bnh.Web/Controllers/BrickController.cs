@@ -22,6 +22,7 @@ namespace Bnh.Controllers
             {typeof(GalleryBrick), "EditGallery"},
             {typeof(MapBrick), "EditMap"},
             {typeof(RazorBrick), "EditHtml"},
+            {typeof(SharedBrick), "EditShared"},
         };
         
         //
@@ -66,6 +67,14 @@ namespace Bnh.Controllers
         {
             var realBrick = db.Bricks.Where(b => b.Id == brick.Id).OfType<GalleryBrick>().FirstOrDefault();
             realBrick.ImageListId = brick.ImageListId;
+            return Edit(brick);
+        }
+
+        [HttpPost]
+        public ActionResult EditShared(SharedBrick brick)
+        {
+            var realBrick = db.Bricks.Where(b => b.Id == brick.Id).OfType<SharedBrick>().FirstOrDefault();
+            realBrick.SharedBrickId = brick.SharedBrickId;
             return Edit(brick);
         }
 

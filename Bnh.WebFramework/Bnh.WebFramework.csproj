@@ -50,6 +50,7 @@
     <Compile Include="BnhModelBinder.cs" />
     <Compile Include="BrickRendering.cs" />
     <Compile Include="CommunityExtensions.cs" />
+    <Compile Include="Constants.cs" />
     <Compile Include="Encoding.cs" />
     <Compile Include="FilterPropertyAttributeExtensions.cs" />
     <Compile Include="HtmlExtensions.cs" />

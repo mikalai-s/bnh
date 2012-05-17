@@ -64,6 +64,7 @@
       <DesignTime>True</DesignTime>
     </Compile>
     <Compile Include="BlEntitiesExtensions.cs" />
+    <Compile Include="Brick.cs" />
     <Compile Include="Clonable.cs" />
     <Compile Include="Cm.Designer.cs">
       <DependentUpon>Cm.edmx</DependentUpon>

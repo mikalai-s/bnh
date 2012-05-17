@@ -166,6 +166,7 @@ namespace Bnh.Entities
     [KnownTypeAttribute(typeof(GalleryBrick))]
     [KnownTypeAttribute(typeof(MapBrick))]
     [KnownTypeAttribute(typeof(EmptyBrick))]
+    [KnownTypeAttribute(typeof(SharedBrick))]
     public abstract partial class Brick : EntityObject
     {
         #region Primitive Properties
@@ -774,6 +775,68 @@ namespace Bnh.Entities
 
         #endregion
 
+    }
+    
+    /// <summary>
+    /// No Metadata Documentation available.
+    /// </summary>
+    [EdmEntityTypeAttribute(NamespaceName="bnhModel", Name="SharedBrick")]
+    [Serializable()]
+    [DataContractAttribute(IsReference=true)]
+    public partial class SharedBrick : Brick
+    {
+        #region Factory Method
+    
+        /// <summary>
+        /// Create a new SharedBrick object.
+        /// </summary>
+        /// <param name="id">Initial value of the Id property.</param>
+        /// <param name="wallId">Initial value of the WallId property.</param>
+        /// <param name="title">Initial value of the Title property.</param>
+        /// <param name="width">Initial value of the Width property.</param>
+        /// <param name="order">Initial value of the Order property.</param>
+        public static SharedBrick CreateSharedBrick(global::System.Int64 id, global::System.Int64 wallId, global::System.String title, global::System.Single width, global::System.Byte order)
+        {
+            SharedBrick sharedBrick = new SharedBrick();
+            sharedBrick.Id = id;
+            sharedBrick.WallId = wallId;
+            sharedBrick.Title = title;
+            sharedBrick.Width = width;
+            sharedBrick.Order = order;
+            return sharedBrick;
+        }
+
+        #endregion
+
+        #region Primitive Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Int64> SharedBrickId
+        {
+            get
+            {
+                return _SharedBrickId;
+            }
+            set
+            {
+                OnSharedBrickIdChanging(value);
+                ReportPropertyChanging("SharedBrickId");
+                _SharedBrickId = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("SharedBrickId");
+                OnSharedBrickIdChanged();
+            }
+        }
+        private Nullable<global::System.Int64> _SharedBrickId;
+        partial void OnSharedBrickIdChanging(Nullable<global::System.Int64> value);
+        partial void OnSharedBrickIdChanged();
+
+        #endregion
+
+    
     }
     
     /// <summary>
