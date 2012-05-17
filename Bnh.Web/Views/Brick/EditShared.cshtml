@@ -1,0 +1,19 @@
+﻿@model Bnh.Entities.SharedBrick
+
+@{
+    ViewBag.Title = "Edit";
+    IEnumerable<SelectListItem> bricks = null;
+    using(var cm = new Bnh.Entities.CmEntities())
+    {
+        bricks = cm.Bricks
+            .Where(b => b.Wall.OwnerId == Constants.SharedBricksSceneGuid)
+            .Select(b => new { Id = b.Id, Title = b.Title}) // reduce SQL scope
+            .ToList()
+            .Select(b => new SelectListItem { Value = b.Id.ToString(), Text = b.Title });
+    }
+}
+
+<div class="editor-label">Brick To Share</div>
+<div class="editor-field">
+    @Html.DropDownList("brickToShare", bricks);
+</div>

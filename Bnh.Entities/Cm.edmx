@@ -33,6 +33,7 @@
           <Property Name="GpsLocation" Type="nvarchar" MaxLength="100" />
           <Property Name="MapHeight" Type="int" />
           <Property Name="MapZoom" Type="int" />
+          <Property Name="SharedBrickId" Type="bigint" />
         </EntityType>
         <EntityType Name="SceneTemplate">
           <Key>
@@ -165,6 +166,9 @@
         </Association>
         <EntityType Name="EmptyBrick" BaseType="bnhModel.Brick" />
         <EntityType Name="RazorBrick" BaseType="bnhModel.HtmlBrick" />
+        <EntityType Name="SharedBrick" BaseType="bnhModel.Brick" >
+          <Property Type="Int64" Name="SharedBrickId" />
+        </EntityType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -219,6 +223,13 @@
                 <ScalarProperty Name="Html" ColumnName="Html" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <Condition ColumnName="Type" Value="4" />
+              </MappingFragment>
+            </EntityTypeMapping>
+            <EntityTypeMapping TypeName="IsTypeOf(bnhModel.SharedBrick)">
+              <MappingFragment StoreEntitySet="Brick">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="SharedBrickId" ColumnName="SharedBrickId" />
+                <Condition ColumnName="Type" Value="5" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -300,6 +311,13 @@
         <InheritanceConnector EntityType="bnhModel.RazorBrick" >
           <ConnectorPoint PointX="7.5" PointY="2.2593896484375" />
           <ConnectorPoint PointX="8.75" PointY="2.2593896484375" />
+        </InheritanceConnector>
+        <EntityTypeShape EntityType="bnhModel.SharedBrick" Width="1.5" PointX="6" PointY="6.25" Height="1.0187792968750031" />
+        <InheritanceConnector EntityType="bnhModel.SharedBrick" >
+          <ConnectorPoint PointX="3.75" PointY="3.172587890625" />
+          <ConnectorPoint PointX="3.75" PointY="6.0964" />
+          <ConnectorPoint PointX="6.75" PointY="6.0964" />
+          <ConnectorPoint PointX="6.75" PointY="6.25" />
         </InheritanceConnector>
       </Diagram>
     </Diagrams>

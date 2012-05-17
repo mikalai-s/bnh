@@ -85,13 +85,19 @@ namespace Bnh.WebFramework
                                                                          {typeof(GalleryBrick), "Gallery"},
                                                                          {typeof(MapBrick), "Map"},
                                                                          {typeof(EmptyBrick), "Empty"},
+                                                                         {typeof(SharedBrick), "Shared"},
                                                                      };
+
+        public static string GetBrickTypeName(Type brickType)
+        {
+            return BrickTypeNames[brickType];
+        }
 
         public static MvcHtmlString DropDownListForBrickTypes(this HtmlHelper htmlHelper, string name)
         {
-            var items = BnhModelBinder.HierarchyTypeMap[typeof (Brick)]
+                var items = BnhModelBinder.HierarchyTypeMap[typeof(Brick)]
                 .Select(e => new SelectListItem { Value = e.Key, Text = BrickTypeNames[e.Value] });
-            return htmlHelper.DropDownList(name, items);
-        }       
+                return htmlHelper.DropDownList(name, items);
+            }
+        }
     }
-}

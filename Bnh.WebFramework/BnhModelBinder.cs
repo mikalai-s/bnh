@@ -23,7 +23,8 @@ namespace Bnh.WebFramework
                     {"1", typeof(HtmlBrick)},
                     {"2", typeof(GalleryBrick)},
                     {"3", typeof(MapBrick)},
-                    {"4", typeof(RazorBrick)}
+                    {"4", typeof(RazorBrick)},
+                    {"5", typeof(SharedBrick)}
                 }
             }
         };

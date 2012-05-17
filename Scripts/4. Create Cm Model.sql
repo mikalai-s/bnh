@@ -83,6 +83,7 @@ CREATE TABLE [cm].[Brick](
 	[GpsLocation] [nvarchar](100) NULL,
 	[MapHeight] [int] NULL,
 	[MapZoom] [int] NULL,
+	[SharedBrickId] [bigint] NULL
  CONSTRAINT [PK_Brick] PRIMARY KEY CLUSTERED 
 (
 	[Id] ASC
@@ -116,3 +117,4 @@ ALTER TABLE [cm].[Brick] ADD  CONSTRAINT [DF_Brick_MapZoom]  DEFAULT ((0)) FOR [
 GO
 
 
+insert into [cm].[Wall]([OwnerId], [Title], [Width], [Order]) values('B740A5E9-3463-4FAC-82C3-DBF9F7BA1017', N'Shared Bricks', 100.00, 0)

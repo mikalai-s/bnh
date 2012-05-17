@@ -3,7 +3,8 @@
 
 @{
     var ownerId = (Guid)ViewBag.OwnerId;
-    ViewBag.Title = "Scene designer";
+    var sharedBricks = (ownerId == Constants.SharedBricksSceneGuid);
+    ViewBag.Title = sharedBricks ? "Shared Bricks" : "Scene designer";
 }
 
 @section Styles {
@@ -39,39 +40,57 @@
 
         <div class="control-panel">
             <h3>Wall Control Panel</h3>
+
+            <fieldset style='@(sharedBricks ? "display:none" : "display:block")'>
+                <legend>Walls</legend>
+
+                <div class="editor-label">New wall</div>
+                <div class="editor-field">
+                    @Html.TextBox("wallTitle")
+                    <input id="addWallButton" type="button" value="Add Wall" />
+                </div>
+                <div class="editor-field">
+                    <label>@Html.CheckBox("lockWallsCheckbox", (bool)ViewBag.LockWalls)Lock walls</label>
+                </div>
+            </fieldset>
+
+            <fieldset>
+                <legend>Bricks</legend>
+
+                <div class="editor-label">New brick</div>
+                <div class="editor-field">
+                    @Html.TextBox("brickTitle")
+                    @Html.DropDownListForBrickTypes("brickType")
+                    <input id="addBrickButton" type="button" value="Add Brick" />
+                </div>
             
-            <div class="editor-label">New wall</div>
-            <div class="editor-field">
-                @Html.TextBox("wallTitle")
-                <input id="addWallButton" type="button" value="Add Wall" />
-            </div>
+                <div class="editor-field">
+                    <label>@Html.CheckBox("lockBricksCheckbox")Lock bricks</label>
+                </div>
+                <div class="editor-field">
+                    <label>@Html.CheckBox("hideBricksContentCheckbox")Hide bricks content</label>
+                </div>
 
-            <div class="editor-label">New brick</div>
-            <div class="editor-field">
-                @Html.TextBox("brickTitle")
-                @Html.DropDownListForBrickTypes("brickType")
-                <input id="addBrickButton" type="button" value="Add Brick" />
-            </div>
+                @Html.ActionLink("Manage Shared Bricks", "Edit", "Scene", new { id = Constants.SharedBricksSceneGuid }, null)
 
-            <div class="editor-field">
-                <label>@Html.CheckBox("lockWallsCheckbox", (bool)ViewBag.LockWalls)Lock walls</label>
-            </div>
-            <div class="editor-field">
-                <label>@Html.CheckBox("lockBricksCheckbox")Lock bricks</label>
-            </div>
-            <div class="editor-field">
-                <label>@Html.CheckBox("hideBricksContentCheckbox")Hide bricks content</label>
-            </div>
+            </fieldset>
+            
+            <fieldset>
+                <legend>Templates</legend>
 
-            <div class="editor-field">
-                @Html.TextBox("templateTitle")
-                <input type="button" id="exportTemplateButton" value="Export Template"/>
-            </div>
+                <div class="editor-field">
+                    @Html.TextBox("templateTitle")
+                    <input type="button" id="exportTemplateButton" value="Export Template"/>
+                </div>
 
-            <div class="editor-field">
-                @Html.DropDownList("templateId", (SelectList)ViewBag.Templates)
-                <input type="button" id="applyTemplateButton" value="Apply Template"/>
-            </div>
+                <div class="editor-field">
+                    @Html.DropDownList("templateId", (SelectList)ViewBag.Templates)
+                    <input type="button" id="applyTemplateButton" value="Apply Template"/>
+                </div>
+            </fieldset>
+
+            
+            
 
             <div style="position:absolute; bottom: 0;">
                 <span class="alter">
