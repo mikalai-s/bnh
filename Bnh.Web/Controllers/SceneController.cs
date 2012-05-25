@@ -22,7 +22,7 @@ namespace Bnh.Controllers
         public ActionResult Edit(Guid id)
         {
             ViewBag.OwnerId = id;
-            var walls = db.Walls.Where(w => w.OwnerId == id);            
+            var walls = db.Walls.Where(w => w.OwnerId == id);
             ViewBag.Templates = new SelectList(db.SceneTemplates.ToList(), "Id", "Title");
             ViewBag.LockWalls = true;
             return View(walls);
@@ -43,13 +43,13 @@ namespace Bnh.Controllers
                 walls = walls ?? new List<Wall>();
 
                 // get moved bricks
-                var movedBricks = (from wall in walls 
-                                   from brick in wall.Bricks 
-                                   where wall.Id != brick.WallId && brick.Id != 0 
+                var movedBricks = (from wall in walls
+                                   from brick in wall.Bricks
+                                   where wall.Id != brick.WallId && brick.Id != 0
                                    select brick.Id).ToList();
 
                 // update existing walls
-                foreach(var wall in walls.Where(w => w.Id != 0))
+                foreach (var wall in walls.Where(w => w.Id != 0))
                 {
                     var realWall = db.Walls.ApplyCurrentValues(wall);
 
@@ -85,7 +85,7 @@ namespace Bnh.Controllers
                 }
 
                 // add new walls
-                foreach(var wall in walls.Where(w => w.Id == 0))
+                foreach (var wall in walls.Where(w => w.Id == 0))
                 {
                     // moved bricks
                     foreach (var brick in wall.Bricks.Where(b => movedBricks.Contains(b.Id)).ToList())
@@ -163,6 +163,12 @@ namespace Bnh.Controllers
             db.SaveChanges();
 
             return PartialView("DesignScene", db.Walls.Where(w => w.OwnerId == ownerId));
+        }
+
+        [HttpPost]
+        public ActionResult CanDeleteBrick(Brick brick)
+        {
+            return new JsonResult() { Data = !db.Bricks.OfType<SharedBrick>().Where(b => b.SharedBrickId == brick.Id).Any() };
         }
 
         protected override void Dispose(bool disposing)
