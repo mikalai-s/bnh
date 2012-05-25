@@ -113,7 +113,7 @@
         .disableSelection();
 
         // reflect lock checkbox value
-    //    onLockWallsCheckbox();
+        //    onLockWallsCheckbox();
     }
 
     function initWall(wall, customData) {
@@ -138,7 +138,7 @@
             handles: "e",
             animateDuration: "0",
             resize: function (event, ui) { onWallResize(event, ui, wall); }
-        });        
+        });
 
         var wallContent = wall.find(".wall > .content");
         wallContent.find(".brick-wrapper").each(function (i, brick) {
@@ -175,7 +175,7 @@
         // create brick from prototype and add into DOM
         var wall = createWall();
 
-        
+
 
         // initialize brick object
         initWall(wall, {
@@ -198,7 +198,7 @@
         // create brick from prototype and add into DOM
         var brick = createBrick();
 
-        
+
 
         // initialize brick object
         initializeBrick(brick, {
@@ -279,7 +279,25 @@
     }
 
     function onDeleteBrickButtonClicked() {
-        $(this).closest(".brick-wrapper").remove();
+        var brick = $(this).closest(".brick-wrapper");
+        $.ajax({
+            url: "/Scene/CanDeleteBrick",
+            type: "POST",
+            contentType: "application/json",
+            async: true,
+            data: jQuery.toJSON(brick.data("entity")),
+            success: function (result) {
+                if (result === true) {
+                    brick.remove();
+                } else {
+                    alert("Unable to delete brick because it's in use!");
+                }
+            },
+            error: function (result) {
+                document.write(result.responseText);
+                document.close();
+            }
+        });
     }
 
     function ensureSceneSaved() {
