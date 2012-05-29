@@ -14,6 +14,14 @@
     <h2>Enter your user name and password below.</h2>
 </hgroup>
 
+@using (Html.BeginForm("LogOn", "Account", FormMethod.Post, new { @id="logonForm"}))
+{
+@Html.Hidden("loginIdentifier", "https://www.google.com/accounts/o8/id")
+@Html.Hidden("returnUrl")
+<a href="javascript: $('#returnUrl').val(window.location); $('#logonForm').submit();">Log In by Google</a>
+}
+
+@*
 @using (Html.BeginForm((string)ViewBag.FormAction, "Account")) {
     @Html.ValidationSummary(true, "Log in was unsuccessful. Please correct the errors and try again.")
 
@@ -43,4 +51,4 @@
     <p>
         @Html.ActionLink("Register", "Register") if you don't have an account.
     </p>
-}
+}*@

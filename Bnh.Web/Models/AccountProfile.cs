@@ -12,7 +12,21 @@ namespace Bnh.Web.Models
     {
         public static AccountProfile Current
         {
-            get { return GetProfile(HttpContext.Current.User.Identity.Name); }
+            get { return GetProfile(CurrentUserName); }
+        }
+
+        public static string CurrentUserName
+        {
+            get { return (string)HttpContext.Current.Session["UserName"]; }
+        }
+
+        public static string CurrentUserFullNameOrUserName
+        {
+            get
+            {
+                var fullName = Current.FullName;
+                return string.IsNullOrWhiteSpace(fullName) ? CurrentUserName : fullName;
+            }
         }
        
         public string FirstName
