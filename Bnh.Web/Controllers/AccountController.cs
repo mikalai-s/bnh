@@ -5,6 +5,11 @@ using System.Web;
 using System.Web.Mvc;
 using System.Web.Security;
 using Bnh.Web.Models;
+using DotNetOpenAuth.OpenId.RelyingParty;
+using DotNetOpenAuth.OpenId;
+using DotNetOpenAuth.OpenId.Extensions.SimpleRegistration;
+using DotNetOpenAuth.Messaging;
+using System.Web.Routing;
 
 namespace Bnh.Web.Controllers
 {
@@ -182,7 +187,7 @@ namespace Bnh.Web.Controllers
                 bool changePasswordSucceeded;
                 try
                 {
-                    MembershipUser currentUser = Membership.GetUser(User.Identity.Name, userIsOnline: true);
+                    MembershipUser currentUser = Membership.GetUser(AccountProfile.CurrentUserName, userIsOnline: true);
                     changePasswordSucceeded = currentUser.ChangePassword(model.OldPassword, model.NewPassword);
                 }
                 catch (Exception)
@@ -262,6 +267,73 @@ namespace Bnh.Web.Controllers
         {
             return ModelState.SelectMany(x => x.Value.Errors.Select(error => error.ErrorMessage));
         }
+
+
+        [AllowAnonymous]
+        public ActionResult LogOn()
+        {
+            var openid = new OpenIdRelyingParty();
+            var response = openid.GetResponse();
+
+            if (response != null)
+            {
+                switch (response.Status)
+                {
+                    case AuthenticationStatus.Authenticated:
+                        // get user email and store it in session
+                        var ex = response.GetExtension<ClaimsResponse>();
+                        Session["UserName"] = ex.Email;
+
+                        // redirect from login page
+                        FormsAuthentication.RedirectFromLoginPage(response.ClaimedIdentifier, false);
+                        break;
+                    case AuthenticationStatus.Canceled:
+                        ModelState.AddModelError("loginIdentifier", "Login was cancelled at the provider");
+                        break;
+                    case AuthenticationStatus.Failed:
+                        ModelState.AddModelError("loginIdentifier", "Login failed using the provided OpenID identifier");
+                        break;
+                }
+            }
+
+            return View("Login");
+        }
+
+        //[System.Web.Mvc.AcceptVerbs(HttpVerbs.Post)]
+        [AllowAnonymous]
+        [HttpPost]
+        public ActionResult LogOn(string loginIdentifier, string returnUrl)
+        {
+            if (!Identifier.IsValid(loginIdentifier))
+            {
+                ModelState.AddModelError("loginIdentifier", "The specified login identifier is invalid");
+                return View();
+            }
+            else
+            {
+                var openid = new OpenIdRelyingParty();
+                
+                if (!string.IsNullOrEmpty(returnUrl))
+                {
+                    // TODO: creat ecorrent return url
+                    //returnUrl = (string)values["ReturnUrl"];
+                }
+
+                IAuthenticationRequest request = string.IsNullOrEmpty(returnUrl) ?
+                    openid.CreateRequest(Identifier.Parse(loginIdentifier)) :
+                    openid.CreateRequest(Identifier.Parse(loginIdentifier), Realm.AutoDetect, new Uri(returnUrl));
+
+                // Require some additional data
+                request.AddExtension(new ClaimsRequest
+                {
+                    Email = DemandLevel.Require,
+                    FullName = DemandLevel.Require
+                });
+
+                return request.RedirectingResponse.AsActionResult();
+            }
+        }
+
 
         #region Status Codes
         private static string ErrorCodeToString(MembershipCreateStatus createStatus)
