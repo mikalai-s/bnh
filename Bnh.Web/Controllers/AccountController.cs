@@ -62,6 +62,7 @@ namespace Bnh.Web.Controllers
             {
                 if (Membership.ValidateUser(model.Email, model.Password))
                 {
+                    Session["UserName"] = model.Email;
                     FormsAuthentication.SetAuthCookie(model.Email, model.RememberMe);
                     if (Url.IsLocalUrl(returnUrl))
                     {
@@ -299,7 +300,6 @@ namespace Bnh.Web.Controllers
             return View("Login");
         }
 
-        //[System.Web.Mvc.AcceptVerbs(HttpVerbs.Post)]
         [AllowAnonymous]
         [HttpPost]
         public ActionResult LogOn(string loginIdentifier, string returnUrl)

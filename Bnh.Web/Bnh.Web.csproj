@@ -251,6 +251,7 @@
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="Images\background.png" />
+    <Content Include="Images\google.gif" />
     <Content Include="Images\logo.png" />
     <Content Include="Properties\PublishProfiles\bnh.pubxml.user" />
     <Content Include="Scripts\BrickContent_Map.js">
@@ -542,6 +543,7 @@
     <Content Include="Styles\DesignBrick.css" />
     <Content Include="Styles\DesignScene.css" />
     <Content Include="Styles\Layout.css" />
+    <Content Include="Styles\Login.css" />
     <Content Include="Styles\MapEditor.css" />
     <Content Include="Styles\Scene.css" />
     <Content Include="Web.config">
