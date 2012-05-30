@@ -312,16 +312,10 @@ namespace Bnh.Web.Controllers
             else
             {
                 var openid = new OpenIdRelyingParty();
-                
-                if (!string.IsNullOrEmpty(returnUrl))
-                {
-                    // TODO: creat ecorrent return url
-                    //returnUrl = (string)values["ReturnUrl"];
-                }
 
                 IAuthenticationRequest request = string.IsNullOrEmpty(returnUrl) ?
                     openid.CreateRequest(Identifier.Parse(loginIdentifier)) :
-                    openid.CreateRequest(Identifier.Parse(loginIdentifier), Realm.AutoDetect, new Uri(returnUrl));
+                    openid.CreateRequest(Identifier.Parse(loginIdentifier), Realm.AutoDetect, new Uri(this.Request.Url, new Uri(returnUrl).Query));
 
                 // Require some additional data
                 request.AddExtension(new ClaimsRequest
