@@ -1,19 +1,19 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <edmx:Edmx Version="2.0" xmlns:edmx="http://schemas.microsoft.com/ado/2008/10/edmx">
   <!-- EF Runtime content -->
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="bnhModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/02/edm/ssdl">
-        <EntityContainer Name="bnhModelStoreContainer">
-          <EntitySet Name="Brick" EntityType="bnhModel.Store.Brick" store:Type="Tables" Schema="cm" />
-          <EntitySet Name="SceneTemplate" EntityType="bnhModel.Store.SceneTemplate" store:Type="Tables" Schema="cm" />
-          <EntitySet Name="Wall" EntityType="bnhModel.Store.Wall" store:Type="Tables" Schema="cm" />
-          <AssociationSet Name="FK_Brick_Wall" Association="bnhModel.Store.FK_Brick_Wall">
+    <Schema Namespace="cmsModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/02/edm/ssdl">
+        <EntityContainer Name="cmsModelStoreContainer">
+          <EntitySet Name="Brick" EntityType="cmsModel.Store.Brick" store:Type="Tables" Schema="cm" />
+          <EntitySet Name="SceneTemplate" EntityType="cmsModel.Store.SceneTemplate" store:Type="Tables" Schema="cm" />
+          <EntitySet Name="Wall" EntityType="cmsModel.Store.Wall" store:Type="Tables" Schema="cm" />
+          <AssociationSet Name="FK_Brick_Wall" Association="cmsModel.Store.FK_Brick_Wall">
             <End Role="Wall" EntitySet="Wall" />
             <End Role="Brick" EntitySet="Brick" />
           </AssociationSet>
-          <AssociationSet Name="FK_Wall_SceneTemplate" Association="bnhModel.Store.FK_Wall_SceneTemplate">
+          <AssociationSet Name="FK_Wall_SceneTemplate" Association="cmsModel.Store.FK_Wall_SceneTemplate">
             <End Role="SceneTemplate" EntitySet="SceneTemplate" />
             <End Role="Wall" EntitySet="Wall" />
           </AssociationSet>
@@ -55,10 +55,10 @@
           <Property Name="Order" Type="tinyint" Nullable="false" />
         </EntityType>
         <Association Name="FK_Brick_Wall">
-          <End Role="Wall" Type="bnhModel.Store.Wall" Multiplicity="1">
+          <End Role="Wall" Type="cmsModel.Store.Wall" Multiplicity="1">
             <OnDelete Action="Cascade" />
           </End>
-          <End Role="Brick" Type="bnhModel.Store.Brick" Multiplicity="*" />
+          <End Role="Brick" Type="cmsModel.Store.Brick" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Wall">
               <PropertyRef Name="Id" />
@@ -69,10 +69,10 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Wall_SceneTemplate">
-          <End Role="SceneTemplate" Type="bnhModel.Store.SceneTemplate" Multiplicity="1">
+          <End Role="SceneTemplate" Type="cmsModel.Store.SceneTemplate" Multiplicity="1">
             <OnDelete Action="Cascade" />
           </End>
-          <End Role="Wall" Type="bnhModel.Store.Wall" Multiplicity="*" />
+          <End Role="Wall" Type="cmsModel.Store.Wall" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="SceneTemplate">
               <PropertyRef Name="Id" />
@@ -85,16 +85,16 @@
       </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
-      <Schema Namespace="bnhModel" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2008/09/edm">
+      <Schema Namespace="cmsModel" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2008/09/edm">
         <EntityContainer Name="CmEntities" annotation:LazyLoadingEnabled="true">
-          <EntitySet Name="Bricks" EntityType="bnhModel.Brick" />
-          <EntitySet Name="Walls" EntityType="bnhModel.Wall" />
-          <AssociationSet Name="FK_Brick_Wall" Association="bnhModel.FK_Brick_Wall">
+          <EntitySet Name="Bricks" EntityType="cmsModel.Brick" />
+          <EntitySet Name="Walls" EntityType="cmsModel.Wall" />
+          <AssociationSet Name="FK_Brick_Wall" Association="cmsModel.FK_Brick_Wall">
             <End Role="Wall" EntitySet="Walls" />
             <End Role="Brick" EntitySet="Bricks" />
           </AssociationSet>
-          <EntitySet Name="SceneTemplates" EntityType="bnhModel.SceneTemplate" />
-          <AssociationSet Name="FK_Wall_SceneTemplate" Association="bnhModel.FK_Wall_SceneTemplate">
+          <EntitySet Name="SceneTemplates" EntityType="cmsModel.SceneTemplate" />
+          <AssociationSet Name="FK_Wall_SceneTemplate" Association="cmsModel.FK_Wall_SceneTemplate">
             <End Role="SceneTemplate" EntitySet="SceneTemplates" />
             <End Role="Wall" EntitySet="Walls" />
           </AssociationSet>
@@ -108,7 +108,7 @@
           <Property Type="String" Name="Title" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Type="Single" Name="Width" Nullable="false" />
           <Property Type="Byte" Name="Order" Nullable="false" />
-          <NavigationProperty Name="Wall" Relationship="bnhModel.FK_Brick_Wall" FromRole="Brick" ToRole="Wall" />
+          <NavigationProperty Name="Wall" Relationship="cmsModel.FK_Brick_Wall" FromRole="Brick" ToRole="Wall" />
           <Property Type="String" Name="ContentTitle" MaxLength="50" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="Wall">
@@ -118,13 +118,13 @@
           <Property Type="Int64" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Type="Guid" Name="OwnerId" Nullable="false" />
           <Property Type="String" Name="Title" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="Bricks" Relationship="bnhModel.FK_Brick_Wall" FromRole="Wall" ToRole="Brick" />
+          <NavigationProperty Name="Bricks" Relationship="cmsModel.FK_Brick_Wall" FromRole="Wall" ToRole="Brick" />
           <Property Type="Single" Name="Width" Nullable="false" />
           <Property Type="Byte" Name="Order" Nullable="false" />
         </EntityType>
         <Association Name="FK_Brick_Wall">
-          <End Type="bnhModel.Wall" Role="Wall" Multiplicity="1" />
-          <End Type="bnhModel.Brick" Role="Brick" Multiplicity="*" />
+          <End Type="cmsModel.Wall" Role="Wall" Multiplicity="1" />
+          <End Type="cmsModel.Brick" Role="Brick" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Wall">
               <PropertyRef Name="Id" />
@@ -134,13 +134,13 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityType Name="HtmlBrick" BaseType="bnhModel.Brick" >
+        <EntityType Name="HtmlBrick" BaseType="cmsModel.Brick" >
           <Property Type="String" Name="Html" MaxLength="Max" FixedLength="false" Unicode="true" />
         </EntityType>
-        <EntityType Name="GalleryBrick" BaseType="bnhModel.Brick" >
+        <EntityType Name="GalleryBrick" BaseType="cmsModel.Brick" >
           <Property Type="Int64" Name="ImageListId" />
         </EntityType>
-        <EntityType Name="MapBrick" BaseType="bnhModel.Brick" >
+        <EntityType Name="MapBrick" BaseType="cmsModel.Brick" >
           <Property Type="String" Name="GpsLocation" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Type="Int32" Name="Height" />
           <Property Type="Int32" Name="Zoom" />
@@ -152,11 +152,11 @@
           <Property Type="Guid" Name="Id" Nullable="false" />
           <Property Type="String" Name="Title" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Type="String" Name="IconUrl" MaxLength="256" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="Walls" Relationship="bnhModel.FK_Wall_SceneTemplate" FromRole="SceneTemplate" ToRole="Wall" />
+          <NavigationProperty Name="Walls" Relationship="cmsModel.FK_Wall_SceneTemplate" FromRole="SceneTemplate" ToRole="Wall" />
         </EntityType>
         <Association Name="FK_Wall_SceneTemplate">
-          <End Type="bnhModel.SceneTemplate" Role="SceneTemplate" Multiplicity="1" />
-          <End Type="bnhModel.Wall" Role="Wall" Multiplicity="*" />
+          <End Type="cmsModel.SceneTemplate" Role="SceneTemplate" Multiplicity="1" />
+          <End Type="cmsModel.Wall" Role="Wall" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="SceneTemplate">
               <PropertyRef Name="Id" />
@@ -166,27 +166,27 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityType Name="EmptyBrick" BaseType="bnhModel.Brick" />
-        <EntityType Name="RazorBrick" BaseType="bnhModel.HtmlBrick" />
-        <EntityType Name="SharedBrick" BaseType="bnhModel.Brick" >
+        <EntityType Name="EmptyBrick" BaseType="cmsModel.Brick" />
+        <EntityType Name="RazorBrick" BaseType="cmsModel.HtmlBrick" />
+        <EntityType Name="SharedBrick" BaseType="cmsModel.Brick" >
           <Property Type="Int64" Name="SharedBrickId" />
         </EntityType>
-        <EntityType Name="TocBrick" BaseType="bnhModel.Brick" />
+        <EntityType Name="TocBrick" BaseType="cmsModel.Brick" />
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2008/09/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="bnhModelStoreContainer" CdmEntityContainer="CmEntities">
+        <EntityContainerMapping StorageEntityContainer="cmsModelStoreContainer" CdmEntityContainer="CmEntities">
           <EntitySetMapping Name="Bricks">
-            <EntityTypeMapping TypeName="IsTypeOf(bnhModel.GalleryBrick)">
+            <EntityTypeMapping TypeName="IsTypeOf(cmsModel.GalleryBrick)">
               <MappingFragment StoreEntitySet="Brick">
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="ImageListId" ColumnName="ImageListId" />
                 <Condition ColumnName="Type" Value="2" />
               </MappingFragment>
             </EntityTypeMapping>
-            <EntityTypeMapping TypeName="IsTypeOf(bnhModel.MapBrick)">
+            <EntityTypeMapping TypeName="IsTypeOf(cmsModel.MapBrick)">
               <MappingFragment StoreEntitySet="Brick">
                 <ScalarProperty Name="Zoom" ColumnName="MapZoom" />
                 <ScalarProperty Name="Height" ColumnName="MapHeight" />
@@ -195,13 +195,13 @@
                 <Condition ColumnName="Type" Value="3" />
               </MappingFragment>
             </EntityTypeMapping>
-            <EntityTypeMapping TypeName="IsTypeOf(bnhModel.EmptyBrick)">
+            <EntityTypeMapping TypeName="IsTypeOf(cmsModel.EmptyBrick)">
               <MappingFragment StoreEntitySet="Brick">
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <Condition ColumnName="Type" Value="0" />
               </MappingFragment>
             </EntityTypeMapping>
-            <EntityTypeMapping TypeName="IsTypeOf(bnhModel.Brick)">
+            <EntityTypeMapping TypeName="IsTypeOf(cmsModel.Brick)">
               <MappingFragment StoreEntitySet="Brick">
                 <ScalarProperty Name="ContentTitle" ColumnName="ContentTitle" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
@@ -211,14 +211,14 @@
                 <ScalarProperty Name="Order" ColumnName="Order" />
               </MappingFragment>
             </EntityTypeMapping>
-            <EntityTypeMapping TypeName="bnhModel.HtmlBrick">
+            <EntityTypeMapping TypeName="cmsModel.HtmlBrick">
               <MappingFragment StoreEntitySet="Brick">
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="Html" ColumnName="Html" />
                 <Condition ColumnName="Type" Value="1" />
               </MappingFragment>
             </EntityTypeMapping>
-            <EntityTypeMapping TypeName="IsTypeOf(bnhModel.RazorBrick)">
+            <EntityTypeMapping TypeName="IsTypeOf(cmsModel.RazorBrick)">
               <MappingFragment StoreEntitySet="Brick">
                 <ScalarProperty Name="ContentTitle" ColumnName="ContentTitle" />
                 <ScalarProperty Name="Order" ColumnName="Order" />
@@ -230,14 +230,14 @@
                 <Condition ColumnName="Type" Value="4" />
               </MappingFragment>
             </EntityTypeMapping>
-            <EntityTypeMapping TypeName="IsTypeOf(bnhModel.SharedBrick)">
+            <EntityTypeMapping TypeName="IsTypeOf(cmsModel.SharedBrick)">
               <MappingFragment StoreEntitySet="Brick">
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="SharedBrickId" ColumnName="SharedBrickId" />
                 <Condition ColumnName="Type" Value="5" />
               </MappingFragment>
             </EntityTypeMapping>
-            <EntityTypeMapping TypeName="IsTypeOf(bnhModel.TocBrick)">
+            <EntityTypeMapping TypeName="IsTypeOf(cmsModel.TocBrick)">
               <MappingFragment StoreEntitySet="Brick">
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <Condition ColumnName="Type" Value="6" />
@@ -245,7 +245,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Walls">
-            <EntityTypeMapping TypeName="bnhModel.Wall">
+            <EntityTypeMapping TypeName="cmsModel.Wall">
               <MappingFragment StoreEntitySet="Wall">
                 <ScalarProperty Name="Order" ColumnName="Order" />
                 <ScalarProperty Name="Width" ColumnName="Width" />
@@ -256,7 +256,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="SceneTemplates">
-            <EntityTypeMapping TypeName="bnhModel.SceneTemplate">
+            <EntityTypeMapping TypeName="cmsModel.SceneTemplate">
               <MappingFragment StoreEntitySet="SceneTemplate">
                 <ScalarProperty Name="IconUrl" ColumnName="IconUrl" />
                 <ScalarProperty Name="Title" ColumnName="Title" />
@@ -285,53 +285,53 @@
     <!-- Diagram content (shape and connector positions) -->
     <Diagrams>
       <Diagram Name="Cm">
-        <EntityTypeShape EntityType="bnhModel.Brick" Width="1.5" PointX="3" PointY="1" Height="2.172587890625" />
-        <EntityTypeShape EntityType="bnhModel.Wall" Width="1.5" PointX="0.75" PointY="1.5" Height="2.172587890625" />
-        <AssociationConnector Association="bnhModel.FK_Brick_Wall" >
+        <EntityTypeShape EntityType="cmsModel.Brick" Width="1.5" PointX="3" PointY="1" Height="2.172587890625" />
+        <EntityTypeShape EntityType="cmsModel.Wall" Width="1.5" PointX="0.75" PointY="1.5" Height="2.172587890625" />
+        <AssociationConnector Association="cmsModel.FK_Brick_Wall" >
           <ConnectorPoint PointX="2.25" PointY="2.3362939453125" />
           <ConnectorPoint PointX="3" PointY="2.3362939453125" />
         </AssociationConnector>
-        <EntityTypeShape EntityType="bnhModel.HtmlBrick" Width="1.5" PointX="6" PointY="1.625" Height="1.2110807291666668" />
-        <InheritanceConnector EntityType="bnhModel.HtmlBrick" ManuallyRouted="false" >
+        <EntityTypeShape EntityType="cmsModel.HtmlBrick" Width="1.5" PointX="6" PointY="1.625" Height="1.2110807291666668" />
+        <InheritanceConnector EntityType="cmsModel.HtmlBrick" ManuallyRouted="false" >
           <ConnectorPoint PointX="4.5" PointY="2.2305403645833333" />
           <ConnectorPoint PointX="6" PointY="2.2305403645833333" />
         </InheritanceConnector>
-        <EntityTypeShape EntityType="bnhModel.GalleryBrick" Width="1.5" PointX="6" PointY="3" Height="1.211080729166667" />
-        <InheritanceConnector EntityType="bnhModel.GalleryBrick" ManuallyRouted="false" >
+        <EntityTypeShape EntityType="cmsModel.GalleryBrick" Width="1.5" PointX="6" PointY="3" Height="1.211080729166667" />
+        <InheritanceConnector EntityType="cmsModel.GalleryBrick" ManuallyRouted="false" >
           <ConnectorPoint PointX="3.75" PointY="3.172587890625" />
           <ConnectorPoint PointX="3.75" PointY="3.6055403645833337" />
           <ConnectorPoint PointX="6" PointY="3.6055403645833337" />
         </InheritanceConnector>
-        <EntityTypeShape EntityType="bnhModel.MapBrick" Width="1.5" PointX="6" PointY="4.375" Height="1.5956835937499996" />
-        <InheritanceConnector EntityType="bnhModel.MapBrick" ManuallyRouted="false" >
+        <EntityTypeShape EntityType="cmsModel.MapBrick" Width="1.5" PointX="6" PointY="4.375" Height="1.5956835937499996" />
+        <InheritanceConnector EntityType="cmsModel.MapBrick" ManuallyRouted="false" >
           <ConnectorPoint PointX="3.75" PointY="3.172587890625" />
           <ConnectorPoint PointX="3.75" PointY="5.172841796875" />
           <ConnectorPoint PointX="6" PointY="5.172841796875" />
         </InheritanceConnector>
-        <EntityTypeShape EntityType="bnhModel.SceneTemplate" Width="1.5" PointX="0.75" PointY="4.875" Height="1.7879850260416657" />
-        <AssociationConnector Association="bnhModel.FK_Wall_SceneTemplate" >
+        <EntityTypeShape EntityType="cmsModel.SceneTemplate" Width="1.5" PointX="0.75" PointY="4.875" Height="1.7879850260416657" />
+        <AssociationConnector Association="cmsModel.FK_Wall_SceneTemplate" >
           <ConnectorPoint PointX="1.5" PointY="4.875" />
           <ConnectorPoint PointX="1.5" PointY="3.672587890625" />
         </AssociationConnector>
-        <EntityTypeShape EntityType="bnhModel.EmptyBrick" Width="1.5" PointX="6" PointY="0.5" Height="1.0187792968749996" />
-        <InheritanceConnector EntityType="bnhModel.EmptyBrick" ManuallyRouted="false" >
+        <EntityTypeShape EntityType="cmsModel.EmptyBrick" Width="1.5" PointX="6" PointY="0.5" Height="1.0187792968749996" />
+        <InheritanceConnector EntityType="cmsModel.EmptyBrick" ManuallyRouted="false" >
           <ConnectorPoint PointX="4.5" PointY="1.2593896484374998" />
           <ConnectorPoint PointX="6" PointY="1.2593896484374998" />
         </InheritanceConnector>
-        <EntityTypeShape EntityType="bnhModel.RazorBrick" Width="1.5" PointX="8.75" PointY="1.75" Height="1.0187792968749996" />
-        <InheritanceConnector EntityType="bnhModel.RazorBrick" >
+        <EntityTypeShape EntityType="cmsModel.RazorBrick" Width="1.5" PointX="8.75" PointY="1.75" Height="1.0187792968749996" />
+        <InheritanceConnector EntityType="cmsModel.RazorBrick" >
           <ConnectorPoint PointX="7.5" PointY="2.2593896484375" />
           <ConnectorPoint PointX="8.75" PointY="2.2593896484375" />
         </InheritanceConnector>
-        <EntityTypeShape EntityType="bnhModel.SharedBrick" Width="1.5" PointX="6" PointY="6.25" Height="1.0187792968750031" />
-        <InheritanceConnector EntityType="bnhModel.SharedBrick" >
+        <EntityTypeShape EntityType="cmsModel.SharedBrick" Width="1.5" PointX="6" PointY="6.25" Height="1.0187792968750031" />
+        <InheritanceConnector EntityType="cmsModel.SharedBrick" >
           <ConnectorPoint PointX="3.75" PointY="3.172587890625" />
           <ConnectorPoint PointX="3.75" PointY="6.0964" />
           <ConnectorPoint PointX="6.75" PointY="6.0964" />
           <ConnectorPoint PointX="6.75" PointY="6.25" />
         </InheritanceConnector>
-        <EntityTypeShape EntityType="bnhModel.TocBrick" Width="1.5" PointX="3" PointY="6.5" Height="1.0187792968749996" />
-        <InheritanceConnector EntityType="bnhModel.TocBrick" >
+        <EntityTypeShape EntityType="cmsModel.TocBrick" Width="1.5" PointX="3" PointY="6.5" Height="1.0187792968749996" />
+        <InheritanceConnector EntityType="cmsModel.TocBrick" >
           <ConnectorPoint PointX="3.75" PointY="3.172587890625" />
           <ConnectorPoint PointX="3.75" PointY="6.5" />
         </InheritanceConnector>

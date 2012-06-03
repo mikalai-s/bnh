@@ -19,12 +19,12 @@ using System.Xml.Serialization;
 [assembly: EdmSchemaAttribute()]
 #region EDM Relationship Metadata
 
-[assembly: EdmRelationshipAttribute("bnhModel", "FK_Brick_Wall", "Wall", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(Bnh.Entities.Wall), "Brick", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(Bnh.Entities.Brick), true)]
-[assembly: EdmRelationshipAttribute("bnhModel", "FK_Wall_SceneTemplate", "SceneTemplate", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(Bnh.Entities.SceneTemplate), "Wall", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(Bnh.Entities.Wall), true)]
+[assembly: EdmRelationshipAttribute("cmsModel", "FK_Brick_Wall", "Wall", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(Ms.Cms.Entities.Wall), "Brick", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(Ms.Cms.Entities.Brick), true)]
+[assembly: EdmRelationshipAttribute("cmsModel", "FK_Wall_SceneTemplate", "SceneTemplate", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(Ms.Cms.Entities.SceneTemplate), "Wall", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(Ms.Cms.Entities.Wall), true)]
 
 #endregion
 
-namespace Bnh.Entities
+namespace Ms.Cms.Entities
 {
     #region Contexts
     
@@ -159,7 +159,7 @@ namespace Bnh.Entities
     /// <summary>
     /// No Metadata Documentation available.
     /// </summary>
-    [EdmEntityTypeAttribute(NamespaceName="bnhModel", Name="Brick")]
+    [EdmEntityTypeAttribute(NamespaceName="cmsModel", Name="Brick")]
     [Serializable()]
     [DataContractAttribute(IsReference=true)]
     [KnownTypeAttribute(typeof(HtmlBrick))]
@@ -330,16 +330,16 @@ namespace Bnh.Entities
         [XmlIgnoreAttribute()]
         [SoapIgnoreAttribute()]
         [DataMemberAttribute()]
-        [EdmRelationshipNavigationPropertyAttribute("bnhModel", "FK_Brick_Wall", "Wall")]
+        [EdmRelationshipNavigationPropertyAttribute("cmsModel", "FK_Brick_Wall", "Wall")]
         public Wall Wall
         {
             get
             {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Wall>("bnhModel.FK_Brick_Wall", "Wall").Value;
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Wall>("cmsModel.FK_Brick_Wall", "Wall").Value;
             }
             set
             {
-                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Wall>("bnhModel.FK_Brick_Wall", "Wall").Value = value;
+                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Wall>("cmsModel.FK_Brick_Wall", "Wall").Value = value;
             }
         }
         /// <summary>
@@ -351,13 +351,13 @@ namespace Bnh.Entities
         {
             get
             {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Wall>("bnhModel.FK_Brick_Wall", "Wall");
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Wall>("cmsModel.FK_Brick_Wall", "Wall");
             }
             set
             {
                 if ((value != null))
                 {
-                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<Wall>("bnhModel.FK_Brick_Wall", "Wall", value);
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<Wall>("cmsModel.FK_Brick_Wall", "Wall", value);
                 }
             }
         }
@@ -369,7 +369,7 @@ namespace Bnh.Entities
     /// <summary>
     /// No Metadata Documentation available.
     /// </summary>
-    [EdmEntityTypeAttribute(NamespaceName="bnhModel", Name="EmptyBrick")]
+    [EdmEntityTypeAttribute(NamespaceName="cmsModel", Name="EmptyBrick")]
     [Serializable()]
     [DataContractAttribute(IsReference=true)]
     public partial class EmptyBrick : Brick
@@ -403,7 +403,7 @@ namespace Bnh.Entities
     /// <summary>
     /// No Metadata Documentation available.
     /// </summary>
-    [EdmEntityTypeAttribute(NamespaceName="bnhModel", Name="GalleryBrick")]
+    [EdmEntityTypeAttribute(NamespaceName="cmsModel", Name="GalleryBrick")]
     [Serializable()]
     [DataContractAttribute(IsReference=true)]
     public partial class GalleryBrick : Brick
@@ -465,7 +465,7 @@ namespace Bnh.Entities
     /// <summary>
     /// No Metadata Documentation available.
     /// </summary>
-    [EdmEntityTypeAttribute(NamespaceName="bnhModel", Name="HtmlBrick")]
+    [EdmEntityTypeAttribute(NamespaceName="cmsModel", Name="HtmlBrick")]
     [Serializable()]
     [DataContractAttribute(IsReference=true)]
     [KnownTypeAttribute(typeof(RazorBrick))]
@@ -528,7 +528,7 @@ namespace Bnh.Entities
     /// <summary>
     /// No Metadata Documentation available.
     /// </summary>
-    [EdmEntityTypeAttribute(NamespaceName="bnhModel", Name="MapBrick")]
+    [EdmEntityTypeAttribute(NamespaceName="cmsModel", Name="MapBrick")]
     [Serializable()]
     [DataContractAttribute(IsReference=true)]
     public partial class MapBrick : Brick
@@ -638,7 +638,7 @@ namespace Bnh.Entities
     /// <summary>
     /// No Metadata Documentation available.
     /// </summary>
-    [EdmEntityTypeAttribute(NamespaceName="bnhModel", Name="RazorBrick")]
+    [EdmEntityTypeAttribute(NamespaceName="cmsModel", Name="RazorBrick")]
     [Serializable()]
     [DataContractAttribute(IsReference=true)]
     public partial class RazorBrick : HtmlBrick
@@ -672,7 +672,7 @@ namespace Bnh.Entities
     /// <summary>
     /// No Metadata Documentation available.
     /// </summary>
-    [EdmEntityTypeAttribute(NamespaceName="bnhModel", Name="SceneTemplate")]
+    [EdmEntityTypeAttribute(NamespaceName="cmsModel", Name="SceneTemplate")]
     [Serializable()]
     [DataContractAttribute(IsReference=true)]
     public partial class SceneTemplate : EntityObject
@@ -782,18 +782,18 @@ namespace Bnh.Entities
         [XmlIgnoreAttribute()]
         [SoapIgnoreAttribute()]
         [DataMemberAttribute()]
-        [EdmRelationshipNavigationPropertyAttribute("bnhModel", "FK_Wall_SceneTemplate", "Wall")]
+        [EdmRelationshipNavigationPropertyAttribute("cmsModel", "FK_Wall_SceneTemplate", "Wall")]
         public EntityCollection<Wall> Walls
         {
             get
             {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<Wall>("bnhModel.FK_Wall_SceneTemplate", "Wall");
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<Wall>("cmsModel.FK_Wall_SceneTemplate", "Wall");
             }
             set
             {
                 if ((value != null))
                 {
-                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<Wall>("bnhModel.FK_Wall_SceneTemplate", "Wall", value);
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<Wall>("cmsModel.FK_Wall_SceneTemplate", "Wall", value);
                 }
             }
         }
@@ -805,7 +805,7 @@ namespace Bnh.Entities
     /// <summary>
     /// No Metadata Documentation available.
     /// </summary>
-    [EdmEntityTypeAttribute(NamespaceName="bnhModel", Name="SharedBrick")]
+    [EdmEntityTypeAttribute(NamespaceName="cmsModel", Name="SharedBrick")]
     [Serializable()]
     [DataContractAttribute(IsReference=true)]
     public partial class SharedBrick : Brick
@@ -867,7 +867,7 @@ namespace Bnh.Entities
     /// <summary>
     /// No Metadata Documentation available.
     /// </summary>
-    [EdmEntityTypeAttribute(NamespaceName="bnhModel", Name="TocBrick")]
+    [EdmEntityTypeAttribute(NamespaceName="cmsModel", Name="TocBrick")]
     [Serializable()]
     [DataContractAttribute(IsReference=true)]
     public partial class TocBrick : Brick
@@ -901,7 +901,7 @@ namespace Bnh.Entities
     /// <summary>
     /// No Metadata Documentation available.
     /// </summary>
-    [EdmEntityTypeAttribute(NamespaceName="bnhModel", Name="Wall")]
+    [EdmEntityTypeAttribute(NamespaceName="cmsModel", Name="Wall")]
     [Serializable()]
     [DataContractAttribute(IsReference=true)]
     public partial class Wall : EntityObject
@@ -1065,18 +1065,18 @@ namespace Bnh.Entities
         [XmlIgnoreAttribute()]
         [SoapIgnoreAttribute()]
         [DataMemberAttribute()]
-        [EdmRelationshipNavigationPropertyAttribute("bnhModel", "FK_Brick_Wall", "Brick")]
+        [EdmRelationshipNavigationPropertyAttribute("cmsModel", "FK_Brick_Wall", "Brick")]
         public EntityCollection<Brick> Bricks
         {
             get
             {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<Brick>("bnhModel.FK_Brick_Wall", "Brick");
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<Brick>("cmsModel.FK_Brick_Wall", "Brick");
             }
             set
             {
                 if ((value != null))
                 {
-                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<Brick>("bnhModel.FK_Brick_Wall", "Brick", value);
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<Brick>("cmsModel.FK_Brick_Wall", "Brick", value);
                 }
             }
         }

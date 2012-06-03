@@ -1,6 +1,6 @@
 ﻿@using Bnh.Web.Models
 
-@model Bnh.Entities.Brick
+@model Ms.Cms.Entities.Brick
 
 <div id="@Model.GetHtmlId()" class='brick-wrapper' style='width:@Model.Width.ToString("F")%'>
     @Html.Partial("~/Views/Brick/BrickContent.cshtml", Model)

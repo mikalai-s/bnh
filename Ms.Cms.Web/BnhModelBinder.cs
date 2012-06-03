@@ -5,11 +5,12 @@ using System.Text;
 using System.Web.Mvc;
 using System.ComponentModel;
 using System.Collections;
+using Ms.Cms.Entities;
 using System.Data.Objects.DataClasses;
-using Bnh.Entities;
+
 using TypeMap = System.Collections.Generic.Dictionary<string, System.Type>;
 
-namespace Bnh.WebFramework
+namespace Ms.Cms.Web
 {
     public class BnhModelBinder : DefaultModelBinder
     {

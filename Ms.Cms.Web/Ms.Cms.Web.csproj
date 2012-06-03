@@ -5,11 +5,11 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>8.0.30703</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{A383D25F-9AB2-4EA2-B155-C4FB9827E9A5}</ProjectGuid>
+    <ProjectGuid>{2DD4B8A0-6FA4-4966-AC72-83BD34968F09}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Bnh.Entities</RootNamespace>
-    <AssemblyName>Bnh.Entities</AssemblyName>
+    <RootNamespace>Ms.Cms.Web</RootNamespace>
+    <AssemblyName>Ms.Cms.Web</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -31,14 +31,18 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>..\packages\Newtonsoft.Json.4.5.6\lib\net40\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
-    <Reference Include="System.ComponentModel.DataAnnotations" />
-    <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Data.Entity" />
     <Reference Include="System.Runtime.Serialization" />
-    <Reference Include="System.Security" />
     <Reference Include="System.Web" />
+    <Reference Include="System.Web.Mvc, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
+    <Reference Include="System.Web.Razor, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
+    <Reference Include="System.Web.Routing" />
+    <Reference Include="System.Web.WebPages, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -46,32 +50,21 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Bl.Designer.cs">
-      <DependentUpon>Bl.edmx</DependentUpon>
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-    </Compile>
-    <Compile Include="BlEntitiesExtensions.cs" />
-    <Compile Include="EntityConnectionHelper.cs" />
-    <Compile Include="ExternalPropertyAttribute.cs" />
-    <Compile Include="FilterPropertyAttribute.cs" />
+    <Compile Include="BnhModelBinder.cs" />
+    <Compile Include="BrickRendering.cs" />
+    <Compile Include="Constants.cs" />
+    <Compile Include="HtmlExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="WallOwners.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <EntityDeploy Include="Bl.edmx">
-      <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>Bl.Designer.cs</LastGenOutput>
-    </EntityDeploy>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="App.config" />
+    <Compile Include="RazorEngine.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Ms.Cms.Entities\Ms.Cms.Entities.csproj">
       <Project>{E9BFEC55-160E-43B2-BC93-B9A0519CB293}</Project>
       <Name>Ms.Cms.Entities</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

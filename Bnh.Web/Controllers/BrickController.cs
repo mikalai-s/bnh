@@ -8,6 +8,8 @@ using System.Web.Mvc;
 using Bnh.Entities;
 using Bnh.WebFramework;
 
+using Ms.Cms.Entities;
+
 namespace Bnh.Controllers
 {
     [Authorize(Roles = "content_manager")]
