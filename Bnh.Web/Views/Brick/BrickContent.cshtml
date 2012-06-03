@@ -1,13 +1,16 @@
-﻿@model Bnh.Entities.Brick
-@using Bnh.Entities
+﻿@using Bnh.Entities
+@using Bnh.Web.Models
+
+@model Bnh.Entities.Brick
+
 @{
     var sharedBrick = (Model as SharedBrick);
-    var model = (sharedBrick == null) ? Model : sharedBrick.Share;
+    var model = Model.EnsureNonShared();
     string suffix =
         (model is RazorBrick) ? "Razor" :
         (model is HtmlBrick) ? "Html" :
         (model is MapBrick) ? "Map" :
-        (model is SharedBrick) ? "Map" : 
+        (model is TocBrick) ? "Toc" :
         null;
 }
 @if (!string.IsNullOrEmpty(suffix))

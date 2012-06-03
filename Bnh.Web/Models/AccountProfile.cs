@@ -26,7 +26,7 @@ namespace Bnh.Web.Models
             {
                 var name = Current.FullName;
                 name = string.IsNullOrWhiteSpace(name) ? CurrentUserName : name;
-                return name ?? string.Empty;
+                return name ?? " ";
             }
         }
        

@@ -167,6 +167,7 @@ namespace Bnh.Entities
     [KnownTypeAttribute(typeof(MapBrick))]
     [KnownTypeAttribute(typeof(EmptyBrick))]
     [KnownTypeAttribute(typeof(SharedBrick))]
+    [KnownTypeAttribute(typeof(TocBrick))]
     public abstract partial class Brick : EntityObject
     {
         #region Primitive Properties
@@ -293,6 +294,30 @@ namespace Bnh.Entities
         private global::System.Byte _Order;
         partial void OnOrderChanging(global::System.Byte value);
         partial void OnOrderChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String ContentTitle
+        {
+            get
+            {
+                return _ContentTitle;
+            }
+            set
+            {
+                OnContentTitleChanging(value);
+                ReportPropertyChanging("ContentTitle");
+                _ContentTitle = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("ContentTitle");
+                OnContentTitleChanged();
+            }
+        }
+        private global::System.String _ContentTitle;
+        partial void OnContentTitleChanging(global::System.String value);
+        partial void OnContentTitleChanged();
 
         #endregion
 
@@ -833,6 +858,40 @@ namespace Bnh.Entities
         private Nullable<global::System.Int64> _SharedBrickId;
         partial void OnSharedBrickIdChanging(Nullable<global::System.Int64> value);
         partial void OnSharedBrickIdChanged();
+
+        #endregion
+
+    
+    }
+    
+    /// <summary>
+    /// No Metadata Documentation available.
+    /// </summary>
+    [EdmEntityTypeAttribute(NamespaceName="bnhModel", Name="TocBrick")]
+    [Serializable()]
+    [DataContractAttribute(IsReference=true)]
+    public partial class TocBrick : Brick
+    {
+        #region Factory Method
+    
+        /// <summary>
+        /// Create a new TocBrick object.
+        /// </summary>
+        /// <param name="id">Initial value of the Id property.</param>
+        /// <param name="wallId">Initial value of the WallId property.</param>
+        /// <param name="title">Initial value of the Title property.</param>
+        /// <param name="width">Initial value of the Width property.</param>
+        /// <param name="order">Initial value of the Order property.</param>
+        public static TocBrick CreateTocBrick(global::System.Int64 id, global::System.Int64 wallId, global::System.String title, global::System.Single width, global::System.Byte order)
+        {
+            TocBrick tocBrick = new TocBrick();
+            tocBrick.Id = id;
+            tocBrick.WallId = wallId;
+            tocBrick.Title = title;
+            tocBrick.Width = width;
+            tocBrick.Order = order;
+            return tocBrick;
+        }
 
         #endregion
 

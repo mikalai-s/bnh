@@ -34,6 +34,7 @@
           <Property Name="MapHeight" Type="int" />
           <Property Name="MapZoom" Type="int" />
           <Property Name="SharedBrickId" Type="bigint" />
+          <Property Name="ContentTitle" Type="nvarchar" MaxLength="50" />
         </EntityType>
         <EntityType Name="SceneTemplate">
           <Key>
@@ -108,6 +109,7 @@
           <Property Type="Single" Name="Width" Nullable="false" />
           <Property Type="Byte" Name="Order" Nullable="false" />
           <NavigationProperty Name="Wall" Relationship="bnhModel.FK_Brick_Wall" FromRole="Brick" ToRole="Wall" />
+          <Property Type="String" Name="ContentTitle" MaxLength="50" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="Wall">
           <Key>
@@ -169,6 +171,7 @@
         <EntityType Name="SharedBrick" BaseType="bnhModel.Brick" >
           <Property Type="Int64" Name="SharedBrickId" />
         </EntityType>
+        <EntityType Name="TocBrick" BaseType="bnhModel.Brick" />
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -200,6 +203,7 @@
             </EntityTypeMapping>
             <EntityTypeMapping TypeName="IsTypeOf(bnhModel.Brick)">
               <MappingFragment StoreEntitySet="Brick">
+                <ScalarProperty Name="ContentTitle" ColumnName="ContentTitle" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="WallId" ColumnName="WallId" />
                 <ScalarProperty Name="Title" ColumnName="Title" />
@@ -216,6 +220,7 @@
             </EntityTypeMapping>
             <EntityTypeMapping TypeName="IsTypeOf(bnhModel.RazorBrick)">
               <MappingFragment StoreEntitySet="Brick">
+                <ScalarProperty Name="ContentTitle" ColumnName="ContentTitle" />
                 <ScalarProperty Name="Order" ColumnName="Order" />
                 <ScalarProperty Name="Width" ColumnName="Width" />
                 <ScalarProperty Name="Title" ColumnName="Title" />
@@ -230,6 +235,12 @@
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="SharedBrickId" ColumnName="SharedBrickId" />
                 <Condition ColumnName="Type" Value="5" />
+              </MappingFragment>
+            </EntityTypeMapping>
+            <EntityTypeMapping TypeName="IsTypeOf(bnhModel.TocBrick)">
+              <MappingFragment StoreEntitySet="Brick">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <Condition ColumnName="Type" Value="6" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -318,6 +329,11 @@
           <ConnectorPoint PointX="3.75" PointY="6.0964" />
           <ConnectorPoint PointX="6.75" PointY="6.0964" />
           <ConnectorPoint PointX="6.75" PointY="6.25" />
+        </InheritanceConnector>
+        <EntityTypeShape EntityType="bnhModel.TocBrick" Width="1.5" PointX="3" PointY="6.5" Height="1.0187792968749996" />
+        <InheritanceConnector EntityType="bnhModel.TocBrick" >
+          <ConnectorPoint PointX="3.75" PointY="3.172587890625" />
+          <ConnectorPoint PointX="3.75" PointY="6.5" />
         </InheritanceConnector>
       </Diagram>
     </Diagrams>

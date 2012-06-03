@@ -38,43 +38,34 @@ namespace Bnh.Controllers
         [HttpPost]
         public ActionResult Edit(Brick brick)
         {
-            var realBrick = db.Bricks.FirstOrDefault(b => b.Id == brick.Id);
-            realBrick.Title = brick.Title;
+            db.Bricks.Attach(brick);
+            db.ObjectStateManager.ChangeObjectState(brick, EntityState.Modified);
             db.SaveChanges();
-            return RedirectToAction("Edit", "Scene", new { id = realBrick.Wall.OwnerId });
+            return RedirectToAction("Edit", "Scene", new { id = brick.Wall.OwnerId });
         }
 
         [HttpPost]
         public ActionResult EditHtml(HtmlBrick brick)
         {
-            var realBrick = db.Bricks.Where(b => b.Id == brick.Id).OfType<HtmlBrick>().FirstOrDefault();
-            realBrick.Html = HttpUtility.HtmlDecode(brick.Html);
+            brick.Html = HttpUtility.HtmlDecode(brick.Html);
             return Edit(brick);
         }
 
         [HttpPost]
         public ActionResult EditMap(MapBrick brick)
         {
-            var realBrick = db.Bricks.Where(b => b.Id == brick.Id).OfType<MapBrick>().FirstOrDefault();
-            realBrick.GpsLocation = brick.GpsLocation;
-            realBrick.Height = brick.Height;
-            realBrick.Zoom = brick.Zoom;
             return Edit(brick);
         }
 
         [HttpPost]
         public ActionResult EditGallery(GalleryBrick brick)
         {
-            var realBrick = db.Bricks.Where(b => b.Id == brick.Id).OfType<GalleryBrick>().FirstOrDefault();
-            realBrick.ImageListId = brick.ImageListId;
             return Edit(brick);
         }
 
         [HttpPost]
         public ActionResult EditShared(SharedBrick brick)
         {
-            var realBrick = db.Bricks.Where(b => b.Id == brick.Id).OfType<SharedBrick>().FirstOrDefault();
-            realBrick.SharedBrickId = brick.SharedBrickId;
             return Edit(brick);
         }
 
