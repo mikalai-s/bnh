@@ -136,6 +136,11 @@ namespace Bnh.Controllers
         [HttpPost]
         public ActionResult ExportTemplate(string title, Guid ownerId)
         {
+            if (string.IsNullOrWhiteSpace(title))
+            {
+                ModelState.AddModelError("EmptyTemplate", "Template name cannot be empty");
+            }
+
             if (ModelState.IsValid)
             {
                 var template = db.SceneTemplates.CreateObject();

@@ -1,0 +1,26 @@
+﻿@using Bnh.Web.Models
+@using Bnh.Entities
+
+@model Bnh.Entities.TocBrick
+
+@{
+    IEnumerable<Brick> contentBricks = null;
+    using(var db = new Bnh.Entities.CmEntities())
+    {
+        contentBricks = db.Walls
+            .Where(w => w.OwnerId == Model.Wall.OwnerId)
+            .OrderBy(w => w.Order)
+            .SelectMany(w => w.Bricks
+                .OrderBy(b => b.Order))
+            .ToList()
+            .Select(b => b.EnsureNonShared())
+            .Where(b => !b.ContentTitle.IsEmpty(true));
+    }
+}
+
+<p>Table of Content
+@foreach (var brick in contentBricks)
+{
+    <br /><a href="#@brick.GetHtmlId()" >@brick.ContentTitle</a>
+}
+</p>

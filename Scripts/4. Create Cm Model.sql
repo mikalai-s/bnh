@@ -76,6 +76,7 @@ CREATE TABLE [cm].[Brick](
 	[WallId] [bigint] NOT NULL,
 	[Type] [tinyint] NOT NULL,
 	[Title] [nvarchar](50) NOT NULL,
+	[ContentTitle] [nvarchar](50) NULL,
 	[Width] [real] NOT NULL,
 	[Order] [tinyint] NOT NULL,
 	[Html] [ntext] NULL,

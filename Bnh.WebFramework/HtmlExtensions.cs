@@ -86,6 +86,7 @@ namespace Bnh.WebFramework
                                                                          {typeof(MapBrick), "Map"},
                                                                          {typeof(EmptyBrick), "Empty"},
                                                                          {typeof(SharedBrick), "Shared"},
+                                                                         {typeof(TocBrick), "Table of Content"}
                                                                      };
 
         public static string GetBrickTypeName(Type brickType)

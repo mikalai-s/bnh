@@ -58,6 +58,7 @@
     <Compile Include="NavigationMenu.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RazorEngine.cs" />
+    <Compile Include="StirngExtensions.cs" />
     <Compile Include="UrlExtensions.cs" />
   </ItemGroup>
   <ItemGroup>
