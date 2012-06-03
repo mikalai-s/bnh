@@ -1,14 +1,9 @@
 ﻿
 using System.Collections.Generic;
-using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Mvc.Html;
 using System.Web.Routing;
-using Bnh.Entities;
-using System;
-using System.Reflection;
-using System.Text;
 
 namespace Bnh.WebFramework
 {
@@ -40,12 +35,12 @@ namespace Bnh.WebFramework
             var inputBuilder = new TagBuilder("input");
             inputBuilder.Attributes["value"] = linkText;
             inputBuilder.Attributes["type"] = "button";
-            
+
 
             string href = UrlHelper.GenerateUrl(null, actionName, controllerName, null, null, null, routeValues, htmlHelper.RouteCollection, htmlHelper.ViewContext.RequestContext, true);
             inputBuilder.Attributes["onclick"] = "location.href='" + href + "'";
 
-            if(htmlAttributes != null)
+            if (htmlAttributes != null)
             {
                 foreach (var attr in htmlAttributes)
                 {
@@ -77,28 +72,5 @@ namespace Bnh.WebFramework
         {
             return ActionInputLink(htmlHelper, linkText, actionName, null, new RouteValueDictionary(routeValues), new RouteValueDictionary());
         }
-
-        private static readonly Dictionary<Type, string> BrickTypeNames = new Dictionary<Type, string>()
-                                                                     {
-                                                                         {typeof(HtmlBrick), "Rich Text"},
-                                                                         {typeof(RazorBrick), "Razor Template"},
-                                                                         {typeof(GalleryBrick), "Gallery"},
-                                                                         {typeof(MapBrick), "Map"},
-                                                                         {typeof(EmptyBrick), "Empty"},
-                                                                         {typeof(SharedBrick), "Shared"},
-                                                                         {typeof(TocBrick), "Table of Content"}
-                                                                     };
-
-        public static string GetBrickTypeName(Type brickType)
-        {
-            return BrickTypeNames[brickType];
-        }
-
-        public static MvcHtmlString DropDownListForBrickTypes(this HtmlHelper htmlHelper, string name)
-        {
-                var items = BnhModelBinder.HierarchyTypeMap[typeof(Brick)]
-                .Select(e => new SelectListItem { Value = e.Key, Text = BrickTypeNames[e.Value] });
-                return htmlHelper.DropDownList(name, items);
-            }
-        }
     }
+}

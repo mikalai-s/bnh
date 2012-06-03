@@ -10,10 +10,11 @@ using System.CodeDom.Compiler;
 using Microsoft.CSharp;
 using System.Dynamic;
 
-namespace Bnh.WebFramework
+namespace Ms.Cms.Web
 {
     public class RazorEngine
     {
+        // TODO: Cache compiled dynamic assembly for performance reazons
         public static string GetContent(string template, dynamic model)
         {
             if (string.IsNullOrEmpty(template)) { return string.Empty; }
@@ -38,10 +39,15 @@ namespace Bnh.WebFramework
             GeneratorResults razorTemplate = engine.GenerateCode(tr);
 
             var compilerParameters = new CompilerParameters();
-            compilerParameters.ReferencedAssemblies.Add("System.dll");
-            compilerParameters.ReferencedAssemblies.Add("Microsoft.CSharp.dll");
-            compilerParameters.ReferencedAssemblies.Add("System.Core.dll");
-            compilerParameters.ReferencedAssemblies.Add(typeof(DynamicContentGeneratorBase).Assembly.Location);
+            AppDomain.CurrentDomain.GetAssemblies()
+                .Where(a => !a.IsDynamic)
+                .ToList()
+                .ForEach(a => compilerParameters.ReferencedAssemblies.Add(a.Location));
+            //compilerParameters.ReferencedAssemblies.Add("System.dll");
+            //compilerParameters.ReferencedAssemblies.Add("Microsoft.CSharp.dll");
+            //compilerParameters.ReferencedAssemblies.Add("System.Core.dll");
+            //compilerParameters.ReferencedAssemblies.Add(Assembly.GetCallingAssembly().Location);
+            //compilerParameters.ReferencedAssemblies.Add(typeof(DynamicContentGeneratorBase).Assembly.Location);
             compilerParameters.GenerateInMemory = true;
 
             CompilerResults compilerResults = new CSharpCodeProvider().CompileAssemblyFromDom(compilerParameters, razorTemplate.GeneratedCode);

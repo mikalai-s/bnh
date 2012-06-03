@@ -1,4 +1,8 @@
-﻿@model Bnh.Entities.Brick
+﻿@using Ms.Cms.Entities
+@using Ms.Cms.Web
+
+@model Brick
+
 <div class='brick-wrapper' style='width:@Model.Width.ToString("F")%' entity-data='@Model.ToJson()'>
     <div class='brick'>
         <div class='header'>

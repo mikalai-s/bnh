@@ -8,6 +8,8 @@ using System.Web.Mvc;
 using Bnh.Entities;
 using System.Data.Objects.DataClasses;
 
+using Ms.Cms.Entities;
+
 namespace Bnh.Controllers
 {
     [Authorize]

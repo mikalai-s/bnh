@@ -1,11 +1,11 @@
 ﻿@using Bnh.Web.Models
-@using Bnh.Entities
+@using Ms.Cms.Entities
 
-@model Bnh.Entities.TocBrick
+@model Ms.Cms.Entities.TocBrick
 
 @{
     IEnumerable<Brick> contentBricks = null;
-    using(var db = new Bnh.Entities.CmEntities())
+    using(var db = new CmEntities())
     {
         contentBricks = db.Walls
             .Where(w => w.OwnerId == Model.Wall.OwnerId)

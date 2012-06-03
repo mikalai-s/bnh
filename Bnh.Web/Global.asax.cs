@@ -10,6 +10,8 @@ using System.Web.Optimization;
 using System.Web.Routing;
 using Bnh.WebFramework;
 
+using Ms.Cms.Web;
+
 namespace Bnh.Web
 {
     // Note: For instructions on enabling IIS6 or IIS7 classic mode, 

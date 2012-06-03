@@ -6,9 +6,12 @@ using System.Data.Objects;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-using Bnh.Entities;
-using System.Web.Script.Serialization;
-using System.Data.Objects.DataClasses;
+
+using Ms.Cms.Entities;
+
+//using System.Web.Script.Serialization;
+//using System.Data.Objects.DataClasses;
+
 
 namespace Bnh.Controllers
 {

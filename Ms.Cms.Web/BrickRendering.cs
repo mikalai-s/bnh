@@ -3,18 +3,20 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Web.Mvc;
-using Bnh.Entities;
 using System.IO;
 using System.Reflection;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
-using System.Web.Script.Serialization;
 using System.ComponentModel;
 using System.Web.Routing;
 using System.Web.Mvc.Html;
 using System.Web;
 
-namespace Bnh.WebFramework
+using Newtonsoft.Json;
+
+using Ms.Cms.Entities;
+
+namespace Ms.Cms.Web
 {
     public static class BrickRendering
     {
@@ -24,7 +26,7 @@ namespace Bnh.WebFramework
         {
             return MvcHtmlString.Create(str);
         }
-
+        /*
         private static string GetMapBrickContent(MapBrick mapBrick)
         {
             // NOTE: in case of HTTPS change the url
@@ -58,7 +60,7 @@ namespace Bnh.WebFramework
 ";
             return string.Format(html, mapBrick.GpsLocation, mapBrick.Height, mapBrick.Zoom ?? 10);
         }
-
+        */
         public static string GetDiscriminant(this Brick brick)
         {
             return BnhModelBinder.HierarchyTypeMap[typeof(Brick)]
@@ -99,7 +101,7 @@ namespace Bnh.WebFramework
                 if(value != null)
                     properties.Add(prop.Name.ToLower(), value);
             }
-            return new JavaScriptSerializer().Serialize(properties);
+            return JsonConvert.SerializeObject(properties);
         }
 
         public static string ToJson(this Wall wall)
@@ -128,7 +130,7 @@ namespace Bnh.WebFramework
                 if (value != null)
                     properties.Add(prop.Name.ToLower(), value);
             }
-            return new JavaScriptSerializer().Serialize(properties);
+            return JsonConvert.SerializeObject(properties);
         }
     }
 }

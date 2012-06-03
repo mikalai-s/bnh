@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace Bnh.Entities
+namespace Ms.Cms.Entities
 {
     public static class SceneTemplating
     {

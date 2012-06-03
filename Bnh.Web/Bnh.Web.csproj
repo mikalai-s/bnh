@@ -589,6 +589,14 @@
       <Project>{291a879a-93d4-47a2-9749-bee9e2a2dd62}</Project>
       <Name>Bnh.WebFramework</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Ms.Cms.Entities\Ms.Cms.Entities.csproj">
+      <Project>{E9BFEC55-160E-43B2-BC93-B9A0519CB293}</Project>
+      <Name>Ms.Cms.Entities</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Ms.Cms.Web\Ms.Cms.Web.csproj">
+      <Project>{2DD4B8A0-6FA4-4966-AC72-83BD34968F09}</Project>
+      <Name>Ms.Cms.Web</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <None Include="Properties\PublishProfiles\bnh.pubxml" />
@@ -616,7 +624,6 @@
     <Content Include="Views\Brick\_Styles.cshtml" />
     <Content Include="Views\Account\Update.cshtml" />
     <Content Include="Views\Community\CommunityFilterPartial.cshtml" />
-    <Content Include="Views\Brick\_CommunityMap.cshtml" />
     <Content Include="Views\Brick\Wall.cshtml" />
     <Content Include="Views\Brick\Brick.cshtml" />
     <Content Include="Views\Brick\BrickContent_Razor.cshtml" />
