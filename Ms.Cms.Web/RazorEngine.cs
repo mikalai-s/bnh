@@ -20,7 +20,7 @@ namespace Ms.Cms.Web
             if (string.IsNullOrEmpty(template)) { return string.Empty; }
 
             const string dynamicallyGeneratedClassName = "DynamicContentTemplate";
-            const string namespaceForDynamicClasses = "bnh";
+            const string namespaceForDynamicClasses = "dyn";
             const string dynamicClassFullName = namespaceForDynamicClasses + "." + dynamicallyGeneratedClassName;
 
             var language = new CSharpRazorCodeLanguage();
@@ -43,11 +43,6 @@ namespace Ms.Cms.Web
                 .Where(a => !a.IsDynamic)
                 .ToList()
                 .ForEach(a => compilerParameters.ReferencedAssemblies.Add(a.Location));
-            //compilerParameters.ReferencedAssemblies.Add("System.dll");
-            //compilerParameters.ReferencedAssemblies.Add("Microsoft.CSharp.dll");
-            //compilerParameters.ReferencedAssemblies.Add("System.Core.dll");
-            //compilerParameters.ReferencedAssemblies.Add(Assembly.GetCallingAssembly().Location);
-            //compilerParameters.ReferencedAssemblies.Add(typeof(DynamicContentGeneratorBase).Assembly.Location);
             compilerParameters.GenerateInMemory = true;
 
             CompilerResults compilerResults = new CSharpCodeProvider().CompileAssemblyFromDom(compilerParameters, razorTemplate.GeneratedCode);
