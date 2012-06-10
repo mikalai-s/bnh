@@ -9,49 +9,31 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Ms.Cms.Models
 {
-    [Table("Bricks", Schema = "Cms")]
-    public abstract partial class Brick
+    [Table("Walls", Schema = "Cms")]
+    public partial class Wall
     {
+        public Wall()
+        {
+            this.Bricks = new HashSet<Brick>();
+        }
+
         public long Id { get; set; }
-        
+
+        public Guid OwnerId { get; set; }
+
         [MaxLength(50)]
         public string Title { get; set; }
 
         public float Width { get; set; }
 
         public byte Order { get; set; }
-
-        [MaxLength(50)]
-        public string ContentTitle { get; set; }
-
-        public Wall Wall
-        {
-            get
-            {
-                if (this._wall == null)
-                {
-                    this._wall = new CmEntities().Walls.Where(w => w.Id == this.WallId).FirstOrDefault();
-                }
-                return this._wall;
-            }
-            set
-            {
-                this._wall = value;
-                this.WallId = value.Id;
-            }
-        }
-
-        internal long WallId { get; set; }
-
-        private Wall _wall = null;
-
-
+    
+        public ICollection<Brick> Bricks { get; private set; }
     }
-
+    
 }

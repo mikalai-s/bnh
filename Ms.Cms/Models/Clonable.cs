@@ -13,7 +13,14 @@ namespace Ms.Cms.Models
     {
         public virtual Wall Clone()
         {
-            return Wall.CreateWall(0, this.OwnerId, this.Title, this.Width, this.Order);
+            return new Wall
+                {
+                    Id = 0,
+                    OwnerId = this.OwnerId,
+                    Title = this.Title,
+                    Width = this.Width,
+                    Order = this.Order
+                };
         }
 
         object ICloneable.Clone()

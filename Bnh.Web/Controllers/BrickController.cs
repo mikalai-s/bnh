@@ -32,7 +32,7 @@ namespace Bnh.Controllers
         public ActionResult Edit(long id)
         {
             Brick brick = db.Bricks.Single(b => b.Id == id);
-            ViewBag.WallId = new SelectList(db.Walls, "Id", "Title", brick.WallId);
+            ViewBag.WallId = new SelectList(db.Walls, "Id", "Title", brick.Wall.Id);
             ViewBag.PartialView = BrickEditView[brick.GetType()];
             return View(brick);
         }
@@ -41,7 +41,7 @@ namespace Bnh.Controllers
         public ActionResult Edit(Brick brick)
         {
             db.Bricks.Attach(brick);
-            db.ObjectStateManager.ChangeObjectState(brick, EntityState.Modified);
+            //db.ObjectStateManager.ChangeObjectState(brick, EntityState.Modified);
             db.SaveChanges();
             return RedirectToAction("Edit", "Scene", new { id = brick.Wall.OwnerId });
         }
