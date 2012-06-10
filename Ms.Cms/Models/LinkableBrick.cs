@@ -10,20 +10,16 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Ms.Cms.Models
 {
-    public partial class SharedBrick : Brick
+    public partial class LinkableBrick : Brick
     {
-        public long? SharedBrickId { get; set; }
+        public long? LinkedBrickId { get; set; }
 
-        public Brick Share
-        {
-            get
-            {
-                return new CmEntities().Bricks.Where(b => b.Id == this.SharedBrickId).FirstOrDefault();
-            }
-        }
+        //[ForeignKey("LinkedBrickId")]
+        public virtual Brick LinkedBrick { get; set; }
     }
     
 }

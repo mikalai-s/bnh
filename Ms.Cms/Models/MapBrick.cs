@@ -20,8 +20,6 @@ namespace Ms.Cms.Models
 
         public int? Height { get; set; }
 
-        public int? Hui { get; set; }
-
         public int? Zoom { get; set; }
     }
     

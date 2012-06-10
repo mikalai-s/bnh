@@ -4,8 +4,7 @@
 @model Brick
 
 @{
-    var sharedBrick = (Model as SharedBrick);
-    var model = Model.EnsureNonShared();
+    var model = Model.EnsureNonLinked();
     string suffix =
         (model is RazorBrick) ? "Razor" :
         (model is HtmlBrick) ? "Html" :

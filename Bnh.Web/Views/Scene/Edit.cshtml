@@ -5,8 +5,8 @@
 
 @{
     var ownerId = (Guid)ViewBag.OwnerId;
-    var sharedBricks = (ownerId == Constants.SharedBricksSceneGuid);
-    ViewBag.Title = sharedBricks ? "Shared Bricks" : "Scene designer";
+    var linkableBricks = (ownerId == Constants.LinkableBricksSceneGuid);
+    ViewBag.Title = linkableBricks ? "Linkable Bricks" : "Scene designer";
 }
 
 @section Styles {
@@ -39,7 +39,7 @@
         <div class="control-panel">
             <h3>Wall Control Panel</h3>
 
-            <fieldset style='@(sharedBricks ? "display:none" : "display:block")'>
+            <fieldset style='@(linkableBricks ? "display:none" : "display:block")'>
                 <legend>Walls</legend>
 
                 <div class="editor-label">New wall</div>
@@ -69,7 +69,7 @@
                     <label>@Html.CheckBox("hideBricksContentCheckbox")Hide bricks content</label>
                 </div>
 
-                @Html.ActionLink("Manage Shared Bricks", "Edit", "Scene", new { id = Constants.SharedBricksSceneGuid }, null)
+                @Html.ActionLink("Manage Linkable Bricks", "Edit", "Scene", new { id = Constants.LinkableBricksSceneGuid }, null)
 
             </fieldset>
             
@@ -87,7 +87,7 @@
                 </div>
             </fieldset>
 
-            <div style='position:absolute; bottom: 0; display: @(sharedBricks ? "display:none" : "display:block")'>
+            <div style='position:absolute; bottom: 0; display: @(linkableBricks ? "display:none" : "display:block")'>
                 <span class="alter">
                     <input type="button" id="saveSceneButton" value="Save" />
                 </span>

@@ -24,7 +24,7 @@ namespace Ms.Cms.Web
                                                                          {typeof(GalleryBrick), "Gallery"},
                                                                          {typeof(MapBrick), "Map"},
                                                                          {typeof(EmptyBrick), "Empty"},
-                                                                         {typeof(SharedBrick), "Shared"},
+                                                                         {typeof(LinkableBrick), "Linkable"},
                                                                          {typeof(TocBrick), "Table of Content"}
                                                                      };
 

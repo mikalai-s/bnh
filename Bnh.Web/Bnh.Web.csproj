@@ -617,7 +617,7 @@
     <Content Include="Views\Brick\BrickContent_Html.cshtml" />
     <Content Include="Views\Brick\BrickContent_Map.cshtml" />
     <Content Include="Views\Brick\BrickContent.cshtml" />
-    <Content Include="Views\Brick\EditShared.cshtml" />
+    <Content Include="Views\Brick\EditLinkable.cshtml" />
     <Content Include="Views\Brick\BrickContent_Toc.cshtml" />
   </ItemGroup>
   <PropertyGroup>
@@ -642,7 +642,7 @@
         <WebProjectProperties>
           <UseIIS>False</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
-          <DevelopmentServerPort>58042</DevelopmentServerPort>
+          <DevelopmentServerPort>49208</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
           <IISUrl>http://localhost:11275/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>

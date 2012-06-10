@@ -25,7 +25,7 @@ namespace Ms.Cms.Web
                     {"2", typeof(GalleryBrick)},
                     {"3", typeof(MapBrick)},
                     {"4", typeof(RazorBrick)},
-                    {"5", typeof(SharedBrick)},
+                    {"5", typeof(LinkableBrick)},
                     {"6", typeof(TocBrick)}
                 }
             }

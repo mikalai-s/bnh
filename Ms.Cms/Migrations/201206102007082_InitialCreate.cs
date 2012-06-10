@@ -16,11 +16,8 @@ namespace Ms.Cms.Migrations
                         Title = c.String(maxLength: 50),
                         Width = c.Single(nullable: false),
                         Order = c.Byte(nullable: false),
-                        SceneTemplate_Id = c.Guid(),
                     })
-                .PrimaryKey(t => t.Id)
-                .ForeignKey("Cms.SceneTemplates", t => t.SceneTemplate_Id)
-                .Index(t => t.SceneTemplate_Id);
+                .PrimaryKey(t => t.Id);
             
             CreateTable(
                 "Cms.Bricks",
@@ -31,18 +28,20 @@ namespace Ms.Cms.Migrations
                         Width = c.Single(nullable: false),
                         Order = c.Byte(nullable: false),
                         ContentTitle = c.String(maxLength: 50),
+                        WallId = c.Long(nullable: false),
                         Html = c.String(),
                         GpsLocation = c.String(maxLength: 100),
                         Height = c.Int(),
                         Zoom = c.Int(),
                         ImageListId = c.Long(),
-                        SharedBrickId = c.Long(),
+                        LinkedBrickId = c.Long(),
                         Discriminator = c.String(nullable: false, maxLength: 128),
-                        Wall_Id = c.Long(),
                     })
                 .PrimaryKey(t => t.Id)
-                .ForeignKey("Cms.Walls", t => t.Wall_Id)
-                .Index(t => t.Wall_Id);
+                .ForeignKey("Cms.Walls", t => t.WallId, cascadeDelete: true)
+                .ForeignKey("Cms.Bricks", t => t.LinkedBrickId)
+                .Index(t => t.WallId)
+                .Index(t => t.LinkedBrickId);
             
             CreateTable(
                 "Cms.SceneTemplates",
@@ -58,10 +57,10 @@ namespace Ms.Cms.Migrations
         
         public override void Down()
         {
-            DropIndex("Cms.Bricks", new[] { "Wall_Id" });
-            DropIndex("Cms.Walls", new[] { "SceneTemplate_Id" });
-            DropForeignKey("Cms.Bricks", "Wall_Id", "Cms.Walls");
-            DropForeignKey("Cms.Walls", "SceneTemplate_Id", "Cms.SceneTemplates");
+            DropIndex("Cms.Bricks", new[] { "LinkedBrickId" });
+            DropIndex("Cms.Bricks", new[] { "WallId" });
+            DropForeignKey("Cms.Bricks", "LinkedBrickId", "Cms.Bricks");
+            DropForeignKey("Cms.Bricks", "WallId", "Cms.Walls");
             DropTable("Cms.SceneTemplates");
             DropTable("Cms.Bricks");
             DropTable("Cms.Walls");

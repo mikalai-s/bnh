@@ -24,7 +24,7 @@ namespace Bnh.Controllers
             {typeof(GalleryBrick), "EditGallery"},
             {typeof(MapBrick), "EditMap"},
             {typeof(RazorBrick), "EditHtml"},
-            {typeof(SharedBrick), "EditShared"},
+            {typeof(LinkableBrick), "EditLinkable"},
         };
         
         //
@@ -66,7 +66,7 @@ namespace Bnh.Controllers
         }
 
         [HttpPost]
-        public ActionResult EditShared(SharedBrick brick)
+        public ActionResult EditLinkable(LinkableBrick brick)
         {
             return Edit(brick);
         }

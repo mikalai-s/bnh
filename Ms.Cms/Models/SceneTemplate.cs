@@ -24,7 +24,8 @@ namespace Ms.Cms.Models
         public Guid Id { get; set; }
         public string Title { get; set; }
         public string IconUrl { get; set; }
-    
+
+        [NotMapped]
         public ICollection<Wall> Walls { get; private set; }
     }
     
