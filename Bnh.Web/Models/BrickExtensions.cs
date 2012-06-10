@@ -19,10 +19,10 @@ namespace Bnh.Web.Models
             return brick.Title.ToHtmlId();
         }
 
-        public static Brick EnsureNonShared(this Brick brick)
+        public static Brick EnsureNonLinked(this Brick brick)
         {
-            var shared = brick as SharedBrick;
-            return (shared == null) ? brick : shared.Share;
+            var linkable = brick as LinkableBrick;
+            return (linkable == null) ? brick : linkable.LinkedBrick;
         }
     }
 }

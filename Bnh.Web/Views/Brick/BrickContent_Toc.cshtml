@@ -13,7 +13,7 @@
             .SelectMany(w => w.Bricks
                 .OrderBy(b => b.Order))
             .ToList()
-            .Select(b => b.EnsureNonShared())
+            .Select(b => b.EnsureNonLinked())
             .Where(b => !b.ContentTitle.IsEmpty(true));
     }
 }

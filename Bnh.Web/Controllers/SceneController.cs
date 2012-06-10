@@ -41,7 +41,7 @@ namespace Bnh.Controllers
                 // get moved bricks
                 var movedBricks = (from wall in walls
                                    from brick in wall.Bricks
-                                   where wall.Id != brick.Wall.Id && brick.Id != 0
+                                   where wall.Id != brick.WallId && brick.Id != 0
                                    select brick.Id).ToList();
 
                 // update existing walls
@@ -175,7 +175,7 @@ namespace Bnh.Controllers
         [HttpPost]
         public ActionResult CanDeleteBrick(Brick brick)
         {
-            return new JsonResult() { Data = !db.Bricks.OfType<SharedBrick>().Where(b => b.SharedBrickId == brick.Id).Any() };
+            return new JsonResult() { Data = !db.Bricks.OfType<LinkableBrick>().Where(b => b.LinkedBrickId == brick.Id).Any() };
         }
 
         protected override void Dispose(bool disposing)

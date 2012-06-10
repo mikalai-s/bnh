@@ -30,28 +30,10 @@ namespace Ms.Cms.Models
         [MaxLength(50)]
         public string ContentTitle { get; set; }
 
-        public Wall Wall
-        {
-            get
-            {
-                if (this._wall == null)
-                {
-                    this._wall = new CmEntities().Walls.Where(w => w.Id == this.WallId).FirstOrDefault();
-                }
-                return this._wall;
-            }
-            set
-            {
-                this._wall = value;
-                this.WallId = value.Id;
-            }
-        }
+        //[ForeignKey("WallId")]
+        public virtual Wall Wall { get; set; }
 
-        internal long WallId { get; set; }
-
-        private Wall _wall = null;
-
-
+        public long WallId { get; set; }
     }
 
 }
