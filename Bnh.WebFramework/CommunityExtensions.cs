@@ -4,10 +4,10 @@ using System.Linq;
 using System.Text;
 using Bnh.Entities;
 using System.Reflection;
-using System.Web.Script.Serialization;
 using System.Web;
 using System.Web.Mvc;
 using System.Linq.Expressions;
+using Newtonsoft.Json;
 
 namespace Bnh.WebFramework
 {
@@ -15,19 +15,12 @@ namespace Bnh.WebFramework
     {
         public static string GetClientProperties(this Community community)
         {
-            var serializer = new JavaScriptSerializer();
-            var clientProperties = new List<string>();
-            var builder = new StringBuilder("{");
+            var properties = new Dictionary<string, object>();
             foreach (var jsp in FilterProperty.Get(typeof(Community)))
             {
-                var value = jsp.Property.GetValue(community, null);
-
-                builder.AppendFormat("{0}:{1},", jsp.Name, serializer.Serialize(value));
+                properties[jsp.Name.ToHtmlString()] = jsp.Property.GetValue(community, null);
             }
-
-            builder.Append("}");
-
-            return builder.ToString();
+            return JsonConvert.SerializeObject(properties);
         }
     }
 }
