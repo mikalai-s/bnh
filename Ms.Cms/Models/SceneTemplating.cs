@@ -12,7 +12,7 @@ namespace Ms.Cms.Models
             foreach (var wall in db.Walls.Where(w => w.OwnerId == from))
             {
                 var newWall = wall.Clone();
-                newWall.Bricks = null;
+                newWall.Bricks.Clear();
                 newWall.OwnerId = to;
 
                 foreach (var brick in wall.Bricks)
@@ -21,7 +21,7 @@ namespace Ms.Cms.Models
                     newBrick.Wall = newWall;
                 }
 
-                db.Walls.AddObject(newWall);
+                db.Walls.Add(newWall);
             }
         }
     }

@@ -35,23 +35,19 @@ namespace Bnh.Controllers
         {
             if (ModelState.IsValid)
             {
-                //ensure walls and bricks
-                db.Refresh(RefreshMode.StoreWins, db.Walls);
-                db.Refresh(RefreshMode.StoreWins, db.Bricks);
-
                 // ensure walls collection is not null
                 walls = walls ?? new List<Wall>();
 
                 // get moved bricks
                 var movedBricks = (from wall in walls
                                    from brick in wall.Bricks
-                                   where wall.Id != brick.WallId && brick.Id != 0
+                                   where wall.Id != brick.Wall.Id && brick.Id != 0
                                    select brick.Id).ToList();
 
                 // update existing walls
                 foreach (var wall in walls.Where(w => w.Id != 0))
                 {
-                    var realWall = db.Walls.ApplyCurrentValues(wall);
+                    var realWall = wall;// db.Walls.ApplyCurrentValues(wall);
 
                     // determine bricks removed from given wall
                     var bricksToRemove = realWall.Bricks
@@ -61,7 +57,7 @@ namespace Bnh.Controllers
                         .ToList();
                     foreach (var bid in bricksToRemove)
                     {
-                        db.Bricks.DeleteObject(db.Bricks.FirstOrDefault(b => b.Id == bid));
+                        db.Bricks.Remove(db.Bricks.FirstOrDefault(b => b.Id == bid));
                     }
 
                     // add new bricks 
@@ -96,7 +92,7 @@ namespace Bnh.Controllers
                     }
 
                     wall.OwnerId = ownerId;
-                    db.Walls.AddObject(wall);
+                    db.Walls.Add(wall);
                 }
 
                 // remove walls
@@ -105,9 +101,12 @@ namespace Bnh.Controllers
                     var ids = walls.Where(w => w.Id != 0).Select(w => w.Id).ToList();
                     if (!ids.Contains(realWall.Id))
                     {
-                        realWall.Bricks.ToList().ForEach(db.Bricks.DeleteObject);
+                        foreach(var brick in realWall.Bricks.ToList())
+                        {
+                            realWall.Bricks.Remove(brick);
+                        }
 
-                        db.Walls.DeleteObject(realWall);
+                        db.Walls.Remove(realWall);
                     }
                 }
 
@@ -143,13 +142,13 @@ namespace Bnh.Controllers
 
             if (ModelState.IsValid)
             {
-                var template = db.SceneTemplates.CreateObject();
+                var template = new SceneTemplate();
                 template.Id = Guid.NewGuid();
                 template.Title = title;
 
                 SceneTemplating.CloneScene(ownerId, template.Id, db);
 
-                db.SceneTemplates.AddObject(template);
+                db.SceneTemplates.Add(template);
 
                 db.SaveChanges();
             }
@@ -161,7 +160,10 @@ namespace Bnh.Controllers
         public ActionResult ApplyTemplate(Guid ownerId, Guid templateId)
         {
             // delete obsolete scene
-            db.Walls.Where(w => w.OwnerId == ownerId).ToList().ForEach(db.Walls.DeleteObject);
+            foreach (var wall in db.Walls.Where(w => w.OwnerId == ownerId).ToList())
+            {
+                db.Walls.Remove(wall);
+            }
 
             SceneTemplating.CloneScene(templateId, ownerId, db);
 

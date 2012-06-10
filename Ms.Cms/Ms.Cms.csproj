@@ -34,8 +34,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="EntityFramework">
-      <HintPath>..\packages\EntityFramework.4.3.1\lib\net40\EntityFramework.dll</HintPath>
+    <Reference Include="EntityFramework, Version=4.4.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\EntityFramework.5.0.0-rc\lib\net40\EntityFramework.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
@@ -116,15 +117,35 @@
     <Reference Include="System.EnterpriseServices" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Models\Brick.cs" />
-    <Compile Include="Models\Clonable.cs" />
-    <Compile Include="Models\Cm.Designer.cs">
-      <DependentUpon>Cm.edmx</DependentUpon>
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
+    <Compile Include="Migrations\201206100338520_InitialCreate.cs" />
+    <Compile Include="Migrations\201206100338520_InitialCreate.Designer.cs">
+      <DependentUpon>201206100338520_InitialCreate.cs</DependentUpon>
     </Compile>
-    <Compile Include="Models\EntityConnectionHelper.cs" />
+    <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Models\Brick.cs">
+    </Compile>
+    <Compile Include="Models\Clonable.cs" />
+    <Compile Include="Models\EmptyBrick.cs">
+    </Compile>
+    <Compile Include="Models\GalleryBrick.cs">
+    </Compile>
+    <Compile Include="Models\HtmlBrick.cs">
+    </Compile>
+    <Compile Include="Models\MapBrick.cs">
+    </Compile>
+    <Compile Include="Models\CmsContext.cs">
+    </Compile>
+    <Compile Include="Models\RazorBrick.cs">
+    </Compile>
+    <Compile Include="Models\SceneTemplate.cs">
+    </Compile>
     <Compile Include="Models\SceneTemplating.cs" />
+    <Compile Include="Models\SharedBrick.cs">
+    </Compile>
+    <Compile Include="Models\TocBrick.cs">
+    </Compile>
+    <Compile Include="Models\Wall.cs">
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Web\BnhModelBinder.cs" />
     <Compile Include="Web\BrickRendering.cs" />
@@ -145,15 +166,13 @@
   <ItemGroup>
     <Folder Include="Controllers\" />
     <Folder Include="Scripts\" />
+    <Folder Include="TestModel\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <EntityDeploy Include="Models\Cm.edmx">
-      <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>Cm.Designer.cs</LastGenOutput>
-    </EntityDeploy>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" />
