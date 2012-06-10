@@ -5,7 +5,7 @@ using System.Text;
 using System.Web.Mvc;
 using System.ComponentModel;
 using System.Collections;
-using Ms.Cms.Entities;
+using Ms.Cms.Models;
 using System.Data.Objects.DataClasses;
 
 using TypeMap = System.Collections.Generic.Dictionary<string, System.Type>;

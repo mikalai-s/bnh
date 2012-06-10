@@ -8,7 +8,7 @@ using System.Web.Mvc;
 using Bnh.Entities;
 using Bnh.WebFramework;
 
-using Ms.Cms.Entities;
+using Ms.Cms.Models;
 
 namespace Bnh.Controllers
 {

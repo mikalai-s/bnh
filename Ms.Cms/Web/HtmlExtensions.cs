@@ -9,7 +9,7 @@ using System;
 using System.Reflection;
 using System.Text;
 
-using Ms.Cms.Entities;
+using Ms.Cms.Models;
 
 namespace Ms.Cms.Web
 {

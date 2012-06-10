@@ -5,7 +5,7 @@ using System.Text;
 using System.Data.EntityClient;
 using System.Configuration;
 
-namespace Ms.Cms.Entities
+namespace Ms.Cms.Models
 {
     public class EntityConnectionHelper
     {

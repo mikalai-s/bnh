@@ -7,7 +7,7 @@ using System.Runtime.Serialization;
 using System.Xml.Serialization;
 using System.ComponentModel;
 
-namespace Ms.Cms.Entities
+namespace Ms.Cms.Models
 {
     public partial class Wall : ICloneable
     {

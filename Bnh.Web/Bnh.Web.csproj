@@ -589,13 +589,9 @@
       <Project>{291a879a-93d4-47a2-9749-bee9e2a2dd62}</Project>
       <Name>Bnh.WebFramework</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Ms.Cms.Entities\Ms.Cms.Entities.csproj">
-      <Project>{E9BFEC55-160E-43B2-BC93-B9A0519CB293}</Project>
-      <Name>Ms.Cms.Entities</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Ms.Cms.Web\Ms.Cms.Web.csproj">
-      <Project>{2DD4B8A0-6FA4-4966-AC72-83BD34968F09}</Project>
-      <Name>Ms.Cms.Web</Name>
+    <ProjectReference Include="..\Ms.Cms\Ms.Cms.csproj">
+      <Project>{E59F60B4-ED10-474B-8FB0-F7C4E290D8F0}</Project>
+      <Name>Ms.Cms</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

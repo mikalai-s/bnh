@@ -7,10 +7,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 
-using Ms.Cms.Entities;
-
-//using System.Web.Script.Serialization;
-//using System.Data.Objects.DataClasses;
+using Ms.Cms.Models;
 
 
 namespace Bnh.Controllers

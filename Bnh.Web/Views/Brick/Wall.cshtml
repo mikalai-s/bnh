@@ -1,4 +1,4 @@
-﻿@model Ms.Cms.Entities.Wall
+﻿@model Ms.Cms.Models.Wall
 
 <div class='wall-wrapper' style='width:@Model.Width.ToString("F")%'>
 @foreach (var brick in Model.Bricks.OrderBy(b => b.Order))

@@ -14,7 +14,7 @@ using System.Web;
 
 using Newtonsoft.Json;
 
-using Ms.Cms.Entities;
+using Ms.Cms.Models;
 
 namespace Ms.Cms.Web
 {

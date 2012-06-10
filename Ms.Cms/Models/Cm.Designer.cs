@@ -19,12 +19,12 @@ using System.Xml.Serialization;
 [assembly: EdmSchemaAttribute()]
 #region EDM Relationship Metadata
 
-[assembly: EdmRelationshipAttribute("cmsModel", "FK_Brick_Wall", "Wall", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(Ms.Cms.Entities.Wall), "Brick", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(Ms.Cms.Entities.Brick), true)]
-[assembly: EdmRelationshipAttribute("cmsModel", "FK_Wall_SceneTemplate", "SceneTemplate", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(Ms.Cms.Entities.SceneTemplate), "Wall", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(Ms.Cms.Entities.Wall), true)]
+[assembly: EdmRelationshipAttribute("cmsModel", "FK_Brick_Wall", "Wall", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(Ms.Cms.Models.Wall), "Brick", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(Ms.Cms.Models.Brick), true)]
+[assembly: EdmRelationshipAttribute("cmsModel", "FK_Wall_SceneTemplate", "SceneTemplate", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(Ms.Cms.Models.SceneTemplate), "Wall", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(Ms.Cms.Models.Wall), true)]
 
 #endregion
 
-namespace Ms.Cms.Entities
+namespace Ms.Cms.Models
 {
     #region Contexts
     

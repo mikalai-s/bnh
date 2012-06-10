@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using Ms.Cms.Entities;
+using Ms.Cms.Models;
 
 namespace Bnh.Entities
 {
