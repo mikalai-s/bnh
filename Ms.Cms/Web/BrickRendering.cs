@@ -63,7 +63,14 @@ namespace Ms.Cms.Web
         */
         public static string GetDiscriminant(this Brick brick)
         {
-            return brick.GetType().Name;
+            // Avoid EF proxies and get brick type defined in current assembly
+            var nonProxyNamespace = typeof(Brick).Namespace;
+            var baseType = brick.GetType();
+            while (baseType.Namespace != nonProxyNamespace)
+            {
+                baseType = baseType.BaseType;
+            }
+            return baseType.Name;
         }
 
         public static string ToJson(this Brick brick)

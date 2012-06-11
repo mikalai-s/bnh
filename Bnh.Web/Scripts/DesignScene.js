@@ -85,7 +85,8 @@
         });
 
         return {
-            ownerId: $("#ownerId").val(),
+            id: $("#sceneId").val(),
+            ownerGuidId: $("#ownerId").val(),
             walls: walls
         };
     }
@@ -202,7 +203,7 @@
 
         // initialize brick object
         initializeBrick(brick, {
-            type: parseInt($("#brickType").val()),
+            type: $("#brickType").val(),
             title: brickTitle.val()
         });
 

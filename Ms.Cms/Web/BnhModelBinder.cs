@@ -42,19 +42,18 @@ namespace Ms.Cms.Web
             {
                 return base.CreateModel(controllerContext, bindingContext, modelType);
             }
-            return null;
-            /*
+
             // get the parameter species
             var result = bindingContext.ValueProvider.GetValue(prefix + "Type");
-            if (result == null || !typeMap.ContainsKey(result.AttemptedValue))
+            if (result == null || string.IsNullOrEmpty(result.AttemptedValue))
             {
                 throw new Exception(string.Format("Unknown type \"{0}\"", result.AttemptedValue));
             }
 
-            var type = typeMap[result.AttemptedValue];
+            var type = Type.GetType(typeof(Brick).Namespace + "." + result.AttemptedValue);
             var model = Activator.CreateInstance(type);
             bindingContext.ModelMetadata = ModelMetadataProviders.Current.GetMetadataForType(() => model, type);
-            return model;*/
+            return model;
         }        
 
         protected override void SetProperty(ControllerContext controllerContext, ModelBindingContext bindingContext, PropertyDescriptor propertyDescriptor, object value)

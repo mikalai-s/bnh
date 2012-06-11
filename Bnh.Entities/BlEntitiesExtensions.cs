@@ -21,5 +21,22 @@ namespace Bnh.Entities
             walls.ForEach(w => w.Bricks.ToList());
             return walls;
         }
+
+        /// <summary>
+        /// Get community's scene. If it doesn't exists it creates one.
+        /// </summary>
+        /// <param name="community">Community to get scene for</param>
+        /// <returns></returns>
+        public static Scene GetScene(this Community community)
+        {
+            var db = new CmsEntities();
+            var scene = db.Scenes.FirstOrDefault(s => s.OwnerGuidId == community.Id);
+            if(scene == null)
+            {
+                scene = db.Scenes.Add(new Scene { OwnerGuidId = community.Id });
+                db.SaveChanges();
+            }
+            return scene;
+        }
     }
 }

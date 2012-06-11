@@ -19,26 +19,43 @@ namespace Bnh.Controllers
 
 
         // GET: /Scene/Edit/5
-        public ActionResult Edit(Guid id)
+        public ActionResult Edit(long id)
         {
             ViewBag.OwnerId = id;
-            var walls = db.Scenes.Where(a => a.OwnerGuidId == id).SelectMany(s => s.Walls);
+            var scene = db.Scenes.FirstOrDefault(s => s.Id == id);
             ViewBag.Templates = new SelectList(db.SceneTemplates.ToList(), "Id", "Title");
             ViewBag.LockWalls = true;
-            return View(walls);
+            return View(scene);
         }
 
         // POST: /Scene/Edit/5
 
         [HttpPost]
-        public ActionResult Save(Guid ownerId, List<Wall> walls)
+        public ActionResult Save(Scene scene)
         {
-            // TODO: fix that
-            /*
             if (ModelState.IsValid)
             {
+                foreach (var wall in scene.Walls)
+                {
+                    foreach (var brick in wall.Bricks)
+                    {
+                        brick.Wall = wall;
+                        db.Bricks.Attach(brick);
+                        db.Entry(brick).State = brick.Id == 0 ? EntityState.Added : EntityState.Modified;
+                    }
+
+                    wall.Scene = scene;
+                    db.Walls.Attach(wall);
+                    db.Entry(wall).State = wall.Id == 0 ? EntityState.Added : EntityState.Modified;
+                }
+
+                scene = db.Scenes.Attach(scene);
+                db.Entry(scene).State = EntityState.Modified;
+                /*
+                var realScene = db.Scenes.First(s => s.Id == scene.Id);
+
                 // ensure walls collection is not null
-                walls = walls ?? new List<Wall>();
+                var walls = realScene.Walls ?? new List<Wall>();
 
                 // get moved bricks
                 var movedBricks = (from wall in walls
@@ -111,15 +128,15 @@ namespace Bnh.Controllers
                         db.Walls.Remove(realWall);
                     }
                 }
-
+                */
                 db.SaveChanges();
             }
 
             if (Request.IsAjaxRequest())
             {
-                return PartialView("DesignScene", db.Walls.Where(w => w.OwnerId == ownerId));
+                return PartialView("DesignScene", scene);
             }
-            */
+
             return View("DesignScene");
         }
 

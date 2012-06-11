@@ -1,10 +1,11 @@
 ﻿@using Ms.Cms.Models
 @using Ms.Cms.Web
 
-@model IEnumerable<Wall>
+@model Scene
 
 @{
-    var ownerId = (Guid)ViewBag.OwnerId;
+    var sceneId = Model.Id;
+    var ownerId = Model.OwnerGuidId;
     var linkableBricks = (ownerId == Constants.LinkableBricksSceneGuid);
     ViewBag.Title = linkableBricks ? "Linkable Bricks" : "Scene designer";
 }
@@ -29,7 +30,8 @@
 
     <fieldset>
         <legend>Scene</legend>
-            
+        
+        @Html.HiddenFor(model => sceneId)
         @Html.HiddenFor(model => ownerId)
             
         <div class="scene-wrapper">
