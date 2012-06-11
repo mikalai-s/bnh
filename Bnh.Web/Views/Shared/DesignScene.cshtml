@@ -1,7 +1,7 @@
 ﻿@using Ms.Cms.Models
-@model IEnumerable<Wall>
+@model Scene
 <div id="scene">
-    @foreach (var wall in Model.OrderBy(w => w.Order))
+    @foreach (var wall in Model.Walls.OrderBy(w => w.Order))
     {
         @Html.Partial("DesignWall", wall)
     }
