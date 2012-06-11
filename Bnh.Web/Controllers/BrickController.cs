@@ -15,7 +15,7 @@ namespace Bnh.Controllers
     [Authorize(Roles = "content_manager")]
     public class BrickController : Controller
     {
-        private CmEntities db = new CmEntities();
+        private CmsEntities db = new CmsEntities();
 
         private Dictionary<Type, string> BrickEditView = new Dictionary<Type, string>
         {
@@ -43,7 +43,7 @@ namespace Bnh.Controllers
             db.Bricks.Attach(brick);
             //db.ObjectStateManager.ChangeObjectState(brick, EntityState.Modified);
             db.SaveChanges();
-            return RedirectToAction("Edit", "Scene", new { id = brick.Wall.OwnerId });
+            return RedirectToAction("Edit", "Scene", new { id = brick.Wall.Scene.OwnerGuidId });
         }
 
         [HttpPost]

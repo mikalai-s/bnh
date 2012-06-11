@@ -15,6 +15,7 @@ namespace Ms.Cms.Web
     public class BnhModelBinder : DefaultModelBinder
     {
         // type mapping
+        /*
         public static readonly Dictionary<Type, TypeMap> HierarchyTypeMap = new Dictionary<Type, TypeMap>
         {
             {
@@ -30,19 +31,20 @@ namespace Ms.Cms.Web
                 }
             }
         };
-
+        */
         protected override object CreateModel(ControllerContext controllerContext, ModelBindingContext bindingContext, Type modelType)
         {
             bool hasPrefix = bindingContext.ValueProvider.ContainsPrefix(bindingContext.ModelName);
             string prefix = ((hasPrefix) && (bindingContext.ModelName != "")) ? bindingContext.ModelName + "." : "";
 
-            if (!HierarchyTypeMap.ContainsKey(modelType))
+            // TODO: make check more accurate
+            if (!modelType.Name.EndsWith("Brick"))
             {
                 return base.CreateModel(controllerContext, bindingContext, modelType);
             }
-
+            return null;
+            /*
             // get the parameter species
-            var typeMap = HierarchyTypeMap[modelType];
             var result = bindingContext.ValueProvider.GetValue(prefix + "Type");
             if (result == null || !typeMap.ContainsKey(result.AttemptedValue))
             {
@@ -52,7 +54,7 @@ namespace Ms.Cms.Web
             var type = typeMap[result.AttemptedValue];
             var model = Activator.CreateInstance(type);
             bindingContext.ModelMetadata = ModelMetadataProviders.Current.GetMetadataForType(() => model, type);
-            return model;
+            return model;*/
         }        
 
         protected override void SetProperty(ControllerContext controllerContext, ModelBindingContext bindingContext, PropertyDescriptor propertyDescriptor, object value)

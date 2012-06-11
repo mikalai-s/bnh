@@ -34,8 +34,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="EntityFramework, Version=4.4.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
+    <Reference Include="EntityFramework">
       <HintPath>..\packages\EntityFramework.5.0.0-rc\lib\net40\EntityFramework.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
@@ -117,9 +116,9 @@
     <Reference Include="System.EnterpriseServices" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Migrations\201206102007082_InitialCreate.cs" />
-    <Compile Include="Migrations\201206102007082_InitialCreate.Designer.cs">
-      <DependentUpon>201206102007082_InitialCreate.cs</DependentUpon>
+    <Compile Include="Migrations\201206110230117_InitialCreate.cs" />
+    <Compile Include="Migrations\201206110230117_InitialCreate.Designer.cs">
+      <DependentUpon>201206110230117_InitialCreate.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Brick.cs">
@@ -137,6 +136,7 @@
     </Compile>
     <Compile Include="Models\RazorBrick.cs">
     </Compile>
+    <Compile Include="Models\Scene.cs" />
     <Compile Include="Models\SceneTemplate.cs">
     </Compile>
     <Compile Include="Models\SceneTemplating.cs" />

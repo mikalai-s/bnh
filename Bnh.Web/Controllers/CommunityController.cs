@@ -39,7 +39,7 @@ namespace Bnh.Controllers
         public ActionResult Create()
         {
             ViewBag.ZoneId = new SelectList(db.Zones, "Id", "Name");
-            using(var cm = new CmEntities())
+            using(var cm = new CmsEntities())
             {
                 ViewBag.Templates = new SelectList(cm.SceneTemplates.ToList(), "Id", "Title");
             }
@@ -62,9 +62,10 @@ namespace Bnh.Controllers
                 var sceneTemplateIdString = this.Request.Form["SceneTemplateId"];
                 if (!string.IsNullOrEmpty(sceneTemplateIdString))
                 {
-                    using (var cm = new CmEntities())
+                    using (var cm = new CmsEntities())
                     {
-                        SceneTemplating.CloneScene(Guid.Parse(sceneTemplateIdString), community.Id, cm);
+                        // TODO: fix that
+                        //SceneTemplating.CloneScene(Guid.Parse(sceneTemplateIdString), community.Id, cm);
 
                         cm.SaveChanges();
                     }

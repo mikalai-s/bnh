@@ -15,14 +15,14 @@ namespace Bnh.Controllers
     [Authorize(Roles = "content_manager")]
     public class SceneController : Controller
     {
-        private CmEntities db = new CmEntities();
+        private CmsEntities db = new CmsEntities();
 
 
         // GET: /Scene/Edit/5
         public ActionResult Edit(Guid id)
         {
             ViewBag.OwnerId = id;
-            var walls = db.Walls.Where(w => w.OwnerId == id);
+            var walls = db.Scenes.Where(a => a.OwnerGuidId == id).SelectMany(s => s.Walls);
             ViewBag.Templates = new SelectList(db.SceneTemplates.ToList(), "Id", "Title");
             ViewBag.LockWalls = true;
             return View(walls);
@@ -33,6 +33,8 @@ namespace Bnh.Controllers
         [HttpPost]
         public ActionResult Save(Guid ownerId, List<Wall> walls)
         {
+            // TODO: fix that
+            /*
             if (ModelState.IsValid)
             {
                 // ensure walls collection is not null
@@ -117,7 +119,7 @@ namespace Bnh.Controllers
             {
                 return PartialView("DesignScene", db.Walls.Where(w => w.OwnerId == ownerId));
             }
-
+            */
             return View("DesignScene");
         }
 
@@ -146,7 +148,8 @@ namespace Bnh.Controllers
                 template.Id = Guid.NewGuid();
                 template.Title = title;
 
-                SceneTemplating.CloneScene(ownerId, template.Id, db);
+                // TODO: Fix that
+               // SceneTemplating.CloneScene(ownerId, template.Id, db);
 
                 db.SceneTemplates.Add(template);
 
@@ -156,6 +159,8 @@ namespace Bnh.Controllers
             return View("Empty");
         }
 
+        // TODO: Fix that
+        /*
         [HttpPost]
         public ActionResult ApplyTemplate(Guid ownerId, Guid templateId)
         {
@@ -171,7 +176,7 @@ namespace Bnh.Controllers
 
             return PartialView("DesignScene", db.Walls.Where(w => w.OwnerId == ownerId));
         }
-
+        */
         [HttpPost]
         public ActionResult CanDeleteBrick(Brick brick)
         {

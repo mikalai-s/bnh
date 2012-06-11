@@ -6,10 +6,10 @@ using System.Text;
 namespace Ms.Cms.Models
 {
     public static class SceneTemplating
-    {
-        public static void CloneScene(Guid from, Guid to, CmEntities db)
+    {/*
+        public static void CloneScene(Guid from, Guid to, CmsEntities db)
         {
-            foreach (var wall in db.Walls.Where(w => w.OwnerId == from))
+            foreach (var wall in db.Walls.Where(w => w.OwnerGuidId == from))
             {
                 var newWall = wall.Clone();
                 newWall.Bricks.Clear();
@@ -23,6 +23,6 @@ namespace Ms.Cms.Models
 
                 db.Walls.Add(newWall);
             }
-        }
+        }*/
     }
 }

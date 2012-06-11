@@ -8,16 +8,29 @@ namespace Ms.Cms.Migrations
         public override void Up()
         {
             CreateTable(
+                "Cms.Scene",
+                c => new
+                    {
+                        Id = c.Long(nullable: false, identity: true),
+                        OwnerGuidId = c.Guid(nullable: false),
+                        OwnerLongId = c.Long(nullable: false),
+                        OwnerIntId = c.Int(nullable: false),
+                    })
+                .PrimaryKey(t => t.Id);
+            
+            CreateTable(
                 "Cms.Walls",
                 c => new
                     {
                         Id = c.Long(nullable: false, identity: true),
-                        OwnerId = c.Guid(nullable: false),
+                        SceneId = c.Long(nullable: false),
                         Title = c.String(maxLength: 50),
                         Width = c.Single(nullable: false),
                         Order = c.Byte(nullable: false),
                     })
-                .PrimaryKey(t => t.Id);
+                .PrimaryKey(t => t.Id)
+                .ForeignKey("Cms.Scene", t => t.SceneId, cascadeDelete: true)
+                .Index(t => t.SceneId);
             
             CreateTable(
                 "Cms.Bricks",
@@ -59,11 +72,14 @@ namespace Ms.Cms.Migrations
         {
             DropIndex("Cms.Bricks", new[] { "LinkedBrickId" });
             DropIndex("Cms.Bricks", new[] { "WallId" });
+            DropIndex("Cms.Walls", new[] { "SceneId" });
             DropForeignKey("Cms.Bricks", "LinkedBrickId", "Cms.Bricks");
             DropForeignKey("Cms.Bricks", "WallId", "Cms.Walls");
+            DropForeignKey("Cms.Walls", "SceneId", "Cms.Scene");
             DropTable("Cms.SceneTemplates");
             DropTable("Cms.Bricks");
             DropTable("Cms.Walls");
+            DropTable("Cms.Scene");
         }
     }
 }
