@@ -35,8 +35,8 @@ namespace Ms.Cms.Web
 
         public static MvcHtmlString DropDownListForBrickTypes(this HtmlHelper htmlHelper, string name)
         {
-                var items = BnhModelBinder.HierarchyTypeMap[typeof(Brick)]
-                .Select(e => new SelectListItem { Value = e.Key, Text = BrickTypeNames[e.Value] });
+            var items = BrickTypeNames
+                .Select(e => new SelectListItem { Value = e.Key.Name, Text = e.Value });
                 return htmlHelper.DropDownList(name, items);
             }
         }

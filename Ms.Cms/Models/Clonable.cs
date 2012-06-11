@@ -16,7 +16,7 @@ namespace Ms.Cms.Models
             return new Wall
                 {
                     Id = 0,
-                    OwnerId = this.OwnerId,
+                    SceneId = this.SceneId,
                     Title = this.Title,
                     Width = this.Width,
                     Order = this.Order

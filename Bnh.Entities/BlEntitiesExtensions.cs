@@ -10,10 +10,13 @@ namespace Bnh.Entities
     {
         public static IEnumerable<Wall> GetWallsFromEntityId(Guid id)
         {
-            var db = new CmEntities();
+            var db = new CmsEntities();
 
             // Convert to list to make sure context is open during request
-            var walls = db.Walls.Where(w => w.OwnerId == id).OrderBy(w => w.Order).ToList();
+            var walls = db.Scenes
+                .Where(s => s.OwnerGuidId == id)
+                .SelectMany(s => s.Walls)
+                .OrderBy(w => w.Order).ToList();
             // ensure bricks while given db context is open
             walls.ForEach(w => w.Bricks.ToList());
             return walls;

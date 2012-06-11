@@ -24,7 +24,7 @@ namespace Ms.Cms.Models
 
         public long Id { get; set; }
 
-        public Guid OwnerId { get; set; }
+        public long SceneId { get; set; }
 
         [MaxLength(50)]
         public string Title { get; set; }
@@ -32,8 +32,12 @@ namespace Ms.Cms.Models
         public float Width { get; set; }
 
         public byte Order { get; set; }
-    
-        public ICollection<Brick> Bricks { get; private set; }
+
+        // navigational
+
+        public virtual Scene Scene { get; set; }
+
+        public virtual ICollection<Brick> Bricks { get; private set; }
     }
-    
+
 }

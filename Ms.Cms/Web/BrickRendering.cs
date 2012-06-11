@@ -63,10 +63,7 @@ namespace Ms.Cms.Web
         */
         public static string GetDiscriminant(this Brick brick)
         {
-            return BnhModelBinder.HierarchyTypeMap[typeof(Brick)]
-                .Where(v => v.Value == brick.GetType())
-                .Select(e => e.Key)
-                .First();
+            return brick.GetType().Name;
         }
 
         public static string ToJson(this Brick brick)
