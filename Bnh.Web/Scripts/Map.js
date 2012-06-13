@@ -12,7 +12,12 @@
             center: myLatLng,
             mapTypeId: google.maps.MapTypeId.TERRAIN
         };
-        var map = new google.maps.Map($(mapCanvas)[0], myOptions);
+        var $mapCanvas = $(mapCanvas);
+        if($mapCanvas.length === 0) {
+            return;
+        }
+
+        var map = new google.maps.Map($mapCanvas[0], myOptions);
 
         var namedOverlays = [];
         if(options.overlays) {
