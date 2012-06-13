@@ -63,6 +63,11 @@ namespace Ms.Cms.Web
         */
         public static string GetDiscriminant(this Brick brick)
         {
+            return brick.GetTypeNonProxy().Name;
+        }
+
+        private static Type GetTypeNonProxy(this Brick brick)
+        {
             // Avoid EF proxies and get brick type defined in current assembly
             var nonProxyNamespace = typeof(Brick).Namespace;
             var baseType = brick.GetType();
@@ -70,7 +75,7 @@ namespace Ms.Cms.Web
             {
                 baseType = baseType.BaseType;
             }
-            return baseType.Name;
+            return baseType;
         }
 
         public static string ToJson(this Brick brick)
@@ -79,7 +84,7 @@ namespace Ms.Cms.Web
 
             properties.Add("type", brick.GetDiscriminant());
 
-            foreach (var prop in brick.GetType().GetProperties(BindingFlags.Instance | BindingFlags.Public))
+            foreach (var prop in brick.GetTypeNonProxy().GetProperties(BindingFlags.Instance | BindingFlags.Public))
             {
                 // NOTE: for HtmlBrick we are not serializing Html property - it's too big
                 if (brick is HtmlBrick && prop.Name == "Html")

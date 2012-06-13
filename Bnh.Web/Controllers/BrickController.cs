@@ -9,6 +9,7 @@ using Bnh.Entities;
 using Bnh.WebFramework;
 
 using Ms.Cms.Models;
+using Ms.Cms.Web;
 
 namespace Bnh.Controllers
 {
@@ -17,14 +18,14 @@ namespace Bnh.Controllers
     {
         private CmsEntities db = new CmsEntities();
 
-        private Dictionary<Type, string> BrickEditView = new Dictionary<Type, string>
+        private Dictionary<string, string> BrickEditView = new Dictionary<string, string>
         {
-            {typeof(EmptyBrick), "Edit"},
-            {typeof(HtmlBrick), "EditHtml"},
-            {typeof(GalleryBrick), "EditGallery"},
-            {typeof(MapBrick), "EditMap"},
-            {typeof(RazorBrick), "EditHtml"},
-            {typeof(LinkableBrick), "EditLinkable"},
+            {"EmptyBrick", "Edit"},
+            {"HtmlBrick", "EditHtml"},
+            {"GalleryBrick", "EditGallery"},
+            {"MapBrick", "EditMap"},
+            {"RazorBrick", "EditHtml"},
+            {"LinkableBrick", "EditLinkable"},
         };
         
         //
@@ -33,17 +34,23 @@ namespace Bnh.Controllers
         {
             Brick brick = db.Bricks.Single(b => b.Id == id);
             ViewBag.WallId = new SelectList(db.Walls, "Id", "Title", brick.Wall.Id);
-            ViewBag.PartialView = BrickEditView[brick.GetType()];
+            ViewBag.PartialView = BrickEditView[brick.GetDiscriminant()];
             return View(brick);
         }
 
         [HttpPost]
         public ActionResult Edit(Brick brick)
         {
+            // update current brick
             db.Bricks.Attach(brick);
-            //db.ObjectStateManager.ChangeObjectState(brick, EntityState.Modified);
+            db.Entry(brick).State = EntityState.Modified;
             db.SaveChanges();
-            return RedirectToAction("Edit", "Scene", new { id = brick.Wall.Scene.OwnerGuidId });
+
+            // load brick's wall property to get current scene later
+            db.Entry(brick).Reference(b => b.Wall).Load();
+
+            // redirect to scene
+            return RedirectToAction("Edit", "Scene", new { id = brick.Wall.SceneId });
         }
 
         [HttpPost]

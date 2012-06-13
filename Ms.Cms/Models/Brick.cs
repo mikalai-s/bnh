@@ -29,6 +29,7 @@ namespace Ms.Cms.Models
 
         public virtual Wall Wall { get; set; }
 
+        [DataMemberAttribute()]
         public long WallId { get; set; }
     }
 
