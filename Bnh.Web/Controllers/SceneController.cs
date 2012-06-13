@@ -24,7 +24,6 @@ namespace Bnh.Controllers
             ViewBag.OwnerId = id;
             var scene = db.Scenes.FirstOrDefault(s => s.Id == id);
             ViewBag.Templates = new SelectList(db.SceneTemplates.ToList(), "Id", "Title");
-            ViewBag.LockWalls = true;
             return View(scene);
         }
 
@@ -35,27 +34,8 @@ namespace Bnh.Controllers
         {
             if (ModelState.IsValid)
             {
-                foreach (var wall in scene.Walls)
-                {
-                    foreach (var brick in wall.Bricks)
-                    {
-                        brick.Wall = wall;
-                        db.Bricks.Attach(brick);
-                        db.Entry(brick).State = brick.Id == 0 ? EntityState.Added : EntityState.Modified;
-                    }
-
-                    wall.Scene = scene;
-                    db.Walls.Attach(wall);
-                    db.Entry(wall).State = wall.Id == 0 ? EntityState.Added : EntityState.Modified;
-                }
-
-                scene = db.Scenes.Attach(scene);
-                db.Entry(scene).State = EntityState.Modified;
-                /*
-                var realScene = db.Scenes.First(s => s.Id == scene.Id);
-
                 // ensure walls collection is not null
-                var walls = realScene.Walls ?? new List<Wall>();
+                var walls = scene.Walls ?? new List<Wall>();
 
                 // get moved bricks
                 var movedBricks = (from wall in walls
@@ -66,7 +46,9 @@ namespace Bnh.Controllers
                 // update existing walls
                 foreach (var wall in walls.Where(w => w.Id != 0))
                 {
-                    var realWall = wall;// db.Walls.ApplyCurrentValues(wall);
+                    var realWall = db.Walls.First(w => w.Id == wall.Id);
+                    realWall.Order = wall.Order;
+                    realWall.Width = wall.Width;
 
                     // determine bricks removed from given wall
                     var bricksToRemove = realWall.Bricks
@@ -76,13 +58,13 @@ namespace Bnh.Controllers
                         .ToList();
                     foreach (var bid in bricksToRemove)
                     {
-                        db.Bricks.Remove(db.Bricks.FirstOrDefault(b => b.Id == bid));
+                        db.Bricks.Remove(db.Bricks.First(b => b.Id == bid));
                     }
 
                     // add new bricks 
                     foreach (var brick in wall.Bricks.Where(b => b.Id == 0).ToList())
                     {
-                        brick.Wall = realWall;
+                        realWall.Bricks.Add(brick);
                     }
 
                     // updated bricks
@@ -95,10 +77,10 @@ namespace Bnh.Controllers
                     foreach (var brick in wall.Bricks.Where(b => movedBricks.Contains(b.Id)))
                     {
                         var realBrick = ApplyCommonBrickValues(brick);
-                        realBrick.Wall = realWall;
+                        realWall.Bricks.Add(realBrick);
                     }
                 }
-
+                
                 // add new walls
                 foreach (var wall in walls.Where(w => w.Id == 0))
                 {
@@ -107,47 +89,47 @@ namespace Bnh.Controllers
                     {
                         wall.Bricks.Remove(brick);
                         var realBrick = ApplyCommonBrickValues(brick);
-                        realBrick.Wall = wall;
+                        wall.Bricks.Add(realBrick);
                     }
 
-                    wall.OwnerId = ownerId;
+                    wall.SceneId = scene.Id;
                     db.Walls.Add(wall);
                 }
 
                 // remove walls
-                foreach (var realWall in db.Walls.Where(w => w.OwnerId == ownerId).ToList())
+                foreach (var realWall in db.Walls.Where(w => w.SceneId == scene.Id).ToList())
                 {
                     var ids = walls.Where(w => w.Id != 0).Select(w => w.Id).ToList();
                     if (!ids.Contains(realWall.Id))
                     {
                         foreach(var brick in realWall.Bricks.ToList())
                         {
-                            realWall.Bricks.Remove(brick);
+                            db.Bricks.Remove(brick);
                         }
 
                         db.Walls.Remove(realWall);
                     }
                 }
-                */
+
                 db.SaveChanges();
             }
 
             if (Request.IsAjaxRequest())
             {
-                return PartialView("DesignScene", scene);
+                // render real (saved) scene
+                return PartialView("DesignScene", db.Scenes.First(s => s.Id == scene.Id));
             }
 
             return View("DesignScene");
         }
 
         // apply only properties that can be changed on scene designer
+        // TODO: maybe disable validation? http://stackoverflow.com/a/5573119/444630
         private Brick ApplyCommonBrickValues(Brick brick)
         {
-            var realBrick = db.Bricks.FirstOrDefault(b => b.Id == brick.Id);
-            if (realBrick.Order != brick.Order)
-                realBrick.Order = brick.Order;
-            if (realBrick.Width != brick.Width)
-                realBrick.Width = brick.Width;
+            var realBrick = db.Bricks.First(b => b.Id == brick.Id);
+            realBrick.Order = brick.Order;
+            realBrick.Width = brick.Width;
             return realBrick;
         }
 
