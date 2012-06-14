@@ -121,8 +121,11 @@
       <DependentUpon>201206110230117_InitialCreate.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Models\Attributes\NonCloneableAttribute.cs" />
+    <Compile Include="Models\Attributes\NonJsExposableAttribute.cs" />
     <Compile Include="Models\Brick.cs">
     </Compile>
+    <Compile Include="Models\Extensions\CommonExtensions.cs" />
     <Compile Include="Models\Clonable.cs" />
     <Compile Include="Models\EmptyBrick.cs">
     </Compile>
@@ -139,7 +142,6 @@
     <Compile Include="Models\Scene.cs" />
     <Compile Include="Models\SceneTemplate.cs">
     </Compile>
-    <Compile Include="Models\SceneTemplating.cs" />
     <Compile Include="Models\LinkableBrick.cs">
     </Compile>
     <Compile Include="Models\TocBrick.cs">

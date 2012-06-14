@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Runtime.Serialization;
+using Ms.Cms.Models.Attributes;
 
 namespace Ms.Cms.Models
 {
@@ -14,25 +15,23 @@ namespace Ms.Cms.Models
             this.Bricks = new HashSet<Brick>();
         }
 
-        [DataMemberAttribute()]
         public long Id { get; set; }
 
         public long SceneId { get; set; }
 
         [MaxLength(50)]
-        [DataMemberAttribute()]
         public string Title { get; set; }
 
-        [DataMemberAttribute()]
         public float Width { get; set; }
 
-        [DataMemberAttribute()]
         public byte Order { get; set; }
 
         // navigational
 
+        [NonJsExposable]
         public virtual Scene Scene { get; set; }
 
+        [NonJsExposable]
         public virtual ICollection<Brick> Bricks { get; private set; }
     }
 

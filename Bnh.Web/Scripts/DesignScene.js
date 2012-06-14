@@ -371,7 +371,7 @@
         var templateTitle = $("#templateTitle");
         var data = {
             title: templateTitle.val(),
-            ownerId: $("#ownerId").val()
+            sceneId: $("#sceneId").val()
         };
 
         $.ajax({
@@ -395,8 +395,8 @@
             return false;
 
         var data = {
-            ownerId: $("#ownerId").val(),
-            templateId: $("#templateId").val()
+            sceneId: $("#sceneId").val(),
+            templateSceneId: $("#templateSceneId").val()
         };
 
         $.ajax({
