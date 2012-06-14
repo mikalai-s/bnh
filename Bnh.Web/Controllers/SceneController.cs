@@ -171,24 +171,7 @@ namespace Bnh.Controllers
         [HttpPost]
         public ActionResult ApplyTemplate(long sceneId, long templateSceneId)
         {
-            var scene = db.Scenes.First(s => s.Id == sceneId);
-
-            // delete all walls on obsolete scene
-            foreach (var wall in scene.Walls.ToList())
-            {
-                db.Walls.Remove(wall);
-            }
-
-            // find template scene and clone it
-            var templateScene = db.Scenes.First(s => s.Id == templateSceneId);
-
-            // clone walls from template scene into our scene
-            foreach (var wall in templateScene.Walls)
-            {
-                scene.Walls.Add(wall.Clone());
-            }
-
-            // save everything it
+            var scene = db.Scenes.First(s => s.Id == sceneId).ApplyTemplate(db.Scenes.First(s => s.Id == templateSceneId));
             db.SaveChanges();
 
             return PartialView("DesignScene", scene);

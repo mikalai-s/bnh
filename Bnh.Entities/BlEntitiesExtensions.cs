@@ -10,16 +10,17 @@ namespace Bnh.Entities
     {
         public static IEnumerable<Wall> GetWallsFromEntityId(Guid id)
         {
-            var db = new CmsEntities();
-
-            // Convert to list to make sure context is open during request
-            var walls = db.Scenes
-                .Where(s => s.OwnerGuidId == id)
-                .SelectMany(s => s.Walls)
-                .OrderBy(w => w.Order).ToList();
-            // ensure bricks while given db context is open
-            walls.ForEach(w => w.Bricks.ToList());
-            return walls;
+            using (var db = new CmsEntities())
+            {
+                // Convert to list to make sure context is open during request
+                var walls = db.Scenes
+                    .Where(s => s.OwnerGuidId == id)
+                    .SelectMany(s => s.Walls)
+                    .OrderBy(w => w.Order).ToList();
+                // ensure bricks while given db context is open
+                walls.ForEach(w => w.Bricks.ToList());
+                return walls;
+            }
         }
 
         /// <summary>
@@ -29,14 +30,16 @@ namespace Bnh.Entities
         /// <returns></returns>
         public static Scene GetScene(this Community community)
         {
-            var db = new CmsEntities();
-            var scene = db.Scenes.FirstOrDefault(s => s.OwnerGuidId == community.Id);
-            if(scene == null)
+            using (var db = new CmsEntities())
             {
-                scene = db.Scenes.Add(new Scene { OwnerGuidId = community.Id });
-                db.SaveChanges();
+                var scene = db.Scenes.FirstOrDefault(s => s.OwnerGuidId == community.Id);
+                if (scene == null)
+                {
+                    scene = db.Scenes.Add(new Scene { OwnerGuidId = community.Id });
+                    db.SaveChanges();
+                }
+                return scene;
             }
-            return scene;
         }
     }
 }
