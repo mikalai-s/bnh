@@ -66,10 +66,9 @@ namespace Bnh.Controllers
                 var templateSceneIdString = this.Request.Form["templateSceneId"];
                 if (!string.IsNullOrEmpty(templateSceneIdString))
                 {
-                    // NOTE: make sure community ID is already create when move to "code first"
+                    // NOTE: make sure community ID is already created when move to "code first"
                     using (var cms = new CmsEntities())
                     {
-                        //cms.Scenes.First(s => s.Id == community.GetScene())
                         var scene = cms.Scenes.Attach(community.GetScene());
                         var templateSceneId = long.Parse(templateSceneIdString);
                         var templateScene = cms.Scenes.First(s => s.Id == templateSceneId);
