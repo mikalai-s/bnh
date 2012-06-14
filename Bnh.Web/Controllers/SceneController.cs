@@ -21,9 +21,15 @@ namespace Bnh.Controllers
         // GET: /Scene/Edit/5
         public ActionResult Edit(long id)
         {
+            var sceneTemplates = from s in db.Scenes
+                                 from t in db.SceneTemplates
+                                 where s.OwnerGuidId == t.Id
+                                 select new { id = s.Id, title = t.Title };
+            ViewBag.Templates = new SelectList(sceneTemplates, "id", "title");
+
             ViewBag.OwnerId = id;
-            var scene = db.Scenes.FirstOrDefault(s => s.Id == id);
-            ViewBag.Templates = new SelectList(db.SceneTemplates.ToList(), "Id", "Title");
+
+            var scene = db.Scenes.FirstOrDefault(s => s.Id == id); 
             return View(scene);
         }
 
@@ -124,7 +130,6 @@ namespace Bnh.Controllers
         }
 
         // apply only properties that can be changed on scene designer
-        // TODO: maybe disable validation? http://stackoverflow.com/a/5573119/444630
         private Brick ApplyCommonBrickValues(Brick brick)
         {
             var realBrick = db.Bricks.First(b => b.Id == brick.Id);
@@ -134,7 +139,7 @@ namespace Bnh.Controllers
         }
 
         [HttpPost]
-        public ActionResult ExportTemplate(string title, Guid ownerId)
+        public ActionResult ExportTemplate(string title, long sceneId)
         {
             if (string.IsNullOrWhiteSpace(title))
             {
@@ -143,15 +148,18 @@ namespace Bnh.Controllers
 
             if (ModelState.IsValid)
             {
-                var template = new SceneTemplate();
-                template.Id = Guid.NewGuid();
-                template.Title = title;
-
-                // TODO: Fix that
-               // SceneTemplating.CloneScene(ownerId, template.Id, db);
-
+                // create scene template first
+                var template = new SceneTemplate { Id = Guid.NewGuid(), Title = title };
                 db.SceneTemplates.Add(template);
 
+                // find source scene and clone it
+                var scene = db.Scenes.First(s => s.Id == sceneId).Clone();
+
+                // update owner id of cloned scene
+                scene.OwnerGuidId = template.Id;
+
+                // add new scene to context and save it
+                db.Scenes.Add(scene);
                 db.SaveChanges();
             }
 
@@ -159,23 +167,33 @@ namespace Bnh.Controllers
         }
 
         // TODO: Fix that
-        /*
+        
         [HttpPost]
-        public ActionResult ApplyTemplate(Guid ownerId, Guid templateId)
+        public ActionResult ApplyTemplate(long sceneId, long templateSceneId)
         {
-            // delete obsolete scene
-            foreach (var wall in db.Walls.Where(w => w.OwnerId == ownerId).ToList())
+            var scene = db.Scenes.First(s => s.Id == sceneId);
+
+            // delete all walls on obsolete scene
+            foreach (var wall in scene.Walls.ToList())
             {
                 db.Walls.Remove(wall);
             }
 
-            SceneTemplating.CloneScene(templateId, ownerId, db);
+            // find template scene and clone it
+            var templateScene = db.Scenes.First(s => s.Id == templateSceneId);
 
+            // clone walls from template scene into our scene
+            foreach (var wall in templateScene.Walls)
+            {
+                scene.Walls.Add(wall.Clone());
+            }
+
+            // save everything it
             db.SaveChanges();
 
-            return PartialView("DesignScene", db.Walls.Where(w => w.OwnerId == ownerId));
+            return PartialView("DesignScene", scene);
         }
-        */
+
         [HttpPost]
         public ActionResult CanDeleteBrick(Brick brick)
         {

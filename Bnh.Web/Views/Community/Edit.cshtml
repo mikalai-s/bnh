@@ -27,7 +27,7 @@
 <h2>@ViewBag.Title</h2>
 
 <h2>
-    <sup class="alter">@Html.ActionLink("edit scene", "Edit", "Scene", new { id = Model.Id }, null)</sup>
+    <sup class="alter">@Html.ActionLink("edit scene", "Edit", "Scene", new { id = Model.GetScene().Id }, null)</sup>
 </h2>
 
 <div>

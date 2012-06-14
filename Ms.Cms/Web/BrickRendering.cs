@@ -15,6 +15,7 @@ using System.Web;
 using Newtonsoft.Json;
 
 using Ms.Cms.Models;
+using Ms.Cms.Models.Attributes;
 
 namespace Ms.Cms.Web
 {
@@ -66,18 +67,6 @@ namespace Ms.Cms.Web
             return brick.GetTypeNonProxy().Name;
         }
 
-        private static Type GetTypeNonProxy(this Brick brick)
-        {
-            // Avoid EF proxies and get brick type defined in current assembly
-            var nonProxyNamespace = typeof(Brick).Namespace;
-            var baseType = brick.GetType();
-            while (baseType.Namespace != nonProxyNamespace)
-            {
-                baseType = baseType.BaseType;
-            }
-            return baseType;
-        }
-
         public static string ToJson(this Brick brick)
         {
             var properties = new Dictionary<string, object>();
@@ -90,8 +79,8 @@ namespace Ms.Cms.Web
                 if (brick is HtmlBrick && prop.Name == "Html")
                     continue;
 
-                var p = prop.GetCustomAttributes(typeof(DataMemberAttribute), false);
-                if (p.Length == 0)
+                var p = prop.GetCustomAttributes(typeof(NonJsExposableAttribute), false);
+                if (p.Length > 0)
                     continue;
 
                 p = prop.GetCustomAttributes(typeof(XmlIgnoreAttribute), false);
@@ -117,10 +106,10 @@ namespace Ms.Cms.Web
         {
             var properties = new Dictionary<string, object>();
 
-            foreach (var prop in wall.GetType().GetProperties(BindingFlags.Instance | BindingFlags.Public))
+            foreach (var prop in wall.GetTypeNonProxy().GetProperties(BindingFlags.Instance | BindingFlags.Public))
             {
-                var p = prop.GetCustomAttributes(typeof(DataMemberAttribute), false);
-                if (p.Length == 0)
+                var p = prop.GetCustomAttributes(typeof(NonJsExposableAttribute), false);
+                if (p.Length > 0)
                     continue;
 
                 p = prop.GetCustomAttributes(typeof(XmlIgnoreAttribute), false);
