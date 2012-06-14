@@ -129,6 +129,7 @@
     <Compile Include="Models\Clonable.cs" />
     <Compile Include="Models\EmptyBrick.cs">
     </Compile>
+    <Compile Include="Models\Extensions\SceneExtensions.cs" />
     <Compile Include="Models\GalleryBrick.cs">
     </Compile>
     <Compile Include="Models\HtmlBrick.cs">
@@ -168,7 +169,6 @@
   <ItemGroup>
     <Folder Include="Controllers\" />
     <Folder Include="Scripts\" />
-    <Folder Include="TestModel\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />

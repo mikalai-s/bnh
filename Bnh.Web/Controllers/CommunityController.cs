@@ -41,7 +41,11 @@ namespace Bnh.Controllers
             ViewBag.ZoneId = new SelectList(db.Zones, "Id", "Name");
             using(var cm = new CmsEntities())
             {
-                ViewBag.Templates = new SelectList(cm.SceneTemplates.ToList(), "Id", "Title");
+                var sceneTemplates = from s in cm.Scenes
+                                     from t in cm.SceneTemplates
+                                     where s.OwnerGuidId == t.Id
+                                     select new { id = s.Id, title = t.Title };
+                ViewBag.Templates = new SelectList(sceneTemplates.ToList(), "id", "title");
             }
             return View();
         } 
@@ -59,15 +63,18 @@ namespace Bnh.Controllers
                 db.Communities.AddObject(community);
                 db.SaveChanges();
 
-                var sceneTemplateIdString = this.Request.Form["SceneTemplateId"];
-                if (!string.IsNullOrEmpty(sceneTemplateIdString))
+                var templateSceneIdString = this.Request.Form["templateSceneId"];
+                if (!string.IsNullOrEmpty(templateSceneIdString))
                 {
-                    using (var cm = new CmsEntities())
+                    // NOTE: make sure community ID is already create when move to "code first"
+                    using (var cms = new CmsEntities())
                     {
-                        // TODO: fix that
-                        //SceneTemplating.CloneScene(Guid.Parse(sceneTemplateIdString), community.Id, cm);
-
-                        cm.SaveChanges();
+                        //cms.Scenes.First(s => s.Id == community.GetScene())
+                        var scene = cms.Scenes.Attach(community.GetScene());
+                        var templateSceneId = long.Parse(templateSceneIdString);
+                        var templateScene = cms.Scenes.First(s => s.Id == templateSceneId);
+                        scene.ApplyTemplate(templateScene);
+                        cms.SaveChanges();
                     }
                 }
                 return RedirectToAction("Index");  
