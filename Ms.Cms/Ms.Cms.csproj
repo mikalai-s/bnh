@@ -21,6 +21,10 @@
     <UpgradeBackupLocation>
     </UpgradeBackupLocation>
     <OldToolsVersion>4.0</OldToolsVersion>
+    <IISExpressSSLPort />
+    <IISExpressAnonymousAuthentication />
+    <IISExpressWindowsAuthentication />
+    <IISExpressUseClassicPipelineMode />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -156,6 +160,9 @@
     <Compile Include="Models\Wall.cs">
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Scripts\nicEdit\_wext.cs" />
+    <Compile Include="Web\WebExtractAttribute.cs" />
+    <Compile Include="Scripts\_wext.cs" />
     <Compile Include="Web\BnhModelBinder.cs" />
     <Compile Include="Web\BrickRendering.cs" />
     <Compile Include="Models\Constants.cs" />
@@ -164,6 +171,13 @@
     <Compile Include="Web\WebExtractor.cs" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Scripts\DesignScene.js" />
+    <EmbeddedResource Include="Scripts\EditHtmlBrick.js" />
+    <EmbeddedResource Include="Scripts\Map.js" />
+    <EmbeddedResource Include="Scripts\MapEditor.js" />
+    <Content Include="Scripts\BrickContent_Map.js" />
+    <EmbeddedResource Include="Scripts\nicEdit\nicEdit.js" />
+    <EmbeddedResource Include="Scripts\nicEdit\nicEditorIcons.gif" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -175,7 +189,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Controllers\" />
-    <Folder Include="Scripts\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
