@@ -246,15 +246,10 @@
     <Content Include="Images\google.gif" />
     <Content Include="Images\logo.png" />
     <Content Include="Properties\PublishProfiles\bnh.pubxml.user" />
-    <Content Include="Scripts\BrickContent_Map.js">
-      <DependentUpon>BrickContent_Map.cshtml</DependentUpon>
-    </Content>
     <Content Include="Scripts\CommunityEdit.js" />
     <Content Include="Scripts\CommunityIndex.js">
       <DependentUpon>Index.cshtml</DependentUpon>
     </Content>
-    <Content Include="Scripts\DesignScene.js" />
-    <Content Include="Scripts\EditHtmlBrick.js" />
     <Content Include="Scripts\Global.Encoding.js" />
     <Content Include="Scripts\jquery-1.7.2-vsdoc.js" />
     <Content Include="Scripts\jquery-1.7.2.js" />
@@ -272,8 +267,6 @@
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\knockout-2.1.0.debug.js" />
     <Content Include="Scripts\knockout-2.1.0.js" />
-    <Content Include="Scripts\MapEditor.js" />
-    <Content Include="Scripts\Map.js" />
     <Content Include="Scripts\modernizr-2.5.3.js" />
     <Content Include="Scripts\tiny_mce\langs\en.js" />
     <Content Include="Scripts\tiny_mce\license.txt" />

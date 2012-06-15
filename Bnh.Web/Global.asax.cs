@@ -68,6 +68,8 @@ namespace Bnh.Web
 
         protected void Application_Start()
         {
+            WebExtractor.Extract(this);
+
             AreaRegistration.RegisterAllAreas();
 
             RegisterGlobalFilters(GlobalFilters.Filters);
