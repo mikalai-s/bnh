@@ -1,41 +1,37 @@
 ﻿@using Ms.Cms.Models
-@using Ms.Cms.Web
-
+@using Ms.Cms
 @model Scene
-
 @{
     var sceneId = Model.Id;
     var ownerId = Model.OwnerGuidId;
     var linkableBricks = (ownerId == Constants.LinkableBricksSceneGuid);
     ViewBag.Title = linkableBricks ? "Linkable Bricks" : "Scene designer";
 }
-
 @section Styles {
-    <link href="@Url.Content("~/Styles/Scene.css")" rel="stylesheet" type="text/css" />
-    <link href="@Url.Content("~/Styles/DesignScene.css")" rel="stylesheet" type="text/css" />
-    <link rel="stylesheet" type="text/css" href="~/Content/themes/base/jquery-ui.css"/>
+    <link href="~/WebExtracted/Ms.Cms/Styles/Scene.css" rel="stylesheet" type="text/css" />
+    <link href="~/WebExtracted/Ms.Cms/Styles/DesignScene.css" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="~/Content/themes/base/jquery-ui.css" />
 }
-
 @section Scripts {
-    <script src="@Url.Content("~/WebExtracted/Ms.Cms/Scripts/DesignScene.js")" type="text/javascript"></script>
+    <script src="~/WebExtracted/Ms.Cms/Scripts/DesignScene.js" type="text/javascript"></script>
 }
 
 <h2>@ViewBag.Title</h2>
 
 <div class="page-view">
-    
+
     <h2>
         <sup class="alter">@Html.ActionLink("edit properties", "Edit", "Community", new { id = ownerId }, null)</sup>
     </h2>
 
     <fieldset>
         <legend>Scene</legend>
-        
+
         @Html.HiddenFor(model => sceneId)
         @Html.HiddenFor(model => ownerId)
-            
+
         <div class="scene-wrapper">
-            @Html.Partial("DesignScene", Model)
+            @Html.Partial("~/WebExtracted/Ms.Cms/Views/Scene/DesignScene.cshtml", Model)
         </div>
 
         <div class="control-panel">
@@ -63,7 +59,7 @@
                     @Html.DropDownListForBrickTypes("brickType")
                     <input id="addBrickButton" type="button" value="Add Brick" />
                 </div>
-            
+
                 <div class="editor-field">
                     <label>@Html.CheckBox("lockBricksCheckbox")Lock bricks</label>
                 </div>
@@ -72,20 +68,19 @@
                 </div>
 
                 @Html.ActionLink("Manage Linkable Bricks", "Edit", "Scene", new { id = Constants.LinkableBricksSceneGuid }, null)
-
             </fieldset>
-            
+
             <fieldset>
                 <legend>Templates</legend>
 
                 <div class="editor-field">
                     @Html.TextBox("templateTitle")
-                    <input type="button" id="exportTemplateButton" value="Export Template"/>
+                    <input type="button" id="exportTemplateButton" value="Export Template" />
                 </div>
 
                 <div class="editor-field">
                     @Html.DropDownList("templateSceneId", (SelectList)ViewBag.Templates)
-                    <input type="button" id="applyTemplateButton" value="Apply Template"/>
+                    <input type="button" id="applyTemplateButton" value="Apply Template" />
                 </div>
             </fieldset>
 
@@ -93,7 +88,7 @@
                 <span class="alter">
                     <input type="button" id="saveSceneButton" value="Save" />
                 </span>
-                @Html.ActionInputLink("View", "Details", "Community", new { id = ownerId }, new Dictionary<string, object> { { "id", "viewScene" } })
+                @Html.ActionLink("View", "Details", "Community", new { id = ownerId }, new Dictionary<string, object> { { "id", "viewScene" } })
             </div>
         </div>
 

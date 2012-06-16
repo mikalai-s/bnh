@@ -171,12 +171,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Controllers\AccountController.cs" />
-    <Compile Include="Controllers\BrickController.cs" />
     <Compile Include="Controllers\BuilderController.cs" />
     <Compile Include="Controllers\CommunityController.cs" />
-    <Compile Include="Models\BrickExtensions.cs" />
     <Compile Include="Controllers\HomeController.cs" />
-    <Compile Include="Controllers\SceneController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -525,12 +522,8 @@
     <Content Include="Styles\CommunityIndex.css">
       <DependentUpon>Index.cshtml</DependentUpon>
     </Content>
-    <Content Include="Styles\DesignBrick.css" />
-    <Content Include="Styles\DesignScene.css" />
     <Content Include="Styles\Layout.css" />
     <Content Include="Styles\Login.css" />
-    <Content Include="Styles\MapEditor.css" />
-    <Content Include="Styles\Scene.css" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
@@ -580,10 +573,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Properties\PublishProfiles\bnh.pubxml" />
-    <Content Include="Views\Brick\Edit.cshtml" />
-    <Content Include="Views\Brick\EditGallery.cshtml" />
-    <Content Include="Views\Brick\EditHtml.cshtml" />
-    <Content Include="Views\Brick\EditMap.cshtml" />
     <Content Include="Views\Builder\Create.cshtml" />
     <Content Include="Views\Builder\Delete.cshtml" />
     <Content Include="Views\Builder\Details.cshtml" />
@@ -594,24 +583,8 @@
     <Content Include="Views\Community\Details.cshtml" />
     <Content Include="Views\Community\Edit.cshtml" />
     <Content Include="Views\Community\Index.cshtml" />
-    <Content Include="Views\Scene\Edit.cshtml" />
-    <Content Include="Views\Shared\DesignBrick.cshtml" />
-    <Content Include="Views\Shared\DesignScene.cshtml" />
-    <Content Include="Views\Shared\DesignWall.cshtml" />
-    <Content Include="Views\Shared\Empty.cshtml" />
-    <Content Include="Views\Shared\Scene.cshtml" />
-    <Content Include="Views\Brick\_Scripts.cshtml" />
-    <Content Include="Views\Brick\_Styles.cshtml" />
     <Content Include="Views\Account\Update.cshtml" />
     <Content Include="Views\Community\CommunityFilterPartial.cshtml" />
-    <Content Include="Views\Brick\Wall.cshtml" />
-    <Content Include="Views\Brick\Brick.cshtml" />
-    <Content Include="Views\Brick\BrickContent_Razor.cshtml" />
-    <Content Include="Views\Brick\BrickContent_Html.cshtml" />
-    <Content Include="Views\Brick\BrickContent_Map.cshtml" />
-    <Content Include="Views\Brick\BrickContent.cshtml" />
-    <Content Include="Views\Brick\EditLinkable.cshtml" />
-    <Content Include="Views\Brick\BrickContent_Toc.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

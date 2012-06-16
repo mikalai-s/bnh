@@ -3,9 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
-using Ms.Cms.Models;
-
-namespace Bnh.Web.Models
+namespace Ms.Cms.Models
 {
     public static class BrickExtensions
     {

@@ -3,6 +3,6 @@
 <div class='wall-wrapper' style='width:@Model.Width.ToString("F")%'>
 @foreach (var brick in Model.Bricks.OrderBy(b => b.Order))
 {
-    @Html.Partial("~/Views/Brick/Brick.cshtml", brick)
+    @Html.Partial("~/WebExtracted/Ms.Cms/Views/Brick/Brick.cshtml", brick)
 }
 </div>
