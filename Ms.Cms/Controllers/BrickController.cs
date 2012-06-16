@@ -19,12 +19,12 @@ namespace Ms.Cms.Controllers
 
         private Dictionary<string, string> BrickEditView = new Dictionary<string, string>
         {
-            {"EmptyBrick", "Edit"},
-            {"HtmlBrick", "EditHtml"},
-            {"GalleryBrick", "EditGallery"},
-            {"MapBrick", "EditMap"},
-            {"RazorBrick", "EditHtml"},
-            {"LinkableBrick", "EditLinkable"},
+            {"EmptyBrick", "~/WebExtracted/Ms.Cms/Views/Brick/Edit.cshtml"},
+            {"HtmlBrick", "~/WebExtracted/Ms.Cms/Views/Brick/EditHtml.cshtml"},
+            {"GalleryBrick", "~/WebExtracted/Ms.Cms/Views/Brick/EditGallery.cshtml"},
+            {"MapBrick", "~/WebExtracted/Ms.Cms/Views/Brick/EditMap.cshtml"},
+            {"RazorBrick", "~/WebExtracted/Ms.Cms/Views/Brick/EditHtml.cshtml"},
+            {"LinkableBrick", "~/WebExtracted/Ms.Cms/Views/Brick/EditLinkable.cshtml"},
         };
         
         //
@@ -34,7 +34,7 @@ namespace Ms.Cms.Controllers
             Brick brick = db.Bricks.Single(b => b.Id == id);
             ViewBag.WallId = new SelectList(db.Walls, "Id", "Title", brick.Wall.Id);
             ViewBag.PartialView = BrickEditView[brick.GetDiscriminant()];
-            return View(brick);
+            return View("~/WebExtracted/Ms.Cms/Views/Brick/Edit.cshtml", brick);
         }
 
         [HttpPost]
