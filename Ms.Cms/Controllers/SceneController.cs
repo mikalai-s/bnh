@@ -10,9 +10,10 @@ using System.Web.Mvc;
 using Ms.Cms.Models;
 
 
-namespace Bnh.Controllers
+namespace Ms.Cms.Controllers
 {
-    [Authorize(Roles = "content_manager")]
+    // TODO: use roles passed from external application
+    //[Authorize(Roles = "content_manager")]
     public class SceneController : Controller
     {
         private CmsEntities db = new CmsEntities();
@@ -30,7 +31,7 @@ namespace Bnh.Controllers
             ViewBag.OwnerId = id;
 
             var scene = db.Scenes.FirstOrDefault(s => s.Id == id); 
-            return View(scene);
+            return View("~/WebExtracted/Ms.Cms/Views/Scene/Edit.cshtml", scene);
         }
 
         // POST: /Scene/Edit/5

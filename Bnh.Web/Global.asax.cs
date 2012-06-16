@@ -68,7 +68,7 @@ namespace Bnh.Web
 
         protected void Application_Start()
         {
-            WebExtractor.Extract(this);
+            Ms.Cms.MsCms.Setup(this, "~/Views/Shared/_Layout.cshtml", "content_manager");
 
             AreaRegistration.RegisterAllAreas();
 

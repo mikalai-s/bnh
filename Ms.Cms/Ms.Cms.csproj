@@ -126,6 +126,9 @@
     <Reference Include="System.EnterpriseServices" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="MsCms.cs" />
+    <Compile Include="Controllers\BrickController.cs" />
+    <Compile Include="Controllers\SceneController.cs" />
     <Compile Include="Migrations\201206110230117_InitialCreate.cs" />
     <Compile Include="Migrations\201206110230117_InitialCreate.Designer.cs">
       <DependentUpon>201206110230117_InitialCreate.cs</DependentUpon>
@@ -160,6 +163,13 @@
     <Compile Include="Models\Wall.cs">
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Styles\_wext.cs" />
+    <Compile Include="Views\Brick\_wext.cs" />
+    <Compile Include="Views\Scene\_wext.cs" />
+    <Compile Include="Views\Wall\_wext.cs" />
+    <Compile Include="Models\Extensions\BrickExtensions.cs" />
+    <Compile Include="Views\_wext.cs" />
+    <Compile Include="Web\StirngExtensions.cs" />
     <Compile Include="Web\WebExtractAttribute.cs" />
     <Compile Include="Scripts\_wext.cs" />
     <Compile Include="Web\BnhModelBinder.cs" />
@@ -175,6 +185,10 @@
     <EmbeddedResource Include="Scripts\Map.js" />
     <EmbeddedResource Include="Scripts\MapEditor.js" />
     <Content Include="Scripts\BrickContent_Map.js" />
+    <EmbeddedResource Include="Styles\DesignBrick.css" />
+    <EmbeddedResource Include="Styles\DesignScene.css" />
+    <EmbeddedResource Include="Styles\MapEditor.css" />
+    <EmbeddedResource Include="Styles\Scene.css" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -182,16 +196,76 @@
     <Content Include="Web.Release.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>
-    <Content Include="Views\Web.config" />
+    <EmbeddedResource Include="Views\Web.config" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Controllers\" />
+    <EmbeddedResource Include="Views\Brick\_Scripts.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\Brick\_Styles.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\Brick\Brick.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\Brick\BrickContent.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\Brick\BrickContent_Html.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\Brick\BrickContent_Map.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\Brick\BrickContent_Razor.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\Brick\BrickContent_Toc.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\Brick\Edit.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\Brick\EditGallery.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\Brick\EditHtml.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\Brick\EditLinkable.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\Brick\EditMap.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\Wall\Wall.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\Scene\Edit.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\Brick\DesignBrick.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\Scene\DesignScene.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\Scene\Scene.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\Scene\Empty.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\Wall\DesignWall.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\_ViewStart.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

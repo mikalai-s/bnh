@@ -1,5 +1,6 @@
 ﻿@using Bnh.Entities
 @using Bnh.WebFramework
+@using Ms.Cms
 
 @model Community
 
@@ -27,7 +28,7 @@
 <h2>@ViewBag.Title</h2>
 
 <h2>
-    <sup class="alter">@Html.ActionLink("edit scene", "Edit", "Scene", new { id = Model.GetScene().Id }, null)</sup>
+    <sup class="alter">@Html.EditSceneLink(Model.GetScene(), "edit scene")</sup>
 </h2>
 
 <div>

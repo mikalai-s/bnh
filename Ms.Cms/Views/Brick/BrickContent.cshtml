@@ -1,5 +1,4 @@
 ﻿@using Ms.Cms.Models
-@using Bnh.Web.Models
 
 @model Brick
 
@@ -14,5 +13,5 @@
 }
 @if (!string.IsNullOrEmpty(suffix))
 { 
-    @Html.Partial("~/Views/Brick/BrickContent_" + suffix + ".cshtml", model);
+    @Html.Partial("~/WebExtracted/Ms.Cms/Views/Brick/BrickContent_" + suffix + ".cshtml", model);
 }

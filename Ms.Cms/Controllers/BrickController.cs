@@ -5,15 +5,14 @@ using System.Data.Entity;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-using Bnh.Entities;
-using Bnh.WebFramework;
 
 using Ms.Cms.Models;
 using Ms.Cms.Web;
 
-namespace Bnh.Controllers
+namespace Ms.Cms.Controllers
 {
-    [Authorize(Roles = "content_manager")]
+    // TODO: use roles passed from external application
+    //[Authorize(Roles = "content_manager")]
     public class BrickController : Controller
     {
         private CmsEntities db = new CmsEntities();
