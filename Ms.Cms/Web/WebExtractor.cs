@@ -41,6 +41,7 @@ namespace Ms.Cms.Web
                     string filePath = Path.Combine(folder, resource.Substring(webExtractAttribute.SourceNamespace.Length + 1));
 
                     if (!Directory.Exists(folder)) { Directory.CreateDirectory(folder); }
+                    if (File.Exists(filePath)) { File.Delete(filePath); }
 
                     using (var file = File.OpenWrite(filePath))
                     {
