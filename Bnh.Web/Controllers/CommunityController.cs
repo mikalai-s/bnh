@@ -72,7 +72,7 @@ namespace Bnh.Controllers
                         var scene = cms.Scenes.Attach(community.GetScene());
                         var templateSceneId = long.Parse(templateSceneIdString);
                         var templateScene = cms.Scenes.First(s => s.Id == templateSceneId);
-                        scene.ApplyTemplate(templateScene);
+                        scene.ApplyTemplate(cms, templateScene);
                         cms.SaveChanges();
                     }
                 }

@@ -43,7 +43,6 @@ namespace Ms.Cms.Models
             var wall = new Wall
             {
                 Id = 0,
-                SceneId = this.SceneId,
                 Title = this.Title,
                 Width = this.Width,
                 Order = this.Order

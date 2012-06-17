@@ -7,12 +7,12 @@ namespace Ms.Cms.Models
 {
     public static class SceneExtensions
     {
-        public static Scene ApplyTemplate(this Scene scene, Scene templateScene)
+        public static Scene ApplyTemplate(this Scene scene, CmsEntities db, Scene templateScene)
         {
             // delete all walls on obsolete scene
             foreach (var wall in scene.Walls.ToList())
             {
-                scene.Walls.Remove(wall);
+                db.Walls.Remove(wall);
             }
 
             // clone walls from template scene into our scene
