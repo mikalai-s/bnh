@@ -124,10 +124,10 @@ namespace Ms.Cms.Controllers
             if (Request.IsAjaxRequest())
             {
                 // render real (saved) scene
-                return PartialView("DesignScene", db.Scenes.First(s => s.Id == scene.Id));
+                return PartialView("~/WebExtracted/Ms.Cms/Views/Scene/DesignScene.cshtml", db.Scenes.First(s => s.Id == scene.Id));
             }
 
-            return View("DesignScene");
+            return View("~/WebExtracted/Ms.Cms/Views/Scene/DesignScene.cshtml");
         }
 
         // apply only properties that can be changed on scene designer
@@ -164,7 +164,7 @@ namespace Ms.Cms.Controllers
                 db.SaveChanges();
             }
 
-            return View("Empty");
+            return View("~/WebExtracted/Ms.Cms/Views/Scene/Empty.cshtml");
         }
 
         // TODO: Fix that
@@ -172,16 +172,19 @@ namespace Ms.Cms.Controllers
         [HttpPost]
         public ActionResult ApplyTemplate(long sceneId, long templateSceneId)
         {
-            var scene = db.Scenes.First(s => s.Id == sceneId).ApplyTemplate(db.Scenes.First(s => s.Id == templateSceneId));
+            var scene = db.Scenes.First(s => s.Id == sceneId).ApplyTemplate(db, db.Scenes.First(s => s.Id == templateSceneId));
             db.SaveChanges();
 
-            return PartialView("DesignScene", scene);
+            return PartialView("~/WebExtracted/Ms.Cms/Views/Scene/DesignScene.cshtml", scene);
         }
 
         [HttpPost]
         public ActionResult CanDeleteBrick(Brick brick)
         {
-            return new JsonResult() { Data = !db.Bricks.OfType<LinkableBrick>().Where(b => b.LinkedBrickId == brick.Id).Any() };
+            return new JsonResult()
+            {
+                Data = !db.Bricks.OfType<LinkableBrick>().Where(b => b.LinkedBrickId == brick.Id).Any()
+            };
         }
 
         protected override void Dispose(bool disposing)
