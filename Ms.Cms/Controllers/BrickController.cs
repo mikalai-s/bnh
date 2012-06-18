@@ -17,12 +17,12 @@ namespace Ms.Cms.Controllers
 
         private Dictionary<string, string> BrickEditView = new Dictionary<string, string>
         {
-            {"EmptyBrick", "~/WebExtracted/Ms.Cms/Views/Brick/Edit.cshtml"},
-            {"HtmlBrick", "~/WebExtracted/Ms.Cms/Views/Brick/EditHtml.cshtml"},
-            {"GalleryBrick", "~/WebExtracted/Ms.Cms/Views/Brick/EditGallery.cshtml"},
-            {"MapBrick", "~/WebExtracted/Ms.Cms/Views/Brick/EditMap.cshtml"},
-            {"RazorBrick", "~/WebExtracted/Ms.Cms/Views/Brick/EditHtml.cshtml"},
-            {"LinkableBrick", "~/WebExtracted/Ms.Cms/Views/Brick/EditLinkable.cshtml"},
+            {"EmptyBrick", "Edit"},
+            {"HtmlBrick", "EditHtml"},
+            {"GalleryBrick", "EditGallery"},
+            {"MapBrick", "EditMap"},
+            {"RazorBrick", "EditHtml"},
+            {"LinkableBrick", "EditLinkable"},
         };
         
         //
