@@ -1,6 +1,4 @@
-﻿@using Ms.Cms.Models
-
-@model Brick
+﻿@model Brick
 
 @{
     var model = Model.EnsureNonLinked();
@@ -11,7 +9,7 @@
         (model is TocBrick) ? "Toc" :
         null;
 }
-@if (!string.IsNullOrEmpty(suffix))
+@if (!suffix.IsEmpty())
 { 
     @Html.Partial("~/WebExtracted/Ms.Cms/Views/Brick/BrickContent_" + suffix + ".cshtml", model);
 }

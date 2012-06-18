@@ -1,2 +1,2 @@
 ﻿
-[assembly: Ms.Cms.Web.WebExtract(SourceNamespace="Ms.Cms.Views.Wall", TargeFolder="Ms.Cms/Views/Wall")]
+[assembly: Ms.Cms.WebExtract(SourceNamespace="Ms.Cms.Views.Wall", TargeFolder="Ms.Cms/Views/Wall")]

@@ -10,7 +10,7 @@ using System.Data.Objects.DataClasses;
 
 using TypeMap = System.Collections.Generic.Dictionary<string, System.Type>;
 
-namespace Ms.Cms.Web
+namespace Ms.Cms
 {
     public class BnhModelBinder : DefaultModelBinder
     {

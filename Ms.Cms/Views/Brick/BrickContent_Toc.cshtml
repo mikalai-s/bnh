@@ -1,6 +1,4 @@
-﻿@using Ms.Cms.Models
-
-@model TocBrick
+﻿@model TocBrick
 
 @{
     IEnumerable<Brick> contentBricks = null;
@@ -13,7 +11,7 @@
                 .OrderBy(b => b.Order))
             .ToList()
             .Select(b => b.EnsureNonLinked())
-            .Where(b => !b.ContentTitle.IsEmpty(true));
+            .Where(b => !string.IsNullOrWhiteSpace(b.ContentTitle));
     }
 }
 

@@ -10,7 +10,7 @@ using System.Web.Optimization;
 using System.Web.Routing;
 using Bnh.WebFramework;
 
-using Ms.Cms.Web;
+using Ms.Cms;
 
 namespace Bnh.Web
 {
@@ -68,14 +68,18 @@ namespace Bnh.Web
 
         protected void Application_Start()
         {
-            Ms.Cms.MsCms.Setup(this, "~/Views/Shared/_Layout.cshtml", "content_manager");
+            Ms.Cms.MsCms.Setup(this, 
+                layout: "~/Views/Shared/_Layout.cshtml", 
+                designer: "content_manager",
+                tinymce: "~/Scripts/tiny_mce/tiny_mce_src.js",
+                googleMaps: "//maps.googleapis.com/maps/api/js?sensor=false");
 
             AreaRegistration.RegisterAllAreas();
 
             RegisterGlobalFilters(GlobalFilters.Filters);
             RegisterRoutes(RouteTable.Routes);
 
-            BundleTable.Bundles.RegisterTemplateBundles();
+            //BundleTable.Bundles.RegisterTemplateBundles();
 
             ModelBinders.Binders.DefaultBinder = new BnhModelBinder();
         }

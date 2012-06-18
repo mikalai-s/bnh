@@ -17,7 +17,7 @@ using Newtonsoft.Json;
 using Ms.Cms.Models;
 using Ms.Cms.Models.Attributes;
 
-namespace Ms.Cms.Web
+namespace Ms.Cms
 {
     public static class BrickRendering
     {

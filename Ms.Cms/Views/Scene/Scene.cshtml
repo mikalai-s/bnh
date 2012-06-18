@@ -1,9 +1,12 @@
-﻿@using Ms.Cms.Models
+﻿@model Scene
 
-@model Scene
 <div id="scene">
     @foreach (var wall in Model.Walls.OrderBy(w => w.Order))
     {
         @Html.Partial("~/WebExtracted/Ms.Cms/Views/Wall/Wall.cshtml", wall)
     }
 </div>
+
+@{
+    this.RenderStylesAndScripts();
+}
