@@ -165,9 +165,7 @@ namespace Ms.Cms.Controllers
 
             return View("~/WebExtracted/Ms.Cms/Views/Scene/Empty.cshtml");
         }
-
-        // TODO: Fix that
-        
+      
         [HttpPost]
         public ActionResult ApplyTemplate(long sceneId, long templateSceneId)
         {

@@ -14,7 +14,7 @@ namespace Ms.Cms
 {
     public class RazorEngine
     {
-        // TODO: Cache compiled dynamic assembly for performance reazons
+        // TODO: Cache compiled dynamic assembly for performance reasons
         public static string GetContent(string template, dynamic model)
         {
             if (string.IsNullOrEmpty(template)) { return string.Empty; }
