@@ -2,7 +2,7 @@
 
 @{
     ViewBag.Title = "Edit";
-    var partialView = (string) ViewBag.PartialView;
+    var partialView = "~/WebExtracted/Ms.Cms/Views/Brick/{0}.cshtml".FormatWith((string)ViewBag.PartialView);
 }
 
 <h2>Edit</h2>
