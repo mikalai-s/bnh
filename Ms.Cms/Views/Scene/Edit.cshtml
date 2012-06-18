@@ -1,19 +1,18 @@
-﻿@using Ms.Cms.Models
-@using Ms.Cms
+﻿
 @model Scene
 @{
     var sceneId = Model.Id;
     var ownerId = Model.OwnerGuidId;
     var linkableBricks = (ownerId == Constants.LinkableBricksSceneGuid);
     ViewBag.Title = linkableBricks ? "Linkable Bricks" : "Scene designer";
-}
-@section Styles {
-    <link href="~/WebExtracted/Ms.Cms/Styles/Scene.css" rel="stylesheet" type="text/css" />
-    <link href="~/WebExtracted/Ms.Cms/Styles/DesignScene.css" rel="stylesheet" type="text/css" />
-    <link rel="stylesheet" type="text/css" href="~/Content/themes/base/jquery-ui.css" />
-}
-@section Scripts {
-    <script src="~/WebExtracted/Ms.Cms/Scripts/DesignScene.js" type="text/javascript"></script>
+
+    this.GetStyleBundle().Include(new []
+    {
+        "~/WebExtracted/Ms.Cms/Styles/Scene.css",
+        "~/WebExtracted/Ms.Cms/Styles/DesignScene.css",
+        "~/Content/themes/base/jquery-ui.css"
+    });
+    this.GetScriptBundle().Include(new [] { "~/WebExtracted/Ms.Cms/Scripts/DesignScene.js" });
 }
 
 <h2>@ViewBag.Title</h2>
@@ -95,3 +94,7 @@
     </fieldset>
 
 </div>
+
+@{
+    this.RenderStylesAndScripts();
+}

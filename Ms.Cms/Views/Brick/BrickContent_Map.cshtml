@@ -1,4 +1,12 @@
-﻿@model Ms.Cms.Models.MapBrick
+﻿@model MapBrick
+@{
+    this.GetScriptBundle().Include(new []
+    {
+        Ms.Cms.MsCms.GoogleMapsApiScript,
+        "~/WebExtracted/Ms.Cms/Scripts/Map.js",
+        "~/WebExtracted/Ms.Cms/Scripts/BrickContent_Map.js"
+    });
+}
 @*@{
     var community = ViewBag.GlobalModel as Bnh.Entities.Community;
 }

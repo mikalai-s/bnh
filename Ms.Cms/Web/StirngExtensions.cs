@@ -20,19 +20,6 @@ namespace System
         }
 
         /// <summary>
-        /// Returns true if given sting is empty.
-        /// </summary>
-        /// <param name="str">Input string.</param>
-        /// <param name="skipWhiteSpace">If set, consider whitespace as empty string. Default is "false".</param>
-        /// <returns></returns>
-        public static bool IsEmpty(this string str, bool skipWhiteSpace = false)
-        {
-            return skipWhiteSpace ? 
-                string.IsNullOrEmpty(str) :
-                string.IsNullOrWhiteSpace(str);
-        }
-
-        /// <summary>
         /// Convert string to HTML id by leaving only a-z, A-Z, -, _ characters.
         /// http://www.w3schools.com/tags/att_standard_id.asp
         /// </summary>

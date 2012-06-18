@@ -11,6 +11,8 @@ using System.Text;
 
 using Ms.Cms.Models;
 using System.IO;
+using System.Web.WebPages;
+using System.Web.Optimization;
 
 namespace Ms.Cms
 {
@@ -46,24 +48,64 @@ namespace Ms.Cms
             return html.ActionLink(text, "Edit", "Scene", new { id = scene.Id }, null);
         }
 
-
-        public static MvcHtmlString Scene(this HtmlHelper html, Scene scene)
+        public static List<string> GetStyleBundle(this WebViewPage page)
         {
-            return html.Partial("~/WebExtracted/Ms.Cms/Views/Scene/Scene.cshtml", scene);
+            var bundle = page.ViewContext.Controller.ViewBag._MsCms_StyleBundle as List<string>;
+            if (bundle == null)
+            {
+                page.ViewContext.Controller.ViewBag._MsCms_StyleBundle = bundle = new List<string>();
+            }
+            return bundle;
         }
 
-        // adopted from http://stackoverflow.com/questions/483091/render-a-view-as-a-string
-        private static MvcHtmlString RenderView<T>(this HtmlHelper helper, string viewName, T model)
+        public static List<string> GetScriptBundle(this WebViewPage page)
         {
-            helper.ViewData.Model = model;
-            using (var sw = new StringWriter())
+            var scriptBundle = page.ViewContext.Controller.ViewBag._MsCms_ScriptBundle as List<string>;
+            if (scriptBundle == null)
             {
-                var viewResult = ViewEngines.Engines.FindPartialView(helper.ViewContext.Controller.ControllerContext, viewName);
-                var viewContext = new ViewContext(helper.ViewContext.Controller.ControllerContext, viewResult.View, helper.ViewData, helper.ViewContext.TempData, sw);
-                viewResult.View.Render(viewContext, sw);
-                viewResult.ViewEngine.ReleaseView(helper.ViewContext.Controller.ControllerContext, viewResult.View);
-                return MvcHtmlString.Create(sw.GetStringBuilder().ToString());
+                page.ViewContext.Controller.ViewBag._MsCms_ScriptBundle = scriptBundle = new List<string>();
             }
+            return scriptBundle;
+            //var scriptBundle = page.ViewBag._MsCms_ScriptBundle as ScriptBundle;
+            //if (scriptBundle == null)
+            //{
+            //    page.ViewBag._MsCms_ScriptBundle = scriptBundle = new ScriptBundle("~/WebExtracted/Ms.Cms/Scripts/js");
+            //}
+            //return scriptBundle;
+        }
+
+
+        public static MvcHtmlString RenderScene(this WebViewPage page, Scene scene)
+        {
+            var s =  page.Html.Partial("~/WebExtracted/Ms.Cms/Views/Scene/Scene.cshtml", scene);
+            page.RenderStylesAndScripts();
+            return s;
+        }
+
+        public static void RenderStylesAndScripts(this WebViewPage page)
+        {
+            // define styles
+            page.DefineSection("_MsCmsStyles", () =>
+            {
+                page.Write(Styles.Render(page.GetStyleBundle().Distinct().ToArray()));
+            });
+
+            // define scripts
+            page.DefineSection("_MsCmsScripts", () =>
+            {
+                page.Write(Scripts.Render(page.GetScriptBundle().Distinct().ToArray()));
+            });
+        }
+
+        /// <summary>
+        /// NOTE: just a temprory solution to be compatible with ScriptBundle.Include() method
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="list"></param>
+        /// <param name="items"></param>
+        public static void Include<T>(this List<T> list, IEnumerable<T> items)
+        {
+            list.AddRange(items);
         }
     }
 }

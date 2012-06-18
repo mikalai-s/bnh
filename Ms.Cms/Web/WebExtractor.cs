@@ -5,7 +5,7 @@ using System.Linq;
 using System.Reflection;
 using System.Web;
 
-namespace Ms.Cms.Web
+namespace Ms.Cms
 {
     /// <summary>
     /// Extracts embedded web resources

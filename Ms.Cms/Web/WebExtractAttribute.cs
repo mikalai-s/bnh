@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace Ms.Cms.Web
+namespace Ms.Cms
 {
     /// <summary>
     /// Tells what destination folder to use for given resource namespace

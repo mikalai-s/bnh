@@ -1,2 +1,2 @@
 ﻿
-[assembly: Ms.Cms.Web.WebExtract(SourceNamespace="Ms.Cms.Scripts", TargeFolder="Ms.Cms/Scripts")]
+[assembly: Ms.Cms.WebExtract(SourceNamespace="Ms.Cms.Scripts", TargeFolder="Ms.Cms/Scripts")]

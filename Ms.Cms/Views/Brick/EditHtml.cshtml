@@ -1,11 +1,16 @@
-﻿@model Ms.Cms.Models.HtmlBrick
+﻿@model HtmlBrick
 
 @{
     ViewBag.Title = "Edit";
+    this.GetStyleBundle().Include(new[] { "~/Styles/DesignBrick.css" });
+    this.GetScriptBundle().Include(new []
+    {
+        Ms.Cms.MsCms.TinyMceScript,
+        "~/WebExtracted/Ms.Cms/Scripts/EditHtmlBrick.js"
+    });
 }
 
 <div class="editor-label">Content</div>
 <div class="editor-field">
     @Html.TextAreaFor(model => model.Html, new { id = "htmlTextArea"})
-    @*@Html.ValidationMessageFor(model => model.Html)*@
 </div>
