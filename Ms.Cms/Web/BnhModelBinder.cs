@@ -14,31 +14,12 @@ namespace Ms.Cms
 {
     public class BnhModelBinder : DefaultModelBinder
     {
-        // type mapping
-        /*
-        public static readonly Dictionary<Type, TypeMap> HierarchyTypeMap = new Dictionary<Type, TypeMap>
-        {
-            {
-                typeof(Brick), new TypeMap
-                {
-                    {"0", typeof(EmptyBrick)},
-                    {"1", typeof(HtmlBrick)},
-                    {"2", typeof(GalleryBrick)},
-                    {"3", typeof(MapBrick)},
-                    {"4", typeof(RazorBrick)},
-                    {"5", typeof(LinkableBrick)},
-                    {"6", typeof(TocBrick)}
-                }
-            }
-        };
-        */
         protected override object CreateModel(ControllerContext controllerContext, ModelBindingContext bindingContext, Type modelType)
         {
             bool hasPrefix = bindingContext.ValueProvider.ContainsPrefix(bindingContext.ModelName);
             string prefix = ((hasPrefix) && (bindingContext.ModelName != "")) ? bindingContext.ModelName + "." : "";
 
-            // TODO: make check more accurate
-            if (!modelType.Name.EndsWith("Brick"))
+            if (!modelType.IsAssignableFrom(typeof(Brick)))
             {
                 return base.CreateModel(controllerContext, bindingContext, modelType);
             }
