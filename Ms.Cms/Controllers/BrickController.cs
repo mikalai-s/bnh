@@ -10,8 +10,7 @@ using Ms.Cms.Models;
 
 namespace Ms.Cms.Controllers
 {
-    // TODO: use roles passed from external application
-    //[Authorize(Roles = "content_manager")]
+    [DesignerAuthorize]
     public class BrickController : Controller
     {
         private CmsEntities db = new CmsEntities();

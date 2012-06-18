@@ -12,8 +12,7 @@ using Ms.Cms.Models;
 
 namespace Ms.Cms.Controllers
 {
-    // TODO: use roles passed from external application
-    //[Authorize(Roles = "content_manager")]
+    [DesignerAuthorizeAttribute]
     public class SceneController : Controller
     {
         private CmsEntities db = new CmsEntities();
