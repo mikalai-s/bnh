@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.ComponentModel.DataAnnotations.Schema;
+using Ms.Cms.Models.Attributes;
 
 namespace Ms.Cms.Models
 {
@@ -9,7 +10,7 @@ namespace Ms.Cms.Models
     {
         public long? LinkedBrickId { get; set; }
 
-        //[ForeignKey("LinkedBrickId")]
+        [NonJsExposable]
         public virtual Brick LinkedBrick { get; set; }
     }
     

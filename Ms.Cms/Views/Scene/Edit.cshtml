@@ -66,7 +66,7 @@
                     <label>@Html.CheckBox("hideBricksContentCheckbox")Hide bricks content</label>
                 </div>
 
-                @Html.ActionLink("Manage Linkable Bricks", "Edit", "Scene", new { id = Constants.LinkableBricksSceneGuid }, null)
+                @Html.ActionLink("Manage Linkable Bricks", "Edit", "Scene", new { id = ViewBag.LinkableBricksSceneId }, null)
             </fieldset>
 
             <fieldset>

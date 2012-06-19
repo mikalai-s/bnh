@@ -196,10 +196,15 @@
             return;
         }
 
+        if (getScene().find(".wall > .content").length === 0) {
+            // add wall if there no any
+            initWall(createWall(), {
+                title: "No Title"
+            });
+        }
+
         // create brick from prototype and add into DOM
         var brick = createBrick();
-
-
 
         // initialize brick object
         initializeBrick(brick, {

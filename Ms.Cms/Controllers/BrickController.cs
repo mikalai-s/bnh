@@ -21,7 +21,7 @@ namespace Ms.Cms.Controllers
             {"HtmlBrick", "EditHtml"},
             {"GalleryBrick", "EditGallery"},
             {"MapBrick", "EditMap"},
-            {"RazorBrick", "EditHtml"},
+            {"RazorBrick", "EditRazor"},
             {"LinkableBrick", "EditLinkable"},
         };
         
@@ -52,6 +52,14 @@ namespace Ms.Cms.Controllers
 
         [HttpPost]
         public ActionResult EditHtml(HtmlBrick brick)
+        {
+            brick.Html = HttpUtility.HtmlDecode(brick.Html);
+            return Edit(brick);
+        }
+
+        [HttpPost]
+        [ValidateInput(false)]
+        public ActionResult EditRazor(HtmlBrick brick)
         {
             brick.Html = HttpUtility.HtmlDecode(brick.Html);
             return Edit(brick);

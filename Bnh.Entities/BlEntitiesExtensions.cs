@@ -38,8 +38,8 @@ namespace Bnh.Entities
                     scene = db.Scenes.Add(new Scene { OwnerGuidId = community.Id });
                     db.SaveChanges();
                 }
-                // trick to ensure that walls and bricks are loaded in current DB context for given scene
-                scene.Walls.SelectMany(w => w.Bricks).ToList();
+                // trick to ensure that walls, bricks and shared bricks are loaded in current DB context for given scene
+                var bricks = scene.Walls.SelectMany(w => w.Bricks).ToList().OfType<LinkableBrick>().Select(b => b.LinkedBrick).ToList();
                 return scene;
             }
         }
