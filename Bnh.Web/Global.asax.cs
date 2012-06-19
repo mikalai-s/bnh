@@ -9,8 +9,8 @@ using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
 using Bnh.WebFramework;
-
 using Ms.Cms;
+using Ms.Cms.Models.Utilities;
 
 namespace Bnh.Web
 {
@@ -68,7 +68,7 @@ namespace Bnh.Web
 
         protected void Application_Start()
         {
-            Ms.Cms.MsCms.Setup(this, 
+            MsCms.Setup(this, 
                 layout: "~/Views/Shared/_Layout.cshtml", 
                 designer: "content_manager",
                 tinymce: "~/Scripts/tiny_mce/tiny_mce_src.js",

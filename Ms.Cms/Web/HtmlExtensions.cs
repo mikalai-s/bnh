@@ -20,26 +20,10 @@ namespace Ms.Cms
     //     Represents support for HTML links in an application.
     public static class HtmlExtensions
     {
-        private static readonly Dictionary<Type, string> BrickTypeNames = new Dictionary<Type, string>()
-                                                                     {
-                                                                         {typeof(HtmlBrick), "Rich Text"},
-                                                                         {typeof(RazorBrick), "Razor Template"},
-                                                                         {typeof(GalleryBrick), "Gallery"},
-                                                                         {typeof(MapBrick), "Map"},
-                                                                         {typeof(EmptyBrick), "Empty"},
-                                                                         {typeof(LinkableBrick), "Linkable"},
-                                                                         {typeof(TocBrick), "Table of Content"}
-                                                                     };
-
-        public static string GetBrickTypeName(Type brickType)
-        {
-            return BrickTypeNames[brickType];
-        }
-
         public static MvcHtmlString DropDownListForBrickTypes(this HtmlHelper htmlHelper, string name)
         {
-            var items = BrickTypeNames
-                .Select(e => new SelectListItem { Value = e.Key.Name, Text = e.Value });
+            var items = MsCms.RegisteredBrickTypes
+                .Select(br => new SelectListItem { Value = br.Type.Name, Text = br.Title });
             return htmlHelper.DropDownList(name, items);
         }
 
