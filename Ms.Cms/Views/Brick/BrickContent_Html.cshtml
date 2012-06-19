@@ -1,7 +1,3 @@
 ﻿@model HtmlBrick
 
-@{
-    this.GetScriptBundle().Include(new[] { "~/WebExtracted/Ms.Cms/Scripts/EditHtmlBrick.js" });
-}
-
 @(new MvcHtmlString(Model.Html))

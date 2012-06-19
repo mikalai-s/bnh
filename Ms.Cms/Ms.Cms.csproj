@@ -133,6 +133,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Models\Utilities\BrickRegistration.cs" />
     <Compile Include="MsCms.cs" />
     <Compile Include="Controllers\BrickController.cs" />
     <Compile Include="Controllers\SceneController.cs" />
@@ -192,7 +193,7 @@
     <EmbeddedResource Include="Scripts\EditHtmlBrick.js" />
     <EmbeddedResource Include="Scripts\Map.js" />
     <EmbeddedResource Include="Scripts\MapEditor.js" />
-    <Content Include="Scripts\BrickContent_Map.js" />
+    <EmbeddedResource Include="Scripts\BrickContent_Map.js" />
     <EmbeddedResource Include="Styles\DesignBrick.css" />
     <EmbeddedResource Include="Styles\DesignScene.css" />
     <EmbeddedResource Include="Styles\MapEditor.css" />

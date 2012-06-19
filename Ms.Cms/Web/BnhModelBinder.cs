@@ -31,7 +31,7 @@ namespace Ms.Cms
                 throw new Exception(string.Format("Unknown type \"{0}\"", result.AttemptedValue));
             }
 
-            var type = Type.GetType(typeof(Brick).Namespace + "." + result.AttemptedValue);
+            var type = MsCms.RegisteredBrickTypes.Select(br => br.Type).First(t => t.Name == result.AttemptedValue);
             var model = Activator.CreateInstance(type);
             bindingContext.ModelMetadata = ModelMetadataProviders.Current.GetMetadataForType(() => model, type);
             return model;

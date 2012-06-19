@@ -7,16 +7,17 @@
         "~/WebExtracted/Ms.Cms/Scripts/BrickContent_Map.js"
     });
 }
-@*@{
+@*TODO: remove community DependencyResolver from here*@
+@{
     var community = ViewBag.GlobalModel as Bnh.Entities.Community;
 }
 @if (community != null)
 { 
-<div class="map-canvas-wrapper" style="height: @(Model.Height)px" zoom="@Model.Zoom" gpsLocation="@community.GpsLocation" gpsBounds="@community.GpsBounds">
-    <div id="mapCanvas"></div>
+<div class="map-canvas-wrapper"  zoom="@Model.Zoom" gpsLocation="@community.GpsLocation" gpsBounds="@community.GpsBounds">
+    <div id="mapCanvas" style="height: @(Model.Height)px"></div>
 </div>
 }
 else
 {
     @:No community entity available
-}*@
+}
