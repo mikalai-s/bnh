@@ -41,7 +41,7 @@
             @Html.Partial(partialView, Model)
         }
 
-        <span class="alter"><input type="submit" value="Save" /></span>
+        <span class="alter"><input type="submit" value="Save" id="saveButton" /></span>
         @Html.ActionLink("Cancel", "Edit", "Scene", new { id = Model.Wall.SceneId }, null)
     </fieldset>
 }

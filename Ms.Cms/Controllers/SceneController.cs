@@ -28,6 +28,10 @@ namespace Ms.Cms.Controllers
             ViewBag.Templates = new SelectList(sceneTemplates, "id", "title");
 
             ViewBag.OwnerId = id;
+            ViewBag.LinkableBricksSceneId = db.Scenes
+                .Where(s => s.OwnerGuidId == Constants.LinkableBricksSceneGuid)
+                .Select(s => s.Id)
+                .First();
 
             var scene = db.Scenes.FirstOrDefault(s => s.Id == id); 
             return View("~/WebExtracted/Ms.Cms/Views/Scene/Edit.cshtml", scene);
