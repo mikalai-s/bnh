@@ -1,8 +1,8 @@
-DROP TABLE cm.Brick
+DROP TABLE Cms.Brick
 GO
-DROP TABLE cm.Wall
+DROP TABLE Cms.Wall
 GO
-DROP TABLE cm.SceneTemplate
+DROP TABLE Cms.SceneTemplate
 GO
 DROP TABLE bl.community_builders
 GO
