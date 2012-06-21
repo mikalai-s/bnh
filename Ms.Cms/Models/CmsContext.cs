@@ -11,14 +11,14 @@ namespace Ms.Cms.Models
         public CmsEntities(string nameOrConnectionString) 
             : base(nameOrConnectionString)
         {
-            var brickAssemblies = MsCms.RegisteredBrickTypes
-                .Select(br => br.Type.Assembly)
-                .Where(a => a != Assembly.GetExecutingAssembly())
-                .Distinct();
-            foreach(var assembly in brickAssemblies)
-            {
-                ((IObjectContextAdapter)this).ObjectContext.MetadataWorkspace.LoadFromAssembly(assembly);
-            }
+            //var brickAssemblies = MsCms.RegisteredBrickTypes
+            //    .Select(br => br.Type.Assembly)
+            //    .Where(a => a != Assembly.GetExecutingAssembly())
+            //    .Distinct();
+            //foreach(var assembly in brickAssemblies)
+            //{
+            //    ((IObjectContextAdapter)this).ObjectContext.MetadataWorkspace.LoadFromAssembly(assembly);
+            //}
         }
 
         public CmsEntities()
