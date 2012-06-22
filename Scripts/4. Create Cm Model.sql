@@ -58,4 +58,4 @@ INSERT INTO [__MigrationHistory] ([MigrationId], [Model], [ProductVersion]) VALU
 
 
 
-insert into [cm].[Wall]([OwnerId], [Title], [Width], [Order]) values('B740A5E9-3463-4FAC-82C3-DBF9F7BA1017', N'Shared Bricks', 100.00, 0)
+insert into [Cms].[Scene]([OwnerGuidId], [OwnerLongId], [OwnerIntId]) values('B740A5E9-3463-4FAC-82C3-DBF9F7BA1017', 0, 0)
