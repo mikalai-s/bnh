@@ -251,9 +251,7 @@
     <Content Include="Images\logo.png" />
     <Content Include="Properties\PublishProfiles\bnh.pubxml.user" />
     <Content Include="Scripts\CommunityEdit.js" />
-    <Content Include="Scripts\CommunityIndex.js">
-      <DependentUpon>Index.cshtml</DependentUpon>
-    </Content>
+    <Content Include="Scripts\CommunityIndex.js" />      
     <Content Include="Scripts\Global.Encoding.js" />
     <Content Include="Scripts\jquery-1.7.2-vsdoc.js" />
     <Content Include="Scripts\jquery-1.7.2.js" />
@@ -526,9 +524,7 @@
     <Content Include="Scripts\tiny_mce\utils\mctabs.js" />
     <Content Include="Scripts\tiny_mce\utils\validate.js" />
     <Content Include="Styles\CommunityEdit.css" />
-    <Content Include="Styles\CommunityIndex.css">
-      <DependentUpon>Index.cshtml</DependentUpon>
-    </Content>
+    <Content Include="Styles\CommunityIndex.css" />
     <Content Include="Styles\Layout.css" />
     <Content Include="Styles\Login.css" />
     <Content Include="Web.config">
