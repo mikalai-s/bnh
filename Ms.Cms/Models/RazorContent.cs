@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace Ms.Cms.Models
 {
-    public partial class RazorBrick : HtmlBrick
+    public partial class RazorContent : HtmlContent
     {
     }
     

@@ -1,9 +1,9 @@
 ﻿
-@model Scene
+@model DesignScene
 @{
     var sceneId = Model.Id;
     var ownerId = Model.OwnerGuidId;
-    var linkableBricks = (ownerId == Constants.LinkableBricksSceneGuid);
+    var linkableBricks = (sceneId == Constants.LinkableBricksSceneId);
     ViewBag.Title = linkableBricks ? "Linkable Bricks" : "Scene designer";
 
     this.GetStyleBundle().Include(new []

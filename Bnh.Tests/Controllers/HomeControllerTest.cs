@@ -7,20 +7,38 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Bnh.Web;
 using Bnh.Web.Controllers;
 using Ms.Cms.Models;
+using MongoDB.Bson.Serialization;
+using MongoDB.Driver.Builders;
+using MongoDB.Bson;
+using MongoDB.Driver;
 
 namespace Bnh.Tests.Controllers
 {
     [TestClass]
     public class HomeControllerTest
     {
+        [TestInitialize]
+        public void Setup()
+        {
+            BsonClassMap.LookupClassMap(typeof(HtmlContent));
+        }
+
         [TestMethod]
         public void Db()
         {
-            var db = new CmsEntities(@"data source=localhost\sqlserver;Initial Catalog=bnh;Integrated Security=SSPI;");
-            var walls = db.Walls.ToList();
-            Assert.IsTrue(walls.Count == 2);
-            Assert.IsTrue(walls[0].Bricks.Count == 1);
-            Assert.IsTrue(walls[1].Bricks.Count == 1);
+            var cs = "mongodb://127.0.0.1/bnh?safe=true";
+            using (var cms = new CmsEntities(cs))
+            {
+                //cms.BrickContents.Insert(new HtmlContent() { Html = "abc" });
+                var e = cms.BrickContents.Collection.FindOneById(ObjectId.Parse("4fe94433afce151fe43622f5"));
+
+                cms.BrickContents.Collection.Remove(Query.EQ("_id", "4fe93c7eafce150ff868d7c9"));
+               // var error = MongoDatabase.Create(cs).GetLastError();
+                var bricks = cms.BrickContents.ToList();
+                Assert.AreEqual(bricks.Count, 0);
+
+                
+            }
         }
     }
 }

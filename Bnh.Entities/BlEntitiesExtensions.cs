@@ -16,7 +16,7 @@ namespace Bnh.Entities
                 var walls = db.Scenes
                     .Where(s => s.OwnerGuidId == id)
                     .SelectMany(s => s.Walls)
-                    .OrderBy(w => w.Order).ToList();
+                    .ToList();
                 // ensure bricks while given db context is open
                 walls.ForEach(w => w.Bricks.ToList());
                 return walls;
@@ -35,11 +35,9 @@ namespace Bnh.Entities
                 var scene = db.Scenes.FirstOrDefault(s => s.OwnerGuidId == community.Id);
                 if (scene == null)
                 {
-                    scene = db.Scenes.Add(new Scene { OwnerGuidId = community.Id });
-                    db.SaveChanges();
+                    scene = new Scene { OwnerGuidId = community.Id };
+                    db.Scenes.Insert(scene);
                 }
-                // trick to ensure that walls, bricks and shared bricks are loaded in current DB context for given scene
-                var bricks = scene.Walls.SelectMany(w => w.Bricks).ToList().OfType<LinkableBrick>().Select(b => b.LinkedBrick).ToList();
                 return scene;
             }
         }

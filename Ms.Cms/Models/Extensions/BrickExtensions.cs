@@ -14,13 +14,31 @@ namespace Ms.Cms.Models
         /// <returns></returns>
         public static string GetHtmlId(this Brick brick)
         {
-            return brick.Title.ToHtmlId();
+            return "";//brick.Title.ToHtmlId();
         }
 
-        public static Brick EnsureNonLinked(this Brick brick)
+        /// <summary>
+        /// Gets brick content.
+        /// NOTE: ensures linked content if content is linkable.
+        /// </summary>
+        /// <param name="brick"></param>
+        /// <returns></returns>
+        public static BrickContent GetContent(this Brick brick)
         {
-            var linkable = brick as LinkableBrick;
-            return (linkable == null) ? brick : linkable.LinkedBrick;
+            using(var db = new CmsEntities())
+            {
+                var list = db.BrickContents.ToList();
+                var content = db.BrickContents.FirstOrDefault(c => c.Id == brick.BrickContentId);
+                if (content != null)
+                {
+                    var linkableContent = content as LinkableContent;
+                    if (linkableContent != null)
+                    {
+                        content = db.BrickContents.FirstOrDefault(c => c.Id == linkableContent.LinkedContentId);
+                    }
+                }
+                return content ?? new EmptyContent();
+            }
         }
     }
 }

@@ -1,7 +1,7 @@
 ﻿@model Scene
 
 <div id="scene">
-    @foreach (var wall in Model.Walls.OrderBy(w => w.Order))
+    @foreach (var wall in Model.Walls)
     {
         @Html.Partial("~/WebExtracted/Ms.Cms/Views/Wall/Wall.cshtml", wall)
     }

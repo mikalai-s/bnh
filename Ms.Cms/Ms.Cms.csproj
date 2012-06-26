@@ -47,20 +47,22 @@
     <Reference Include="Antlr3.Runtime">
       <HintPath>..\packages\WebGrease.1.0.0\lib\Antlr3.Runtime.dll</HintPath>
     </Reference>
-    <Reference Include="EntityFramework">
-      <HintPath>..\packages\EntityFramework.5.0.0-rc\lib\net40\EntityFramework.dll</HintPath>
-    </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <Private>True</Private>
       <HintPath>..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
+    </Reference>
+    <Reference Include="MongoDB.Bson">
+      <HintPath>..\packages\mongocsharpdriver.1.4.2\lib\net35\MongoDB.Bson.dll</HintPath>
+    </Reference>
+    <Reference Include="MongoDB.Driver">
+      <HintPath>..\packages\mongocsharpdriver.1.4.2\lib\net35\MongoDB.Driver.dll</HintPath>
     </Reference>
     <Reference Include="Newtonsoft.Json, Version=4.5.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.4.5.7\lib\net40\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
-    <Reference Include="System.Data.Entity" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Net.Http, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Net.Http.2.0.20126.16343\lib\net40\System.Net.Http.dll</HintPath>
@@ -78,7 +80,6 @@
     <Reference Include="System.Web.ApplicationServices" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
-    <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.Web.Helpers, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <Private>True</Private>
       <HintPath>..\packages\Microsoft.AspNet.WebPages.2.0.20505.0\lib\net40\System.Web.Helpers.dll</HintPath>
@@ -133,40 +134,38 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DynamicBsonClassMap.cs" />
+    <Compile Include="Models\BrickContent.cs" />
+    <Compile Include="Models\CmsContext.cs" />
+    <Compile Include="Models\DesignUi\DesignBrick.cs" />
+    <Compile Include="Models\DesignUi\DesignScene.cs" />
+    <Compile Include="Models\DesignUi\DesignWall.cs" />
+    <Compile Include="Models\EmptyContent.cs" />
+    <Compile Include="Models\Extensions\CommonExtensions.cs" />
+    <Compile Include="Models\InitData\InitData.cs" />
+    <Compile Include="Models\IRepository.cs" />
+    <Compile Include="Models\MongoRepository.cs" />
+    <Compile Include="Models\SceneRepository.cs" />
     <Compile Include="Models\Utilities\BrickRegistration.cs" />
     <Compile Include="MsCms.cs" />
     <Compile Include="Controllers\BrickController.cs" />
     <Compile Include="Controllers\SceneController.cs" />
-    <Compile Include="Migrations\201206110230117_InitialCreate.cs" />
-    <Compile Include="Migrations\201206110230117_InitialCreate.Designer.cs">
-      <DependentUpon>201206110230117_InitialCreate.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Attributes\NonCloneableAttribute.cs" />
     <Compile Include="Models\Attributes\NonJsExposableAttribute.cs" />
     <Compile Include="Models\Brick.cs">
     </Compile>
-    <Compile Include="Models\Extensions\CommonExtensions.cs" />
     <Compile Include="Models\Clonable.cs" />
-    <Compile Include="Models\EmptyBrick.cs">
-    </Compile>
     <Compile Include="Models\Extensions\SceneExtensions.cs" />
-    <Compile Include="Models\GalleryBrick.cs">
+    <Compile Include="Models\HtmlContent.cs">
     </Compile>
-    <Compile Include="Models\HtmlBrick.cs">
+    <Compile Include="Models\MapContent.cs">
     </Compile>
-    <Compile Include="Models\MapBrick.cs">
-    </Compile>
-    <Compile Include="Models\CmsContext.cs">
-    </Compile>
-    <Compile Include="Models\RazorBrick.cs">
+    <Compile Include="Models\RazorContent.cs">
     </Compile>
     <Compile Include="Models\Scene.cs" />
-    <Compile Include="Models\SceneTemplate.cs">
+    <Compile Include="Models\LinkableContent.cs">
     </Compile>
-    <Compile Include="Models\LinkableBrick.cs">
-    </Compile>
-    <Compile Include="Models\TocBrick.cs">
+    <Compile Include="Models\TocContent.cs">
     </Compile>
     <Compile Include="Models\Wall.cs">
     </Compile>
@@ -178,6 +177,7 @@
     <Compile Include="Models\Extensions\BrickExtensions.cs" />
     <Compile Include="Views\_wext.cs" />
     <Compile Include="Web\DesignerAuthorizeAttribute.cs" />
+    <Compile Include="Web\ObjectIdBinder.cs" />
     <Compile Include="Web\StirngExtensions.cs" />
     <Compile Include="Web\WebExtractAttribute.cs" />
     <Compile Include="Scripts\_wext.cs" />
@@ -235,9 +235,6 @@
     <EmbeddedResource Include="Views\Brick\Edit.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Views\Brick\EditGallery.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
     <EmbeddedResource Include="Views\Brick\EditHtml.cshtml" />
   </ItemGroup>
   <ItemGroup>
@@ -273,6 +270,7 @@
   <ItemGroup>
     <EmbeddedResource Include="Views\Brick\EditRazor.cshtml" />
   </ItemGroup>
+  <ItemGroup />
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>

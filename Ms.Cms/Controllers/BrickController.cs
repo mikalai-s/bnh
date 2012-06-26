@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data;
-using System.Data.Entity;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -28,16 +26,16 @@ namespace Ms.Cms.Controllers
         //
         // GET: /Brick/Edit/5
         public ActionResult Edit(long id)
-        {
+        {/*
             Brick brick = db.Bricks.Single(b => b.Id == id);
             ViewBag.WallId = new SelectList(db.Walls, "Id", "Title", brick.Wall.Id);
-            ViewBag.PartialView = BrickEditView[brick.GetDiscriminant()];
-            return View("~/WebExtracted/Ms.Cms/Views/Brick/Edit.cshtml", brick);
+            ViewBag.PartialView = BrickEditView[brick.GetDiscriminant()];*/
+            return View("~/WebExtracted/Ms.Cms/Views/Brick/Edit.cshtml");//, brick);
         }
 
         [HttpPost]
-        public ActionResult Edit(Brick brick)
-        {
+        public ActionResult Edit(BrickContent brick)
+        {/*
             // update current brick
             db.Bricks.Attach(brick);
             db.Entry(brick).State = EntityState.Modified;
@@ -45,13 +43,13 @@ namespace Ms.Cms.Controllers
 
             // load brick's wall property to get current scene later
             db.Entry(brick).Reference(b => b.Wall).Load();
-
+            */
             // redirect to scene
-            return RedirectToAction("Edit", "Scene", new { id = brick.Wall.SceneId });
+            return RedirectToAction("Edit", "Scene");//, new { id = brick.Wall.SceneId });
         }
 
         [HttpPost]
-        public ActionResult EditHtml(HtmlBrick brick)
+        public ActionResult EditHtml(HtmlContent brick)
         {
             brick.Html = HttpUtility.HtmlDecode(brick.Html);
             return Edit(brick);
@@ -59,26 +57,20 @@ namespace Ms.Cms.Controllers
 
         [HttpPost]
         [ValidateInput(false)]
-        public ActionResult EditRazor(HtmlBrick brick)
+        public ActionResult EditRazor(HtmlContent brick)
         {
             brick.Html = HttpUtility.HtmlDecode(brick.Html);
             return Edit(brick);
         }
 
         [HttpPost]
-        public ActionResult EditMap(MapBrick brick)
+        public ActionResult EditMap(MapContent brick)
         {
             return Edit(brick);
-        }
+        }        
 
         [HttpPost]
-        public ActionResult EditGallery(GalleryBrick brick)
-        {
-            return Edit(brick);
-        }
-
-        [HttpPost]
-        public ActionResult EditLinkable(LinkableBrick brick)
+        public ActionResult EditLinkable(LinkableContent brick)
         {
             return Edit(brick);
         }
