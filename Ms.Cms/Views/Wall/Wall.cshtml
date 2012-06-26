@@ -1,7 +1,7 @@
 ﻿@model Wall
 
 <div class='wall-wrapper' style='width:@Model.Width.ToString("F")%'>
-@foreach (var brick in Model.Bricks.OrderBy(b => b.Order))
+@foreach (var brick in Model.Bricks)
 {
     @Html.Partial("~/WebExtracted/Ms.Cms/Views/Brick/Brick.cshtml", brick)
 }

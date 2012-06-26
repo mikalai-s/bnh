@@ -1,4 +1,4 @@
-﻿@model TocBrick
+﻿@model TocContent
 
 @{
     IEnumerable<Brick> contentBricks = null;
@@ -7,8 +7,7 @@
         contentBricks = db.Walls
             .Where(w => w.SceneId == Model.Wall.SceneId)
             .OrderBy(w => w.Order)
-            .SelectMany(w => w.Bricks
-                .OrderBy(b => b.Order))
+            .SelectMany(w => w.Bricks)
             .ToList()
             .Select(b => b.EnsureNonLinked())
             .Where(b => !string.IsNullOrWhiteSpace(b.ContentTitle));

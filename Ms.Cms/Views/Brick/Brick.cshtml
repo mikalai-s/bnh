@@ -1,5 +1,5 @@
 ﻿@model Brick
 
 <div id="@Model.GetHtmlId()" class='brick-wrapper' style='width:@Model.Width.ToString("F")%'>
-    @Html.Partial("~/WebExtracted/Ms.Cms/Views/Brick/BrickContent.cshtml", Model)
+    @Html.Partial("~/WebExtracted/Ms.Cms/Views/Brick/BrickContent.cshtml", Model.GetContent())
 </div>

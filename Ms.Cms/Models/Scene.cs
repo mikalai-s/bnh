@@ -1,29 +1,29 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations.Schema;
+
 using Ms.Cms.Models.Attributes;
+using MongoDB.Bson.Serialization.Attributes;
+using MongoDB.Bson;
 
 namespace Ms.Cms.Models
 {
-    [Table("Scene", Schema = "Cms")]
     public partial class Scene
     {
-        public Scene()
-        {
-            this.Walls = new HashSet<Wall>();
-        }
+        [BsonRepresentation(BsonType.ObjectId)]
+        public string Id { get; set; }
 
-        public long Id { get; set; }
+        public string Title { get; set; }
 
+        public bool IsTemplate { get; set; }
+
+        // TODO: remove this thing when we get rid of SQL completely
         public Guid OwnerGuidId { get; set; }
 
-        public long OwnerLongId { get; set; }
-
-        public int OwnerIntId { get; set; }
-
-        // navigational
-
         [NonJsExposable]
-        public virtual ICollection<Wall> Walls { get; private set; }
+        public ICollection<Wall> Walls
+        {
+            get { return this._walls ?? (this._walls = new List<Wall>()); }
+            set { this._walls = value; }
+        } ICollection<Wall> _walls = null;
     }
 }

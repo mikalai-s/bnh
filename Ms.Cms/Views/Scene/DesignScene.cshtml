@@ -1,7 +1,7 @@
-﻿@model Scene
+﻿@model DesignScene
 
 <div id="scene">
-    @foreach (var wall in Model.Walls.OrderBy(w => w.Order))
+    @foreach (var wall in Model.Walls)
     {
         @Html.Partial("~/WebExtracted/Ms.Cms/Views/Wall/DesignWall.cshtml", wall)
     }
@@ -10,7 +10,7 @@
     @Html.Partial("~/WebExtracted/Ms.Cms/Views/Wall/DesignWall.cshtml", new Wall { Width = 100.0F })
 </div>
 <div id="brickPrototype">
-    @Html.Partial("~/WebExtracted/Ms.Cms/Views/Brick/DesignBrick.cshtml", new EmptyBrick { Width = 100.0F })
+    @Html.Partial("~/WebExtracted/Ms.Cms/Views/Brick/DesignBrick.cshtml", new Brick { Width = 100.0F })
 </div>
 
 @{

@@ -6,9 +6,9 @@ using System.Web.Mvc;
 using System.ComponentModel;
 using System.Collections;
 using Ms.Cms.Models;
-using System.Data.Objects.DataClasses;
 
 using TypeMap = System.Collections.Generic.Dictionary<string, System.Type>;
+using Ms.Cms.Controllers;
 
 namespace Ms.Cms
 {
@@ -19,22 +19,24 @@ namespace Ms.Cms
             bool hasPrefix = bindingContext.ValueProvider.ContainsPrefix(bindingContext.ModelName);
             string prefix = ((hasPrefix) && (bindingContext.ModelName != "")) ? bindingContext.ModelName + "." : "";
 
-            if (!modelType.IsAssignableFrom(typeof(Brick)))
+            if (controllerContext.Controller.GetType() == typeof(SceneController))
             {
-                return base.CreateModel(controllerContext, bindingContext, modelType);
+                if (modelType.IsAssignableFrom(typeof(Brick)))
+                {
+                    var model = new DesignBrick();
+                    bindingContext.ModelMetadata = ModelMetadataProviders.Current.GetMetadataForType(() => model, model.GetType());
+                    return model;
+                }
+
+                if (modelType.IsAssignableFrom(typeof(Wall)))
+                {
+                    var model = new DesignWall();
+                    bindingContext.ModelMetadata = ModelMetadataProviders.Current.GetMetadataForType(() => model, model.GetType());
+                    return model;
+                }
             }
 
-            // get the parameter species
-            var result = bindingContext.ValueProvider.GetValue(prefix + "Type");
-            if (result == null || string.IsNullOrEmpty(result.AttemptedValue))
-            {
-                throw new Exception(string.Format("Unknown type \"{0}\"", result.AttemptedValue));
-            }
-
-            var type = MsCms.RegisteredBrickTypes.Select(br => br.Type).First(t => t.Name == result.AttemptedValue);
-            var model = Activator.CreateInstance(type);
-            bindingContext.ModelMetadata = ModelMetadataProviders.Current.GetMetadataForType(() => model, type);
-            return model;
+            return base.CreateModel(controllerContext, bindingContext, modelType);           
         }        
 
         protected override void SetProperty(ControllerContext controllerContext, ModelBindingContext bindingContext, PropertyDescriptor propertyDescriptor, object value)
@@ -57,7 +59,8 @@ namespace Ms.Cms
                     {
                         Type valueType = value.GetType();
 
-                        if (valueType.IsGenericType && valueType.GetGenericTypeDefinition() == typeof(EntityCollection<>))
+                        // TODO: check it used to be typeof(EntityCollection<>)
+                        if (valueType.IsGenericType && valueType.GetGenericTypeDefinition() == typeof(IEnumerable<>))
                         {
                             IListSource ls = (IListSource)propertyDescriptor.GetValue(bindingContext.Model);
                             IList list = ls.GetList();

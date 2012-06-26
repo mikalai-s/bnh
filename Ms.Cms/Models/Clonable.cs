@@ -16,10 +16,8 @@ namespace Ms.Cms.Models
         {
             var scene = new Scene
             {
-                Id = 0,
-                OwnerGuidId = this.OwnerGuidId,
-                OwnerIntId = this.OwnerIntId,
-                OwnerLongId = this.OwnerLongId,
+                IsTemplate = this.IsTemplate,
+                Title = this.Title
             };
 
             foreach (var wall in this.Walls)
@@ -42,15 +40,13 @@ namespace Ms.Cms.Models
         {
             var wall = new Wall
             {
-                Id = 0,
                 Title = this.Title,
-                Width = this.Width,
-                Order = this.Order
+                Width = this.Width
             };
 
             foreach (var brick in this.Bricks)
             {
-                wall.Bricks.Add(brick.Clone());
+                //wall.Bricks.Add(brick.Clone());
             }
 
             return wall;

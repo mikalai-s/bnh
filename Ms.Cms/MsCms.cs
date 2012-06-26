@@ -4,6 +4,9 @@ using System.Linq;
 using System.Web;
 using Ms.Cms.Models;
 using Ms.Cms.Models.Utilities;
+using System.Web.Mvc;
+using MongoDB.Bson;
+using MongoDB.Bson.Serialization;
 
 namespace Ms.Cms
 {
@@ -31,16 +34,27 @@ namespace Ms.Cms
 
             // do web extraction
             WebExtractor.Extract(app);
+
+            ModelBinders.Binders.Add(typeof(ObjectId), new ObjectIdModelBinder()); 
+
+            // initialize DB data
+            InitData.Init();
+
+            // Register known types map to make possible to deserialize inherited types by descriminator
+            foreach (var br in RegisteredBrickTypes)
+            {
+                BsonClassMap.LookupClassMap(br.Type);
+            }
         }
 
         private static IEnumerable<BrickRegistration> GetRegisteredBrickTypes(IEnumerable<BrickRegistration> externalBricks)
         {
-            yield return new BrickRegistration { Type = typeof(HtmlBrick), Title = "Rich Text", View = "" };
-            yield return new BrickRegistration { Type = typeof(RazorBrick), Title = "Razor Template", View = "" };
-            yield return new BrickRegistration { Type = typeof(MapBrick), Title = "Map", View = "" };
-            yield return new BrickRegistration { Type = typeof(EmptyBrick), Title = "Empty", View = "" };
-            yield return new BrickRegistration { Type = typeof(LinkableBrick), Title = "Linkable", View = "" };
-            yield return new BrickRegistration { Type = typeof(TocBrick), Title = "Table of Content", View = "" };
+            yield return new BrickRegistration { Type = typeof(HtmlContent), Title = "Rich Text", View = "" };
+            yield return new BrickRegistration { Type = typeof(RazorContent), Title = "Razor Template", View = "" };
+            yield return new BrickRegistration { Type = typeof(MapContent), Title = "Map", View = "" };
+            yield return new BrickRegistration { Type = typeof(BrickContent), Title = "Empty", View = "" };
+            yield return new BrickRegistration { Type = typeof(LinkableContent), Title = "Linkable", View = "" };
+            yield return new BrickRegistration { Type = typeof(TocContent), Title = "Table of Content", View = "" };
 
             foreach (var externalBrick in externalBricks)
             {
@@ -50,4 +64,8 @@ namespace Ms.Cms
 
         public static string GoogleMapsApiScript { get; set; }
     }
+
+    
+
+
 }

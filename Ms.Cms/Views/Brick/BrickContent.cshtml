@@ -1,15 +1,14 @@
-﻿@model Brick
+﻿@model BrickContent
 
 @{
-    var model = Model.EnsureNonLinked();
     string suffix =
-        (model is RazorBrick) ? "Razor" :
-        (model is HtmlBrick) ? "Html" :
-        (model is MapBrick) ? "Map" :
-        (model is TocBrick) ? "Toc" :
+        (Model is RazorContent) ? "Razor" :
+        (Model is HtmlContent) ? "Html" :
+        (Model is MapContent) ? "Map" :
+        (Model is TocContent) ? "Toc" :
         null;
 }
 @if (!suffix.IsEmpty())
 { 
-    @Html.Partial("~/WebExtracted/Ms.Cms/Views/Brick/BrickContent_" + suffix + ".cshtml", model);
+    @Html.Partial("~/WebExtracted/Ms.Cms/Views/Brick/BrickContent_" + suffix + ".cshtml", Model);
 }

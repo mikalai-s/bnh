@@ -71,24 +71,10 @@ namespace Ms.Cms
         {
             var properties = new Dictionary<string, object>();
 
-            properties.Add("type", brick.GetDiscriminant());
-
             foreach (var prop in brick.GetTypeNonProxy().GetProperties(BindingFlags.Instance | BindingFlags.Public))
             {
-                // NOTE: for HtmlBrick we are not serializing Html property - it's too big
-                if (brick is HtmlBrick && prop.Name == "Html")
-                    continue;
-
                 var p = prop.GetCustomAttributes(typeof(NonJsExposableAttribute), false);
                 if (p.Length > 0)
-                    continue;
-
-                p = prop.GetCustomAttributes(typeof(XmlIgnoreAttribute), false);
-                if(p.Length > 0)
-                    continue;
-
-                p = prop.GetCustomAttributes(typeof(SoapIgnoreAttribute), false);
-                if(p.Length > 0)
                     continue;
 
                 p = prop.GetCustomAttributes(typeof(BrowsableAttribute), false);

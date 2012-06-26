@@ -7,7 +7,7 @@
             <a class='delete'>delete</a>
         </div>
         <div class='content'>
-            @foreach (var brick in Model.Bricks.OrderBy(b => b.Order))
+            @foreach (var brick in Model.Bricks)
             {
                 @Html.Partial("~/WebExtracted/Ms.Cms/Views/Brick/DesignBrick.cshtml", brick);
             }
