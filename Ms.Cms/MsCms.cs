@@ -35,8 +35,6 @@ namespace Ms.Cms
             // do web extraction
             WebExtractor.Extract(app);
 
-            ModelBinders.Binders.Add(typeof(ObjectId), new ObjectIdModelBinder()); 
-
             // initialize DB data
             InitData.Init();
 
