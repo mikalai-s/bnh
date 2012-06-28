@@ -30,7 +30,7 @@ namespace Ms.Cms.Controllers
             ViewBag.OwnerId = id;
             ViewBag.LinkableBricksSceneId = Constants.LinkableBricksSceneId;
 
-            return View("~/WebExtracted/Ms.Cms/Views/Scene/Edit.cshtml", db.Scenes.First(s => s.Id == id).ToDesignScene());
+            return View("~/WebExtracted/Ms.Cms/Views/Scene/Edit.cshtml", db.Scenes.First(s => s.Id == id));
         }
 
         // POST: /Scene/Edit/5
@@ -46,7 +46,7 @@ namespace Ms.Cms.Controllers
             if (Request.IsAjaxRequest())
             {
                 // render real (saved) scene
-                return PartialView("~/WebExtracted/Ms.Cms/Views/Scene/DesignScene.cshtml", db.Scenes.First(s => s.Id == scene.Id).ToDesignScene());
+                return PartialView("~/WebExtracted/Ms.Cms/Views/Scene/DesignScene.cshtml", db.Scenes.First(s => s.Id == scene.Id));
             }
             
             return View("~/WebExtracted/Ms.Cms/Views/Scene/DesignScene.cshtml");
@@ -73,36 +73,28 @@ namespace Ms.Cms.Controllers
             {
                 foreach (var brick in wall.Bricks)
                 {
-                    if (brick.OriginalIndex.HasValue)
+                    if (string.IsNullOrEmpty(brick.NewContentTypeName)) // existing brick
                     {
-                        var existingBrick = existingSceneWalls
-                            .ElementAt(brick.OriginalWallIndex.Value)
-                            .Bricks.ElementAt(brick.OriginalIndex.Value);
-                        brick.BrickContentId = existingBrick.BrickContentId;
-
-                        existingBricks.Remove(existingBrick.BrickContentId);
+                        existingBricks.Remove(brick.BrickContentId);
                     }
-                    else 
+                    else if(brick.NewContentTypeName != typeof(EmptyContent).Name) // not empty brick
                     {
                         var contentType = MsCms.RegisteredBrickTypes
-                            // TODO: somehow resolve brick type. Or maybe better to have another 
-                            .Where(br => br.Type.Name == brick.TypeName)
+                            .Where(br => br.Type.Name == brick.NewContentTypeName)
                             .Select(br => br.Type)
                             .First();
-                        if (contentType != typeof(EmptyContent))
-                        {
-                            var newContent = Activator.CreateInstance(contentType) as BrickContent;
-                            db.BrickContents.Insert(newContent);
-                            brick.BrickContentId = newContent.Id;
-                        }
+                        var newContent = Activator.CreateInstance(contentType) as BrickContent;
+                        db.BrickContents.Insert(newContent);
+                        brick.BrickContentId = newContent.Id;
                     }
                 }
             }
 
+            // save scene document
+            db.Scenes.Save(scene);
+
             // delete removed bricks
             existingBricks.ForEach(db.BrickContents.Delete);
-
-            db.Scenes.Save(scene);
         }
       
         [HttpPost]
@@ -112,7 +104,7 @@ namespace Ms.Cms.Controllers
             template.Id = sceneId;
             SaveScene(template);
 
-            return PartialView("~/WebExtracted/Ms.Cms/Views/Scene/DesignScene.cshtml", template.ToDesignScene());
+            return PartialView("~/WebExtracted/Ms.Cms/Views/Scene/DesignScene.cshtml", template);
         }
 
         [HttpPost]

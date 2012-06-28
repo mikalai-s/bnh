@@ -213,7 +213,7 @@
 
         // initialize brick object
         initializeBrick(brick, {
-            typeName: $("#brickType").val(),
+            NewContentTypeName: $("#brickType").val(),
             title: brickTitle.val()
         });
 
