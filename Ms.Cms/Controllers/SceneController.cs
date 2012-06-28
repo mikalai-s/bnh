@@ -23,7 +23,7 @@ namespace Ms.Cms.Controllers
         public ActionResult Edit(string id)
         {
             ViewBag.Templates = new SelectList(
-                db.Scenes.Where(s => s.IsTemplate).Select(s => new { id = s.Id, title = s.Title }), 
+                db.Scenes.Where(s => s.IsTemplate && s.Id != id).Select(s => new { id = s.Id, title = s.Title }), 
                 "id", 
                 "title");
 
