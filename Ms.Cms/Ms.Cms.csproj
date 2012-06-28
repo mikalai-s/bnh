@@ -146,7 +146,6 @@
     <Compile Include="MsCms.cs" />
     <Compile Include="Controllers\BrickController.cs" />
     <Compile Include="Controllers\SceneController.cs" />
-    <Compile Include="Models\Attributes\NonCloneableAttribute.cs" />
     <Compile Include="Models\Attributes\NonJsExposableAttribute.cs" />
     <Compile Include="Models\Brick.cs">
     </Compile>
