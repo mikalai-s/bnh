@@ -19,19 +19,20 @@ namespace Ms.Cms
             bool hasPrefix = bindingContext.ValueProvider.ContainsPrefix(bindingContext.ModelName);
             string prefix = ((hasPrefix) && (bindingContext.ModelName != "")) ? bindingContext.ModelName + "." : "";
 
-            if (controllerContext.Controller.GetType() == typeof(SceneController))
+            if (controllerContext.Controller.GetType() == typeof(BrickController))
             {
-                if (modelType.IsAssignableFrom(typeof(Brick)))
+                if(modelType.IsAssignableFrom(typeof(BrickContent)))
                 {
-                    var model = new DesignBrick();
-                    bindingContext.ModelMetadata = ModelMetadataProviders.Current.GetMetadataForType(() => model, model.GetType());
-                    return model;
-                }
+                    // get the parameter species
+                    var result = bindingContext.ValueProvider.GetValue(prefix + "Type");
+                    if (result == null || string.IsNullOrEmpty(result.AttemptedValue))
+                    {
+                        throw new Exception(string.Format("Unknown type \"{0}\"", result.AttemptedValue));
+                    }
 
-                if (modelType.IsAssignableFrom(typeof(Wall)))
-                {
-                    var model = new DesignWall();
-                    bindingContext.ModelMetadata = ModelMetadataProviders.Current.GetMetadataForType(() => model, model.GetType());
+                    var type = MsCms.RegisteredBrickTypes.Select(br => br.Type).First(t => t.Name == result.AttemptedValue);
+                    var model = Activator.CreateInstance(type);
+                    bindingContext.ModelMetadata = ModelMetadataProviders.Current.GetMetadataForType(() => model, type);
                     return model;
                 }
             }

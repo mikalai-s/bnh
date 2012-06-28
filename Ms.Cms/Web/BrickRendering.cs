@@ -64,14 +64,14 @@ namespace Ms.Cms
         */
         public static string GetDiscriminant(this Brick brick)
         {
-            return brick.GetTypeNonProxy().Name;
+            return brick.GetType().Name;
         }
 
         public static string ToJson(this Brick brick)
         {
             var properties = new Dictionary<string, object>();
 
-            foreach (var prop in brick.GetTypeNonProxy().GetProperties(BindingFlags.Instance | BindingFlags.Public))
+            foreach (var prop in brick.GetType().GetProperties(BindingFlags.Instance | BindingFlags.Public))
             {
                 var p = prop.GetCustomAttributes(typeof(NonJsExposableAttribute), false);
                 if (p.Length > 0)
@@ -92,7 +92,7 @@ namespace Ms.Cms
         {
             var properties = new Dictionary<string, object>();
 
-            foreach (var prop in wall.GetTypeNonProxy().GetProperties(BindingFlags.Instance | BindingFlags.Public))
+            foreach (var prop in wall.GetType().GetProperties(BindingFlags.Instance | BindingFlags.Public))
             {
                 var p = prop.GetCustomAttributes(typeof(NonJsExposableAttribute), false);
                 if (p.Length > 0)

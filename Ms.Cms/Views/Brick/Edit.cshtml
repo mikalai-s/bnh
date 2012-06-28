@@ -1,32 +1,21 @@
-﻿@model Brick
+﻿@model BrickContent
 
 @{
     ViewBag.Title = "Edit";
-    var partialView = "~/WebExtracted/Ms.Cms/Views/Brick/{0}.cshtml".FormatWith((string)ViewBag.PartialView);
+    var partialView = "~/WebExtracted/Ms.Cms/Views/Brick/Edit{0}.cshtml".FormatWith((string)ViewBag.PartialViewSuffix);
 }
 
 <h2>Edit</h2>
 
 <div class="page-view">
-@using (Html.BeginForm((string)ViewBag.PartialView, "Brick", new { id = Model.Id }))
+@using (Html.BeginForm("Edit", "Brick", new { id = Model.Id }))
 {
     @Html.ValidationSummary(true)
     <fieldset>
         <legend>Brick</legend>
 
         @Html.HiddenFor(model => model.Id)
-        @Html.Hidden("Type", Model.GetDiscriminant())
-        @Html.HiddenFor(model => model.WallId)
-        @Html.HiddenFor(model => model.Width)
-        @Html.HiddenFor(model => model.Order)
-
-        <div class="editor-label">
-            @Html.LabelFor(model => model.Title)
-        </div>
-        <div class="editor-field">
-            @Html.EditorFor(model => model.Title)
-            @Html.ValidationMessageFor(model => model.Title)
-        </div>
+        @Html.Hidden("Type", Model.GetType().Name)
 
         <div class="editor-label">
             @Html.LabelFor(model => model.ContentTitle)
@@ -36,13 +25,13 @@
             @Html.ValidationMessageFor(model => model.ContentTitle)
         </div>
         
-        @if (partialView != "Edit")
+        @if (ViewBag.PartialViewSuffix != "EmptyContent")
         {
             @Html.Partial(partialView, Model)
         }
 
         <span class="alter"><input type="submit" value="Save" id="saveButton" /></span>
-        @Html.ActionLink("Cancel", "Edit", "Scene", new { id = Model.Wall.SceneId }, null)
+        @Html.ActionLink("Cancel", "Edit", "Scene", new { id = Model.GetSceneId() }, null)
     </fieldset>
 }
 </div>

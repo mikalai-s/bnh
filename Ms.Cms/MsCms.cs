@@ -52,7 +52,7 @@ namespace Ms.Cms
             yield return new BrickRegistration { Type = typeof(HtmlContent), Title = "Rich Text", View = "" };
             yield return new BrickRegistration { Type = typeof(RazorContent), Title = "Razor Template", View = "" };
             yield return new BrickRegistration { Type = typeof(MapContent), Title = "Map", View = "" };
-            yield return new BrickRegistration { Type = typeof(BrickContent), Title = "Empty", View = "" };
+            yield return new BrickRegistration { Type = typeof(EmptyContent), Title = "Empty", View = "" };
             yield return new BrickRegistration { Type = typeof(LinkableContent), Title = "Linkable", View = "" };
             yield return new BrickRegistration { Type = typeof(TocContent), Title = "Table of Content", View = "" };
 

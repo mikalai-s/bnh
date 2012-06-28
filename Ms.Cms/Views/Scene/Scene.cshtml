@@ -1,4 +1,10 @@
 ﻿@model Scene
+@{
+    this.GetStyleBundle().Include(new[]
+    {
+        "~/WebExtracted/Ms.Cms/Styles/Scene.css",
+    });
+}
 
 <div id="scene">
     @foreach (var wall in Model.Walls)

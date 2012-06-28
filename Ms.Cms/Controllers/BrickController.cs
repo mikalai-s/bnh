@@ -12,67 +12,28 @@ namespace Ms.Cms.Controllers
     public class BrickController : Controller
     {
         private CmsEntities db = new CmsEntities();
-
-        private Dictionary<string, string> BrickEditView = new Dictionary<string, string>
-        {
-            {"EmptyBrick", "Edit"},
-            {"HtmlBrick", "EditHtml"},
-            {"GalleryBrick", "EditGallery"},
-            {"MapBrick", "EditMap"},
-            {"RazorBrick", "EditRazor"},
-            {"LinkableBrick", "EditLinkable"},
-        };
-        
+       
         //
         // GET: /Brick/Edit/5
-        public ActionResult Edit(long id)
-        {/*
-            Brick brick = db.Bricks.Single(b => b.Id == id);
-            ViewBag.WallId = new SelectList(db.Walls, "Id", "Title", brick.Wall.Id);
-            ViewBag.PartialView = BrickEditView[brick.GetDiscriminant()];*/
-            return View("~/WebExtracted/Ms.Cms/Views/Brick/Edit.cshtml");//, brick);
+        public ActionResult Edit(string id)
+        {
+            var brick = db.BrickContents.First(b => b.Id == id);
+            ViewBag.PartialViewSuffix = brick.GetType().Name;
+            return View("~/WebExtracted/Ms.Cms/Views/Brick/Edit.cshtml", brick);
         }
 
         [HttpPost]
-        public ActionResult Edit(BrickContent brick)
-        {/*
-            // update current brick
-            db.Bricks.Attach(brick);
-            db.Entry(brick).State = EntityState.Modified;
-            db.SaveChanges();
+        public ActionResult Edit(BrickContent content)
+        {
+            var htmlcontent = content as HtmlContent;
+            if (htmlcontent != null)
+            {
+                htmlcontent.Html = HttpUtility.HtmlDecode(htmlcontent.Html);
+            }
+            db.BrickContents.Save(content);
 
-            // load brick's wall property to get current scene later
-            db.Entry(brick).Reference(b => b.Wall).Load();
-            */
             // redirect to scene
-            return RedirectToAction("Edit", "Scene");//, new { id = brick.Wall.SceneId });
-        }
-
-        [HttpPost]
-        public ActionResult EditHtml(HtmlContent brick)
-        {
-            brick.Html = HttpUtility.HtmlDecode(brick.Html);
-            return Edit(brick);
-        }
-
-        [HttpPost]
-        [ValidateInput(false)]
-        public ActionResult EditRazor(HtmlContent brick)
-        {
-            brick.Html = HttpUtility.HtmlDecode(brick.Html);
-            return Edit(brick);
-        }
-
-        [HttpPost]
-        public ActionResult EditMap(MapContent brick)
-        {
-            return Edit(brick);
-        }        
-
-        [HttpPost]
-        public ActionResult EditLinkable(LinkableContent brick)
-        {
-            return Edit(brick);
+            return RedirectToAction("Edit", "Scene", new { id = content.GetSceneId() });
         }
 
         protected override void Dispose(bool disposing)

@@ -1,0 +1,18 @@
+﻿@model LinkableContent
+
+@{
+    ViewBag.Title = "Edit";
+    IEnumerable<SelectListItem> bricks = null;
+    using(var cm = new CmsEntities())
+    {
+        bricks = cm.Scenes
+            .First(s => s.Id == Constants.LinkableBricksSceneId)
+            .Walls.SelectMany(w => w.Bricks)
+            .Select(b => new SelectListItem { Value = b.BrickContentId, Text = b.Title });
+    }
+}
+
+<div class="editor-label">Brick To Link</div>
+<div class="editor-field">
+    @Html.DropDownList("linkedBrickId", bricks)
+</div>
