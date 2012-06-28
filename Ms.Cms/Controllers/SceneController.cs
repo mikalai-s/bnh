@@ -114,6 +114,7 @@ namespace Ms.Cms.Controllers
             var template = db.Scenes.First(t => t.Id == templateSceneId && t.IsTemplate);
             template.Id = sceneId;
             template.OwnerGuidId = scene.OwnerGuidId;
+            template.Title = null;
             SaveScene(template, true);
 
             return PartialView("~/WebExtracted/Ms.Cms/Views/Scene/DesignScene.cshtml", template);
