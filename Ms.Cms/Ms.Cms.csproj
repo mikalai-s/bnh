@@ -134,7 +134,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DynamicBsonClassMap.cs" />
     <Compile Include="Models\BrickContent.cs" />
     <Compile Include="Models\CmsContext.cs" />
     <Compile Include="Models\EmptyContent.cs" />
@@ -170,7 +169,6 @@
     <Compile Include="Models\Extensions\BrickExtensions.cs" />
     <Compile Include="Views\_wext.cs" />
     <Compile Include="Web\DesignerAuthorizeAttribute.cs" />
-    <Compile Include="Web\ObjectIdBinder.cs" />
     <Compile Include="Web\StirngExtensions.cs" />
     <Compile Include="Web\WebExtractAttribute.cs" />
     <Compile Include="Scripts\_wext.cs" />
