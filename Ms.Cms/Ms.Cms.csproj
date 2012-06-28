@@ -150,7 +150,6 @@
     <Compile Include="Models\Attributes\NonJsExposableAttribute.cs" />
     <Compile Include="Models\Brick.cs">
     </Compile>
-    <Compile Include="Models\Clonable.cs" />
     <Compile Include="Models\HtmlContent.cs">
     </Compile>
     <Compile Include="Models\MapContent.cs">
