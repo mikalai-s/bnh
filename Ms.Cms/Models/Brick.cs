@@ -23,13 +23,7 @@ namespace Ms.Cms.Models
         #region UI Specific Properties
 
         [BsonIgnore]
-        public string TypeName { get; set; }
-
-        [BsonIgnore]
-        public int? OriginalWallIndex { get; set; }
-
-        [BsonIgnore]
-        public int? OriginalIndex { get; set; }
+        public string NewContentTypeName { get; set; }
 
         #endregion
     }
