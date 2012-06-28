@@ -11,18 +11,22 @@
     var lockWallsCheckbox,
         lockBricksCheckbox,
         hideBricksContentCheckbox,
-        originalSceneData;
+        originalSceneData,
+        $isTemplateCheckbox,
+        $titleTextbox;
+
 
     $(function () {
 
         lockWallsCheckbox = $("#lockWallsCheckbox");
         lockBricksCheckbox = $("#lockBricksCheckbox");
         hideBricksContentCheckbox = $("#hideBricksContentCheckbox");
+        $isTemplateCheckbox = $("#IsTemplate");
+        $titleTextbox = $("#Title");
 
         $("#addBrickButton").click(onAddBrickButtonClicked);
         $("#addWallButton").click(onAddWallButtonClicked);
         $("#viewScene").click(onViewSceneButtonClicked);
-        $("#exportTemplateButton").click(onExportTemplateButtonClicked);
         $("#applyTemplateButton").click(onApplyTemplateButtonClicked);
         $("#saveSceneButton").click(onSaveSceneButton);
 
@@ -54,8 +58,7 @@
                 initScene();
             },
             error: function (result) {
-                document.write(result.responseText);
-                document.close();
+                if (window.console) { window.console.error(result); }
             }
         });
     }
@@ -70,7 +73,7 @@
             // get entity
             var entity = wall.data("entity");
             walls[walls.length] = entity;
-
+            
             entity.bricks = [];
             entity.order = i;
 
@@ -87,6 +90,8 @@
         return {
             id: $("#sceneId").val(),
             ownerGuidId: $("#ownerId").val(),
+            isTemplate: $isTemplateCheckbox.attr("checked") === "checked",
+            title: $titleTextbox.val(),
             walls: walls
         };
     }
@@ -300,8 +305,7 @@
                 }
             },
             error: function (result) {
-                document.write(result.responseText);
-                document.close();
+                if (window.console) { window.console.error(result); }
             }
         });
     }
@@ -368,33 +372,6 @@
             .toggleClass("hide-content", checked);
     }
 
-    function onExportTemplateButtonClicked() {
-        if (!ensureSceneSaved()) {
-            return false;
-        }
-
-        var templateTitle = $("#templateTitle");
-        var data = {
-            title: templateTitle.val(),
-            sceneId: $("#sceneId").val()
-        };
-
-        $.ajax({
-            url: "/Scene/ExportTemplate",
-            type: "POST",
-            contentType: "application/json",
-            async: true,
-            data: jQuery.toJSON(data),
-            success: function () {
-                templateTitle.val("");
-            },
-            error: function (result) {
-                document.write(result.responseText);
-                document.close();
-            }
-        });
-    }
-
     function onApplyTemplateButtonClicked() {
         if (!confirm("Are you sure you want to replace entire scene with template data?"))
             return false;
@@ -414,6 +391,7 @@
                 initScene();
             },
             error: function (result) {
+                if (window.console) { window.console.error(result); }
             }
         });
     }

@@ -18,5 +18,19 @@ namespace Ms.Cms.Models
 
         [BsonRepresentation(BsonType.ObjectId)]
         public string BrickContentId { get; set; }
+
+
+        #region UI Specific Properties
+
+        [BsonIgnore]
+        public string TypeName { get; set; }
+
+        [BsonIgnore]
+        public int? OriginalWallIndex { get; set; }
+
+        [BsonIgnore]
+        public int? OriginalIndex { get; set; }
+
+        #endregion
     }
 }

@@ -62,7 +62,7 @@ namespace Ms.Cms.Models
     {
         public virtual Brick Clone()
         {
-            var type = this.GetTypeNonProxy();
+            var type = this.GetType();
             var clone = Activator.CreateInstance(type) as Brick;
 
             foreach (var property in type.GetProperties(BindingFlags.Instance | BindingFlags.Public))

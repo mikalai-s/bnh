@@ -29,6 +29,10 @@ namespace Bnh.Tests.Controllers
             var cs = "mongodb://127.0.0.1/bnh?safe=true";
             using (var cms = new CmsEntities(cs))
             {
+                var s = cms.Scenes.Collection.Find(Query.EQ("Walls.Bricks.BrickContentId", ObjectId.Parse("4fe94834afce1524345bd6eb"))).First();
+
+                /*
+
                 //cms.BrickContents.Insert(new HtmlContent() { Html = "abc" });
                 var e = cms.BrickContents.Collection.FindOneById(ObjectId.Parse("4fe94433afce151fe43622f5"));
 
@@ -37,7 +41,7 @@ namespace Bnh.Tests.Controllers
                 var bricks = cms.BrickContents.ToList();
                 Assert.AreEqual(bricks.Count, 0);
 
-                
+                */
             }
         }
     }

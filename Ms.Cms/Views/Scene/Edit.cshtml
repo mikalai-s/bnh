@@ -1,5 +1,5 @@
 ﻿
-@model DesignScene
+@model Scene
 @{
     var sceneId = Model.Id;
     var ownerId = Model.OwnerGuidId;
@@ -73,8 +73,8 @@
                 <legend>Templates</legend>
 
                 <div class="editor-field">
-                    @Html.TextBox("templateTitle")
-                    <input type="button" id="exportTemplateButton" value="Export Template" />
+                    <label>@Html.CheckBoxFor(model => model.IsTemplate)Use as template with title: </label>
+                    @Html.TextBoxFor(model => model.Title)
                 </div>
 
                 <div class="editor-field">

@@ -137,11 +137,7 @@
     <Compile Include="DynamicBsonClassMap.cs" />
     <Compile Include="Models\BrickContent.cs" />
     <Compile Include="Models\CmsContext.cs" />
-    <Compile Include="Models\DesignUi\DesignBrick.cs" />
-    <Compile Include="Models\DesignUi\DesignScene.cs" />
-    <Compile Include="Models\DesignUi\DesignWall.cs" />
     <Compile Include="Models\EmptyContent.cs" />
-    <Compile Include="Models\Extensions\CommonExtensions.cs" />
     <Compile Include="Models\InitData\InitData.cs" />
     <Compile Include="Models\IRepository.cs" />
     <Compile Include="Models\MongoRepository.cs" />
@@ -235,13 +231,13 @@
     <EmbeddedResource Include="Views\Brick\Edit.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Views\Brick\EditHtml.cshtml" />
+    <EmbeddedResource Include="Views\Brick\EditHtmlContent.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Views\Brick\EditLinkable.cshtml" />
+    <EmbeddedResource Include="Views\Brick\EditLinkableContent.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Views\Brick\EditMap.cshtml" />
+    <EmbeddedResource Include="Views\Brick\EditMapContent.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Views\Wall\Wall.cshtml" />
@@ -268,7 +264,7 @@
     <EmbeddedResource Include="Views\_ViewStart.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Views\Brick\EditRazor.cshtml" />
+    <EmbeddedResource Include="Views\Brick\EditRazorContent.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <PropertyGroup>
