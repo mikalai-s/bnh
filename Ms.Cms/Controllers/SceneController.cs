@@ -52,7 +52,7 @@ namespace Ms.Cms.Controllers
             return View("~/WebExtracted/Ms.Cms/Views/Scene/DesignScene.cshtml");
         }
 
-        private void SaveScene(Scene scene, bool templating = false)
+        private void SaveScene(Scene scene, bool cloning = false)
         {
             // enumerate scene's existing brick contents to track deleted ones
             var existingSceneWalls = db.Scenes
@@ -73,11 +73,21 @@ namespace Ms.Cms.Controllers
             {
                 foreach (var brick in wall.Bricks)
                 {
-                    if (string.IsNullOrEmpty(brick.NewContentTypeName)) // existing brick
+                    if (cloning)
+                    {
+                        if (!string.IsNullOrEmpty(brick.BrickContentId)) // doesn't make sense to clone empty brick
+                        {
+                            var content = db.BrickContents.First(c => c.Id == brick.BrickContentId);
+                            content.Id = null;
+                            db.BrickContents.Insert(content);
+                            brick.BrickContentId = content.Id;
+                        }
+                    }
+                    else if (string.IsNullOrEmpty(brick.NewContentTypeName)) // existing brick
                     {
                         existingBricks.Remove(brick.BrickContentId);
                     }
-                    else if(brick.NewContentTypeName != typeof(EmptyContent).Name) // not empty brick
+                    else  // not empty brick
                     {
                         var contentType = MsCms.RegisteredBrickTypes
                             .Where(br => br.Type.Name == brick.NewContentTypeName)
@@ -96,13 +106,15 @@ namespace Ms.Cms.Controllers
             // delete removed bricks
             existingBricks.ForEach(db.BrickContents.Delete);
         }
-      
+
         [HttpPost]
         public ActionResult ApplyTemplate(string sceneId, string templateSceneId)
         {
+            var scene = db.Scenes.First(t => t.Id == sceneId);
             var template = db.Scenes.First(t => t.Id == templateSceneId && t.IsTemplate);
             template.Id = sceneId;
-            SaveScene(template);
+            template.OwnerGuidId = scene.OwnerGuidId;
+            SaveScene(template, true);
 
             return PartialView("~/WebExtracted/Ms.Cms/Views/Scene/DesignScene.cshtml", template);
         }
