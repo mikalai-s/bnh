@@ -30,7 +30,7 @@ namespace Ms.Cms.Controllers
             ViewBag.OwnerId = id;
             ViewBag.LinkableBricksSceneId = Constants.LinkableBricksSceneId;
 
-            return View("~/WebExtracted/Ms.Cms/Views/Scene/Edit.cshtml", db.Scenes.First(s => s.Id == id));
+            return View(ContentUrl.Views.Scene.Edit, db.Scenes.First(s => s.Id == id));
         }
 
         // POST: /Scene/Edit/5
@@ -46,10 +46,10 @@ namespace Ms.Cms.Controllers
             if (Request.IsAjaxRequest())
             {
                 // render real (saved) scene
-                return PartialView("~/WebExtracted/Ms.Cms/Views/Scene/Partial/DesignScene.cshtml", db.Scenes.First(s => s.Id == scene.Id));
+                return PartialView(ContentUrl.Views.Scene.Partial.DesignScene, db.Scenes.First(s => s.Id == scene.Id));
             }
             
-            return View("~/WebExtracted/Ms.Cms/Views/Scene/Partial/DesignScene.cshtml");
+            return View(ContentUrl.Views.Scene.Partial.DesignScene);
         }
 
         private void SaveScene(Scene scene, bool cloning = false)
@@ -117,7 +117,7 @@ namespace Ms.Cms.Controllers
             template.Title = null;
             SaveScene(template, true);
 
-            return PartialView("~/WebExtracted/Ms.Cms/Views/Scene/Partial/DesignScene.cshtml", template);
+            return PartialView(ContentUrl.Views.Scene.Partial.DesignScene, template);
         }
 
         [HttpPost]
