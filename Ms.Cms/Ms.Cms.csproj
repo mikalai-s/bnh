@@ -169,10 +169,10 @@
     <Compile Include="Views\Scene\_wext.cs" />
     <Compile Include="Models\Extensions\BrickExtensions.cs" />
     <Compile Include="Views\_wext.cs" />
-    <Compile Include="Web\ContentConstants.cs" />
+    <Compile Include="Web\ContentUrls.cs" />
     <Compile Include="Web\DesignerAuthorizeAttribute.cs" />
     <Compile Include="Web\StirngExtensions.cs" />
-    <Compile Include="Web\Utilities.cs" />
+    <Compile Include="Web\UrlExtensions.cs" />
     <Compile Include="Web\WebExtractAttribute.cs" />
     <Compile Include="Scripts\_wext.cs" />
     <Compile Include="Web\BnhModelBinder.cs" />

@@ -1,7 +1,7 @@
 ﻿@model BrickContent
 
 @{
-    var view = "~/WebExtracted/Ms.Cms/Views/BrickContent/Partial/Edit{0}.cshtml".FormatWith(Model.GetType().Name);
+    var view = ContentUrl.Resolve("/Views/BrickContent/Partial/Edit{0}.cshtml").FormatWith(Model.GetType().Name);
 }
 
 <h2>Edit</h2>

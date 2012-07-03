@@ -2,11 +2,11 @@
 
 @{
     ViewBag.Title = "Edit";
-    this.GetStyleBundle().Include(new[] { "~/WebExtracted/Ms.Cms/Styles/DesignBrick.css" });
+    this.GetStyleBundle().Include(new[] { ContentUrl.Styles.DesignBrick });
     this.GetScriptBundle().Include(new []
     {
         Ms.Cms.MsCms.TinyMceScript,
-        "~/WebExtracted/Ms.Cms/Scripts/EditHtmlBrick.js"
+        ContentUrl.Scripts.EditHtmlBrick
     });
 }
 

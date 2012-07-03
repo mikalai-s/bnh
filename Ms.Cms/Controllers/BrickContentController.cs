@@ -18,7 +18,7 @@ namespace Ms.Cms.Controllers
         public ActionResult Edit(string id)
         {
             var content = db.BrickContents.First(b => b.Id == id);
-            return View("~/WebExtracted/Ms.Cms/Views/BrickContent/Edit.cshtml", content);
+            return View(ContentUrl.Views.BrickContent.Edit, content);
         }
 
         [HttpPost]
@@ -39,7 +39,7 @@ namespace Ms.Cms.Controllers
         public ActionResult View(string id)
         {
             var content = db.BrickContents.First(b => b.Id == id);
-            return View("~/WebExtracted/Ms.Cms/Views/BrickContent/View.cshtml", content);
+            return View(ContentUrl.Views.BrickContent.View, content);
         }
 
         protected override void Dispose(bool disposing)
