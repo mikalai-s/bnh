@@ -1,0 +1,25 @@
+﻿@model Scene
+@{
+    this.GetStyleBundle().Include(new[]
+    {
+        "~/WebExtracted/Ms.Cms/Styles/Scene.css",
+    });
+}
+
+<div id="scene">
+    @foreach (var wall in Model.Walls)
+    {
+        <div class='wall-wrapper' style='width:@wall.Width.ToString("F")%'>
+        @foreach (var brick in wall.Bricks)
+        {
+            <div id="@brick.GetHtmlId()" class='brick-wrapper' style='width:@brick.Width.ToString("F")%'>
+                @Html.Partial("~/WebExtracted/Ms.Cms/Views/BrickContent/View.cshtml", brick.GetContent())
+            </div>
+        }
+        </div>
+    }
+</div>
+
+@{
+    this.RenderStylesAndScripts();
+}

@@ -1,14 +1,13 @@
 ﻿@model BrickContent
 
 @{
-    ViewBag.Title = "Edit";
-    var partialView = "~/WebExtracted/Ms.Cms/Views/Brick/Edit{0}.cshtml".FormatWith((string)ViewBag.PartialViewSuffix);
+    var view = "~/WebExtracted/Ms.Cms/Views/BrickContent/Partial/Edit{0}.cshtml".FormatWith(Model.GetType().Name);
 }
 
 <h2>Edit</h2>
 
 <div class="page-view">
-@using (Html.BeginForm("Edit", "Brick", new { id = Model.Id }))
+@using (Html.BeginForm("Edit", "BrickContent", new { id = Model.Id }))
 {
     @Html.ValidationSummary(true)
     <fieldset>
@@ -25,9 +24,9 @@
             @Html.ValidationMessageFor(model => model.ContentTitle)
         </div>
         
-        @if (ViewBag.PartialViewSuffix != "EmptyContent")
+        @if (File.Exists(Server.MapPath(view)))
         {
-            @Html.Partial(partialView, Model)
+            @Html.Partial(view, Model)
         }
 
         <span class="alter"><input type="submit" value="Save" id="saveButton" /></span>

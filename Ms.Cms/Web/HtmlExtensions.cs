@@ -61,7 +61,7 @@ namespace Ms.Cms
 
         public static MvcHtmlString RenderScene(this WebViewPage page, Scene scene)
         {
-            var s =  page.Html.Partial("~/WebExtracted/Ms.Cms/Views/Scene/Scene.cshtml", scene);
+            var s =  page.Html.Partial("~/WebExtracted/Ms.Cms/Views/Scene/View.cshtml", scene);
             page.RenderStylesAndScripts();
             return s;
         }

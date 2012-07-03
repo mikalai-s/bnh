@@ -46,10 +46,10 @@ namespace Ms.Cms.Controllers
             if (Request.IsAjaxRequest())
             {
                 // render real (saved) scene
-                return PartialView("~/WebExtracted/Ms.Cms/Views/Scene/DesignScene.cshtml", db.Scenes.First(s => s.Id == scene.Id));
+                return PartialView("~/WebExtracted/Ms.Cms/Views/Scene/Partial/DesignScene.cshtml", db.Scenes.First(s => s.Id == scene.Id));
             }
             
-            return View("~/WebExtracted/Ms.Cms/Views/Scene/DesignScene.cshtml");
+            return View("~/WebExtracted/Ms.Cms/Views/Scene/Partial/DesignScene.cshtml");
         }
 
         private void SaveScene(Scene scene, bool cloning = false)
@@ -117,7 +117,7 @@ namespace Ms.Cms.Controllers
             template.Title = null;
             SaveScene(template, true);
 
-            return PartialView("~/WebExtracted/Ms.Cms/Views/Scene/DesignScene.cshtml", template);
+            return PartialView("~/WebExtracted/Ms.Cms/Views/Scene/Partial/DesignScene.cshtml", template);
         }
 
         [HttpPost]

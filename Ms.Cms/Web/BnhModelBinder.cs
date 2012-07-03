@@ -19,7 +19,7 @@ namespace Ms.Cms
             bool hasPrefix = bindingContext.ValueProvider.ContainsPrefix(bindingContext.ModelName);
             string prefix = ((hasPrefix) && (bindingContext.ModelName != "")) ? bindingContext.ModelName + "." : "";
 
-            if (controllerContext.Controller.GetType() == typeof(BrickController))
+            if (controllerContext.Controller.GetType() == typeof(BrickContentController))
             {
                 if(modelType.IsAssignableFrom(typeof(BrickContent)))
                 {

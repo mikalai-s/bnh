@@ -9,31 +9,37 @@ using Ms.Cms.Models;
 namespace Ms.Cms.Controllers
 {
     [DesignerAuthorize]
-    public class BrickController : Controller
+    public class BrickContentController : Controller
     {
         private CmsEntities db = new CmsEntities();
        
         //
-        // GET: /Brick/Edit/5
+        // GET: /BrickContent/Edit/5
         public ActionResult Edit(string id)
         {
-            var brick = db.BrickContents.First(b => b.Id == id);
-            ViewBag.PartialViewSuffix = brick.GetType().Name;
-            return View("~/WebExtracted/Ms.Cms/Views/Brick/Edit.cshtml", brick);
+            var content = db.BrickContents.First(b => b.Id == id);
+            return View("~/WebExtracted/Ms.Cms/Views/BrickContent/Edit.cshtml", content);
         }
 
         [HttpPost]
         public ActionResult Edit(BrickContent content)
         {
-            var htmlcontent = content as HtmlContent;
-            if (htmlcontent != null)
+            var htmlContent = content as HtmlContent;
+            if (htmlContent != null)
             {
-                htmlcontent.Html = HttpUtility.HtmlDecode(htmlcontent.Html);
+                htmlContent.Html = HttpUtility.HtmlDecode(htmlContent.Html);
             }
             db.BrickContents.Save(content);
 
             // redirect to scene
             return RedirectToAction("Edit", "Scene", new { id = content.GetSceneId() });
+        }
+
+        [HttpGet]
+        public ActionResult View(string id)
+        {
+            var content = db.BrickContents.First(b => b.Id == id);
+            return View("~/WebExtracted/Ms.Cms/Views/BrickContent/View.cshtml", content);
         }
 
         protected override void Dispose(bool disposing)

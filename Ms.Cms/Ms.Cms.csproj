@@ -143,7 +143,7 @@
     <Compile Include="Models\SceneRepository.cs" />
     <Compile Include="Models\Utilities\BrickRegistration.cs" />
     <Compile Include="MsCms.cs" />
-    <Compile Include="Controllers\BrickController.cs" />
+    <Compile Include="Controllers\BrickContentController.cs" />
     <Compile Include="Controllers\SceneController.cs" />
     <Compile Include="Models\Attributes\NonJsExposableAttribute.cs" />
     <Compile Include="Models\Brick.cs">
@@ -163,13 +163,16 @@
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Styles\_wext.cs" />
-    <Compile Include="Views\Brick\_wext.cs" />
+    <Compile Include="Views\BrickContent\Partial\_wext.cs" />
+    <Compile Include="Views\BrickContent\_wext.cs" />
+    <Compile Include="Views\Scene\Partial\_wext.cs" />
     <Compile Include="Views\Scene\_wext.cs" />
-    <Compile Include="Views\Wall\_wext.cs" />
     <Compile Include="Models\Extensions\BrickExtensions.cs" />
     <Compile Include="Views\_wext.cs" />
+    <Compile Include="Web\ContentConstants.cs" />
     <Compile Include="Web\DesignerAuthorizeAttribute.cs" />
     <Compile Include="Web\StirngExtensions.cs" />
+    <Compile Include="Web\Utilities.cs" />
     <Compile Include="Web\WebExtractAttribute.cs" />
     <Compile Include="Scripts\_wext.cs" />
     <Compile Include="Web\BnhModelBinder.cs" />
@@ -205,61 +208,52 @@
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Views\Brick\Brick.cshtml" />
+    <EmbeddedResource Include="Views\BrickContent\View.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Views\Brick\BrickContent.cshtml" />
+    <EmbeddedResource Include="Views\BrickContent\Partial\ViewHtmlContent.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Views\Brick\BrickContent_Html.cshtml" />
+    <EmbeddedResource Include="Views\BrickContent\Partial\ViewMapContent.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Views\Brick\BrickContent_Map.cshtml" />
+    <EmbeddedResource Include="Views\BrickContent\Partial\ViewRazorContent.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Views\Brick\BrickContent_Razor.cshtml" />
+    <EmbeddedResource Include="Views\BrickContent\Partial\ViewTocContent.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Views\Brick\BrickContent_Toc.cshtml" />
+    <EmbeddedResource Include="Views\BrickContent\Edit.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Views\Brick\Edit.cshtml" />
+    <EmbeddedResource Include="Views\BrickContent\Partial\EditHtmlContent.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Views\Brick\EditHtmlContent.cshtml" />
+    <EmbeddedResource Include="Views\BrickContent\Partial\EditLinkableContent.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Views\Brick\EditLinkableContent.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Views\Brick\EditMapContent.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Views\Wall\Wall.cshtml" />
+    <EmbeddedResource Include="Views\BrickContent\Partial\EditMapContent.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Views\Scene\Edit.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Views\Brick\DesignBrick.cshtml" />
+    <EmbeddedResource Include="Views\Scene\Partial\DesignBrick.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Views\Scene\DesignScene.cshtml" />
+    <EmbeddedResource Include="Views\Scene\Partial\DesignScene.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Views\Scene\Scene.cshtml" />
+    <EmbeddedResource Include="Views\Scene\View.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Views\Scene\Empty.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Views\Wall\DesignWall.cshtml" />
+    <EmbeddedResource Include="Views\Scene\Partial\DesignWall.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Views\_ViewStart.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Views\Brick\EditRazorContent.cshtml" />
+    <EmbeddedResource Include="Views\BrickContent\Partial\EditRazorContent.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <PropertyGroup>
