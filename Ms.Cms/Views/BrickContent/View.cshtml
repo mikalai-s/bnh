@@ -1,0 +1,9 @@
+﻿@model BrickContent
+
+@{
+    string view = "~/WebExtracted/Ms.Cms/Views/BrickContent/Partial/View{0}.cshtml".FormatWith(Model.GetType().Name);
+}
+@if (File.Exists(Server.MapPath(view)))
+{ 
+    @Html.Partial(view, Model);
+}
