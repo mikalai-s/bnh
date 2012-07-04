@@ -8,7 +8,7 @@
             @Html.ActionLink("edit", "Edit", "BrickContent", new { id = Model.BrickContentId }, new { @class = "edit" })
         </div>
         <div class='content'>
-            @Html.Partial("~/WebExtracted/Ms.Cms/Views/BrickContent/View.cshtml", Model.GetContent())
+            @Html.Partial(ContentUrl.Views.BrickContent.View, Model.GetContent())
         </div>
     </div>
 </div>

@@ -50,18 +50,12 @@ namespace Ms.Cms
                 page.ViewContext.Controller.ViewBag._MsCms_ScriptBundle = scriptBundle = new List<string>();
             }
             return scriptBundle;
-            //var scriptBundle = page.ViewBag._MsCms_ScriptBundle as ScriptBundle;
-            //if (scriptBundle == null)
-            //{
-            //    page.ViewBag._MsCms_ScriptBundle = scriptBundle = new ScriptBundle("~/WebExtracted/Ms.Cms/Scripts/js");
-            //}
-            //return scriptBundle;
         }
 
 
         public static MvcHtmlString RenderScene(this WebViewPage page, Scene scene)
         {
-            var s =  page.Html.Partial("~/WebExtracted/Ms.Cms/Views/Scene/View.cshtml", scene);
+            var s =  page.Html.Partial(ContentUrl.Views.Scene.View, scene);
             page.RenderStylesAndScripts();
             return s;
         }

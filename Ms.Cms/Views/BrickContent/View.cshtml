@@ -1,7 +1,7 @@
 ﻿@model BrickContent
 
 @{
-    string view = ContentUrl.Resolve("/Views/BrickContent/Partial/View{0}.cshtml").FormatWith(Model.GetType().Name);
+    string view = ContentUrl.Views.BrickContent.Partial.GetView(Model.GetType());
 }
 @if (File.Exists(Server.MapPath(view)))
 { 

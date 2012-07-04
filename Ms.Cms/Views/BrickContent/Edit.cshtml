@@ -1,7 +1,7 @@
 ﻿@model BrickContent
 
 @{
-    var view = ContentUrl.Resolve("/Views/BrickContent/Partial/Edit{0}.cshtml").FormatWith(Model.GetType().Name);
+    var view = ContentUrl.Views.BrickContent.Partial.GetEdit(Model.GetType());
 }
 
 <h2>Edit</h2>

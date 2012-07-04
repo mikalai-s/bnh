@@ -2,7 +2,7 @@
 @{
     this.GetStyleBundle().Include(new[]
     {
-        "~/WebExtracted/Ms.Cms/Styles/Scene.css",
+        ContentUrl.Styles.Scene
     });
 }
 
@@ -13,7 +13,7 @@
         @foreach (var brick in wall.Bricks)
         {
             <div id="@brick.GetHtmlId()" class='brick-wrapper' style='width:@brick.Width.ToString("F")%'>
-                @Html.Partial("~/WebExtracted/Ms.Cms/Views/BrickContent/View.cshtml", brick.GetContent())
+                @Html.Partial(ContentUrl.Views.BrickContent.View, brick.GetContent())
             </div>
         }
         </div>

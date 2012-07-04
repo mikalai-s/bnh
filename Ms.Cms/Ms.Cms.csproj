@@ -172,7 +172,6 @@
     <Compile Include="Web\ContentUrls.cs" />
     <Compile Include="Web\DesignerAuthorizeAttribute.cs" />
     <Compile Include="Web\StirngExtensions.cs" />
-    <Compile Include="Web\UrlExtensions.cs" />
     <Compile Include="Web\WebExtractAttribute.cs" />
     <Compile Include="Scripts\_wext.cs" />
     <Compile Include="Web\BnhModelBinder.cs" />

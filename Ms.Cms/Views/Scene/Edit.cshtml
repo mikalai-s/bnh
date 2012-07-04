@@ -8,11 +8,14 @@
 
     this.GetStyleBundle().Include(new []
     {
-        "~/WebExtracted/Ms.Cms/Styles/Scene.css",
-        "~/WebExtracted/Ms.Cms/Styles/DesignScene.css",
+        ContentUrl.Styles.Scene,
+        ContentUrl.Styles.DesignScene,
         "~/Content/themes/base/jquery-ui.css"
     });
-    this.GetScriptBundle().Include(new [] { "~/WebExtracted/Ms.Cms/Scripts/DesignScene.js" });
+    this.GetScriptBundle().Include(new []
+    {
+        ContentUrl.Scripts.DesignScene
+    });
 }
 
 <h2>@ViewBag.Title</h2>
@@ -30,7 +33,7 @@
         @Html.HiddenFor(model => ownerId)
 
         <div class="scene-wrapper">
-            @Html.Partial("~/WebExtracted/Ms.Cms/Views/Scene/Partial/DesignScene.cshtml", Model)
+            @Html.Partial(ContentUrl.Views.Scene.Partial.DesignScene, Model)
         </div>
 
         <div class="control-panel">

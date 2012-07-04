@@ -14,7 +14,7 @@ namespace Ms.Cms
     {
         public static void Extract(HttpApplication application)
         {
-            var root = application.Server.MapPath("/WebExtracted");
+            var root = application.Server.MapPath("/");
           
             var assembly = Assembly.GetExecutingAssembly();
             var webExtractAttributes = assembly.GetCustomAttributes(typeof(WebExtractAttribute), false)
