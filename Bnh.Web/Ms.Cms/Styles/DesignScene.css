@@ -1,0 +1,104 @@
+﻿/*.scene-wrapper {
+    border: 1px solid navy;
+    margin: 20px 0px;
+    padding: 4px;
+}
+*/
+.wall-wrapper {
+    height: auto !important;
+}
+
+.wall-wrapper .wall {
+    border: 1px dodgerblue dashed;
+    min-height: 200px;
+}
+
+.brick-wrapper {
+    height: auto !important
+}
+
+.brick-wrapper .brick
+{
+    border: 1px dashed red;
+}
+
+.header 
+{
+    white-space: nowrap;
+    overflow: hidden;   
+}
+
+.wall > .header, .brick > .header
+{
+    display: block;
+    width: 100%;
+    background-color: #e5e5e5;
+    border-bottom: 1px dashed gray;
+    cursor: move;
+}
+
+.locked > .wall, .locked > .brick {
+    border-style: solid;
+}
+
+.locked > .wall > .header, .locked > .brick > .header {
+    display: none;   
+}
+
+.wall > .content {
+    height: 100%;
+}
+
+.wall a.delete, .wall a.edit
+{
+    cursor: pointer;
+    float: right;
+}
+
+.brick-wrapper.hide-content > .brick > .content {
+    display: none;
+}
+
+#wallPrototype, #brickPrototype
+{
+    display: none;
+}
+
+.wall .content, .brick .content {
+    padding: 1px;   
+}
+
+.map-canvas-wrapper {
+    padding: 0;
+    border: none;
+}
+
+.ui-resizable-handle {
+    right: 0px !important;
+}
+
+.ui-state-disabled {
+    filter: none !important;
+    opacity: 1 !important;
+}
+
+.brick-placeholder {
+    background-color: peachpuff; 
+}
+
+.control-panel {
+    position: fixed;
+    margin-bottom: -350px;
+    bottom: 50%;
+    left: 0;
+    width: 360px;
+    height: 700px;
+    border: 1px solid black;
+    background-color: white;
+    padding: 10px;
+}
+
+.drop-target > .wall {
+    border: 1px solid green !important;
+    
+}

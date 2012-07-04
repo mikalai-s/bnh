@@ -22,8 +22,6 @@ namespace Ms.Cms
 
         public static IEnumerable<BrickRegistration> RegisteredBrickTypes { get; private set; }
 
-        public static string WebExtractorUrl { get; private set; }
-
         public static string GoogleMapsApiScript { get; set; }
 
         public static void Setup(HttpApplication app, string layout = null, string designer = null, string tinymce = null, string googleMaps = null, IEnumerable<BrickRegistration> bricks = null)
@@ -35,7 +33,6 @@ namespace Ms.Cms
             TinyMceScript = tinymce ?? "";
             GoogleMapsApiScript = googleMaps ?? "";
             RegisteredBrickTypes = GetRegisteredBrickTypes(bricks ?? Enumerable.Empty<BrickRegistration>()).ToList();
-            WebExtractorUrl = "/WebExtracted";
 
             // do web extraction
             WebExtractor.Extract(app);
