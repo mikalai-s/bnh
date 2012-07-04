@@ -10,7 +10,7 @@
         var myOptions = {
             zoom: options.zoom,
             center: myLatLng,
-            mapTypeId: google.maps.MapTypeId.TERRAIN
+            mapTypeId: google.maps.MapTypeId.ROADMAP
         };
         var $mapCanvas = $(mapCanvas);
         if($mapCanvas.length === 0) {
@@ -102,7 +102,7 @@
        // infowindow.open(map);
         polygon.setOptions({
                 strokeWeight: 2,
-                fillOpacity: 0.75,
+                fillOpacity: 0.75
             });
     }
 
