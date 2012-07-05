@@ -17,7 +17,8 @@ namespace Ms.Cms.Models
         public bool IsTemplate { get; set; }
 
         // TODO: remove this thing when we get rid of SQL completely
-        public Guid OwnerGuidId { get; set; }
+        [BsonRepresentation(BsonType.ObjectId)]
+        public string OwnerGuidId { get; set; }
 
         [NonJsExposable]
         public ICollection<Wall> Walls
