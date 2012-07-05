@@ -8,7 +8,7 @@ namespace Bnh.Entities
 {
     public static class BlEntitiesExtensions
     {
-        public static IEnumerable<Wall> GetWallsFromEntityId(Guid id)
+        public static IEnumerable<Wall> GetWallsFromEntityId(string id)
         {
             using (var db = new CmsEntities())
             {

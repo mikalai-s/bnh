@@ -22,10 +22,11 @@ namespace Ms.Cms.Controllers
         // GET: /Scene/Edit/5
         public ActionResult Edit(string id)
         {
-            ViewBag.Templates = new SelectList(
-                db.Scenes.Where(s => s.IsTemplate && s.Id != id).Select(s => new { id = s.Id, title = s.Title }), 
-                "id", 
-                "title");
+            var templates = db.Scenes
+                .Where(s => s.IsTemplate && s.Id != id)
+                .Select(s => new { id = s.Id, title = s.Title })
+                .ToList();
+            ViewBag.Templates = new SelectList(templates, "id", "title");
 
             ViewBag.OwnerId = id;
             ViewBag.LinkableBricksSceneId = Constants.LinkableBricksSceneId;
