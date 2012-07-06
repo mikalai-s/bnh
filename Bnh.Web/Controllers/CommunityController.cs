@@ -81,7 +81,7 @@ namespace Bnh.Controllers
         public ActionResult Create()
         {
             // TODO: fix that
-            //ViewBag.ZoneId = new SelectList(db.Zones, "Id", "Name");
+            ViewBag.CityZones = new SelectList(db.Cities.First(c => c.Name == "Calgary").Zones);
             using(var cm = new CmsEntities())
             {/*
                 var sceneTemplates = from s in cm.Scenes
@@ -120,8 +120,7 @@ namespace Bnh.Controllers
                 return RedirectToAction("Index");  
             }
 
-            // TODO: Fix that
-            //ViewBag.ZoneId = new SelectList(db.Zones, "Id", "Name", community.ZoneId);
+            ViewBag.CityZones = new SelectList(db.Cities.First(c => c.Name == "Calgary").Zones, community.Zone);
             return View(community);
         }
         
@@ -131,8 +130,7 @@ namespace Bnh.Controllers
         public ActionResult Edit(string id)
         {
             Community community = db.Communities.Single(c => c.Id == id);
-            // TODO: fix that
-            //ViewBag.ZoneId = new SelectList(db.Zones, "Id", "Name", community.ZoneId);
+            ViewBag.CityZones = new SelectList(db.Cities.First(c => c.Name == "Calgary").Zones, community.Zone);
             return View(community);
         }
 
@@ -145,12 +143,11 @@ namespace Bnh.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.Communities.Insert(community);
+                db.Communities.Save(community);
                 
                 return RedirectToAction("Details", new { id = community.UrlId });
             }
-            //TODO: fix that:
-            //ViewBag.ZoneId = new SelectList(db.Zones, "Id", "Name", community.ZoneId);
+            ViewBag.CityZones = new SelectList(db.Cities.First(c => c.Name == "Calgary").Zones, community.Zone);
             return View(community);
         }
 
