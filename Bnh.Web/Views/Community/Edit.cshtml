@@ -9,6 +9,7 @@
     ViewBag.GlobalModel = Model;
     var propertiesToSkip = new List<string> { "Name", "Zone" };
     var externalProperties = ExternalProperty.Get(typeof(Community)).Where(p => !propertiesToSkip.Contains(p.Property.Name));
+    var zones = ViewBag.CityZones as IEnumerable<SelectListItem>;
 }
 
 @section Styles {
@@ -40,6 +41,7 @@
             <legend>Properties</legend>
 
             @Html.HiddenFor(model => model.Id)
+            @Html.HiddenFor(model => model.CityId)
             @Html.HiddenFor(model => model.GpsLocation)
             @Html.HiddenFor(model => model.GpsBounds)
 
@@ -60,10 +62,10 @@
                         </td>
                     </tr>
                     <tr>
-                        <td>@Html.LabelFor(model => model.ZoneId, "Zone")</td>
+                        <td>@Html.LabelFor(model => model.Zone, "Zone")</td>
                         <td>
-                            @Html.DropDownList("ZoneId", String.Empty)
-                            @Html.ValidationMessageFor(model => model.ZoneId)
+                            @Html.DropDownList("Zone", zones)
+                            @Html.ValidationMessageFor(model => model.Zone)
                         </td>
                     </tr>             
 
