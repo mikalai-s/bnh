@@ -593,6 +593,7 @@
     <Content Include="Views\Community\Index.cshtml" />
     <Content Include="Views\Account\Update.cshtml" />
     <Content Include="Views\Community\CommunityFilterPartial.cshtml" />
+    <Content Include="Views\Community\EditScene.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

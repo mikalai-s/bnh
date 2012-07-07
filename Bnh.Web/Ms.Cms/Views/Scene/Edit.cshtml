@@ -2,7 +2,6 @@
 @model Scene
 @{
     var sceneId = Model.Id;
-    var ownerId = Model.OwnerGuidId;
     var linkableBricks = (sceneId == Constants.LinkableBricksSceneId);
     ViewBag.Title = linkableBricks ? "Linkable Bricks" : "Scene designer";
 
@@ -23,14 +22,13 @@
 <div class="page-view">
 
     <h2>
-        <sup class="alter">@Html.ActionLink("edit properties", "Edit", "Community", new { id = ownerId }, null)</sup>
+        @*<sup class="alter">@Html.ActionLink("edit properties", "Edit", "Community", new { id = ownerId }, null)</sup>*@
     </h2>
 
     <fieldset>
         <legend>Scene</legend>
 
         @Html.HiddenFor(model => sceneId)
-        @Html.HiddenFor(model => ownerId)
 
         <div class="scene-wrapper">
             @Html.Partial(ContentUrl.Views.Scene.Partial.DesignScene, Model)
@@ -90,7 +88,7 @@
                 <span class="alter">
                     <input type="button" id="saveSceneButton" value="Save" />
                 </span>
-                @Html.ActionLink("View", "Details", "Community", new { id = ownerId }, new Dictionary<string, object> { { "id", "viewScene" } })
+               @* @Html.ActionLink("View", "Details", "Community", new { id = ownerId }, new Dictionary<string, object> { { "id", "viewScene" } })*@
             </div>
         </div>
 

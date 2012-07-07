@@ -8,6 +8,7 @@ using System.Web;
 using System.Web.Mvc;
 using System.Linq.Expressions;
 using Newtonsoft.Json;
+using System.Web.Routing;
 
 namespace Bnh.WebFramework
 {
@@ -22,5 +23,12 @@ namespace Bnh.WebFramework
             }
             return JsonConvert.SerializeObject(properties);
         }
+
+        public static string GetReturnUrl(this Community community)
+        {
+            return UrlHelper.GenerateUrl(null, "View", "Community", new RouteValueDictionary(new { id = community.UrlId }), new RouteCollection(), HttpContext.Current.Request.RequestContext, false);
+        }
+
+
     }
 }
