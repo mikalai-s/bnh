@@ -8,21 +8,6 @@ namespace Bnh.Entities
 {
     public static class BlEntitiesExtensions
     {
-        public static IEnumerable<Wall> GetWallsFromEntityId(string id)
-        {
-            using (var db = new CmsEntities())
-            {
-                // Convert to list to make sure context is open during request
-                var walls = db.Scenes
-                    .Where(s => s.OwnerGuidId == id)
-                    .SelectMany(s => s.Walls)
-                    .ToList();
-                // ensure bricks while given db context is open
-                walls.ForEach(w => w.Bricks.ToList());
-                return walls;
-            }
-        }
-
         /// <summary>
         /// Get community's scene. If it doesn't exists it creates one.
         /// </summary>
@@ -30,13 +15,18 @@ namespace Bnh.Entities
         /// <returns></returns>
         public static Scene GetScene(this Community community)
         {
-            using (var db = new CmsEntities())
+            using (var cmd = new CmsEntities())
             {
-                var scene = db.Scenes.FirstOrDefault(s => s.OwnerGuidId == community.Id);
+                var scene = cmd.Scenes.FirstOrDefault(s => s.Id == community.SceneId);
                 if (scene == null)
                 {
-                    scene = new Scene { OwnerGuidId = community.Id };
-                    db.Scenes.Insert(scene);
+                    cmd.Scenes.Insert(scene);
+
+                    using (var bl = new BleEntities())
+                    {
+                        community.SceneId = scene.Id;
+                        bl.Communities.Save(community);
+                    }
                 }
                 return scene;
             }

@@ -19,21 +19,6 @@ namespace Ms.Cms.Controllers
         private CmsEntities db = new CmsEntities();
 
 
-        // GET: /Scene/Edit/5
-        public ActionResult Edit(string id)
-        {
-            var templates = db.Scenes
-                .Where(s => s.IsTemplate && s.Id != id)
-                .Select(s => new { id = s.Id, title = s.Title })
-                .ToList();
-            ViewBag.Templates = new SelectList(templates, "id", "title");
-
-            ViewBag.OwnerId = id;
-            ViewBag.LinkableBricksSceneId = Constants.LinkableBricksSceneId;
-
-            return View(ContentUrl.Views.Scene.Edit, db.Scenes.First(s => s.Id == id));
-        }
-
         // POST: /Scene/Edit/5
 
         [HttpPost]
@@ -114,7 +99,6 @@ namespace Ms.Cms.Controllers
             var scene = db.Scenes.First(t => t.Id == sceneId);
             var template = db.Scenes.First(t => t.Id == templateSceneId && t.IsTemplate);
             template.Id = sceneId;
-            template.OwnerGuidId = scene.OwnerGuidId;
             template.Title = null;
             SaveScene(template, true);
 

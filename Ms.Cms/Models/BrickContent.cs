@@ -15,12 +15,6 @@ namespace Ms.Cms.Models
 
         public string ContentTitle { get; set; }
 
-        public string GetSceneId()
-        {
-            using (var cms = new CmsEntities())
-            {
-                return cms.Scenes.Collection.Find(Query.EQ("Walls.Bricks.BrickContentId", ObjectId.Parse(this.Id))).First().Id;
-            }
-        }
+        
     }
 }

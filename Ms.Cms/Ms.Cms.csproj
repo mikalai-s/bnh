@@ -137,6 +137,7 @@
     <Compile Include="Models\BrickContent.cs" />
     <Compile Include="Models\CmsContext.cs" />
     <Compile Include="Models\EmptyContent.cs" />
+    <Compile Include="Models\Extensions\BrickContentExtensions.cs" />
     <Compile Include="Models\InitData\InitData.cs" />
     <Compile Include="Models\IRepository.cs" />
     <Compile Include="Models\MongoRepository.cs" />
@@ -234,9 +235,6 @@
     <EmbeddedResource Include="Views\BrickContent\Partial\EditMapContent.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Views\Scene\Edit.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
     <EmbeddedResource Include="Views\Scene\Partial\DesignBrick.cshtml" />
   </ItemGroup>
   <ItemGroup>
@@ -254,7 +252,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Views\BrickContent\Partial\EditRazorContent.cshtml" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Content Include="Views\Scene\Edit.cshtml" />
+  </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>

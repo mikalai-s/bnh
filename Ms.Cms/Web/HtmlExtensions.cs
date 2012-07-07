@@ -27,9 +27,9 @@ namespace Ms.Cms
             return htmlHelper.DropDownList(name, items);
         }
 
-        public static MvcHtmlString EditSceneLink(this HtmlHelper html, Scene scene, string text)
+        public static MvcHtmlString EditSceneLink(this HtmlHelper html, Scene scene, string text, Uri viewUrl)
         {
-            return html.ActionLink(text, "Edit", "Scene", new { id = scene.Id }, null);
+            return html.ActionLink(text, "Edit", "Scene", new { id = scene.Id, returnUrl = viewUrl.AbsoluteUri }, null);
         }
 
         public static List<string> GetStyleBundle(this WebViewPage page)
@@ -58,6 +58,23 @@ namespace Ms.Cms
             var s =  page.Html.Partial(ContentUrl.Views.Scene.View, scene);
             page.RenderStylesAndScripts();
             return s;
+        }
+
+        public static MvcHtmlString RenderDesignScene(this WebViewPage page, Scene scene)
+        {
+            using (var db = new CmsEntities())
+            {
+                var templates = db.Scenes
+                    .Where(s => s.IsTemplate && s.Id != scene.Id)
+                    .Select(s => new { id = s.Id, title = s.Title })
+                    .ToList();
+                page.ViewBag.Templates = new SelectList(templates, "id", "title");
+                page.ViewBag.LinkableBricksSceneId = Constants.LinkableBricksSceneId;
+
+                var viewString = page.Html.Partial(ContentUrl.Views.Scene.Edit, scene);
+                page.RenderStylesAndScripts();
+                return viewString;
+            }
         }
 
         public static void RenderStylesAndScripts(this WebViewPage page)

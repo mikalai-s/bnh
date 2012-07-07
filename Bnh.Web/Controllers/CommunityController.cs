@@ -65,14 +65,10 @@ namespace Bnh.Controllers
         public ViewResult Details(string id)
         {
             ObjectId oid;
-            if (ObjectId.TryParse(id, out oid))
-            {
-                return View(db.Communities.Single(c => c.Id == id));
-            }
-            else
-            {
-                return View(db.Communities.Single(c => c.UrlId == id));
-            }           
+            var checker = ObjectId.TryParse(id, out oid) ?
+                (Func<Community, bool>)(c => c.Id == id) :
+                (Func<Community, bool>)(c => c.UrlId == id);
+            return View(db.Communities.Single(checker));
         }
 
         //
@@ -129,7 +125,11 @@ namespace Bnh.Controllers
         [Authorize(Roles = "content_manager")]
         public ActionResult Edit(string id)
         {
-            Community community = db.Communities.Single(c => c.Id == id);
+            ObjectId oid;
+            var checker = ObjectId.TryParse(id, out oid) ?
+                (Func<Community, bool>)(c => c.Id == id):
+                (Func<Community, bool>)(c => c.UrlId == id);
+            Community community = db.Communities.Single(checker);
             ViewBag.CityZones = new SelectList(db.Cities.First(c => c.Name == "Calgary").Zones, community.Zone);
             return View(community);
         }
@@ -148,6 +148,19 @@ namespace Bnh.Controllers
                 return RedirectToAction("Details", new { id = community.UrlId });
             }
             ViewBag.CityZones = new SelectList(db.Cities.First(c => c.Name == "Calgary").Zones, community.Zone);
+            return View(community);
+        }
+
+        //
+        // GET: /Community/Edit/5
+        [Authorize(Roles = "content_manager")]
+        public ActionResult EditScene(string id)
+        {
+            ObjectId oid;
+            var checker = ObjectId.TryParse(id, out oid) ?
+                (Func<Community, bool>)(c => c.Id == id) :
+                (Func<Community, bool>)(c => c.UrlId == id);
+            Community community = db.Communities.Single(checker);
             return View(community);
         }
 

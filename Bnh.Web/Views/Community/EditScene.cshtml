@@ -1,0 +1,13 @@
+﻿@using Bnh.Entities
+@using Bnh.WebFramework
+@using Ms.Cms
+
+@model Community
+
+@{
+    ViewBag.Title = Model.Name + " community scene editor";
+}
+
+<h2>@ViewBag.Title</h2>
+
+@this.RenderDesignScene(Model.GetScene())
