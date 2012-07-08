@@ -29,7 +29,8 @@ namespace Bnh.Controllers
         [HttpGet]
         public JsonResult Zones()
         {
-            return Json(db.Zones.Include("Communities").ToArray().Select((item) =>
+            UrlHelper urlHelper = new UrlHelper(this.HttpContext.Request.RequestContext);
+            return Json(db.Zones.OrderBy(m => m.Order).Include("Communities").ToArray().Select((item) =>
                                                                              {
                                                                                  ZoneDto zone = new ZoneDto();
                                                                                  zone.Name = item.Name;
@@ -43,6 +44,9 @@ namespace Bnh.Controllers
                                                                                                                                     communityDto.HasLake = community.HasLake;
                                                                                                                                     communityDto.GpsBounds = community.GpsBounds;
                                                                                                                                     communityDto.GpsLocation = community.GpsLocation;
+
+                                                                                                                                    communityDto.InfoPopup = String.Format("<a href='{0}'>{1}</a>",
+                                                                                                                                        urlHelper.Action("Details", "Community", new { id = community.UrlId}), community.Name); 
                                                                                                                                     return
                                                                                                                                         communityDto;
                                                                                                                                 });

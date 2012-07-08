@@ -16,10 +16,9 @@ function RestoreMapStateControl(controlDiv, map) {
     // Set CSS for the control interior.
     var controlText = document.createElement('div');
     controlText.style.fontFamily = 'Arial,sans-serif';
-    controlText.style.fontSize = '14px';
-    controlText.style.paddingLeft = '4px';
-    controlText.style.paddingRight = '4px';
-    controlText.innerHTML = '<strong>Restore Map State<strong>';
+    controlText.style.fontSize = '13px';
+    controlText.style.padding = '1px 6px';
+    controlText.innerHTML = 'Restore Map State';
     controlUI.appendChild(controlText);
 
     // Setup the click event listeners: simply set the map to Chicago.

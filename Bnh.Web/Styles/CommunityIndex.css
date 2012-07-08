@@ -13,15 +13,16 @@ ul.zones
 {
     width: 100%;
     padding: 0px;
+    list-style-type: none;
 }
 
 
 
 ul.zones .zone
 {
-    float: left;
-    display: table-row;
-    width: 50%;
+    float: right;
+    display: table-cell;
+    width: 49%;
 }
 
  .zone-header,  .zone-community

@@ -13,9 +13,7 @@
     @Html.Script("/Scripts/jquery.balloon.js")
     <script src="@Url.Content("~/WebExtracted/Ms.Cms/Scripts/Map.js")" type="text/javascript"></script>
     <script src="@Url.Content("/Scripts/knockout-2.1.0.debug.js")" type="text/javascript"></script>
-        @Html.Script("/Scripts/Community.js")
     <script src="@Url.Content("/Scripts/CommunityIndex.js")" type="text/javascript"></script>
-
 }
 
 <h2>
@@ -43,7 +41,7 @@
                                        {
                                            <sup class="alter"><a data-bind="attr: { href: deleteUrl, title: deleteTitle}" >x</a></sup>
                                        }
-                                <a class="community" data-bind="text: name, infoPopUpBinding: name, attr: { href: detailsUrl, title: name}, event: {mouseover: communityMouseover, mouseout:communityMouseout }" ></a>
+                                <a class="community" data-bind="text: name, infoPopup: infoPopup, attr: { href: detailsUrl, title: name}, event: {mouseover: communityMouseover, mouseout:communityMouseout }" ></a>
                                 
                             </div>
                         </div> 
