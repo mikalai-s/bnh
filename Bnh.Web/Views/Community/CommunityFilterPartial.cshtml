@@ -1,13 +1,10 @@
-﻿@using System.Reflection
-@using System.Linq
-@using Bnh.Entities
-@using Bnh.WebFramework
+﻿@using Bnh.Entities
 
 @{
     var properties = FilterProperty.Get(typeof(Community));
 }
 
-<div id="filterParameters">
+<div id="filterParameters" data-bind="with: filter">
     @foreach (var jsp in properties)
     {
         if (jsp.Property.PropertyType == typeof(bool))
@@ -16,27 +13,7 @@
         }
         else
         { 
-    <div>@jsp.Title<input id="@jsp.Name" type="input" class="filter" data-bind="value: @jsp.Name" /></div>
+    <div>@jsp.Title<input id="@jsp.Name" type="text" class="filter" data-bind="value: @jsp.Name" /></div>
         }
     }
-
-    <script type="text/javascript">
-        function CommunityFilterViewModel(config) {
-            var me = this;
-            @foreach (var jsp in properties)
-            {
-            @:me.@jsp.Name = ko.observable(false);
-            }
-
-            this.isCommunityVisible = function(cp) {
-                var visible = 
-                    @foreach (var jsp in properties)
-                    { 
-                    @:(!(me.@(jsp.Name)()) || me.@(jsp.Name)() @(jsp.Operator) cp.@(jsp.Name)) &&
-                    }
-                    true;
-                return visible;
-            }           
-        }
-    </script>
 </div>

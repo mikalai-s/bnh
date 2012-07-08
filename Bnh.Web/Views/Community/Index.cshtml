@@ -10,9 +10,12 @@
 {
     <script type="text/javascript" src="//maps.googleapis.com/maps/api/js?sensor=false"></script>
     @*<script src="http://maps.googleapis.com/maps/api/js?key=AIzaSyBXgUOTPfgbS4kHE7fm_xr2za_O1ApA_TM&sensor=false" type="text/javascript"></script>*@
+    @Html.Script("/Scripts/jquery.balloon.js")
     <script src="@Url.Content("~/WebExtracted/Ms.Cms/Scripts/Map.js")" type="text/javascript"></script>
     <script src="@Url.Content("/Scripts/knockout-2.1.0.debug.js")" type="text/javascript"></script>
+        @Html.Script("/Scripts/Community.js")
     <script src="@Url.Content("/Scripts/CommunityIndex.js")" type="text/javascript"></script>
+
 }
 
 <h2>
@@ -31,36 +34,23 @@
                 @Html.Partial("CommunityFilterPartial")
             </fieldset>
 
-            <table class="zones">
-                @{
-                    var rowCount = 2;
-                    var zones = Model.Select(c => c.Zone).Distinct().OrderBy(z => z.Order).ToList();
-
-                    for (var i = 0; i < zones.Count / rowCount; i++)
-                    { 
-                    <tr>
-                        <td>
-                            @foreach (var zone in zones.GetRange(i * rowCount, rowCount))
-                            {
-                                <div class="zone">
-                                    <div class="zone-header">@zone.Name</div>
-                                    @foreach (var community in zone.Communities.OrderBy(c => c.Name))
-                                    {
-                                        <div class="zone-community" data-bind='slideVisible: isCommunityVisible(@community.GetClientProperties())'>
-                                            @if (Context.User.IsInRole("content_manager"))
-                                            {
-                                                <sup class="alter">@Html.ActionLink("x", "Delete", new { id = community.Id }, new { title = "Delete " + community.Name })</sup>
-                                            }
-                                            <span>@Html.ActionLink(community.Name, "Details", new { id = community.UrlId }, new { @class="community", gpsLocation = community.GpsLocation, gpsBounds = community.GpsBounds })</span>
-                                        </div>
-                                    }
-                                </div>
-                            }
-                        </td>
-                    </tr>
-                    }
-                }
-            </table>
+            <ul class="zones" data-bind="foreach: zones">
+                <li>
+                    <div class="zone">
+                        <div class="zone-header" data-bind="text: name"></div>
+                        <div data-bind="foreach: communities">
+                                 <div class="zone-community" data-bind='slideVisible: $root.filter().isCommunityVisible($data)' >
+                                       @if (Context.User.IsInRole("content_manager"))
+                                       {
+                                           <sup class="alter"><a data-bind="attr: { href: deleteUrl, title: deleteTitle}" >x</a></sup>
+                                       }
+                                <a class="community" data-bind="text: name, infoPopUpBinding: name, attr: { href: detailsUrl, title: name}, event: {mouseover: communityMouseover, mouseout:communityMouseout }" ></a>
+                                
+                            </div>
+                        </div>
+                    </div>    
+                </li>
+            </ul>
         </td>
         <td>
             <div class="map-canvas-wrapper">

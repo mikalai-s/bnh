@@ -7,7 +7,7 @@ using System.Web;
 using System.Web.Mvc;
 using Bnh.Entities;
 using System.Data.Objects.DataClasses;
-
+using Bnh.Web.Models;
 using Ms.Cms.Models;
 
 namespace Bnh.Controllers
@@ -21,8 +21,34 @@ namespace Bnh.Controllers
         // GET: /Community/
         public ViewResult Index()
         {
+            //db.Zones.Include("Communities");
             var communities = db.Communities.Include("Zone");
             return View(communities.ToList());
+        }
+
+        [HttpGet]
+        public JsonResult Zones()
+        {
+            return Json(db.Zones.Include("Communities").ToArray().Select((item) =>
+                                                                             {
+                                                                                 ZoneDto zone = new ZoneDto();
+                                                                                 zone.Name = item.Name;
+                                                                                 zone.Communities = item.Communities.Select((community) =>
+                                                                                                                                {
+                                                                                                                                    CommunityDto communityDto = new CommunityDto();
+                                                                                                                                    communityDto.DistanceToCenter = community.Remoteness;
+                                                                                                                                    communityDto.Id = community.Id;
+                                                                                                                                    communityDto.Name = community.Name;
+                                                                                                                                    communityDto.UrlId = community.UrlId;
+                                                                                                                                    communityDto.HasLake = community.HasLake;
+                                                                                                                                    communityDto.GpsBounds = community.GpsBounds;
+                                                                                                                                    communityDto.GpsLocation = community.GpsLocation;
+                                                                                                                                    return
+                                                                                                                                        communityDto;
+                                                                                                                                });
+                                                                                 return
+                                                                                     zone;
+                                                                             }), JsonRequestBehavior.AllowGet);
         }
 
         public ViewResult Details(string id)
