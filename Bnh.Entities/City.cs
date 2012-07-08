@@ -9,8 +9,8 @@ namespace Bnh.Entities
 {
     public class City
     {
-        [BsonRepresentation(BsonType.ObjectId)]
-        public string Id { get; set; }
+        [BsonRepresentation(BsonType.ObjectId), BsonId]
+        public string CityId { get; set; }
         
         public string Name { get; set; }
 

@@ -49,6 +49,8 @@ namespace Ms.Cms
             {
                 public const string Edit = "~/Ms.Cms/Views/Scene/Edit.cshtml";
 
+                public const string EditLinkable = "~/Ms.Cms/Views/Scene/EditLinkable.cshtml";
+
                 public const string View = "~/Ms.Cms/Views/Scene/View.cshtml";
 
                 public static class Partial

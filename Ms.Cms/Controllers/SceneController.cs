@@ -19,6 +19,13 @@ namespace Ms.Cms.Controllers
         private CmsEntities db = new CmsEntities();
 
 
+        [HttpGet]
+        public ActionResult EditLinkable()
+        {
+            return View(ContentUrl.Views.Scene.EditLinkable);
+        }
+
+
         // POST: /Scene/Edit/5
 
         [HttpPost]
@@ -32,7 +39,7 @@ namespace Ms.Cms.Controllers
             if (Request.IsAjaxRequest())
             {
                 // render real (saved) scene
-                return PartialView(ContentUrl.Views.Scene.Partial.DesignScene, db.Scenes.First(s => s.Id == scene.Id));
+                return PartialView(ContentUrl.Views.Scene.Partial.DesignScene, db.Scenes.First(s => s.SceneId == scene.SceneId));
             }
             
             return View(ContentUrl.Views.Scene.Partial.DesignScene);
@@ -42,7 +49,7 @@ namespace Ms.Cms.Controllers
         {
             // enumerate scene's existing brick contents to track deleted ones
             var existingSceneWalls = db.Scenes
-                .Where(s => s.Id == scene.Id)
+                .Where(s => s.SceneId == scene.SceneId)
                 .ToList() // because SelectMany() is not supported by MongoDB Linq yet
                 .SelectMany(s => s.Walls);
             var existingBricks = existingSceneWalls
@@ -63,10 +70,10 @@ namespace Ms.Cms.Controllers
                     {
                         if (!string.IsNullOrEmpty(brick.BrickContentId)) // doesn't make sense to clone empty brick
                         {
-                            var content = db.BrickContents.First(c => c.Id == brick.BrickContentId);
-                            content.Id = null;
+                            var content = db.BrickContents.First(c => c.BrickContentId == brick.BrickContentId);
+                            content.BrickContentId = null;
                             db.BrickContents.Insert(content);
-                            brick.BrickContentId = content.Id;
+                            brick.BrickContentId = content.BrickContentId;
                         }
                     }
                     else if (string.IsNullOrEmpty(brick.NewContentTypeName)) // existing brick
@@ -81,7 +88,7 @@ namespace Ms.Cms.Controllers
                             .First();
                         var newContent = Activator.CreateInstance(contentType) as BrickContent;
                         db.BrickContents.Insert(newContent);
-                        brick.BrickContentId = newContent.Id;
+                        brick.BrickContentId = newContent.BrickContentId;
                     }
                 }
             }
@@ -96,9 +103,8 @@ namespace Ms.Cms.Controllers
         [HttpPost]
         public ActionResult ApplyTemplate(string sceneId, string templateSceneId)
         {
-            var scene = db.Scenes.First(t => t.Id == sceneId);
-            var template = db.Scenes.First(t => t.Id == templateSceneId && t.IsTemplate);
-            template.Id = sceneId;
+            var template = db.Scenes.First(t => t.SceneId == templateSceneId && t.IsTemplate);
+            template.SceneId = sceneId;
             template.Title = null;
             SaveScene(template, true);
 

@@ -12,11 +12,11 @@ namespace Ms.Cms.Models
             using (var db = new CmsEntities())
             {
                 // just a simple check whether there is need to initilize data
-                if (db.Scenes.Where(s => s.Id == Constants.LinkableBricksSceneId).Any()) { return; }
-
+                if (db.Scenes.Where(s => s.SceneId == Constants.LinkableBricksSceneId).Any()) { return; }
+                
                 db.Scenes.Insert(new Scene
                 {
-                    Id = Constants.LinkableBricksSceneId,
+                    SceneId = Constants.LinkableBricksSceneId,
                     Title = "Linkable Bricks Scene",
                     Walls = new [] 
                     {
