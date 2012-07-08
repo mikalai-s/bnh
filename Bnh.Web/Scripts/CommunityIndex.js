@@ -1,13 +1,10 @@
 ﻿(function () {
     "use strict"
 
-    var overlays = [];
-
     var filterLegend = $("#filterLegend");
     var filterParameters = $("#filterParameters");
 
     Global.Map = new Map("#mapCanvas", {
-        overlays: overlays,
         zoom: 11,
         center: {
             lat: 51.02844,

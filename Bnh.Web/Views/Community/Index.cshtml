@@ -35,8 +35,7 @@
             </fieldset>
 
             <ul class="zones" data-bind="foreach: zones">
-                <li>
-                    <div class="zone">
+                <li class="zone">
                         <div class="zone-header" data-bind="text: name"></div>
                         <div data-bind="foreach: communities">
                                  <div class="zone-community" data-bind='slideVisible: $root.filter().isCommunityVisible($data)' >
@@ -47,8 +46,7 @@
                                 <a class="community" data-bind="text: name, infoPopUpBinding: name, attr: { href: detailsUrl, title: name}, event: {mouseover: communityMouseover, mouseout:communityMouseout }" ></a>
                                 
                             </div>
-                        </div>
-                    </div>    
+                        </div> 
                 </li>
             </ul>
         </td>

@@ -20,7 +20,7 @@ function CommuntiyViewModel(id, name, urlId, gpsLocation, gpsBounds) {
     self.detailsUrl = ko.computed(function () {
         return "/Calgary/Community/" + self.urlId();
     });
-    if (gpsBounds != null) {     
+    if (gpsBounds != null) {
         self.gpsBounds = $.map(gpsBounds, Global.Map.deserializeCoordinates);
         self.associatedMapObject = Global.Map.addPolygon(self.gpsBounds, '<a href="' + self.detailsUrl() + '">' + self.name() + '</a>');
     }
@@ -28,7 +28,7 @@ function CommuntiyViewModel(id, name, urlId, gpsLocation, gpsBounds) {
 
     self.communityMouseover = function () {
         Global.Map.highlightPolygon(self.associatedMapObject);
-        
+
     };
     self.communityMouseout = function () {
         Global.Map.dehighlightPolygon(self.associatedMapObject);
@@ -38,46 +38,47 @@ function CommuntiyViewModel(id, name, urlId, gpsLocation, gpsBounds) {
 ko.bindingHandlers.infoPopUpBinding = {
     init: function (element, valueAccessor) {
         $(element).balloon({ position: "right", contents: valueAccessor(),
-           css: {
+            css: {
                 borderRadius: 0,
-                 backgroundColor: 'white'
-           } });
+                backgroundColor: 'white'
+            }
+        });
     }
- };
+};
 
- ko.bindingHandlers.slideVisible = {
-     update: function (element, valueAccessor, allBindingsAccessor, viewModel) {
-         // First get the latest data that we're bound to
-         var value = valueAccessor();
+ko.bindingHandlers.slideVisible = {
+    update: function (element, valueAccessor, allBindingsAccessor, viewModel) {
+        // First get the latest data that we're bound to
+        var value = valueAccessor();
 
-         // Next, whether or not the supplied model property is observable, get its current value
-         var valueUnwrapped = ko.utils.unwrapObservable(value);
+        // Next, whether or not the supplied model property is observable, get its current value
+        var valueUnwrapped = ko.utils.unwrapObservable(value);
 
-         element = $(element);
+        element = $(element);
 
-         // Now manipulate the DOM element
-         if (valueUnwrapped == true)
-             element.show(); // Make the element visible
-         else
-             element.hide(); // Make the element invisible
-         if (viewModel.associatedMapObject != null) {
-             viewModel.associatedMapObject.setVisible(valueUnwrapped);
-         }
-     }
- };
+        // Now manipulate the DOM element
+        if (valueUnwrapped == true)
+            element.show(); // Make the element visible
+        else
+            element.hide(); // Make the element invisible
+        if (viewModel.associatedMapObject != null) {
+            viewModel.associatedMapObject.setVisible(valueUnwrapped);
+        }
+    }
+};
 
- function CommunityFilterViewModel(config) {
-     var self = this;
-     self.remoteness = ko.observable(false);
-     self.hasLake = ko.observable(false);
-     self.hasWaterFeature = ko.observable(false);
-     self.hasClubOrFacility = ko.observable(false);
-     self.hasMountainView = ko.observable(false);
-     self.hasParksAndPathways = ko.observable(false);
-     self.hasShoppingPlaza = ko.observable(false);
+function CommunityFilterViewModel(config) {
+    var self = this;
+    self.remoteness = ko.observable(false);
+    self.hasLake = ko.observable(false);
+    self.hasWaterFeature = ko.observable(false);
+    self.hasClubOrFacility = ko.observable(false);
+    self.hasMountainView = ko.observable(false);
+    self.hasParksAndPathways = ko.observable(false);
+    self.hasShoppingPlaza = ko.observable(false);
 
-     this.isCommunityVisible = function(cp) {
-         var visible =
+    this.isCommunityVisible = function (cp) {
+        var visible =
              (!(self.remoteness()) || self.remoteness() <= cp.distanceToCityCenter()) &&
                  (!(self.hasLake()) || self.hasLake() === cp.hasLake()) &&
                      (!(self.hasWaterFeature()) || self.hasWaterFeature() === cp.hasWaterFeature()) &&
@@ -86,9 +87,9 @@ ko.bindingHandlers.infoPopUpBinding = {
                                  (!(self.hasParksAndPathways()) || self.hasParksAndPathways() === cp.hasParksAndPathways()) &&
                                      (!(self.hasShoppingPlaza()) || self.hasShoppingPlaza() === cp.hasShoppingPlaza()) &&
                                          true;
-         return visible;
-     };
- }
+        return visible;
+    };
+}
 
 function CommunityPageViewModel() {
     var self = this;
