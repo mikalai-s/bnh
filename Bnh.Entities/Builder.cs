@@ -9,8 +9,8 @@ namespace Bnh.Entities
 {
     public class Builder
     {
-        [BsonRepresentation(BsonType.ObjectId)]
-        public string Id { get; set; }
+        [BsonRepresentation(BsonType.ObjectId), BsonId]
+        public string BuilderId { get; set; }
 
         public string Name { get; set; }
         

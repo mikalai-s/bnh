@@ -11,9 +11,6 @@ namespace Ms.Cms.Models
     {
         [BsonRepresentation(BsonType.ObjectId)]
         public string LinkedContentId { get; set; }
-
-        //[NonJsExposable]
-        //public Brick LinkedBrick { get; set; }
     }
     
 }

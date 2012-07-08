@@ -253,7 +253,10 @@
     <EmbeddedResource Include="Views\BrickContent\Partial\EditRazorContent.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\Scene\Edit.cshtml" />
+    <EmbeddedResource Include="Views\Scene\Edit.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\Scene\EditLinkable.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

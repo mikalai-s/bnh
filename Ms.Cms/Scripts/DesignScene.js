@@ -88,7 +88,7 @@
         });
 
         return {
-            id: $("#sceneId").val(),
+            sceneId: $("#sceneId").val(),
             ownerGuidId: $("#ownerId").val(),
             isTemplate: $isTemplateCheckbox.attr("checked") === "checked",
             title: $titleTextbox.val(),

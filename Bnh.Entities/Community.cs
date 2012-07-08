@@ -4,13 +4,14 @@ using System.Linq;
 using System.Text;
 using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
+using Ms.Cms.Models;
 
 namespace Bnh.Entities
 {
     public class Community
     {
-        [BsonRepresentation(BsonType.ObjectId)]
-        public string Id { get; set; }
+        [BsonRepresentation(BsonType.ObjectId), BsonId]
+        public string CommunityId { get; set; }
 
         [ExternalProperty(Title = "Community")]
         public string Name { get; set; }
@@ -77,7 +78,5 @@ namespace Bnh.Entities
         public string Schools { get; set; }        
         
         public IEnumerable<Builder> Builders { get; set; }
-
-        public string SceneId { get; set; }
     }
 }

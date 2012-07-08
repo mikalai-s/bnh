@@ -28,9 +28,9 @@
 
 <h2>@ViewBag.Title</h2>
 
-<h2>
-    <sup class="alter">@Html.EditSceneLink(Model.GetScene(), "edit scene")</sup>
-</h2>
+<h4>
+    @Html.ActionLink("edit scene", "EditScene", new { id = Model.UrlId })
+</h4>
 
 <div>
     @using (Html.BeginForm())
@@ -40,8 +40,7 @@
         <fieldset>
             <legend>Properties</legend>
 
-            @Html.HiddenFor(model => model.Id)
-            @Html.HiddenFor(model => model.CityId)
+            @Html.HiddenFor(model => model.CommunityId)            @Html.HiddenFor(model => model.CityId)
             @Html.HiddenFor(model => model.GpsLocation)
             @Html.HiddenFor(model => model.GpsBounds)
 

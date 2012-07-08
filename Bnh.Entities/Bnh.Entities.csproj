@@ -53,7 +53,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BlEntitiesExtensions.cs" />
     <Compile Include="Builder.cs" />
     <Compile Include="City.cs" />
     <Compile Include="BleContext.cs" />

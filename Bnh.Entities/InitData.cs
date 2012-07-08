@@ -24,8 +24,8 @@ namespace Bnh.Entities
                 db.Cities.Insert(calgary);
 
                 // insert communitities
-                db.Communities.Insert(new Community { Name = "Saddlebrook", UrlId = "Saddlebrook", CityId = calgary.Id, Zone = "NE" });
-                db.Communities.Insert(new Community { Name = "Auburn Bay", UrlId = "AuburnBay", CityId = calgary.Id, Zone = "SE" });
+                db.Communities.Insert(new Community { Name = "Saddlebrook", UrlId = "Saddlebrook", CityId = calgary.CityId, Zone = "NE" });
+                db.Communities.Insert(new Community { Name = "Auburn Bay", UrlId = "AuburnBay", CityId = calgary.CityId, Zone = "SE" });
             }
         }
     }

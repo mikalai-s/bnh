@@ -23,7 +23,7 @@ namespace Bnh.Controllers
         public ViewResult Index()
         {
             var city = db.Cities.First(c => c.Name == "Calgary");
-            city.Communities = db.Communities.Where(c => c.CityId ==city.Id).ToList();
+            city.Communities = db.Communities.Where(c => c.CityId ==city.CityId).ToList();
             return View(city);
         }
 
@@ -66,7 +66,7 @@ namespace Bnh.Controllers
         {
             ObjectId oid;
             var checker = ObjectId.TryParse(id, out oid) ?
-                (Func<Community, bool>)(c => c.Id == id) :
+                (Func<Community, bool>)(c => c.CommunityId == id) :
                 (Func<Community, bool>)(c => c.UrlId == id);
             return View(db.Communities.Single(checker));
         }
@@ -127,7 +127,7 @@ namespace Bnh.Controllers
         {
             ObjectId oid;
             var checker = ObjectId.TryParse(id, out oid) ?
-                (Func<Community, bool>)(c => c.Id == id):
+                (Func<Community, bool>)(c => c.CommunityId == id):
                 (Func<Community, bool>)(c => c.UrlId == id);
             Community community = db.Communities.Single(checker);
             ViewBag.CityZones = new SelectList(db.Cities.First(c => c.Name == "Calgary").Zones, community.Zone);
@@ -151,14 +151,12 @@ namespace Bnh.Controllers
             return View(community);
         }
 
-        //
-        // GET: /Community/Edit/5
-        [Authorize(Roles = "content_manager")]
+        [HttpGet]
         public ActionResult EditScene(string id)
         {
             ObjectId oid;
             var checker = ObjectId.TryParse(id, out oid) ?
-                (Func<Community, bool>)(c => c.Id == id) :
+                (Func<Community, bool>)(c => c.CommunityId == id) :
                 (Func<Community, bool>)(c => c.UrlId == id);
             Community community = db.Communities.Single(checker);
             return View(community);
@@ -169,7 +167,7 @@ namespace Bnh.Controllers
         [Authorize(Roles = "content_manager")]
         public ActionResult Delete(string id)
         {
-            Community community = db.Communities.Single(c => c.Id == id);
+            Community community = db.Communities.Single(c => c.CommunityId == id);
             return View(community);
         }
 

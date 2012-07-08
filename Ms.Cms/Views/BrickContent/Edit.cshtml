@@ -7,13 +7,13 @@
 <h2>Edit</h2>
 
 <div class="page-view">
-@using (Html.BeginForm("Edit", "BrickContent", new { id = Model.Id }))
+@using (Html.BeginForm("Edit", "BrickContent", new { id = Model.BrickContentId }))
 {
     @Html.ValidationSummary(true)
     <fieldset>
         <legend>Brick</legend>
 
-        @Html.HiddenFor(model => model.Id)
+        @Html.HiddenFor(model => model.BrickContentId)
         @Html.Hidden("Type", Model.GetType().Name)
 
         <div class="editor-label">
@@ -30,7 +30,7 @@
         }
 
         <span class="alter"><input type="submit" value="Save" id="saveButton" /></span>
-        @Html.ActionLink("Cancel", "Edit", "Scene", new { id = Model.GetSceneId() }, null)
+        <span><a href="@Html.ViewContext.RequestContext.GetBackUrl()">Cancel</a></span>
     </fieldset>
 }
 </div>

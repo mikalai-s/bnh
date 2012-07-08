@@ -17,7 +17,7 @@ namespace Ms.Cms.Controllers
         // GET: /BrickContent/Edit/5
         public ActionResult Edit(string id)
         {
-            var content = db.BrickContents.First(b => b.Id == id);
+            var content = db.BrickContents.First(b => b.BrickContentId == id);
             return View(ContentUrl.Views.BrickContent.Edit, content);
         }
 
@@ -31,14 +31,14 @@ namespace Ms.Cms.Controllers
             }
             db.BrickContents.Save(content);
 
-            // redirect to scene
-            return RedirectToAction("Edit", "Scene", new { id = content.GetSceneId() });
+            // redirect to previous url
+            return Redirect(this.Request.RequestContext.GetBackUrl());
         }
 
         [HttpGet]
-        public ActionResult View(string id)
+        public new ActionResult View(string id)
         {
-            var content = db.BrickContents.First(b => b.Id == id);
+            var content = db.BrickContents.First(b => b.BrickContentId == id);
             return View(ContentUrl.Views.BrickContent.View, content);
         }
 

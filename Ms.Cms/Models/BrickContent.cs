@@ -10,8 +10,8 @@ namespace Ms.Cms.Models
 {
     public abstract class BrickContent
     {
-        [BsonRepresentation(BsonType.ObjectId)]
-        public string Id { get; set; }
+        [BsonRepresentation(BsonType.ObjectId), BsonId]
+        public string BrickContentId { get; set; }
 
         public string ContentTitle { get; set; }
 

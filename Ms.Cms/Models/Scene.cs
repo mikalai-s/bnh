@@ -9,8 +9,8 @@ namespace Ms.Cms.Models
 {
     public partial class Scene
     {
-        [BsonRepresentation(BsonType.ObjectId)]
-        public string Id { get; set; }
+        [BsonRepresentation(BsonType.ObjectId), BsonId]
+        public string SceneId { get; set; }
 
         public string Title { get; set; }
 

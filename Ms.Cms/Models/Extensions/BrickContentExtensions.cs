@@ -15,8 +15,8 @@ namespace Ms.Cms.Models
             {
                 // TODO: provide corresponding index to speed up the query
                 return cms.Scenes.Collection
-                    .Find(Query.EQ("Walls.Bricks.BrickContentId", ObjectId.Parse(content.Id)))
-                    .Select(c => c.Id)
+                    .Find(Query.EQ("Walls.Bricks.BrickContentId", ObjectId.Parse(content.BrickContentId)))
+                    .Select(c => c.SceneId)
                     .First();
             }
         }       

@@ -28,13 +28,13 @@ namespace Ms.Cms.Models
             using(var db = new CmsEntities())
             {
                 var list = db.BrickContents.ToList();
-                var content = db.BrickContents.FirstOrDefault(c => c.Id == brick.BrickContentId);
+                var content = db.BrickContents.FirstOrDefault(c => c.BrickContentId == brick.BrickContentId);
                 if (content != null)
                 {
                     var linkableContent = content as LinkableContent;
                     if (linkableContent != null)
                     {
-                        content = db.BrickContents.FirstOrDefault(c => c.Id == linkableContent.LinkedContentId);
+                        content = db.BrickContents.FirstOrDefault(c => c.BrickContentId == linkableContent.LinkedContentId);
                     }
                 }
                 return content ?? new EmptyContent();
