@@ -40,6 +40,12 @@ namespace Bnh.Web.Models
             set;
         }
 
+        public String InfoPopup
+        {
+            get;
+            set;
+        }
+
         public String GpsLocation
         {
             get;

@@ -252,7 +252,6 @@
     <Content Include="Images\google.gif" />
     <Content Include="Images\logo.png" />
     <Content Include="Properties\PublishProfiles\bnh.pubxml.user" />
-    <Content Include="Scripts\Community.js" />
     <Content Include="Scripts\CommunityEdit.js" />
     <Content Include="Scripts\CommunityIndex.js" />
     <Content Include="Scripts\Global.Encoding.js" />
