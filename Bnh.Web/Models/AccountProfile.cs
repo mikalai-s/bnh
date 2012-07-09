@@ -9,31 +9,11 @@ using System.ComponentModel.DataAnnotations;
 namespace Bnh.Web.Models
 {
     public class AccountProfile : ProfileBase
-    {
-        public static AccountProfile Current
-        {
-            get { return GetProfile(CurrentUserName); }
-        }
-
-        public static string CurrentUserName
-        {
-            get { return (string)HttpContext.Current.Session["UserName"]; }
-        }
-
-        public static string CurrentUserFullNameOrUserName
-        {
-            get
-            {
-                var name = Current.FullName;
-                name = string.IsNullOrWhiteSpace(name) ? CurrentUserName : name;
-                return name ?? " ";
-            }
-        }
-       
+    {       
         public string FirstName
         {
-            get { return ((string)(base["FirstName"])); }
-            set { base["FirstName"] = value; }
+            get { return (string)base.GetPropertyValue("FirstName"); }
+            set { base.SetPropertyValue("FirstName", value); }
         }
 
         public string LastName
@@ -54,29 +34,33 @@ namespace Bnh.Web.Models
             set { base["Gender"] = value; }
         }
 
-        public virtual string FullName
+        public string GetFullName()
         {
-            get { return this.FirstName + " " + this.LastName; }
+            var fullName = (this.FirstName + " " + this.LastName);
+            return string.IsNullOrWhiteSpace(fullName) ? this.UserName : fullName;
         }
 
-        public static AccountProfile GetProfile(string username)
+        /// <summary>
+        /// Get the profile of the currently logged-on user.
+        /// </summary>     
+        public static AccountProfile GetProfile()
         {
-            return Create(username) as AccountProfile;
+            return (AccountProfile)HttpContext.Current.Profile;
         }
-
+ 
+        /// <summary>
+        /// Gets the profile of a specific user.
+        /// </summary>
+        /// <param name="userName">The user name of the user whose profile you want to retrieve.</param>
+        public static AccountProfile GetProfile(string userName)
+        {
+            return (AccountProfile) Create(userName);
+        }
 
         public enum GenderEnum
         {
             Male = 0,
             Female = 1
-        }
-    }
-
-    public class EmptyAccountProfile : AccountProfile
-    {
-        public override string FullName
-        {
-            get { return "[No Profile!]"; }
         }
     }
 }
