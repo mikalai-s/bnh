@@ -10,6 +10,7 @@ using System.Data.Objects.DataClasses;
 using Bnh.Web.Models;
 using Ms.Cms.Models;
 using MongoDB.Bson;
+using Ms.Cms.Controllers;
 
 namespace Bnh.Controllers
 {
@@ -76,15 +77,17 @@ namespace Bnh.Controllers
         [Authorize(Roles = "content_manager")]
         public ActionResult Create()
         {
-            // TODO: fix that
             ViewBag.CityZones = new SelectList(db.Cities.First(c => c.Name == "Calgary").Zones);
             using(var cm = new CmsEntities())
-            {/*
+            {
                 var sceneTemplates = from s in cm.Scenes
-                                     from t in cm.SceneTemplates
-                                     where s.OwnerGuidId == t.Id
-                                     select new { id = s.Id, title = t.Title };
-                ViewBag.Templates = new SelectList(sceneTemplates.ToList(), "id", "title");*/
+                                     where s.IsTemplate
+                                     select new { id = s.SceneId, title = s.Title };
+                ViewBag.Templates = new SelectList(new[] { new { id = string.Empty, title = string.Empty } }.Union(sceneTemplates), "id", "title");
+
+                var city = db.Cities.First(c => c.Name == "Calgary");
+                ViewBag.CityZones = new SelectList(city.Zones);
+                ViewBag.CityId = city.CityId;
             }
             return View();
         } 
@@ -100,20 +103,13 @@ namespace Bnh.Controllers
             {
                 db.Communities.Insert(community);
 
-                var templateSceneIdString = this.Request.Form["templateSceneId"];
-                if (!string.IsNullOrEmpty(templateSceneIdString))
-                {/*
-                    // NOTE: make sure community ID is already created when move to "code first"
-                    using (var cms = new CmsEntities())
-                    {
-                        var scene = cms.Scenes.Attach(community.GetScene());
-                        var templateSceneId = long.Parse(templateSceneIdString);
-                        var templateScene = cms.Scenes.First(s => s.Id == templateSceneId);
-                        scene.ApplyTemplate(cms, templateScene);
-                        cms.SaveChanges();
-                    }*/
+                var templateSceneId = this.Request.Form["templateSceneId"];
+                if (!string.IsNullOrEmpty(templateSceneId))
+                {
+                    var sceneController = new SceneController();
+                    sceneController.ApplyTemplate(community.CommunityId, templateSceneId);
                 }
-                return RedirectToAction("Index");  
+                return RedirectToAction("Edit", new { id = community.UrlId });
             }
 
             ViewBag.CityZones = new SelectList(db.Cities.First(c => c.Name == "Calgary").Zones, community.Zone);

@@ -106,6 +106,7 @@ namespace Ms.Cms.Controllers
             var template = db.Scenes.First(t => t.SceneId == templateSceneId && t.IsTemplate);
             template.SceneId = sceneId;
             template.Title = null;
+            template.IsTemplate = false;
             SaveScene(template, true);
 
             return PartialView(ContentUrl.Views.Scene.Partial.DesignScene, template);
