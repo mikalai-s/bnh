@@ -27,6 +27,9 @@ namespace Ms.Cms.Models
                         }
                     }
                 });
+
+                // add index to brick content
+                db.Scenes.Collection.EnsureIndex("Walls", "Bricks", "BrickContentId");
             }
         }
     }

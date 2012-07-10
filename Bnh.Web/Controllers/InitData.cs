@@ -14,12 +14,10 @@ namespace Bnh.Web.Controllers
         public static void Init()
         {
             // simple check whether there is need to initialize database data
-            if (Membership.GetUserNameByEmail("admin@bnh.com") == "admin")
+            if (Membership.GetUserNameByEmail("admin@bnh.com") == "admin@bnh.com")
                 return;
 
-            var user = Membership.CreateUser("user@bnh.com", "1");
-            user.Email = user.UserName;
-
+            var user = Membership.CreateUser("user@bnh.com", "1", "user@bnh.com");
             var userProfile = AccountProfile.GetProfile(user.UserName);
             userProfile.Gender = AccountProfile.GenderEnum.Male;
             userProfile.FirstName = "Bob";
@@ -28,9 +26,7 @@ namespace Bnh.Web.Controllers
             userProfile.Save();
 
 
-            var admin = Membership.CreateUser("admin@bnh.com", "1");
-            admin.Email = admin.UserName;
-
+            var admin = Membership.CreateUser("admin@bnh.com", "1", "admin@bnh.com");
             var adminProfile = AccountProfile.GetProfile(admin.UserName);
             adminProfile.Gender = AccountProfile.GenderEnum.Female;
             adminProfile.FirstName = "Alice";

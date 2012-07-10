@@ -19,7 +19,5 @@ namespace Bnh.Entities
         public IEnumerable<string> Zones { get; set; }
 
         public IEnumerable<Community> Communities { get; set; }
-
-        // tODo: do rlatino between communities and cities
     }
 }

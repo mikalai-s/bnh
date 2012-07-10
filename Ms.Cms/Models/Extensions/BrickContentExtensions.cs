@@ -13,7 +13,6 @@ namespace Ms.Cms.Models
         {
             using (var cms = new CmsEntities())
             {
-                // TODO: provide corresponding index to speed up the query
                 return cms.Scenes.Collection
                     .Find(Query.EQ("Walls.Bricks.BrickContentId", ObjectId.Parse(content.BrickContentId)))
                     .Select(c => c.SceneId)

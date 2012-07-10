@@ -60,7 +60,6 @@ namespace Ms.Cms
                     {
                         Type valueType = value.GetType();
 
-                        // TODO: check it used to be typeof(EntityCollection<>)
                         if (valueType.IsGenericType && valueType.GetGenericTypeDefinition() == typeof(IEnumerable<>))
                         {
                             IListSource ls = (IListSource)propertyDescriptor.GetValue(bindingContext.Model);
