@@ -72,6 +72,7 @@ namespace Bnh.Web
                 tinymce: "~/Scripts/tiny_mce/tiny_mce_src.js",
                 googleMaps: "//maps.googleapis.com/maps/api/js?sensor=false");
 
+            Bnh.Web.Controllers.InitData.Init();
             Bnh.Entities.InitData.Init();
 
             AreaRegistration.RegisterAllAreas();
