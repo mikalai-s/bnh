@@ -27,6 +27,9 @@ namespace System
         /// <returns></returns>
         public static string ToHtmlId(this string str)
         {
+            if (str == null)
+                return null;
+
             return Regex.Replace(str, @"[^a-zA-Z0-9_\-]", "");
         }
     }

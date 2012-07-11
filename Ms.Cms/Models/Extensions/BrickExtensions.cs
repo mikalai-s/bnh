@@ -8,16 +8,6 @@ namespace Ms.Cms.Models
     public static class BrickExtensions
     {
         /// <summary>
-        /// Gets brick title converted to HTML id string
-        /// </summary>
-        /// <param name="brick"></param>
-        /// <returns></returns>
-        public static string GetHtmlId(this Brick brick)
-        {
-            return "";//brick.Title.ToHtmlId();
-        }
-
-        /// <summary>
         /// Gets brick content.
         /// NOTE: ensures linked content if content is linkable.
         /// </summary>

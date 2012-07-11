@@ -1,22 +1,28 @@
 ﻿@model TocContent
 
 @{
-    IEnumerable<Brick> contentBricks = null;
+    IEnumerable<BrickContent> contents = null;
     using(var db = new CmsEntities())
     {
-        contentBricks = db.Walls
-            .Where(w => w.SceneId == Model.Wall.SceneId)
-            .OrderBy(w => w.Order)
+        var sceneId = Model.GetSceneId();
+        var bricks = db.Scenes
+            .First(w => w.SceneId == sceneId)
+            .Walls
             .SelectMany(w => w.Bricks)
+            .Where(b => b.BrickContentId != Model.BrickContentId)
+            .Select(b => b.BrickContentId)
+            .ToList();
+        contents = db.BrickContents
+            .Where(c => bricks.Contains(c.BrickContentId))
+            .Where(c => !string.IsNullOrEmpty(c.ContentTitle))
             .ToList()
-            .Select(b => b.EnsureNonLinked())
-            .Where(b => !string.IsNullOrWhiteSpace(b.ContentTitle));
+            .OrderBy(c => bricks.IndexOf(c.BrickContentId));
     }
 }
 
 <p>Table of Content
-@foreach (var brick in contentBricks)
+@foreach (var content in contents)
 {
-    <br /><a href="#@brick.GetHtmlId()" >@brick.ContentTitle</a>
+    <br /><a href="#@content.GetHtmlId()" >@content.ContentTitle</a>
 }
 </p>
