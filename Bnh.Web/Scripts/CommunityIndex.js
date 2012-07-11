@@ -7,28 +7,29 @@
         self.communities = ko.observableArray();
     }
 
-    function CommuntiyViewModel(id, name, urlId, gpsLocation, gpsBounds, infoPopup) {
+    function CommuntiyViewModel(communityDto) {
         var self = this;
-        self.id = ko.observable(id);
-        self.name = ko.observable(name);
-        self.urlId = ko.observable(urlId);
-        self.hasLake = ko.observable();
-        self.distanceToCityCenter = ko.observable();
-        self.deleteUrl = ko.computed(function () {
-            return "/Calgary/Community/" + self.id() + "/Delete";
-        });
+        self.id = ko.observable(communityDto.Id);
+        self.name = ko.observable(communityDto.Name);
+        self.urlId = ko.observable(communityDto.UrlId);
+        self.hasLake = ko.observable(communityDto.HasLake);
+        self.distanceToCityCenter = ko.observable(communityDto.DistanceToCenter);
+        self.hasWaterFeature = ko.observable(communityDto.HasWaterFeature);
+        self.hasClubOrFacility = ko.observable(communityDto.HasClubOfFacility);
+        self.hasMountainView = ko.observable(communityDto.HasMountainView);
+        self.hasParksAndPathways = ko.observable(communityDto.HasParksAndPathways);
+        self.hasShoppingPlaza = ko.observable(communityDto.HasShoppingPlaza);
+        self.deleteUrl = ko.observable(communityDto.DeleteUrl);
         self.deleteTitle = ko.computed(function () {
             return "Delete " + self.name();
         });
-        self.detailsUrl = ko.computed(function () {
-            return "/Calgary/Community/" + self.urlId();
-        });
-        self.infoPopup = ko.observable(infoPopup);
-        if (gpsBounds != null) {
-            self.gpsBounds = $.map(gpsBounds, Global.Map.deserializeCoordinates);
+        self.detailsUrl = ko.observable(communityDto.DetailsUrl);
+        self.infoPopup = ko.observable(communityDto.InfoPopup);
+        if ((communityDto.GpsBounds != null) && (communityDto.GpsBounds != 'null')) {
+            self.gpsBounds = $.map($.parseJSON(communityDto.GpsBounds), Global.Map.deserializeCoordinates);
             self.associatedMapObject = Global.Map.addPolygon(self.gpsBounds, self.infoPopup());
         }
-        self.gpsLocation = Global.Map.deserializeCoordinates(gpsLocation);
+        self.gpsLocation = Global.Map.deserializeCoordinates($.parseJSON(communityDto.GpsLocation));
 
         self.communityMouseover = function () {
             Global.Map.highlightPolygon(self.associatedMapObject);
@@ -73,7 +74,7 @@
 
     function CommunityFilterViewModel(config) {
         var self = this;
-        self.remoteness = ko.observable(false);
+        self.remoteness = ko.observable();
         self.hasLake = ko.observable(false);
         self.hasWaterFeature = ko.observable(false);
         self.hasClubOrFacility = ko.observable(false);
@@ -83,7 +84,7 @@
 
         this.isCommunityVisible = function (cp) {
             var visible =
-             (!(self.remoteness()) || self.remoteness() <= cp.distanceToCityCenter()) &&
+             (!(self.remoteness()) || self.remoteness() >= cp.distanceToCityCenter()) &&
                  (!(self.hasLake()) || self.hasLake() === cp.hasLake()) &&
                      (!(self.hasWaterFeature()) || self.hasWaterFeature() === cp.hasWaterFeature()) &&
                          (!(self.hasClubOrFacility()) || self.hasClubOrFacility() === cp.hasClubOrFacility()) &&
@@ -105,10 +106,7 @@
                     var zone = new ZoneViewModel();
                     zone.name(item.Name);
                     zone.communities($.map(item.Communities, function (item) {
-                        var community = new CommuntiyViewModel(item.Id, item.Name, item.UrlId,
-                            $.parseJSON(item.GpsLocation), $.parseJSON(item.GpsBounds), item.InfoPopup);
-                        community.hasLake(item.HasLake);
-                        community.distanceToCityCenter(item.Remoteness);
+                        var community = new CommuntiyViewModel(item);
                         return community;
                     }));
                     return zone;
