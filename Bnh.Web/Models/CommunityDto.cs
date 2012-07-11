@@ -34,6 +34,36 @@ namespace Bnh.Web.Models
             set;
         }
 
+        public bool HasWaterFeature
+        {
+            get;
+            set;
+        }
+
+        public bool HasClubOfFacility
+        {
+            get;
+            set;
+        }
+
+        public bool HasMountainView
+        {
+            get;
+            set;
+        }
+
+        public bool HasParksAndPathways
+        {
+            get;
+            set;
+        }
+
+        public bool HasShoppingPlaza
+        {
+            get;
+            set;
+        }
+
         public int DistanceToCenter
         {
             get;
@@ -53,6 +83,18 @@ namespace Bnh.Web.Models
         }
 
         public String GpsBounds
+        {
+            get;
+            set;
+        }
+
+        public String DeleteUrl
+        {
+            get;
+            set;
+        }
+
+        public String DetailsUrl
         {
             get;
             set;
