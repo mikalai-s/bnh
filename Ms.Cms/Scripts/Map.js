@@ -10,7 +10,7 @@ function RestoreMapStateControl(controlDiv, map) {
     controlUI.style.borderWidth = '1px';
     controlUI.style.cursor = 'pointer';
     controlUI.style.textAlign = 'center';
-    controlUI.title = 'Click to restore Map state';
+    controlUI.title = 'Click to reset Map state';
     controlDiv.appendChild(controlUI);
 
     // Set CSS for the control interior.
@@ -18,7 +18,7 @@ function RestoreMapStateControl(controlDiv, map) {
     controlText.style.fontFamily = 'Arial,sans-serif';
     controlText.style.fontSize = '13px';
     controlText.style.padding = '1px 6px';
-    controlText.innerHTML = 'Restore Map State';
+    controlText.innerHTML = 'Reset Map';
     controlUI.appendChild(controlText);
 
     // Setup the click event listeners: simply set the map to Chicago.
