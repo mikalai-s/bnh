@@ -42,7 +42,11 @@
 
     ko.bindingHandlers.infoPopup = {
         init: function (element, valueAccessor) {
-            $(element).balloon({ position: "right", contents: valueAccessor(),
+            $(element).balloon({
+                position: "right",
+                contents: valueAccessor(),
+                delay: 200,
+                minLifetime: 0,
                 css: {
                     borderRadius: 0,
                     backgroundColor: 'white'

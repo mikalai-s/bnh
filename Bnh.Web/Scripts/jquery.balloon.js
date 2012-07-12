@@ -12,6 +12,8 @@
 	//-----------------------------------------------------------------------------
 	// Private
 	//-----------------------------------------------------------------------------
+	// stores currently active balloon target
+	var activeTarget = null;
 	// Helper for meta programming
 	var Meta = {};
 	Meta.pos  = $.extend(["top", "bottom", "left", "right"], {camel: ["Top", "Bottom", "Left", "Right"]});
@@ -167,27 +169,22 @@
 	// Public
 	//-----------------------------------------------------------------------------
 	$.fn.balloon = function(options) {
+		var timeout = null;
 		options = $.extend(true, {}, $.balloon.defaults, options);
-		return this.one("mouseenter", function(e) {
-			var $target = $(this), t = this;
-			var $balloon = $target.unbind("mouseenter", arguments.callee)
-				.showBalloon(options).mouseenter(function(e) {
-					isValidTargetEvent($target, e) && $target.showBalloon();
-				}).data("balloon");
-			if($balloon) {
-				$balloon.mouseleave(function(e) {
-					if(t == e.relatedTarget || $.contains(t, e.relatedTarget)) return;
-					$target.hideBalloon();
-				}).mouseenter(function(e) { $target.showBalloon(); });
-			}
-		}).mouseleave(function(e) {
+		return this.on("mouseenter", function(e) {
 			var $target = $(this);
-			isValidTargetEvent($target, e) && $target.hideBalloon();
+			timeout = setTimeout(function() {
+				$target.showBalloon(options);
+				activeTarget = $target;
+			}, options.delay);
+		}).on("mouseleave", function() {
+			clearTimeout(timeout);
 		});
 	};
 
 	$.fn.showBalloon = function(options) {
 		var $target, $balloon, offTimer;
+		activeTarget && activeTarget.hideBalloon();
 		if(!$.balloon.defaults.css) $.balloon.defaults.css = {};
 		if(options || !this.data("options"))
 			this.data("options", $.extend(true, {}, $.balloon.defaults, options));
@@ -221,7 +218,6 @@
 			} else {
 				makeupBalloon($target, $balloon, options);
 			}
-			$target.data("onTimer", setTimeout(function() {
 				if(options.showAnimation) {
 					options.showAnimation.apply($balloon.stop(true, true), [options.showDuration]);
 				} else {
@@ -229,15 +225,13 @@
 						if(this.style.removeAttribute) { this.style.removeAttribute("filter"); }
 					});
 				}
-			}, options.delay));
 		});
 	};
 
 	$.fn.hideBalloon = function() {
-		var options = this.data("options"), onTimer, offTimer;
+		var options = this.data("options"), offTimer;
 		return this.each(function() {
 			var $target = $(this);
-			(onTimer = $target.data("onTimer")) && clearTimeout(onTimer);
 			(offTimer = $target.data("offTimer")) && clearTimeout(offTimer);
 			$target.data("offTimer", setTimeout(function() {
 				var $balloon = $target.data("balloon");
@@ -272,4 +266,9 @@
 			}
 		}
 	};
+
+	// handle global mousedown event to hide active ballon
+	$(document).on("mousedown", function() {
+		activeTarget && activeTarget.hideBalloon();
+	});
 })(jQuery);
