@@ -31,28 +31,34 @@ namespace Bnh.Controllers
         {
             UrlHelper urlHelper = new UrlHelper(this.HttpContext.Request.RequestContext);
             return Json(db.Zones.OrderBy(m => m.Order).Include("Communities").ToArray().Select((item) =>
-                                                                             {
-                                                                                 ZoneDto zone = new ZoneDto();
-                                                                                 zone.Name = item.Name;
-                                                                                 zone.Communities = item.Communities.Select((community) =>
-                                                                                                                                {
-                                                                                                                                    CommunityDto communityDto = new CommunityDto();
-                                                                                                                                    communityDto.DistanceToCenter = community.Remoteness;
-                                                                                                                                    communityDto.Id = community.Id;
-                                                                                                                                    communityDto.Name = community.Name;
-                                                                                                                                    communityDto.UrlId = community.UrlId;
-                                                                                                                                    communityDto.HasLake = community.HasLake;
-                                                                                                                                    communityDto.GpsBounds = community.GpsBounds;
-                                                                                                                                    communityDto.GpsLocation = community.GpsLocation;
-
-                                                                                                                                    communityDto.InfoPopup = String.Format("<a href='{0}'>{1}</a>",
-                                                                                                                                        urlHelper.Action("Details", "Community", new { id = community.UrlId}), community.Name); 
-                                                                                                                                    return
-                                                                                                                                        communityDto;
-                                                                                                                                });
-                                                                                 return
-                                                                                     zone;
-                                                                             }), JsonRequestBehavior.AllowGet);
+                        {
+                            ZoneDto zone = new ZoneDto();
+                            zone.Name = item.Name;
+                            zone.Communities = item.Communities.Select((community) =>
+                                                                        {
+                                                                            CommunityDto communityDto = new CommunityDto();
+                                                                            communityDto.DistanceToCenter = community.Remoteness;
+                                                                            communityDto.Id = community.Id;
+                                                                            communityDto.Name = community.Name;
+                                                                            communityDto.UrlId = community.UrlId;
+                                                                            communityDto.HasLake = community.HasLake;
+                                                                            communityDto.HasMountainView = community.HasMountainView;
+                                                                            communityDto.HasClubOfFacility = community.HasClubOrFacility;
+                                                                            communityDto.HasParksAndPathways = community.HasParksAndPathways;
+                                                                            communityDto.HasShoppingPlaza = community.HasParksAndPathways;
+                                                                            communityDto.HasWaterFeature = community.HasWaterFeature;
+                                                                            communityDto.GpsBounds = community.GpsBounds;
+                                                                            communityDto.GpsLocation = community.GpsLocation;
+                                                                            communityDto.DeleteUrl = urlHelper.Action("Delete", "Community", new { id = community.Id });
+                                                                            communityDto.DetailsUrl = urlHelper.Action("Details", "Community", new { id = community.UrlId });
+                                                                            communityDto.InfoPopup = String.Format("<a href='{0}'>{1}</a>",
+                                                                                urlHelper.Action("Details", "Community", new { id = community.UrlId }), community.Name);
+                                                                            return
+                                                                                communityDto;
+                                                                        });
+                            return
+                                zone;
+                        }), JsonRequestBehavior.AllowGet);
         }
 
         public ViewResult Details(string id)
