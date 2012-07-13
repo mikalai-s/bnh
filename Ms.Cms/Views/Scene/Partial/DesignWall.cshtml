@@ -1,0 +1,16 @@
+﻿@model Wall
+
+<div class='wall-wrapper' style='width:@Model.Width.ToString("F")%' entity-data='@Model.ToJson()'>
+    <div class='wall'>
+        <div class='header'>
+            <span class='title'>Wall</span>
+            <a class='delete'>delete</a>
+        </div>
+        <div class='content'>
+            @foreach (var brick in Model.Bricks)
+            {
+                @Html.Partial(ContentUrl.Views.Scene.Partial.DesignBrick, brick);
+            }
+        </div>
+    </div>
+</div>

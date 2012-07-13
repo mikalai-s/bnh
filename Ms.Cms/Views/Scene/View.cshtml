@@ -1,0 +1,26 @@
+﻿@model Scene
+@{
+    this.GetStyleBundle().Include(new[]
+    {
+        ContentUrl.Styles.Scene
+    });
+}
+
+<div id="scene">
+    @foreach (var wall in Model.Walls)
+    {
+        <div class='wall-wrapper' style='width:@wall.Width.ToString("F")%'>
+        @foreach (var brick in wall.Bricks)
+        {
+            var content = brick.GetContent();
+            <div id="@content.GetHtmlId()" class='brick-wrapper' style='width:@brick.Width.ToString("F")%'>
+                @Html.Partial(ContentUrl.Views.BrickContent.View, content)
+            </div>
+        }
+        </div>
+    }
+</div>
+
+@{
+    this.RenderStylesAndScripts();
+}

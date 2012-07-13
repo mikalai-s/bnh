@@ -27,9 +27,15 @@ namespace Ms.Cms
             return htmlHelper.DropDownList(name, items);
         }
 
-        public static MvcHtmlString EditSceneLink(this HtmlHelper html, Scene scene, string text)
+        public static MvcHtmlString EditSceneLink(this HtmlHelper html, Scene scene, string text, Uri viewUrl)
         {
-            return html.ActionLink(text, "Edit", "Scene", new { id = scene.Id }, null);
+            return html.ActionLink(text, "Edit", "Scene", new { id = scene.SceneId, returnUrl = viewUrl.AbsoluteUri }, null);
+        }
+
+        public static string GetBackUrl(this RequestContext rc)
+        {
+            return rc.HttpContext.Session["_lastUsedSceneDesignUrl"] as string ?? 
+                   rc.HttpContext.Request.UrlReferrer + "";
         }
 
         public static List<string> GetStyleBundle(this WebViewPage page)
@@ -50,20 +56,39 @@ namespace Ms.Cms
                 page.ViewContext.Controller.ViewBag._MsCms_ScriptBundle = scriptBundle = new List<string>();
             }
             return scriptBundle;
-            //var scriptBundle = page.ViewBag._MsCms_ScriptBundle as ScriptBundle;
-            //if (scriptBundle == null)
-            //{
-            //    page.ViewBag._MsCms_ScriptBundle = scriptBundle = new ScriptBundle("~/WebExtracted/Ms.Cms/Scripts/js");
-            //}
-            //return scriptBundle;
         }
 
 
-        public static MvcHtmlString RenderScene(this WebViewPage page, Scene scene)
+        public static MvcHtmlString RenderScene(this WebViewPage page, string sceneId)
         {
-            var s =  page.Html.Partial("~/WebExtracted/Ms.Cms/Views/Scene/Scene.cshtml", scene);
-            page.RenderStylesAndScripts();
-            return s;
+            using (var db = new CmsEntities())
+            {
+                var scene = db.Scenes.FirstOrDefault(s => s.SceneId == sceneId) ?? new Scene { SceneId = sceneId };
+                var view = page.Html.Partial(ContentUrl.Views.Scene.View, scene);
+                page.RenderStylesAndScripts();
+                return view;
+            }
+        }
+
+        public static MvcHtmlString RenderDesignScene(this WebViewPage page, string sceneId)
+        {
+            using (var db = new CmsEntities())
+            {
+                // save crrent URL in sesion so we know it when redirecting back from brick editing
+                page.Session["_lastUsedSceneDesignUrl"] = page.Request.Url.AbsoluteUri;
+
+                var scene = db.Scenes.FirstOrDefault(s => s.SceneId == sceneId) ?? new Scene { SceneId = sceneId };
+                var templates = db.Scenes
+                    .Where(s => s.IsTemplate && s.SceneId != scene.SceneId)
+                    .Select(s => new { id = s.SceneId, title = s.Title })
+                    .ToList();
+                page.ViewBag.Templates = new SelectList(templates, "id", "title");
+                page.ViewBag.LinkableBricksSceneId = Constants.LinkableBricksSceneId;
+
+                var viewString = page.Html.Partial(ContentUrl.Views.Scene.Edit, scene);
+                page.RenderStylesAndScripts();
+                return viewString;
+            }
         }
 
         public static void RenderStylesAndScripts(this WebViewPage page)

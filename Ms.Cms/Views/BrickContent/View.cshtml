@@ -1,0 +1,9 @@
+﻿@model BrickContent
+
+@{
+    string view = ContentUrl.Views.BrickContent.Partial.GetView(Model.GetType());
+}
+@if (File.Exists(Server.MapPath(view)))
+{ 
+    @Html.Partial(view, Model);
+}

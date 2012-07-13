@@ -47,20 +47,24 @@
     <Reference Include="Antlr3.Runtime">
       <HintPath>..\packages\WebGrease.1.0.0\lib\Antlr3.Runtime.dll</HintPath>
     </Reference>
-    <Reference Include="EntityFramework">
-      <HintPath>..\packages\EntityFramework.5.0.0-rc\lib\net40\EntityFramework.dll</HintPath>
-    </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <Private>True</Private>
       <HintPath>..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
+    </Reference>
+    <Reference Include="MongoDB.Bson, Version=1.5.0.4566, Culture=neutral, PublicKeyToken=f686731cfb9cc103, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\mongocsharpdriver.1.5\lib\net35\MongoDB.Bson.dll</HintPath>
+    </Reference>
+    <Reference Include="MongoDB.Driver, Version=1.5.0.4566, Culture=neutral, PublicKeyToken=f686731cfb9cc103, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\mongocsharpdriver.1.5\lib\net35\MongoDB.Driver.dll</HintPath>
     </Reference>
     <Reference Include="Newtonsoft.Json, Version=4.5.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.4.5.7\lib\net40\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
-    <Reference Include="System.Data.Entity" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Net.Http, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Net.Http.2.0.20126.16343\lib\net40\System.Net.Http.dll</HintPath>
@@ -78,7 +82,6 @@
     <Reference Include="System.Web.ApplicationServices" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
-    <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.Web.Helpers, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <Private>True</Private>
       <HintPath>..\packages\Microsoft.AspNet.WebPages.2.0.20505.0\lib\net40\System.Web.Helpers.dll</HintPath>
@@ -99,9 +102,6 @@
     <Reference Include="System.Web.Optimization, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Microsoft.AspNet.Web.Optimization.1.0.0-beta3\lib\net40\System.Web.Optimization.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Web.Providers">
-      <HintPath>..\packages\System.Web.Providers.Core.1.0\lib\net40\System.Web.Providers.dll</HintPath>
     </Reference>
     <Reference Include="System.Web.Razor, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <Private>True</Private>
@@ -133,50 +133,43 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Models\BrickContent.cs" />
+    <Compile Include="Models\CmsContext.cs" />
+    <Compile Include="Models\EmptyContent.cs" />
+    <Compile Include="Models\Extensions\BrickContentExtensions.cs" />
+    <Compile Include="Models\InitData\InitData.cs" />
+    <Compile Include="Models\IRepository.cs" />
+    <Compile Include="Models\MongoRepository.cs" />
+    <Compile Include="Models\SceneRepository.cs" />
     <Compile Include="Models\Utilities\BrickRegistration.cs" />
     <Compile Include="MsCms.cs" />
-    <Compile Include="Controllers\BrickController.cs" />
+    <Compile Include="Controllers\BrickContentController.cs" />
     <Compile Include="Controllers\SceneController.cs" />
-    <Compile Include="Migrations\201206110230117_InitialCreate.cs" />
-    <Compile Include="Migrations\201206110230117_InitialCreate.Designer.cs">
-      <DependentUpon>201206110230117_InitialCreate.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\Configuration.cs" />
-    <Compile Include="Models\Attributes\NonCloneableAttribute.cs" />
     <Compile Include="Models\Attributes\NonJsExposableAttribute.cs" />
     <Compile Include="Models\Brick.cs">
     </Compile>
-    <Compile Include="Models\Extensions\CommonExtensions.cs" />
-    <Compile Include="Models\Clonable.cs" />
-    <Compile Include="Models\EmptyBrick.cs">
+    <Compile Include="Models\HtmlContent.cs">
     </Compile>
-    <Compile Include="Models\Extensions\SceneExtensions.cs" />
-    <Compile Include="Models\GalleryBrick.cs">
+    <Compile Include="Models\MapContent.cs">
     </Compile>
-    <Compile Include="Models\HtmlBrick.cs">
-    </Compile>
-    <Compile Include="Models\MapBrick.cs">
-    </Compile>
-    <Compile Include="Models\CmsContext.cs">
-    </Compile>
-    <Compile Include="Models\RazorBrick.cs">
+    <Compile Include="Models\RazorContent.cs">
     </Compile>
     <Compile Include="Models\Scene.cs" />
-    <Compile Include="Models\SceneTemplate.cs">
+    <Compile Include="Models\LinkableContent.cs">
     </Compile>
-    <Compile Include="Models\LinkableBrick.cs">
-    </Compile>
-    <Compile Include="Models\TocBrick.cs">
+    <Compile Include="Models\TocContent.cs">
     </Compile>
     <Compile Include="Models\Wall.cs">
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Styles\_wext.cs" />
-    <Compile Include="Views\Brick\_wext.cs" />
+    <Compile Include="Views\BrickContent\Partial\_wext.cs" />
+    <Compile Include="Views\BrickContent\_wext.cs" />
+    <Compile Include="Views\Scene\Partial\_wext.cs" />
     <Compile Include="Views\Scene\_wext.cs" />
-    <Compile Include="Views\Wall\_wext.cs" />
     <Compile Include="Models\Extensions\BrickExtensions.cs" />
     <Compile Include="Views\_wext.cs" />
+    <Compile Include="Web\ContentUrls.cs" />
     <Compile Include="Web\DesignerAuthorizeAttribute.cs" />
     <Compile Include="Web\StirngExtensions.cs" />
     <Compile Include="Web\WebExtractAttribute.cs" />
@@ -214,64 +207,55 @@
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Views\Brick\Brick.cshtml" />
+    <EmbeddedResource Include="Views\BrickContent\View.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Views\Brick\BrickContent.cshtml" />
+    <EmbeddedResource Include="Views\BrickContent\Partial\ViewHtmlContent.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Views\Brick\BrickContent_Html.cshtml" />
+    <EmbeddedResource Include="Views\BrickContent\Partial\ViewMapContent.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Views\Brick\BrickContent_Map.cshtml" />
+    <EmbeddedResource Include="Views\BrickContent\Partial\ViewRazorContent.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Views\Brick\BrickContent_Razor.cshtml" />
+    <EmbeddedResource Include="Views\BrickContent\Partial\ViewTocContent.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Views\Brick\BrickContent_Toc.cshtml" />
+    <EmbeddedResource Include="Views\BrickContent\Edit.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Views\Brick\Edit.cshtml" />
+    <EmbeddedResource Include="Views\BrickContent\Partial\EditHtmlContent.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Views\Brick\EditGallery.cshtml" />
+    <EmbeddedResource Include="Views\BrickContent\Partial\EditLinkableContent.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Views\Brick\EditHtml.cshtml" />
+    <EmbeddedResource Include="Views\BrickContent\Partial\EditMapContent.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Views\Brick\EditLinkable.cshtml" />
+    <EmbeddedResource Include="Views\Scene\Partial\DesignBrick.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Views\Brick\EditMap.cshtml" />
+    <EmbeddedResource Include="Views\Scene\Partial\DesignScene.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Views\Wall\Wall.cshtml" />
+    <EmbeddedResource Include="Views\Scene\View.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Views\Scene\Edit.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Views\Brick\DesignBrick.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Views\Scene\DesignScene.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Views\Scene\Scene.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Views\Scene\Empty.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Views\Wall\DesignWall.cshtml" />
+    <EmbeddedResource Include="Views\Scene\Partial\DesignWall.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Views\_ViewStart.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Views\Brick\EditRazor.cshtml" />
+    <EmbeddedResource Include="Views\BrickContent\Partial\EditRazorContent.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\Scene\Edit.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\Scene\EditLinkable.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
@@ -295,7 +279,7 @@
         <WebProjectProperties>
           <UseIIS>False</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
-          <DevelopmentServerPort>49213</DevelopmentServerPort>
+          <DevelopmentServerPort>65016</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
           <IISUrl>
           </IISUrl>

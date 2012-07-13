@@ -1,40 +1,39 @@
 ﻿using System;
 using System.Linq;
-using System.Data.Entity;
-using System.Data.Entity.Infrastructure;
+
 using System.Reflection;
+using System.Collections.Generic;
+using System.Configuration;
+
+using MongoDB.Driver.Linq;
+using MongoDB.Bson;
 
 namespace Ms.Cms.Models
 {
-    public partial class CmsEntities : DbContext
+    public partial class CmsEntities : IDisposable
     {
         public CmsEntities(string nameOrConnectionString) 
-            : base(nameOrConnectionString)
         {
-            //var brickAssemblies = MsCms.RegisteredBrickTypes
-            //    .Select(br => br.Type.Assembly)
-            //    .Where(a => a != Assembly.GetExecutingAssembly())
-            //    .Distinct();
-            //foreach(var assembly in brickAssemblies)
-            //{
-            //    ((IObjectContextAdapter)this).ObjectContext.MetadataWorkspace.LoadFromAssembly(assembly);
-            //}
+            var connectionString = nameOrConnectionString;
+            if (ConfigurationManager.ConnectionStrings[nameOrConnectionString] != null)
+            {
+                connectionString = ConfigurationManager.ConnectionStrings[nameOrConnectionString].ConnectionString;
+            }
+
+            this.Scenes = new SceneRepository(connectionString);
+            this.BrickContents = new MongoRepository<string, BrickContent>(connectionString);
         }
 
         public CmsEntities()
             : this("Ms.Cms")
         {
-            
         }
-    
-        //protected override void OnModelCreating(DbModelBuilder modelBuilder)
-        //{
-        //}
 
-        public DbSet<Scene> Scenes { get; set; }
-        public DbSet<Wall> Walls { get; set; }
-        public DbSet<Brick> Bricks { get; set; }       
+        public SceneRepository Scenes { get; private set; }
+        public MongoRepository<string, BrickContent> BrickContents { get; private set; }
 
-        public DbSet<SceneTemplate> SceneTemplates { get; set; }
+        public void Dispose()
+        {
+        }
     }
 }

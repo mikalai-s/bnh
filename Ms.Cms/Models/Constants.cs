@@ -2,11 +2,12 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using MongoDB.Bson;
 
 namespace Ms.Cms.Models
 {
     public static class Constants
     {
-        public static Guid LinkableBricksSceneGuid = new Guid("B740A5E9-3463-4FAC-82C3-DBF9F7BA1017");
+        public static string LinkableBricksSceneId = "4fe5582cafce151ef4d39828";
     }
 }

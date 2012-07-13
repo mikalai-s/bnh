@@ -5,16 +5,15 @@
 @{
     ViewBag.Title = Model.Name;
     ViewBag.GlobalModel = Model;
-    var scene = Model.GetScene();
 }
 
 <div class="page-view">
-    <h2>            
+    <h5>            
         @if (Context.User.IsInRole("content_manager"))
         {
-            <sup class="alter">@Html.ActionLink("edit properties", "Edit", new { id = Model.Id }, null)</sup><br />
-            <sup class="alter">@Html.ActionLink("edit scene", "Edit", "Scene", new { id = scene.Id }, null)</sup>
+            @Html.ActionLink("edit properties", "Edit", new { id = Model.UrlId }, null)<br />
+            @Html.ActionLink("edit scene", "EditScene", new { id = Model.UrlId }, null)
         }
-    </h2>
-    @this.RenderScene(scene)
+    </h5>
+    @this.RenderScene(Model.CommunityId)
 </div>

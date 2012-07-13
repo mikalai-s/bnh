@@ -1,13 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data;
-using System.Data.Entity;
-using System.Data.Objects;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 
 using Ms.Cms.Models;
+using System.Configuration;
+
+using MongoDB.Driver.Linq;
+using MongoDB.Bson;
 
 
 namespace Ms.Cms.Controllers
@@ -18,24 +19,12 @@ namespace Ms.Cms.Controllers
         private CmsEntities db = new CmsEntities();
 
 
-        // GET: /Scene/Edit/5
-        public ActionResult Edit(long id)
+        [HttpGet]
+        public ActionResult EditLinkable()
         {
-            var sceneTemplates = from s in db.Scenes
-                                 from t in db.SceneTemplates
-                                 where s.OwnerGuidId == t.Id
-                                 select new { id = s.Id, title = t.Title };
-            ViewBag.Templates = new SelectList(sceneTemplates, "id", "title");
-
-            ViewBag.OwnerId = id;
-            ViewBag.LinkableBricksSceneId = db.Scenes
-                .Where(s => s.OwnerGuidId == Constants.LinkableBricksSceneGuid)
-                .Select(s => s.Id)
-                .First();
-
-            var scene = db.Scenes.FirstOrDefault(s => s.Id == id); 
-            return View("~/WebExtracted/Ms.Cms/Views/Scene/Edit.cshtml", scene);
+            return View(ContentUrl.Views.Scene.EditLinkable);
         }
+
 
         // POST: /Scene/Edit/5
 
@@ -44,148 +33,105 @@ namespace Ms.Cms.Controllers
         {
             if (ModelState.IsValid)
             {
-                // ensure walls collection is not null
-                var walls = scene.Walls ?? new List<Wall>();
-
-                // get moved bricks
-                var movedBricks = (from wall in walls
-                                   from brick in wall.Bricks
-                                   where wall.Id != brick.WallId && brick.Id != 0
-                                   select brick.Id).ToList();
-
-                // update existing walls
-                foreach (var wall in walls.Where(w => w.Id != 0))
-                {
-                    var realWall = db.Walls.First(w => w.Id == wall.Id);
-                    realWall.Order = wall.Order;
-                    realWall.Width = wall.Width;
-
-                    // determine bricks removed from given wall
-                    var bricksToRemove = realWall.Bricks
-                        .Select(b => b.Id)
-                        .Except(movedBricks)
-                        .Except(wall.Bricks.Select(b => b.Id))
-                        .ToList();
-                    foreach (var bid in bricksToRemove)
-                    {
-                        db.Bricks.Remove(db.Bricks.First(b => b.Id == bid));
-                    }
-
-                    // add new bricks 
-                    foreach (var brick in wall.Bricks.Where(b => b.Id == 0).ToList())
-                    {
-                        realWall.Bricks.Add(brick);
-                    }
-
-                    // updated bricks
-                    foreach (var brick in wall.Bricks.Where(b => (b.Id != 0) && (!movedBricks.Contains(b.Id))))
-                    {
-                        ApplyCommonBrickValues(brick);
-                    }
-
-                    // moved bricks 
-                    foreach (var brick in wall.Bricks.Where(b => movedBricks.Contains(b.Id)))
-                    {
-                        var realBrick = ApplyCommonBrickValues(brick);
-                        realWall.Bricks.Add(realBrick);
-                    }
-                }
-                
-                // add new walls
-                foreach (var wall in walls.Where(w => w.Id == 0))
-                {
-                    // moved bricks
-                    foreach (var brick in wall.Bricks.Where(b => movedBricks.Contains(b.Id)).ToList())
-                    {
-                        wall.Bricks.Remove(brick);
-                        var realBrick = ApplyCommonBrickValues(brick);
-                        wall.Bricks.Add(realBrick);
-                    }
-
-                    wall.SceneId = scene.Id;
-                    db.Walls.Add(wall);
-                }
-
-                // remove walls
-                foreach (var realWall in db.Walls.Where(w => w.SceneId == scene.Id).ToList())
-                {
-                    var ids = walls.Where(w => w.Id != 0).Select(w => w.Id).ToList();
-                    if (!ids.Contains(realWall.Id))
-                    {
-                        foreach(var brick in realWall.Bricks.ToList())
-                        {
-                            db.Bricks.Remove(brick);
-                        }
-
-                        db.Walls.Remove(realWall);
-                    }
-                }
-
-                db.SaveChanges();
+                SaveScene(scene);
             }
-
+            
             if (Request.IsAjaxRequest())
             {
                 // render real (saved) scene
-                return PartialView("~/WebExtracted/Ms.Cms/Views/Scene/DesignScene.cshtml", db.Scenes.First(s => s.Id == scene.Id));
+                return PartialView(ContentUrl.Views.Scene.Partial.DesignScene, db.Scenes.First(s => s.SceneId == scene.SceneId));
             }
-
-            return View("~/WebExtracted/Ms.Cms/Views/Scene/DesignScene.cshtml");
+            
+            return View(ContentUrl.Views.Scene.Partial.DesignScene);
         }
 
-        // apply only properties that can be changed on scene designer
-        private Brick ApplyCommonBrickValues(Brick brick)
+        private void SaveScene(Scene scene, bool cloning = false)
         {
-            var realBrick = db.Bricks.First(b => b.Id == brick.Id);
-            realBrick.Order = brick.Order;
-            realBrick.Width = brick.Width;
-            return realBrick;
+            // enumerate scene's existing brick contents to track deleted ones
+            var existingSceneWalls = db.Scenes
+                .Where(s => s.SceneId == scene.SceneId)
+                .ToList() // because SelectMany() is not supported by MongoDB Linq yet
+                .SelectMany(s => s.Walls);
+            var existingBricks = existingSceneWalls
+                .SelectMany(w => w.Bricks.Select(b => b.BrickContentId))
+                .Where(id => !string.IsNullOrEmpty(id))
+                .ToList();
+
+            // TODO: it's good to implement some kind of version check on each scene
+            // so that if designScene version is different from realScene version 
+            // we throw exception saying that somebody has already updated scene 
+            // while a user was editing it.
+
+            foreach (var wall in scene.Walls)
+            {
+                foreach (var brick in wall.Bricks)
+                {
+                    if (cloning)
+                    {
+                        if (!string.IsNullOrEmpty(brick.BrickContentId)) // doesn't make sense to clone empty brick
+                        {
+                            var content = db.BrickContents.First(c => c.BrickContentId == brick.BrickContentId);
+                            content.BrickContentId = null;
+                            db.BrickContents.Insert(content);
+                            brick.BrickContentId = content.BrickContentId;
+                        }
+                    }
+                    else if (string.IsNullOrEmpty(brick.NewContentTypeName)) // existing brick
+                    {
+                        existingBricks.Remove(brick.BrickContentId);
+                    }
+                    else  // not empty brick
+                    {
+                        var contentType = MsCms.RegisteredBrickTypes
+                            .Where(br => br.Type.Name == brick.NewContentTypeName)
+                            .Select(br => br.Type)
+                            .First();
+                        var newContent = Activator.CreateInstance(contentType) as BrickContent;
+                        db.BrickContents.Insert(newContent);
+                        brick.BrickContentId = newContent.BrickContentId;
+                    }
+                }
+            }
+
+            // save scene document
+            db.Scenes.Save(scene);
+
+            // delete removed bricks
+            existingBricks.ForEach(db.BrickContents.Delete);
         }
 
         [HttpPost]
-        public ActionResult ExportTemplate(string title, long sceneId)
+        public ActionResult ApplyTemplate(string sceneId, string templateSceneId)
         {
-            if (string.IsNullOrWhiteSpace(title))
-            {
-                ModelState.AddModelError("EmptyTemplate", "Template name cannot be empty");
-            }
+            var template = db.Scenes.First(t => t.SceneId == templateSceneId && t.IsTemplate);
+            template.SceneId = sceneId;
+            template.Title = null;
+            template.IsTemplate = false;
+            SaveScene(template, true);
 
-            if (ModelState.IsValid)
-            {
-                // create scene template first
-                var template = new SceneTemplate { Id = Guid.NewGuid(), Title = title };
-                db.SceneTemplates.Add(template);
-
-                // find source scene and clone it
-                var scene = db.Scenes.First(s => s.Id == sceneId).Clone();
-
-                // update owner id of cloned scene
-                scene.OwnerGuidId = template.Id;
-
-                // add new scene to context and save it
-                db.Scenes.Add(scene);
-                db.SaveChanges();
-            }
-
-            return View("~/WebExtracted/Ms.Cms/Views/Scene/Empty.cshtml");
-        }
-      
-        [HttpPost]
-        public ActionResult ApplyTemplate(long sceneId, long templateSceneId)
-        {
-            var scene = db.Scenes.First(s => s.Id == sceneId).ApplyTemplate(db, db.Scenes.First(s => s.Id == templateSceneId));
-            db.SaveChanges();
-
-            return PartialView("~/WebExtracted/Ms.Cms/Views/Scene/DesignScene.cshtml", scene);
+            return PartialView(ContentUrl.Views.Scene.Partial.DesignScene, template);
         }
 
         [HttpPost]
         public ActionResult CanDeleteBrick(Brick brick)
         {
-            return new JsonResult()
+            if (brick == null || string.IsNullOrEmpty(brick.BrickContentId))
             {
-                Data = !db.Bricks.OfType<LinkableBrick>().Where(b => b.LinkedBrickId == brick.Id).Any()
-            };
+                return new JsonResult { Data = true };
+            }
+            else
+            {
+                return new JsonResult()
+                {
+                    // because OfType() extension is not implemented in current MongoDd driver
+                    // the query is a little bit weird
+                    Data = !db.BrickContents
+                        .Where(b => b is LinkableContent)
+                        .Select(b => b as LinkableContent)
+                        .ToList()
+                        .Any(b => b.LinkedContentId == brick.BrickContentId)
+                };
+            }
         }
 
         protected override void Dispose(bool disposing)

@@ -1,35 +1,35 @@
 ﻿(function (ko, $) {
     "use strict"
 
-    function ZoneViewModel() {
+    function ZoneViewModel(name, communities) {
         var self = this;
-        self.name = ko.observable();
-        self.communities = ko.observableArray();
+        self.name = ko.observable(name || "");
+        self.communities = ko.observableArray(communities || []);
     }
 
-    function CommuntiyViewModel(communityDto) {
+    function CommuntiyViewModel(community, uiHelpers) {
         var self = this;
-        self.id = ko.observable(communityDto.Id);
-        self.name = ko.observable(communityDto.Name);
-        self.urlId = ko.observable(communityDto.UrlId);
-        self.hasLake = ko.observable(communityDto.HasLake);
-        self.distanceToCityCenter = ko.observable(communityDto.DistanceToCenter);
-        self.hasWaterFeature = ko.observable(communityDto.HasWaterFeature);
-        self.hasClubOrFacility = ko.observable(communityDto.HasClubOfFacility);
-        self.hasMountainView = ko.observable(communityDto.HasMountainView);
-        self.hasParksAndPathways = ko.observable(communityDto.HasParksAndPathways);
-        self.hasShoppingPlaza = ko.observable(communityDto.HasShoppingPlaza);
-        self.deleteUrl = ko.observable(communityDto.DeleteUrl);
+        self.id = ko.observable(community.Id);
+        self.name = ko.observable(community.Name);
+        self.urlId = ko.observable(community.UrlId);
+        self.hasLake = ko.observable(community.HasLake);
+        self.distanceToCityCenter = ko.observable(community.DistanceToCenter);
+        self.hasWaterFeature = ko.observable(community.HasWaterFeature);
+        self.hasClubOrFacility = ko.observable(community.HasClubOfFacility);
+        self.hasMountainView = ko.observable(community.HasMountainView);
+        self.hasParksAndPathways = ko.observable(community.HasParksAndPathways);
+        self.hasShoppingPlaza = ko.observable(community.HasShoppingPlaza);
+        self.deleteUrl = ko.observable(uiHelpers.deleteUrl);
         self.deleteTitle = ko.computed(function () {
             return "Delete " + self.name();
         });
-        self.detailsUrl = ko.observable(communityDto.DetailsUrl);
-        self.infoPopup = ko.observable(communityDto.InfoPopup);
-        if ((communityDto.GpsBounds != null) && (communityDto.GpsBounds != 'null')) {
-            self.gpsBounds = $.map($.parseJSON(communityDto.GpsBounds), Global.Map.deserializeCoordinates);
+        self.detailsUrl = ko.observable(uiHelpers.detailsUrl);
+        self.infoPopup = ko.observable(uiHelpers.infoPopup);
+        if ((community.GpsBounds != null) && (community.GpsBounds != 'null')) {
+            self.gpsBounds = $.map($.parseJSON(community.GpsBounds), Global.Map.deserializeCoordinates);
             self.associatedMapObject = Global.Map.addPolygon(self.gpsBounds, self.infoPopup());
         }
-        self.gpsLocation = Global.Map.deserializeCoordinates($.parseJSON(communityDto.GpsLocation));
+        self.gpsLocation = Global.Map.deserializeCoordinates($.parseJSON(community.GpsLocation));
 
         self.communityMouseover = function () {
             Global.Map.highlightPolygon(self.associatedMapObject);
@@ -102,20 +102,17 @@
 
     function CommunityPageViewModel() {
         var self = this;
-        self.zones = ko.observableArray();
+        self.zones = ko.observableArray([]);
         self.filter = ko.observable(new CommunityFilterViewModel());
         self.initialize = function () {
             $.getJSON("/Community/Zones", function (data) {
-                var mappedZones = $.map(data, function (item) {
-                    var zone = new ZoneViewModel();
-                    zone.name(item.Name);
-                    zone.communities($.map(item.Communities, function (item) {
-                        var community = new CommuntiyViewModel(item);
-                        return community;
-                    }));
-                    return zone;
+                var zones = $.map(data, function (communities, zone) {
+                    var communities = $.map(communities, function (item) {
+                        return new CommuntiyViewModel(item.community, item.uiHelpers);
+                    });
+                    return new ZoneViewModel(zone, communities);                        
                 });
-                self.zones(mappedZones);
+                self.zones(zones);
             });
         };
         self.initialize();

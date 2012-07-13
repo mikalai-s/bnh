@@ -1,0 +1,20 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using MongoDB.Bson;
+using MongoDB.Bson.Serialization.Attributes;
+using MongoDB.Driver.Builders;
+
+namespace Ms.Cms.Models
+{
+    public abstract class BrickContent
+    {
+        [BsonRepresentation(BsonType.ObjectId), BsonId]
+        public string BrickContentId { get; set; }
+
+        public string ContentTitle { get; set; }
+
+        
+    }
+}
