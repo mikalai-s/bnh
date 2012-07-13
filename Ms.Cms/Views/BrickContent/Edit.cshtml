@@ -1,0 +1,40 @@
+﻿@model BrickContent
+
+@{
+    var view = ContentUrl.Views.BrickContent.Partial.GetEdit(Model.GetType());
+}
+
+<h2>Edit</h2>
+
+<div class="page-view">
+@using (Html.BeginForm("Edit", "BrickContent", new { id = Model.BrickContentId }))
+{
+    @Html.ValidationSummary(true)
+    <fieldset>
+        <legend>Brick</legend>
+
+        @Html.HiddenFor(model => model.BrickContentId)
+        @Html.Hidden("Type", Model.GetType().Name)
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.ContentTitle)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.ContentTitle)
+            @Html.ValidationMessageFor(model => model.ContentTitle)
+        </div>
+        
+        @if (File.Exists(Server.MapPath(view)))
+        {
+            @Html.Partial(view, Model)
+        }
+
+        <span class="alter"><input type="submit" value="Save" id="saveButton" /></span>
+        <span><a href="@Html.ViewContext.RequestContext.GetBackUrl()">Cancel</a></span>
+    </fieldset>
+}
+</div>
+
+@{
+    this.RenderStylesAndScripts();
+}

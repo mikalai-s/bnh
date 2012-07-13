@@ -9,6 +9,7 @@
     ViewBag.GlobalModel = Model;
     var propertiesToSkip = new List<string> { "Name", "Zone" };
     var externalProperties = ExternalProperty.Get(typeof(Community)).Where(p => !propertiesToSkip.Contains(p.Property.Name));
+    var zones = ViewBag.CityZones as IEnumerable<SelectListItem>;
 }
 
 @section Styles {
@@ -20,16 +21,16 @@
 @section Scripts {
     <script src="@Url.Content("/Scripts/jquery.validate.js")" type="text/javascript"></script>
     <script type="text/javascript" src="//maps.googleapis.com/maps/api/js?sensor=false&libraries=drawing"></script>
-    <script src="@Url.Content("~/WebExtracted/Ms.Cms/Scripts/MapEditor.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Ms.Cms/Scripts/MapEditor.js")" type="text/javascript"></script>
     <script src="@Url.Content("/Scripts/CommunityEdit.js")" type="text/javascript"></script>
     <script src="@Url.Content("/Scripts/jquery.json-2.3.js")" type="text/javascript"></script>    
 }
 
 <h2>@ViewBag.Title</h2>
 
-<h2>
-    <sup class="alter">@Html.EditSceneLink(Model.GetScene(), "edit scene")</sup>
-</h2>
+<h4>
+    @Html.ActionLink("edit scene", "EditScene", new { id = Model.UrlId })
+</h4>
 
 <div>
     @using (Html.BeginForm())
@@ -39,7 +40,7 @@
         <fieldset>
             <legend>Properties</legend>
 
-            @Html.HiddenFor(model => model.Id)
+            @Html.HiddenFor(model => model.CommunityId)            @Html.HiddenFor(model => model.CityId)
             @Html.HiddenFor(model => model.GpsLocation)
             @Html.HiddenFor(model => model.GpsBounds)
 
@@ -60,10 +61,10 @@
                         </td>
                     </tr>
                     <tr>
-                        <td>@Html.LabelFor(model => model.ZoneId, "Zone")</td>
+                        <td>@Html.LabelFor(model => model.Zone, "Zone")</td>
                         <td>
-                            @Html.DropDownList("ZoneId", String.Empty)
-                            @Html.ValidationMessageFor(model => model.ZoneId)
+                            @Html.DropDownList("Zone", zones)
+                            @Html.ValidationMessageFor(model => model.Zone)
                         </td>
                     </tr>             
 

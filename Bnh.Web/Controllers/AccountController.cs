@@ -62,7 +62,6 @@ namespace Bnh.Web.Controllers
             {
                 if (Membership.ValidateUser(model.Email, model.Password))
                 {
-                    Session["UserName"] = model.Email;
                     FormsAuthentication.SetAuthCookie(model.Email, model.RememberMe);
                     if (Url.IsLocalUrl(returnUrl))
                     {
@@ -141,7 +140,7 @@ namespace Bnh.Web.Controllers
             {
                 // Attempt to register the user
                 MembershipCreateStatus createStatus;
-                Membership.CreateUser(model.Email, model.Password, model.Email, passwordQuestion: null, passwordAnswer: null, isApproved: true, providerUserKey: null, status: out createStatus);
+                var user = Membership.CreateUser(model.Email, model.Password, model.Email, passwordQuestion: null, passwordAnswer: null, isApproved: true, providerUserKey: null, status: out createStatus);
 
                 if (createStatus == MembershipCreateStatus.Success)
                 {
@@ -188,7 +187,7 @@ namespace Bnh.Web.Controllers
                 bool changePasswordSucceeded;
                 try
                 {
-                    MembershipUser currentUser = Membership.GetUser(AccountProfile.CurrentUserName, userIsOnline: true);
+                    MembershipUser currentUser = Membership.GetUser(Profile.UserName, userIsOnline: true);
                     changePasswordSucceeded = currentUser.ChangePassword(model.OldPassword, model.NewPassword);
                 }
                 catch (Exception)
@@ -212,7 +211,7 @@ namespace Bnh.Web.Controllers
 
         public ActionResult Update()
         {
-            var profile = AccountProfile.Current;
+            var profile = this.Profile as AccountProfile;
             var model = new AccountModel
             {
                 FirstName = profile.FirstName,
@@ -228,7 +227,7 @@ namespace Bnh.Web.Controllers
         {
             if (ModelState.IsValid)
             {
-                var profile = AccountProfile.Current;
+                var profile = this.Profile as AccountProfile;
                 profile.FirstName = model.FirstName;
                 profile.LastName = model.LastName;
                 profile.Birthday = model.Birthday;
@@ -283,10 +282,10 @@ namespace Bnh.Web.Controllers
                     case AuthenticationStatus.Authenticated:
                         // get user email and store it in session
                         var ex = response.GetExtension<ClaimsResponse>();
-                        Session["UserName"] = ex.Email;
+
 
                         // redirect from login page
-                        FormsAuthentication.RedirectFromLoginPage(response.ClaimedIdentifier, false);
+                        FormsAuthentication.RedirectFromLoginPage(ex.Email, true);
                         break;
                     case AuthenticationStatus.Canceled:
                         ModelState.AddModelError("loginIdentifier", "Login was cancelled at the provider");

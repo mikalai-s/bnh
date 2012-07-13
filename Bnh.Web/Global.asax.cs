@@ -41,8 +41,6 @@ namespace Bnh.Web
                 "{controller}/{action}/{id}",
                 new { controller = "Home", action = "Index", id = UrlParameter.Optional }
             );
-
-
         }
 
         private static void MapControllerInvertRoutes(RouteCollection routes, string controller)
@@ -73,6 +71,9 @@ namespace Bnh.Web
                 designer: "content_manager",
                 tinymce: "~/Scripts/tiny_mce/tiny_mce_src.js",
                 googleMaps: "//maps.googleapis.com/maps/api/js?sensor=false");
+
+            Bnh.Web.Controllers.InitData.Init();
+            Bnh.Entities.InitData.Init();
 
             AreaRegistration.RegisterAllAreas();
 

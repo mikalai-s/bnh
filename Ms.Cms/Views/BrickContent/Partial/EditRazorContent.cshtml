@@ -1,0 +1,11 @@
+﻿@model HtmlContent
+
+@{
+    ViewBag.Title = "Edit";
+    this.GetStyleBundle().Include(new[] { ContentUrl.Styles.DesignBrick });
+}
+
+<div class="editor-label">Content</div>
+<div class="editor-field">
+    @Html.TextAreaFor(model => model.Html, new { id = "htmlTextArea"})
+</div>

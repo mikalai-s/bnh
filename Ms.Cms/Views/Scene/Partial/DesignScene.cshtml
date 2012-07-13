@@ -1,0 +1,18 @@
+﻿@model Scene
+
+<div id="scene">
+    @foreach (var wall in Model.Walls)
+    {
+        @Html.Partial(ContentUrl.Views.Scene.Partial.DesignWall, wall)
+    }
+</div>
+<div id="wallPrototype">
+    @Html.Partial(ContentUrl.Views.Scene.Partial.DesignWall, new Wall { Width = 100.0F })
+</div>
+<div id="brickPrototype">
+    @Html.Partial(ContentUrl.Views.Scene.Partial.DesignBrick, new Brick { Width = 100.0F })
+</div>
+
+@{
+    this.RenderStylesAndScripts();
+}

@@ -31,15 +31,18 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="EntityFramework, Version=4.4.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+    <Reference Include="MongoDB.Bson, Version=1.5.0.4566, Culture=neutral, PublicKeyToken=f686731cfb9cc103, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\EntityFramework.5.0.0-rc\lib\net40\EntityFramework.dll</HintPath>
+      <HintPath>..\packages\mongocsharpdriver.1.5\lib\net35\MongoDB.Bson.dll</HintPath>
+    </Reference>
+    <Reference Include="MongoDB.Driver, Version=1.5.0.4566, Culture=neutral, PublicKeyToken=f686731cfb9cc103, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\mongocsharpdriver.1.5\lib\net35\MongoDB.Driver.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
-    <Reference Include="System.Data.Entity" />
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Security" />
     <Reference Include="System.Web" />
@@ -50,23 +53,16 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Bl.Designer.cs">
-      <DependentUpon>Bl.edmx</DependentUpon>
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-    </Compile>
-    <Compile Include="BlEntitiesExtensions.cs" />
-    <Compile Include="EntityConnectionHelper.cs" />
+    <Compile Include="Builder.cs" />
+    <Compile Include="City.cs" />
+    <Compile Include="BleContext.cs" />
+    <Compile Include="CityExtensions.cs" />
+    <Compile Include="Community.cs" />
+    <Compile Include="CommunityRepository.cs" />
     <Compile Include="ExternalPropertyAttribute.cs" />
     <Compile Include="FilterPropertyAttribute.cs" />
+    <Compile Include="InitData.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="WallOwners.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <EntityDeploy Include="Bl.edmx">
-      <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>Bl.Designer.cs</LastGenOutput>
-    </EntityDeploy>
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

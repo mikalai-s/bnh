@@ -9,64 +9,59 @@ using Bnh.Entities;
 using System.Data.Objects.DataClasses;
 using Bnh.Web.Models;
 using Ms.Cms.Models;
+using MongoDB.Bson;
+using Ms.Cms.Controllers;
 
 namespace Bnh.Controllers
 {
     [Authorize]
     public class CommunityController : Controller
     {
-        private BlEntities db = new BlEntities();
+        private BleEntities db = new BleEntities();
 
         //
         // GET: /Community/
         public ViewResult Index()
         {
-            //db.Zones.Include("Communities");
-            var communities = db.Communities.Include("Zone");
-            return View(communities.ToList());
+            return View();
         }
 
         [HttpGet]
         public JsonResult Zones()
         {
-            UrlHelper urlHelper = new UrlHelper(this.HttpContext.Request.RequestContext);
-            return Json(db.Zones.OrderBy(m => m.Order).Include("Communities").ToArray().Select((item) =>
+            var urlHelper = new UrlHelper(this.HttpContext.Request.RequestContext);
+
+            var city = db.Cities.First(c => c.Name == "Calgary");
+                var zones = city.Zones.ToList();
+                var communities = city
+                    .GetCommunities(db)
+                    .GroupBy(
+                        c => c.Zone,
+                        c => new
                         {
-                            ZoneDto zone = new ZoneDto();
-                            zone.Name = item.Name;
-                            zone.Communities = item.Communities.Select((community) =>
-                                                                        {
-                                                                            CommunityDto communityDto = new CommunityDto();
-                                                                            communityDto.DistanceToCenter = community.Remoteness;
-                                                                            communityDto.Id = community.Id;
-                                                                            communityDto.Name = community.Name;
-                                                                            communityDto.UrlId = community.UrlId;
-                                                                            communityDto.HasLake = community.HasLake;
-                                                                            communityDto.HasMountainView = community.HasMountainView;
-                                                                            communityDto.HasClubOfFacility = community.HasClubOrFacility;
-                                                                            communityDto.HasParksAndPathways = community.HasParksAndPathways;
-                                                                            communityDto.HasShoppingPlaza = community.HasParksAndPathways;
-                                                                            communityDto.HasWaterFeature = community.HasWaterFeature;
-                                                                            communityDto.GpsBounds = community.GpsBounds;
-                                                                            communityDto.GpsLocation = community.GpsLocation;
-                                                                            communityDto.DeleteUrl = urlHelper.Action("Delete", "Community", new { id = community.Id });
-                                                                            communityDto.DetailsUrl = urlHelper.Action("Details", "Community", new { id = community.UrlId });
-                                                                            communityDto.InfoPopup = String.Format("<a href='{0}'>{1}</a>",
-                                                                                urlHelper.Action("Details", "Community", new { id = community.UrlId }), community.Name);
-                                                                            return
-                                                                                communityDto;
-                                                                        });
-                            return
-                                zone;
-                        }), JsonRequestBehavior.AllowGet);
+                            community = c,
+                            uiHelpers = new
+                            {
+                                deleteUrl = urlHelper.Action("Delete", "Community", new { id = c.UrlId }),
+                                detailsUrl = urlHelper.Action("Details", "Community", new { id = c.UrlId }),
+                                infoPopup = "<a href='{0}'>{1}</a>".FormatWith(urlHelper.Action("Details", "Community", new { id = c.UrlId }), c.Name)
+                            }
+                        })
+                    .OrderBy(g => zones.IndexOf(g.Key))
+                    .ToDictionary(
+                        g => g.Key,
+                        g => g.OrderBy(c => c.community.Name));
+
+            return Json(communities, JsonRequestBehavior.AllowGet);
         }
 
         public ViewResult Details(string id)
         {
-            Guid guid;
-            var isGuid = Guid.TryParse(id, out guid);
-            Community community = db.Communities.Single(c => (isGuid && c.Id == guid) || (c.UrlId == id));
-            return View(community);
+            ObjectId oid;
+            var checker = ObjectId.TryParse(id, out oid) ?
+                (Func<Community, bool>)(c => c.CommunityId == id) :
+                (Func<Community, bool>)(c => c.UrlId == id);
+            return View(db.Communities.Single(checker));
         }
 
         //
@@ -74,14 +69,17 @@ namespace Bnh.Controllers
         [Authorize(Roles = "content_manager")]
         public ActionResult Create()
         {
-            ViewBag.ZoneId = new SelectList(db.Zones, "Id", "Name");
+            ViewBag.CityZones = new SelectList(db.Cities.First(c => c.Name == "Calgary").Zones);
             using(var cm = new CmsEntities())
             {
                 var sceneTemplates = from s in cm.Scenes
-                                     from t in cm.SceneTemplates
-                                     where s.OwnerGuidId == t.Id
-                                     select new { id = s.Id, title = t.Title };
-                ViewBag.Templates = new SelectList(sceneTemplates.ToList(), "id", "title");
+                                     where s.IsTemplate
+                                     select new { id = s.SceneId, title = s.Title };
+                ViewBag.Templates = new SelectList(new[] { new { id = string.Empty, title = string.Empty } }.Union(sceneTemplates), "id", "title");
+
+                var city = db.Cities.First(c => c.Name == "Calgary");
+                ViewBag.CityZones = new SelectList(city.Zones);
+                ViewBag.CityId = city.CityId;
             }
             return View();
         } 
@@ -95,37 +93,32 @@ namespace Bnh.Controllers
         {
             if (ModelState.IsValid)
             {
-                community.Id = Guid.NewGuid();
-                db.Communities.AddObject(community);
-                db.SaveChanges();
+                db.Communities.Insert(community);
 
-                var templateSceneIdString = this.Request.Form["templateSceneId"];
-                if (!string.IsNullOrEmpty(templateSceneIdString))
+                var templateSceneId = this.Request.Form["templateSceneId"];
+                if (!string.IsNullOrEmpty(templateSceneId))
                 {
-                    // NOTE: make sure community ID is already created when move to "code first"
-                    using (var cms = new CmsEntities())
-                    {
-                        var scene = cms.Scenes.Attach(community.GetScene());
-                        var templateSceneId = long.Parse(templateSceneIdString);
-                        var templateScene = cms.Scenes.First(s => s.Id == templateSceneId);
-                        scene.ApplyTemplate(cms, templateScene);
-                        cms.SaveChanges();
-                    }
+                    var sceneController = new SceneController();
+                    sceneController.ApplyTemplate(community.CommunityId, templateSceneId);
                 }
-                return RedirectToAction("Index");  
+                return RedirectToAction("Edit", new { id = community.UrlId });
             }
 
-            ViewBag.ZoneId = new SelectList(db.Zones, "Id", "Name", community.ZoneId);
+            ViewBag.CityZones = new SelectList(db.Cities.First(c => c.Name == "Calgary").Zones, community.Zone);
             return View(community);
         }
         
         //
         // GET: /Community/Edit/5
         [Authorize(Roles = "content_manager")]
-        public ActionResult Edit(Guid id)
+        public ActionResult Edit(string id)
         {
-            Community community = db.Communities.Single(c => c.Id == id);
-            ViewBag.ZoneId = new SelectList(db.Zones, "Id", "Name", community.ZoneId);
+            ObjectId oid;
+            var checker = ObjectId.TryParse(id, out oid) ?
+                (Func<Community, bool>)(c => c.CommunityId == id):
+                (Func<Community, bool>)(c => c.UrlId == id);
+            Community community = db.Communities.Single(checker);
+            ViewBag.CityZones = new SelectList(db.Cities.First(c => c.Name == "Calgary").Zones, community.Zone);
             return View(community);
         }
 
@@ -138,21 +131,31 @@ namespace Bnh.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.Communities.Attach(community);
-                db.ObjectStateManager.ChangeObjectState(community, EntityState.Modified);
-                db.SaveChanges();
+                db.Communities.Save(community);
+                
                 return RedirectToAction("Details", new { id = community.UrlId });
             }
-            ViewBag.ZoneId = new SelectList(db.Zones, "Id", "Name", community.ZoneId);
+            ViewBag.CityZones = new SelectList(db.Cities.First(c => c.Name == "Calgary").Zones, community.Zone);
+            return View(community);
+        }
+
+        [HttpGet]
+        public ActionResult EditScene(string id)
+        {
+            ObjectId oid;
+            var checker = ObjectId.TryParse(id, out oid) ?
+                (Func<Community, bool>)(c => c.CommunityId == id) :
+                (Func<Community, bool>)(c => c.UrlId == id);
+            Community community = db.Communities.Single(checker);
             return View(community);
         }
 
         //
         // GET: /Community/Delete/5
         [Authorize(Roles = "content_manager")]
-        public ActionResult Delete(Guid id)
+        public ActionResult Delete(string id)
         {
-            Community community = db.Communities.Single(c => c.Id == id);
+            Community community = db.Communities.Single(c => c.CommunityId == id);
             return View(community);
         }
 
@@ -161,11 +164,9 @@ namespace Bnh.Controllers
 
         [HttpPost, ActionName("Delete")]
         [Authorize(Roles = "content_manager")]
-        public ActionResult DeleteConfirmed(Guid id)
+        public ActionResult DeleteConfirmed(string id)
         {            
-            Community community = db.Communities.Single(c => c.Id == id);
-            db.Communities.DeleteObject(community);
-            db.SaveChanges();
+            db.Communities.Delete(id);
             return RedirectToAction("Index");
         }
 

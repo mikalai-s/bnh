@@ -1,0 +1,31 @@
+The project requires MongoDB to persist data.
+
+Here is sample instruction of installing MongoDb on a machine:
+
+	1. Download zip from http://downloads.mongodb.org/win32/mongodb-win32-x86_64-2008plus-2.0.6.zip
+
+	2. Create the following folder structure:
+
+		C:\data
+		C:\data\bin  <-- put bin files from zip in here
+		C:\data\db  <-- database / data will be saved in here but folder needs to be created
+
+		(the locations can be changed, these are just the defaults so easiest to use)
+
+	3.a To run database as console application simply start C:\data\bin\mongod.exe
+
+	3.b. To run database as a service:
+
+		- create a text file c:\data\bin\mongod.config with the following content:
+
+			dbpath = c:/data/db
+			logpath = c:/data/logs/mongo.log
+			logappend = true
+
+		- run the following command to register service:
+			
+			c:\data\bin\mongod --config "c:\data\bin\mongod.config" –install
+
+		- start service (I recommend to update service to start automatically)
+
+	4. If you want to look inside MongoDB there is a console app that comes with it but a GUI like http://www.mongovue.com/ is easier.
