@@ -17,7 +17,5 @@ namespace Bnh.Entities
         public string UrlId { get; set; }
 
         public IEnumerable<string> Zones { get; set; }
-
-        public IEnumerable<Community> Communities { get; set; }
     }
 }

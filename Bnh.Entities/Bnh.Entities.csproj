@@ -56,6 +56,7 @@
     <Compile Include="Builder.cs" />
     <Compile Include="City.cs" />
     <Compile Include="BleContext.cs" />
+    <Compile Include="CityExtensions.cs" />
     <Compile Include="Community.cs" />
     <Compile Include="CommunityRepository.cs" />
     <Compile Include="ExternalPropertyAttribute.cs" />

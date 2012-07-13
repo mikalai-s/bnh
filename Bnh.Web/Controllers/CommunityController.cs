@@ -23,44 +23,36 @@ namespace Bnh.Controllers
         // GET: /Community/
         public ViewResult Index()
         {
-            var city = db.Cities.First(c => c.Name == "Calgary");
-            city.Communities = db.Communities.Where(c => c.CityId ==city.CityId).ToList();
-            return View(city);
+            return View();
         }
 
         [HttpGet]
         public JsonResult Zones()
         {
-            UrlHelper urlHelper = new UrlHelper(this.HttpContext.Request.RequestContext);
-            return Json(db.Zones.OrderBy(m => m.Order).Include("Communities").ToArray().Select((item) =>
+            var urlHelper = new UrlHelper(this.HttpContext.Request.RequestContext);
+
+            var city = db.Cities.First(c => c.Name == "Calgary");
+                var zones = city.Zones.ToList();
+                var communities = city
+                    .GetCommunities(db)
+                    .GroupBy(
+                        c => c.Zone,
+                        c => new
                         {
-                            ZoneDto zone = new ZoneDto();
-                            zone.Name = item.Name;
-                            zone.Communities = item.Communities.Select((community) =>
-                                                                        {
-                                                                            CommunityDto communityDto = new CommunityDto();
-                                                                            communityDto.DistanceToCenter = community.Remoteness;
-                                                                            communityDto.Id = community.Id;
-                                                                            communityDto.Name = community.Name;
-                                                                            communityDto.UrlId = community.UrlId;
-                                                                            communityDto.HasLake = community.HasLake;
-                                                                            communityDto.HasMountainView = community.HasMountainView;
-                                                                            communityDto.HasClubOfFacility = community.HasClubOrFacility;
-                                                                            communityDto.HasParksAndPathways = community.HasParksAndPathways;
-                                                                            communityDto.HasShoppingPlaza = community.HasParksAndPathways;
-                                                                            communityDto.HasWaterFeature = community.HasWaterFeature;
-                                                                            communityDto.GpsBounds = community.GpsBounds;
-                                                                            communityDto.GpsLocation = community.GpsLocation;
-                                                                            communityDto.DeleteUrl = urlHelper.Action("Delete", "Community", new { id = community.Id });
-                                                                            communityDto.DetailsUrl = urlHelper.Action("Details", "Community", new { id = community.UrlId });
-                                                                            communityDto.InfoPopup = String.Format("<a href='{0}'>{1}</a>",
-                                                                                urlHelper.Action("Details", "Community", new { id = community.UrlId }), community.Name);
-                                                                            return
-                                                                                communityDto;
-                                                                        });
-                            return
-                                zone;
-                        }), JsonRequestBehavior.AllowGet);
+                            community = c,
+                            uiHelpers = new
+                            {
+                                deleteUrl = urlHelper.Action("Delete", "Community", new { id = c.UrlId }),
+                                detailsUrl = urlHelper.Action("Details", "Community", new { id = c.UrlId }),
+                                infoPopup = "<a href='{0}'>{1}</a>".FormatWith(urlHelper.Action("Details", "Community", new { id = c.UrlId }), c.Name)
+                            }
+                        })
+                    .OrderBy(g => zones.IndexOf(g.Key))
+                    .ToDictionary(
+                        g => g.Key,
+                        g => g.OrderBy(c => c.community.Name));
+
+            return Json(communities, JsonRequestBehavior.AllowGet);
         }
 
         public ViewResult Details(string id)
