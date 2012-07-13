@@ -13,13 +13,13 @@
     var mapEditor = new Global.MapEditor("#mapCanvas", overlays);
 
     $("form").validate({
-        submitHandler: function (form) {
+        submitHandler: function(form) {
             gpsLocationField.val($.toJSON(mapEditor.getLocation()));
             gpsBoundsField.val($.toJSON(mapEditor.getBounds()));
 
             // do other stuff for a valid form
             form.submit();
         }
-    })
+    });
 
 })();

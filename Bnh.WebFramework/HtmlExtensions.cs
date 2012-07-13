@@ -1,4 +1,5 @@
 ﻿
+using System;
 using System.Collections.Generic;
 using System.Web;
 using System.Web.Mvc;
@@ -71,6 +72,14 @@ namespace Bnh.WebFramework
         public static MvcHtmlString ActionInputLink(this HtmlHelper htmlHelper, string linkText, string actionName, object routeValues)
         {
             return ActionInputLink(htmlHelper, linkText, actionName, null, new RouteValueDictionary(routeValues), new RouteValueDictionary());
+        }
+
+        public static IHtmlString Script(this HtmlHelper htmlHelper, String path)
+        {
+            TagBuilder tagBuilder = new TagBuilder("script");
+            tagBuilder.MergeAttribute("src", path);
+            tagBuilder.MergeAttribute("type", "text/javascript");
+            return new MvcHtmlString(tagBuilder.ToString(TagRenderMode.Normal));
         }
     }
 }
