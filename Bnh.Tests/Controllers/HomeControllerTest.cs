@@ -11,6 +11,9 @@ using MongoDB.Bson.Serialization;
 using MongoDB.Driver.Builders;
 using MongoDB.Bson;
 using MongoDB.Driver;
+using Bnh.Entities;
+using Bnh.Controllers;
+using System.Web.Script.Serialization;
 
 namespace Bnh.Tests.Controllers
 {
@@ -27,21 +30,21 @@ namespace Bnh.Tests.Controllers
         public void Db()
         {
             var cs = "mongodb://127.0.0.1/bnh?safe=true";
-            using (var cms = new CmsEntities(cs))
+            using (var db = new BleEntities(cs))
             {
-                var s = cms.Scenes.Collection.Find(Query.EQ("Walls.Bricks.BrickContentId", ObjectId.Parse("4fe94834afce1524345bd6eb"))).First();
-
-                /*
-
-                //cms.BrickContents.Insert(new HtmlContent() { Html = "abc" });
-                var e = cms.BrickContents.Collection.FindOneById(ObjectId.Parse("4fe94433afce151fe43622f5"));
-
-                cms.BrickContents.Collection.Remove(Query.EQ("_id", "4fe93c7eafce150ff868d7c9"));
-               // var error = MongoDatabase.Create(cs).GetLastError();
-                var bricks = cms.BrickContents.ToList();
-                Assert.AreEqual(bricks.Count, 0);
-
-                */
+                var city = db.Cities.First(c => c.Name == "Calgary");
+                var zones = city.Zones.ToList();
+                var communities = city
+                    .GetCommunities(db)
+                    .GroupBy(
+                        c => c.Zone,
+                        c => c)
+                    .OrderBy(g => zones.IndexOf(g.Key))
+                    .ToDictionary(
+                        g => g.Key,
+                        g => g.OrderBy(c => c.Name));
+                    
+                var s = new JavaScriptSerializer().Serialize(communities);
             }
         }
     }

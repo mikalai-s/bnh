@@ -191,8 +191,6 @@
     </Compile>
     <Compile Include="Models\AccountModels.cs" />
     <Compile Include="Models\AccountProfile.cs" />
-    <Compile Include="Models\CommunityDto.cs" />
-    <Compile Include="Models\ZoneDto.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
