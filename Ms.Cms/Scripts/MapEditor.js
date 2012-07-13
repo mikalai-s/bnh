@@ -18,7 +18,7 @@
         var options = {
             zoom: overlays.zoom ? overlays.zoom : 11,
             center: center, 
-            mapTypeId: google.maps.MapTypeId.TERRAIN
+            mapTypeId: google.maps.MapTypeId.ROADMAP
         };
         var map = new google.maps.Map($(mapCanvas)[0], options);
 

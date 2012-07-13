@@ -1,128 +1,110 @@
-﻿var Global = Global || { };
+﻿var Global = Global || {};
 
-(function () {
-    "use strict"
+function RestoreMapStateControl(controlDiv, map) {
+    controlDiv.style.padding = '5px';
 
-    Global.Map = Global.Map || function(mapCanvas, options) {
-        var polygon;
+    // Set CSS for the control border.
+    var controlUI = document.createElement('div');
+    controlUI.style.backgroundColor = 'white';
+    controlUI.style.borderStyle = 'solid';
+    controlUI.style.borderWidth = '1px';
+    controlUI.style.cursor = 'pointer';
+    controlUI.style.textAlign = 'center';
+    controlUI.title = 'Click to reset Map state';
+    controlDiv.appendChild(controlUI);
 
-        var myLatLng = deserializeCoord(options.center);
-        var myOptions = {
-            zoom: options.zoom,
-            center: myLatLng,
-            mapTypeId: google.maps.MapTypeId.TERRAIN
-        };
-        var $mapCanvas = $(mapCanvas);
-        if($mapCanvas.length === 0) {
-            return;
-        }
+    // Set CSS for the control interior.
+    var controlText = document.createElement('div');
+    controlText.style.fontFamily = 'Arial,sans-serif';
+    controlText.style.fontSize = '13px';
+    controlText.style.padding = '1px 6px';
+    controlText.innerHTML = 'Reset Map';
+    controlUI.appendChild(controlText);
 
-        var map = new google.maps.Map($mapCanvas[0], myOptions);
+    // Setup the click event listeners: simply set the map to Chicago.
+    google.maps.event.addDomListener(controlUI, 'click', function () {
+        map.mapInstance.setCenter(map.mapOptions.center);
+        map.mapInstance.setZoom(map.mapOptions.zoom);
+        map.closeInfoPopUp();
+    });
+}
 
-        var namedOverlays = [];
-        if(options.overlays) {
-            for(var i = 0; i < options.overlays.length; i ++) {
-                var coords = [];
-                for(var j = 0; j < options.overlays[i].polygons.length; j ++) {
-                    coords.push(deserializeCoord(options.overlays[i].polygons[j]))
-                }
+function Map(mapCanvas, options) {
 
-                namedOverlays[options.overlays[i].name] = addPolygon(options.overlays[i].name, map, coords, options.polygonClick);
-            }
-        }
-
-        return {
-            highlight: function(name) {
-                highlightPolygon(namedOverlays[name]);
-            },
-            dehighlight: function(name) {
-                dehighlightPolygon(namedOverlays[name]);
-            },
-            setVisible: function(name, visible) {
-                setPolygonVisible(namedOverlays[name], visible);
-            }
-        };
-
-        
-        
-//        var infowindow = new google.maps.InfoWindow({
-//            content: "Silverado"
-    };
-
-//    google.maps.event.addListener(bermudaTriangle, 'click', function (event) {
-//        infowindow.setPosition(event.latLng);
-//        infowindow.open(map);
-//    });
-/* 
-    };
-
-    */
-
-
-    function deserializeCoord(coord) {
-        if(!coord || !coord.lat || !coord.lng)
+    var self = this;
+    self.deserializeCoordinates = function (coord) {
+        if (!coord || !coord.lat || !coord.lng)
             return;
 
         return new google.maps.LatLng(coord.lat, coord.lng);
+    };
+    var myLatLng = self.deserializeCoordinates(options.center);
+    self.mapOptions = {
+        zoom: options.zoom,
+        center: myLatLng,
+        mapTypeId: google.maps.MapTypeId.ROADMAP
+    };
+    var $mapCanvas = $(mapCanvas);
+    if ($mapCanvas.length === 0) {
+        return;
     }
-
-
-    function addPolygon(name, map, coords, clickHandler) {
+    self.mapInstance = new google.maps.Map($mapCanvas[0], self.mapOptions);
+    self.highlightPolygon = function (polygon) {
+        if (!polygon)
+            return;
+        polygon.setOptions({
+            strokeWeight: 2,
+            fillOpacity: 0.75
+        });
+    };
+    self.dehighlightPolygon = function (polygon) {
+        if (!polygon)
+            return;
+        polygon.setOptions({
+            strokeWeight: 1,
+            fillOpacity: 0.35
+        });
+    };
+    var infoPopUp = new google.maps.InfoWindow();
+    self.showInfoPopUp = function (coordinates, content) {
+        infoPopUp.setContent(content);
+        infoPopUp.setPosition(coordinates);
+        infoPopUp.open(self.mapInstance);
+    };
+    self.closeInfoPopUp = function () {
+        infoPopUp.close();
+    };
+    self.addPolygon = function (coords, infoPopUpContent) {
         var polygon = new google.maps.Polygon({
             paths: coords,
             strokeColor: "#FF3333",
             strokeOpacity: 0.8,
-            strokeWeight: 2,
+            strokeWeight: 1,
             fillColor: "#FFaaaa",
             fillOpacity: 0.35,
-            map: map
+            map: self.mapInstance
         });
 
+
+
+        google.maps.event.addListener(polygon, 'click', function (event) {
+            self.showInfoPopUp(event.latLng, infoPopUpContent);
+        });
         google.maps.event.addListener(polygon, 'mouseover', function (event) {
-            highlightPolygon(polygon);
+            self.highlightPolygon(polygon);
         });
 
         google.maps.event.addListener(polygon, 'mouseout', function (event) {
-            dehighlightPolygon(polygon);
+            self.dehighlightPolygon(polygon);
         });
 
-        if(clickHandler) {
-            google.maps.event.addListener(polygon, 'click', function (event) {
-                clickHandler(name);
-            });
-        }
-
         return polygon;
-    }
-
-    function highlightPolygon(polygon) {
-        if(!polygon)
-            return;
-    // infowindow.setPosition(triangleCoords[0]);
-       // infowindow.open(map);
-        polygon.setOptions({
-                strokeWeight: 2,
-                fillOpacity: 0.75,
-            });
-    }
-
-    function dehighlightPolygon(polygon) {
-        if(!polygon)
-            return;
-
-       // infowindow.close();
-        
-        polygon.setOptions({
-            strokeWeight: 1,
-            fillOpacity: 0.35
-        });   
-    }
-
-    function setPolygonVisible(polygon, visible) {
-        if(!polygon)
-            return;
-
-        polygon.setVisible(visible);
-    }
-
-})();
+    };
+    self.initializeCustomControls = function () {
+        var restoreControlDiv = document.createElement('div');
+        var restoreControl = new RestoreMapStateControl(restoreControlDiv, self);
+        restoreControlDiv.index = 1;
+        self.mapInstance.controls[google.maps.ControlPosition.TOP_CENTER].push(restoreControlDiv);
+    };
+    self.initializeCustomControls();
+};

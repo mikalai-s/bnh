@@ -9,30 +9,28 @@ table.main > tbody > tr > td
     width: 99%;
 }
 
-table.zones
+ul.zones
 {
     width: 100%;
+    padding: 0px;
+    list-style-type: none;
 }
 
-table.zones td
+
+
+ul.zones .zone
 {
-    vertical-align: top;
-
+    float: right;
+    display: table-cell;
+    width: 49%;
 }
 
-table.zones .zone
-{
-    float: left;
-    display: table-row;
-    width: 50%;
-}
-
-table .zone-header, table .zone-community
+ .zone-header,  .zone-community
 {
     padding: 3px;
 }
 
-table .zone-header
+ .zone-header
 {
     padding-left: 10px;
     font-weight: bold;
