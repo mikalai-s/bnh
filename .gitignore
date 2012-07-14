@@ -1,6 +1,7 @@
 
 #ignore thumbnails created by windows
 Thumbs.db
+
 #Ignore files build by Visual Studio
 *.obj
 *.exe
@@ -27,10 +28,10 @@ obj/
 [Rr]elease*/
 _ReSharper*/
 [Tt]est[Rr]esult*
-#Ignore Web Extracted content
-WebExtracted
 
-#Ignore web extracted content
+packages/
+
+#Ignore Web Extracted content
 Bnh.Web/Ms.Cms
 
 #Allow NuGet.exe (do not ignore)
