@@ -29,3 +29,6 @@ _ReSharper*/
 [Tt]est[Rr]esult*
 #Ignore Web Extracted content
 WebExtracted
+
+#Allow NuGet.exe (do not ignore)
+!NuGet.exe
