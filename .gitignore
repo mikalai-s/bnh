@@ -30,5 +30,8 @@ _ReSharper*/
 #Ignore Web Extracted content
 WebExtracted
 
+#Ignore web extracted content
+Bnh.Web/Ms.Cms
+
 #Allow NuGet.exe (do not ignore)
 !NuGet.exe
