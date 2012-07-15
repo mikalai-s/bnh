@@ -184,14 +184,11 @@
     <Compile Include="Web\WebExtractor.cs" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Scripts\DesignScene.js" />
-    <EmbeddedResource Include="Scripts\EditHtmlBrick.js" />
-    <EmbeddedResource Include="Scripts\Map.js" />
-    <EmbeddedResource Include="Scripts\MapEditor.js" />
-    <EmbeddedResource Include="Scripts\BrickContent_Map.js" />
+    <EmbeddedResource Include="Scripts\design-scene.js" />
+    <EmbeddedResource Include="Scripts\edit-html-brick.js" />
+    <EmbeddedResource Include="Scripts\brick-content-map.js" />
     <EmbeddedResource Include="Styles\DesignBrick.css" />
     <EmbeddedResource Include="Styles\DesignScene.css" />
-    <EmbeddedResource Include="Styles\MapEditor.css" />
     <EmbeddedResource Include="Styles\Scene.css" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
