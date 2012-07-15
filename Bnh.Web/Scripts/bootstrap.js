@@ -4,5 +4,6 @@
         , knockout: 'libs/knockout/knockout-2.1.0'
         , async: 'libs/require/async'
         , jqballoon: 'libs/jquery/jquery.balloon'
+        , jqjson: 'libs/jquery/jquery.json-2.3'
     }
 });

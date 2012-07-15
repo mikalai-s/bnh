@@ -571,6 +571,7 @@
     <Content Include="Scripts\libs\tiny_mce\utils\form_utils.js" />
     <Content Include="Scripts\libs\tiny_mce\utils\mctabs.js" />
     <Content Include="Scripts\libs\tiny_mce\utils\validate.js" />
+    <EmbeddedResource Include="Scripts\map-editor.js" />
     <Content Include="Styles\CommunityEdit.css" />
     <Content Include="Styles\CommunityIndex.css" />
     <Content Include="Styles\Layout.css" />

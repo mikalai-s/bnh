@@ -1,5 +1,5 @@
 ﻿define(
-    ["jquery", "map-editor"], 
+    ["jquery", "map-editor", "jqjson"],
     function ($, MapEditor) {
         "use strict"
 
@@ -14,14 +14,10 @@
 
         var mapEditor = new MapEditor("#mapCanvas", overlays);
 
-        $("form").validate({
-            submitHandler: function(form) {
-                gpsLocationField.val($.toJSON(mapEditor.getLocation()));
-                gpsBoundsField.val($.toJSON(mapEditor.getBounds()));
-
-                // do other stuff for a valid form
-                form.submit();
-            }
+        // handle onsubmit event to gather gps coordiates from map
+        $("input:submit, button:submit").click(function () {
+            gpsLocationField.val($.toJSON(mapEditor.getLocation()));
+            gpsBoundsField.val($.toJSON(mapEditor.getBounds()));
         });
     }
 );

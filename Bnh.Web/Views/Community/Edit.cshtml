@@ -14,16 +14,12 @@
 
 @section Styles {
     <link href="@Url.Content("/Content/themes/base/jquery.ui.all.css")" rel="stylesheet" type="text/css" />
-    <link href="@Url.Content("/Styles/MapEditor.css")" rel="stylesheet" type="text/css" />
+    <link href="@Url.Content("~/Ms.Cms/Styles/MapEditor.css")" rel="stylesheet" type="text/css" />
     <link href="@Url.Content("/Styles/CommunityEdit.css")" rel="stylesheet" type="text/css" />
 }
 
 @section Scripts {
-    <script src="@Url.Content("/Scripts/jquery.validate.js")" type="text/javascript"></script>
-    <script type="text/javascript" src="//maps.googleapis.com/maps/api/js?sensor=false&libraries=drawing"></script>
-    <script src="@Url.Content("~/Ms.Cms/Scripts/MapEditor.js")" type="text/javascript"></script>
-    <script src="@Url.Content("/Scripts/CommunityEdit.js")" type="text/javascript"></script>
-    <script src="@Url.Content("/Scripts/jquery.json-2.3.js")" type="text/javascript"></script>    
+    <script>require(["community-edit"])</script>
 }
 
 <h2>@ViewBag.Title</h2>
