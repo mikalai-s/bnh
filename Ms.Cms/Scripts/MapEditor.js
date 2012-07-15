@@ -1,8 +1,7 @@
-﻿var Global = Global || { };
+﻿var Global = Global || {};
 
 (function () {
     "use strict"
-
 
     Global.MapEditor = Global.MapEditor || function(mapCanvas, overlays) {
         var currentValues = {

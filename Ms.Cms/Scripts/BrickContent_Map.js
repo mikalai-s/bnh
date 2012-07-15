@@ -7,19 +7,12 @@
     var gpsLocation = gpsLocationAttr ? $.parseJSON(gpsLocationAttr) : null;
     var gpsBounds = gpsBoundsAttr ? $.parseJSON(gpsBoundsAttr) : null;
 
-    var overlays = [];
-
-    if (gpsLocation || gpsBounds) {
-        overlays.push({
-            name: "community",
-            center: gpsLocation,
-            polygons: gpsBounds
-        });
-    }
-
-    new Global.Map("#mapCanvas", {
-        overlays: overlays,
+    var map = new Global.Map("#mapCanvas", {
         zoom: elem.attr("zoom") * 1,
         center: gpsLocation
     });
+
+    if (gpsBounds) {
+        map.addPolygon($.map(gpsBounds, map.deserializeCoordinates));
+    }
 })();

@@ -26,17 +26,17 @@
         self.detailsUrl = ko.observable(uiHelpers.detailsUrl);
         self.infoPopup = ko.observable(uiHelpers.infoPopup);
         if ((community.GpsBounds != null) && (community.GpsBounds != 'null')) {
-            self.gpsBounds = $.map($.parseJSON(community.GpsBounds), Global.Map.deserializeCoordinates);
-            self.associatedMapObject = Global.Map.addPolygon(self.gpsBounds, self.infoPopup());
+            self.gpsBounds = $.map($.parseJSON(community.GpsBounds), map.deserializeCoordinates);
+            self.associatedMapObject = map.addPolygon(self.gpsBounds, self.infoPopup());
         }
-        self.gpsLocation = Global.Map.deserializeCoordinates($.parseJSON(community.GpsLocation));
+        self.gpsLocation = map.deserializeCoordinates($.parseJSON(community.GpsLocation));
 
         self.communityMouseover = function () {
-            Global.Map.highlightPolygon(self.associatedMapObject);
+            map.highlightPolygon(self.associatedMapObject);
 
         };
         self.communityMouseout = function () {
-            Global.Map.dehighlightPolygon(self.associatedMapObject);
+            map.dehighlightPolygon(self.associatedMapObject);
         };
     }
 
@@ -123,7 +123,7 @@
     var filterLegend = $("#filterLegend");
     var filterParameters = $("#filterParameters");
 
-    Global.Map = new Map("#mapCanvas", {
+    var map = new Global.Map("#mapCanvas", {
         zoom: 11,
         center: {
             lat: 51.02844,
