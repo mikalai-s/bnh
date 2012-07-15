@@ -9,9 +9,9 @@ namespace Ms.Cms
     {
         public static class Scripts
         {
-            public const string EditHtmlBrick = "~/Ms.Cms/Scripts/EditHtmlBrick.js";
+            public const string EditHtmlBrick = "~/Ms.Cms/Scripts/edit-html-brick.js";
 
-            public const string DesignScene = "~/Ms.Cms/Scripts/DesignScene.js";
+            public const string DesignScene = "~/Ms.Cms/Scripts/design-scene.js";
         }
 
         public static class Styles

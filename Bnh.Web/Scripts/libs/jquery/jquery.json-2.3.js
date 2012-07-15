@@ -14,7 +14,9 @@
  * copyrighted 2005 by Bob Ippolito.
  */
 
-(function( $ ) {
+define(
+    ["jquery"],
+    function ($) {
 
 	var	escapeable = /["\\\x00-\x1f\x7f-\x9f]/g,
 		meta = {
@@ -190,4 +192,4 @@
 		return '"' + string + '"';
 	};
 
-})( jQuery );
+});

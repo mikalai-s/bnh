@@ -1,6 +1,6 @@
 ﻿define(
     ["tinymce"],
-    function (tinyMCE) {
+    function () {
         "use strict";
 
         tinyMCE.init({

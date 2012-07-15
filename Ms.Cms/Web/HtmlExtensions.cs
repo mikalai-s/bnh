@@ -102,7 +102,8 @@ namespace Ms.Cms
             // define scripts
             page.DefineSection("_MsCmsScripts", () =>
             {
-                page.Write(Scripts.Render(page.GetScriptBundle().Distinct().ToArray()));
+                var scripts = page.GetScriptBundle().Distinct().Select(s => "'" + page.Url.Content(s) + "'");
+                page.Write(new MvcHtmlString("<script>require([" + string.Join(",",  scripts) + "])</script>"));
             });
         }
 
