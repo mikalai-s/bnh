@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.Profile;
 using System.Web.Security;
 using System.ComponentModel.DataAnnotations;
+using MongoDB.Bson;
 
 namespace Bnh.Web.Models
 {
@@ -24,10 +25,14 @@ namespace Bnh.Web.Models
 
         public DateTime Birthday
         {
-            get { return ((DateTime)(base["Birthday"])); }
+            get
+            {
+                return (DateTime)base["Birthday"];
+            }
             set { base["Birthday"] = value; }
         }
-       
+
+     
         public GenderEnum Gender
         {
             get { return ((GenderEnum)(base["Gender"])); }

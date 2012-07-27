@@ -5,8 +5,7 @@
 }
 
 @section Scripts {
-    <script src="@Url.Content("~/Scripts/jquery.validate.min.js")" type="text/javascript"></script>
-    <script src="@Url.Content("~/Scripts/jquery.validate.unobtrusive.min.js")" type="text/javascript"></script>
+    <script>require(["account-login"])</script>
 }
 
 @{
@@ -56,7 +55,7 @@
     @Html.Hidden("returnUrl")
     <fieldset>
         <legend>External Login</legend>
-        <a href="javascript: $('#returnUrl').val(window.location); $('#logonForm').submit();"><img alt="Google Login" src="~/Images/google.gif" /></a>
+        <a href="#" id="submitLink"><img alt="Google Login" src="~/Images/google.gif" /></a>
     </fieldset>
 }
 

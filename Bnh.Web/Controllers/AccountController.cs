@@ -216,7 +216,7 @@ namespace Bnh.Web.Controllers
             {
                 FirstName = profile.FirstName,
                 LastName = profile.LastName,
-                Birthday = profile.Birthday,
+                Birthday = profile.Birthday.ToLocalTime(),
                 Gender = profile.Gender
             };
             return View(model);
