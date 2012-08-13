@@ -17,6 +17,8 @@ namespace Bnh.Entities
 
         public MongoRepository<string, City> Cities { get; private set; }
 
+        public MongoRepository<string, Review> Reviews { get; private set; }
+
 
         public BleEntities()
             : this("Bnh.Entities")
@@ -34,6 +36,8 @@ namespace Bnh.Entities
 
             this.Communities = new MongoRepository<string, Community>(connectionString);
             this.Cities = new MongoRepository<string, City>(connectionString);
+
+            this.Reviews = new MongoRepository<string, Review>(connectionString);
         }
 
 

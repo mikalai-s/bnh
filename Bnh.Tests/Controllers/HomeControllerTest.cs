@@ -16,7 +16,7 @@ using Bnh.Controllers;
 using System.Web.Script.Serialization;
 
 namespace Bnh.Tests.Controllers
-{
+{/*
     [TestClass]
     public class HomeControllerTest
     {
@@ -47,5 +47,5 @@ namespace Bnh.Tests.Controllers
                 var s = new JavaScriptSerializer().Serialize(communities);
             }
         }
-    }
+    }*/
 }

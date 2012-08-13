@@ -57,10 +57,7 @@ namespace Bnh.Controllers
 
         public ViewResult Details(string id)
         {
-            ObjectId oid;
-            var checker = ObjectId.TryParse(id, out oid) ?
-                (Func<Community, bool>)(c => c.CommunityId == id) :
-                (Func<Community, bool>)(c => c.UrlId == id);
+            var checker = GetCommunityResolver(id);
             return View(db.Communities.Single(checker));
         }
 
@@ -113,10 +110,7 @@ namespace Bnh.Controllers
         [Authorize(Roles = "content_manager")]
         public ActionResult Edit(string id)
         {
-            ObjectId oid;
-            var checker = ObjectId.TryParse(id, out oid) ?
-                (Func<Community, bool>)(c => c.CommunityId == id):
-                (Func<Community, bool>)(c => c.UrlId == id);
+            var checker = GetCommunityResolver(id);
             Community community = db.Communities.Single(checker);
             ViewBag.CityZones = new SelectList(db.Cities.First(c => c.Name == "Calgary").Zones, community.Zone);
             return View(community);
@@ -142,13 +136,12 @@ namespace Bnh.Controllers
         [HttpGet]
         public ActionResult EditScene(string id)
         {
-            ObjectId oid;
-            var checker = ObjectId.TryParse(id, out oid) ?
-                (Func<Community, bool>)(c => c.CommunityId == id) :
-                (Func<Community, bool>)(c => c.UrlId == id);
+            var checker = GetCommunityResolver(id);
             Community community = db.Communities.Single(checker);
             return View(community);
         }
+
+
 
         //
         // GET: /Community/Delete/5
@@ -168,6 +161,26 @@ namespace Bnh.Controllers
         {            
             db.Communities.Delete(id);
             return RedirectToAction("Index");
+        }
+
+
+        public ActionResult Review(string id, int page = 0, int itemsPerPage = int.MaxValue)
+        {
+            ObjectId oid;
+            if (!ObjectId.TryParse(id, out oid))
+                id = db.Communities.Where(c => c.UrlId == id).Select(c => c.CommunityId).Single();
+            var total = db.Reviews.Where(r => r.ReviewId == id).Count();
+            var pager = new Pager<Review>(page, itemsPerPage, total, db.Reviews.Where(r => r.ReviewId == id));
+            return View("Review", pager);
+        }
+
+
+        private Func<Community, bool> GetCommunityResolver(string id)
+        {
+            ObjectId oid;
+            if(ObjectId.TryParse(id, out oid))
+                return c => (c.CommunityId == id);
+            return c => (c.UrlId == id);
         }
 
         protected override void Dispose(bool disposing)
