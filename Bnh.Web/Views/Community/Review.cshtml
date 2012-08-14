@@ -10,10 +10,12 @@
         <div>
             @if(Model.PageIndex == 0)
             {
+                <a><< First</a>
                 <a>< Previous</a>
             }
             else
             {
+                @Html.ActionLink("<< First", "Review", new { id = ViewBag.CommunityUrlId, page = 0 }, null)
                 @Html.ActionLink("< Previous", "Review", new { id = ViewBag.CommunityUrlId, page = Model.PageIndex - 1 }, null)
             }
             @for(var i = 0; i < Model.NumberOfPages; i ++)
@@ -30,17 +32,15 @@
             @if(Model.PageIndex == Model.NumberOfPages - 1)
             {
                 <a>Next ></a>
+                <a>Last >></a>
             }
             else
             {
-                @Html.ActionLink("Next > ", "Review", new { id = ViewBag.CommunityUrlId, page = Model.PageIndex + 1 }, null)
+                @Html.ActionLink("Next >", "Review", new { id = ViewBag.CommunityUrlId, page = Model.PageIndex + 1 }, null)
+                @Html.ActionLink("Last >>", "Review", new { id = ViewBag.CommunityUrlId, page = Model.NumberOfPages - 1 }, null)
             }
         </div>
     }
-}
-
-@{
-
 }
 
 <h2>Review</h2>
