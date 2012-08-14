@@ -3,4 +3,53 @@
 
 @model Pager<Review>
 
+@helper RenderPagerControls()
+{
+    if(Model.NumberOfPages > 1)
+    {
+        <div>
+            @if(Model.PageIndex == 0)
+            {
+                <a>< Previous</a>
+            }
+            else
+            {
+                @Html.ActionLink("< Previous", "Review", new { id = ViewBag.CommunityUrlId, page = Model.PageIndex - 1 }, null)
+            }
+            @for(var i = 0; i < Model.NumberOfPages; i ++)
+            {
+                if(Model.PageIndex == i)
+                {
+                    <a>@(i + 1)</a>
+                }
+                else
+                {
+                    @Html.ActionLink((i + 1).ToString(), "Review", new { id = ViewBag.CommunityUrlId, page = i }, null)
+                }
+            }
+            @if(Model.PageIndex == Model.NumberOfPages - 1)
+            {
+                <a>Next ></a>
+            }
+            else
+            {
+                @Html.ActionLink("Next > ", "Review", new { id = ViewBag.CommunityUrlId, page = Model.PageIndex + 1 }, null)
+            }
+        </div>
+    }
+}
+
+@{
+
+}
+
 <h2>Review</h2>
+
+@RenderPagerControls()
+
+@foreach (var review in Model.PageItems)
+{
+    <div>@review.Message</div>
+}
+
+@RenderPagerControls()

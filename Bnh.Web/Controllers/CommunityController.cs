@@ -163,14 +163,34 @@ namespace Bnh.Controllers
             return RedirectToAction("Index");
         }
 
+        private Review[] _reviews = new Review[]
+        {
+            new Review { Message = "Review 1", Ratings = new [] { 1, 2, 3, 4, 5 } },
+            new Review { Message = "Review 2", Ratings = new [] { 1, 2, 3, 4, 5 } },
+            new Review { Message = "Review 3", Ratings = new [] { 1, 2, 3, 4, 5 } },
+            new Review { Message = "Review 4", Ratings = new [] { 1, 2, 3, 4, 5 } },
+            new Review { Message = "Review 5", Ratings = new [] { 1, 2, 3, 4, 5 } },
+            new Review { Message = "Review 6", Ratings = new [] { 1, 2, 3, 4, 5 } },
+            new Review { Message = "Review 7", Ratings = new [] { 1, 2, 3, 4, 5 } },
+            new Review { Message = "Review 8", Ratings = new [] { 1, 2, 3, 4, 5 } }
+        };
+
 
         public ActionResult Review(string id, int page = 0, int itemsPerPage = int.MaxValue)
         {
+            // save curretn id so review view can use it
+            ViewBag.CommunityUrlId = id;
+
             ObjectId oid;
             if (!ObjectId.TryParse(id, out oid))
                 id = db.Communities.Where(c => c.UrlId == id).Select(c => c.CommunityId).Single();
-            var total = db.Reviews.Where(r => r.ReviewId == id).Count();
-            var pager = new Pager<Review>(page, itemsPerPage, total, db.Reviews.Where(r => r.ReviewId == id));
+            
+            //var total = db.Reviews.Where(r => r.ReviewId == id).Count();
+            //var pager = new Pager<Review>(page, itemsPerPage, total, db.Reviews.Where(r => r.ReviewId == id), new { CommunityUrlId = id });
+            var total = this._reviews.Length;
+            var pager = new Pager<Review>(page, 3, total, _reviews);
+            if (page >= pager.NumberOfPages)
+                return HttpNotFound("Page not found");
             return View("Review", pager);
         }
 

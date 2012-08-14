@@ -17,11 +17,6 @@ namespace Bnh.Web.Models
         public int TotalLength { get; private set; }
 
         /// <summary>
-        /// Collection of items to split into pages
-        /// </summary>
-        public IEnumerable<T> Items { get; private set; }
-
-        /// <summary>
         /// Number of items in a page
         /// </summary>
         public int PageSize { get; private set; }
@@ -39,23 +34,27 @@ namespace Bnh.Web.Models
         /// <summary>
         /// Gets items on current page
         /// </summary>
-        public IEnumerable<T> PageItems { get; private set; }
+        public T[] PageItems { get { return this._pageItems.Value; } }
 
         /// <summary>
-        /// 
+        /// Helps to evaluate PageItems only when it needs
         /// </summary>
-        /// <param name="startIndex"></param>
-        /// <param name="pageSize"></param>
-        /// <param name="totalLength"></param>
-        /// <param name="items"></param>
+        private Lazy<T[]> _pageItems = null;
+
+        /// <summary>
+        /// Creates instance of Pager object
+        /// </summary>
+        /// <param name="pageIndex">Index of current page</param>
+        /// <param name="pageSize">Size of a page</param>
+        /// <param name="totalLength">total number of items in collection</param>
+        /// <param name="items">Items to split into pages</param>
         public Pager(int pageIndex, int pageSize, int totalLength, IEnumerable<T> items)
         {
             this.PageIndex = pageIndex;
             this.PageSize = pageSize;
             this.TotalLength = totalLength;
-            this.Items = items;
             this.NumberOfPages = (int)Math.Ceiling(totalLength / (double)pageSize);
-            this.PageItems = items.Skip(pageIndex * pageSize).Take(pageSize);
+            this._pageItems = new Lazy<T[]>(() => items.Skip(pageIndex * pageSize).Take(pageSize).ToArray());
         }
     }
 }
