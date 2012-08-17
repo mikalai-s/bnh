@@ -11,13 +11,21 @@ using Bnh.Web.Models;
 using Ms.Cms.Models;
 using MongoDB.Bson;
 using Ms.Cms.Controllers;
+using Bnh.Web.Code;
 
 namespace Bnh.Controllers
 {
     [Authorize]
     public class CommunityController : Controller
     {
-        private BleEntities db = new BleEntities();
+        private BleEntities db = null;
+        private Configuration config = null;
+
+        public CommunityController(BleEntities db, Configuration config)
+        {
+            this.db = db;
+            this.config = config;
+        }
 
         //
         // GET: /Community/
@@ -178,6 +186,8 @@ namespace Bnh.Controllers
 
         public ActionResult Review(string id, int page = 0, int itemsPerPage = int.MaxValue)
         {
+            
+
             // save curretn id so review view can use it
             ViewBag.CommunityUrlId = id;
 

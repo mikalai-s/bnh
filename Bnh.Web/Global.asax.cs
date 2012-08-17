@@ -8,6 +8,9 @@ using System.Web.Http;
 using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
+using Autofac;
+using Autofac.Integration.Mvc;
+using Bnh.Web.Code;
 using Bnh.WebFramework;
 using Ms.Cms;
 using Ms.Cms.Models.Utilities;
@@ -80,9 +83,20 @@ namespace Bnh.Web
             RegisterGlobalFilters(GlobalFilters.Filters);
             RegisterRoutes(RouteTable.Routes);
 
+            RegisterAutofacModules();
+
             //BundleTable.Bundles.RegisterTemplateBundles();
 
             ModelBinders.Binders.DefaultBinder = new BnhModelBinder();
+        }
+
+        private void RegisterAutofacModules()
+        {
+            var builder = new ContainerBuilder();
+            builder.RegisterModule<AutofacModule>();
+            builder.RegisterControllers(typeof(MvcApplication).Assembly);
+            var container = builder.Build();
+            DependencyResolver.SetResolver(new AutofacDependencyResolver(container));
         }
     }
 }

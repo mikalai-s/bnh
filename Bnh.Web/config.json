@@ -1,0 +1,10 @@
+﻿{
+    review: {
+        questions: [
+            "Overall score",
+            "Roads",
+            "Schools",
+            "Parks",
+        ]
+    }
+}
