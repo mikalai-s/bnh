@@ -41,6 +41,45 @@ namespace Bnh.Web.Models
         /// </summary>
         private Lazy<T[]> _pageItems = null;
 
+        public IEnumerable<Link> Links
+        {
+            get
+            {
+                if (this.PageIndex == 0)
+                {
+                    yield return new Link { Text = "<< First", Disabled = true };
+                    yield return new Link { Text = "< Previous", Disabled = true };
+                }
+                else
+                {
+                    yield return new Link { Text = "<< First", Action = "Review", PageIndex = 0 };
+                    yield return new Link { Text = "< Previous", Action = "Review", PageIndex = this.PageIndex - 1 };
+                }
+                for (var i = 0; i < this.NumberOfPages; i++)
+                {
+                    if (this.PageIndex == i)
+                    {
+                        yield return new Link { Text = (i + 1).ToString(), Active = true, Numeric = true };
+                    }
+                    else
+                    {
+                        yield return new Link { Text = (i + 1).ToString(), Action = "Review", PageIndex = i, Numeric = true };
+                    }
+                }
+                if (this.PageIndex == this.NumberOfPages - 1)
+                {
+                    yield return new Link { Text = "Next >", Disabled = true };
+                    yield return new Link { Text = "Last >>", Disabled = true };
+                }
+                else
+                {
+                    yield return new Link { Text = "Next >", Action = "Review", PageIndex = this.PageIndex + 1 };
+                    yield return new Link { Text = "Last >>", Action = "Review", PageIndex = this.NumberOfPages - 1 };
+                }
+            }
+        }
+
+
         /// <summary>
         /// Creates instance of Pager object
         /// </summary>
@@ -55,6 +94,17 @@ namespace Bnh.Web.Models
             this.TotalLength = totalLength;
             this.NumberOfPages = (int)Math.Ceiling(totalLength / (double)pageSize);
             this._pageItems = new Lazy<T[]>(() => items.Skip(pageIndex * pageSize).Take(pageSize).ToArray());
+        }
+
+
+        public struct Link
+        {
+            public string Text { get; set; }
+            public string Action { get; set; }
+            public int PageIndex { get; set; }
+            public bool Disabled { get; set; }
+            public bool Active { get; set; }
+            public bool Numeric { get; set; }
         }
     }
 }

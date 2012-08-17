@@ -1,0 +1,39 @@
+﻿@using Bnh.Web.Models
+@using Bnh.Entities
+
+@model Pager<Review>
+
+@helper RenderPagerControls()
+{
+    Func<Pager<Review>.Link, string> classResolver = (link) =>
+        (link.Active && link.Numeric) ? "active page" :
+        link.Numeric ? "page" : "";
+    
+    if(Model.NumberOfPages > 1)
+    {
+        <div class="pager">
+        @foreach(var link in Model.Links)
+        {
+            if(link.Disabled || link.Active)
+            {
+                @Html.Label(link.Text, new { @class = classResolver(link) })
+            }
+            else
+            {
+                @Html.ActionLink(link.Text, link.Action, new { id = ViewBag.CommunityUrlId, page = link.PageIndex }, new { @class = classResolver(link) })
+            }
+        }
+        </div>
+    }
+}
+
+<h2>Review</h2>
+
+@RenderPagerControls()
+
+@foreach (var review in Model.PageItems)
+{
+    <div>@review.Message</div>
+}
+
+@RenderPagerControls()

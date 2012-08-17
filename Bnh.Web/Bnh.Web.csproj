@@ -597,7 +597,7 @@
       <SubType>Designer</SubType>
     </Content>
     <Content Include="Views\Home\Copy of About.cshtml" />
-    <Content Include="Views\Community\Review.cshtml" />
+    <Content Include="Views\Shared\Review.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
