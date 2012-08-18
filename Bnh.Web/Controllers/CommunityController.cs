@@ -39,7 +39,7 @@ namespace Bnh.Controllers
         {
             var urlHelper = new UrlHelper(this.HttpContext.Request.RequestContext);
 
-            var city = db.Cities.First(c => c.Name == "Calgary");
+            var city = db.Cities.First(c => c.Name == config.City);
                 var zones = city.Zones.ToList();
                 var communities = city
                     .GetCommunities(db)
@@ -65,8 +65,7 @@ namespace Bnh.Controllers
 
         public ViewResult Details(string id)
         {
-            var checker = GetCommunityResolver(id);
-            return View(db.Communities.Single(checker));
+            return View(GetCommunity(id));
         }
 
         //
@@ -74,7 +73,7 @@ namespace Bnh.Controllers
         [Authorize(Roles = "content_manager")]
         public ActionResult Create()
         {
-            ViewBag.CityZones = new SelectList(db.Cities.First(c => c.Name == "Calgary").Zones);
+            ViewBag.CityZones = new SelectList(db.Cities.First(c => c.Name == config.City).Zones);
             using(var cm = new CmsEntities())
             {
                 var sceneTemplates = from s in cm.Scenes
@@ -82,7 +81,7 @@ namespace Bnh.Controllers
                                      select new { id = s.SceneId, title = s.Title };
                 ViewBag.Templates = new SelectList(new[] { new { id = string.Empty, title = string.Empty } }.Union(sceneTemplates), "id", "title");
 
-                var city = db.Cities.First(c => c.Name == "Calgary");
+                var city = db.Cities.First(c => c.Name == config.City);
                 ViewBag.CityZones = new SelectList(city.Zones);
                 ViewBag.CityId = city.CityId;
             }
@@ -109,7 +108,7 @@ namespace Bnh.Controllers
                 return RedirectToAction("Edit", new { id = community.UrlId });
             }
 
-            ViewBag.CityZones = new SelectList(db.Cities.First(c => c.Name == "Calgary").Zones, community.Zone);
+            ViewBag.CityZones = new SelectList(db.Cities.First(c => c.Name == config.City).Zones, community.Zone);
             return View(community);
         }
         
@@ -118,9 +117,8 @@ namespace Bnh.Controllers
         [Authorize(Roles = "content_manager")]
         public ActionResult Edit(string id)
         {
-            var checker = GetCommunityResolver(id);
-            Community community = db.Communities.Single(checker);
-            ViewBag.CityZones = new SelectList(db.Cities.First(c => c.Name == "Calgary").Zones, community.Zone);
+            var community = GetCommunity(id);
+            ViewBag.CityZones = new SelectList(db.Cities.First(c => c.Name == config.City).Zones, community.Zone);
             return View(community);
         }
 
@@ -137,16 +135,14 @@ namespace Bnh.Controllers
                 
                 return RedirectToAction("Details", new { id = community.UrlId });
             }
-            ViewBag.CityZones = new SelectList(db.Cities.First(c => c.Name == "Calgary").Zones, community.Zone);
+            ViewBag.CityZones = new SelectList(db.Cities.First(c => c.Name == config.City).Zones, community.Zone);
             return View(community);
         }
 
         [HttpGet]
         public ActionResult EditScene(string id)
         {
-            var checker = GetCommunityResolver(id);
-            Community community = db.Communities.Single(checker);
-            return View(community);
+            return View(GetCommunity(id));
         }
 
 
@@ -156,7 +152,7 @@ namespace Bnh.Controllers
         [Authorize(Roles = "content_manager")]
         public ActionResult Delete(string id)
         {
-            Community community = db.Communities.Single(c => c.CommunityId == id);
+            var community = db.Communities.Single(c => c.CommunityId == id);
             return View(community);
         }
 
@@ -171,46 +167,60 @@ namespace Bnh.Controllers
             return RedirectToAction("Index");
         }
 
-        private Review[] _reviews = new Review[]
+
+        public ActionResult Reviews(string id, int page = 1, int size = int.MaxValue)
         {
-            new Review { Message = "Review 1", Ratings = new [] { 1, 2, 3, 4, 5 } },
-            new Review { Message = "Review 2", Ratings = new [] { 1, 2, 3, 4, 5 } },
-            new Review { Message = "Review 3", Ratings = new [] { 1, 2, 3, 4, 5 } },
-            new Review { Message = "Review 4", Ratings = new [] { 1, 2, 3, 4, 5 } },
-            new Review { Message = "Review 5", Ratings = new [] { 1, 2, 3, 4, 5 } },
-            new Review { Message = "Review 6", Ratings = new [] { 1, 2, 3, 4, 5 } },
-            new Review { Message = "Review 7", Ratings = new [] { 1, 2, 3, 4, 5 } },
-            new Review { Message = "Review 8", Ratings = new [] { 1, 2, 3, 4, 5 } }
-        };
+            if (page < 1)
+                return HttpNotFound();
 
+            var community = GetCommunity(id);
 
-        public ActionResult Review(string id, int page = 0, int itemsPerPage = int.MaxValue)
-        {
-            
-
-            // save curretn id so review view can use it
+            // save current id so we can reuse it in review
             ViewBag.CommunityUrlId = id;
+            ViewBag.CommunityName = community.Name;
 
-            ObjectId oid;
-            if (!ObjectId.TryParse(id, out oid))
-                id = db.Communities.Where(c => c.UrlId == id).Select(c => c.CommunityId).Single();
+            var total = db.Reviews.Where(r => r.TargetId == community.CommunityId).Count();
+            var pager = new Pager<Review>(page - 1, size, total, db.Reviews.Where(r => r.TargetId == community.CommunityId));
             
-            //var total = db.Reviews.Where(r => r.ReviewId == id).Count();
-            //var pager = new Pager<Review>(page, itemsPerPage, total, db.Reviews.Where(r => r.ReviewId == id), new { CommunityUrlId = id });
-            var total = this._reviews.Length;
-            var pager = new Pager<Review>(page, 3, total, _reviews);
-            if (page >= pager.NumberOfPages)
-                return HttpNotFound("Page not found");
-            return View("Review", pager);
+            if (page > pager.NumberOfPages)
+                return HttpNotFound();
+
+            return View(pager);
+        }
+
+        [HttpGet]
+        public ActionResult AddReview(string id)
+        {
+            var community = GetCommunity(id);
+
+            ViewBag.CommunityUrlId = id;
+            ViewBag.CommunityName = community.Name;
+
+            return View(new Review { TargetId = community.CommunityId });
+        }
+
+        [HttpPost]
+        public ActionResult AddReview(Review review)
+        {
+//#if DEBUG
+//            // NOTE: temporary feature that allows user to create more than one review
+//            // TODO: remove when feature is done
+//            review.ReviewId = null;
+//#endif
+            review.UserName = User.Identity.Name;
+            review.Message = HttpUtility.HtmlDecode(review.Message);
+            db.Reviews.Insert(review);
+            return Redirect(Url.Action("Reviews", new { id = this.RouteData.Values["id"] }) + "#" + review.ReviewId);
         }
 
 
-        private Func<Community, bool> GetCommunityResolver(string id)
+        private Community GetCommunity(string id)
         {
             ObjectId oid;
             if(ObjectId.TryParse(id, out oid))
-                return c => (c.CommunityId == id);
-            return c => (c.UrlId == id);
+                return db.Communities.Single(c => c.CommunityId == id);
+            else
+                return db.Communities.Single(c => c.UrlId == id);
         }
 
         protected override void Dispose(bool disposing)

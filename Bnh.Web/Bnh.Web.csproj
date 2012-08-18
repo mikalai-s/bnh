@@ -579,6 +579,7 @@
     <Content Include="Scripts\libs\tiny_mce\utils\mctabs.js" />
     <Content Include="Scripts\libs\tiny_mce\utils\validate.js" />
     <EmbeddedResource Include="Scripts\map-editor.js" />
+    <Content Include="Scripts\review-add.js" />
     <Content Include="Styles\CommunityEdit.css" />
     <Content Include="Styles\CommunityIndex.css" />
     <Content Include="Styles\Layout.css" />
@@ -609,7 +610,8 @@
       <SubType>Designer</SubType>
     </Content>
     <Content Include="Views\Home\Copy of About.cshtml" />
-    <Content Include="Views\Shared\Review.cshtml" />
+    <Content Include="Views\Shared\Reviews.cshtml" />
+    <Content Include="Views\Shared\AddReview.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

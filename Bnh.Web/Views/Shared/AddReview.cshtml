@@ -1,0 +1,28 @@
+﻿@model Bnh.Entities.Review
+
+@section Scripts {
+    <script>require(["review-add"])</script>
+}
+
+@{
+    ViewBag.Title = "Add " + ViewBag.CommunityName + " Review";
+}
+
+<div class="page-view">
+    <h2>Add @ViewBag.CommunityName Review</h2>
+
+    @using (Html.BeginForm()) {
+        @Html.HiddenFor(m => m.TargetId)
+
+        <h4>Please rate the community by following parameters:</h4>
+        
+        
+        <h4>And also leave us a review:</h4>
+        @Html.TextAreaFor(m => m.Message)
+
+        <p>
+            <span class="alter"><input type="submit" value="Create" /></span>
+            @Html.ActionInputLink("Cancel", "Reviews")
+        </p>
+    }
+</div>

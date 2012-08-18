@@ -20,20 +20,34 @@
             }
             else
             {
-                @Html.ActionLink(link.Text, link.Action, new { id = ViewBag.CommunityUrlId, page = link.PageIndex }, new { @class = classResolver(link) })
+                @Html.ActionLink(link.Text, link.Action, new { id = ViewBag.CommunityUrlId, page = link.PageIndex + 1 }, new { @class = classResolver(link) })
             }
         }
         </div>
     }
 }
 
-<h2>Review</h2>
+@{
+    ViewBag.Title = ViewBag.CommunityName + " Reviews";
+}
+
+<h2>@ViewBag.CommunityName Reviews</h2>
+
+@*TODO: if user has already added a review, then don't show "add review" link*@
+@Html.ActionLink("Add review", "AddReview", new { id = ViewBag.CommunityUrlId })
 
 @RenderPagerControls()
 
 @foreach (var review in Model.PageItems)
 {
-    <div>@review.Message</div>
+    <div id="@review.ReviewId">
+        <section>
+            @MvcHtmlString.Create(review.Message)
+        </section>
+        <section>
+            by @review.UserName at @review.Created
+        </section>
+    </div>
 }
 
 @RenderPagerControls()

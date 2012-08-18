@@ -1,4 +1,5 @@
 ﻿{
+	city: "Calgary",
     review: {
         questions: [
             "Overall score",

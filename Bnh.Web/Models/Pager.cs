@@ -52,8 +52,8 @@ namespace Bnh.Web.Models
                 }
                 else
                 {
-                    yield return new Link { Text = "<< First", Action = "Review", PageIndex = 0 };
-                    yield return new Link { Text = "< Previous", Action = "Review", PageIndex = this.PageIndex - 1 };
+                    yield return new Link { Text = "<< First", Action = "Reviews", PageIndex = 0 };
+                    yield return new Link { Text = "< Previous", Action = "Reviews", PageIndex = this.PageIndex - 1 };
                 }
                 for (var i = 0; i < this.NumberOfPages; i++)
                 {
@@ -63,7 +63,7 @@ namespace Bnh.Web.Models
                     }
                     else
                     {
-                        yield return new Link { Text = (i + 1).ToString(), Action = "Review", PageIndex = i, Numeric = true };
+                        yield return new Link { Text = (i + 1).ToString(), Action = "Reviews", PageIndex = i, Numeric = true };
                     }
                 }
                 if (this.PageIndex == this.NumberOfPages - 1)
@@ -73,8 +73,8 @@ namespace Bnh.Web.Models
                 }
                 else
                 {
-                    yield return new Link { Text = "Next >", Action = "Review", PageIndex = this.PageIndex + 1 };
-                    yield return new Link { Text = "Last >>", Action = "Review", PageIndex = this.NumberOfPages - 1 };
+                    yield return new Link { Text = "Next >", Action = "Reviews", PageIndex = this.PageIndex + 1 };
+                    yield return new Link { Text = "Last >>", Action = "Reviews", PageIndex = this.NumberOfPages - 1 };
                 }
             }
         }
@@ -92,7 +92,7 @@ namespace Bnh.Web.Models
             this.PageIndex = pageIndex;
             this.PageSize = pageSize;
             this.TotalLength = totalLength;
-            this.NumberOfPages = (int)Math.Ceiling(totalLength / (double)pageSize);
+            this.NumberOfPages = (int)Math.Ceiling((totalLength == 0 ? 1 : totalLength) / (double)pageSize);
             this._pageItems = new Lazy<T[]>(() => items.Skip(pageIndex * pageSize).Take(pageSize).ToArray());
         }
 

@@ -7,6 +7,7 @@ namespace Bnh.Web.Code
 {
     public class Configuration
     {
+        public string City { get; set; }
         public ReviewConfiguration Review { get; set; }
     }
 
