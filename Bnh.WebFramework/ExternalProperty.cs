@@ -4,8 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Web;
 using System.Reflection;
-using Bnh.Entities;
 using System.Web.Mvc;
+using Bnh.Core.Entities.Attributes;
 
 namespace Bnh.WebFramework
 {

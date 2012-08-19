@@ -1,5 +1,8 @@
 ﻿{
-	city: "Calgary",
+    connectionStrings: {
+        mongo: "mongodb://127.0.0.1/bnh?safe=true"
+    },
+    city: "Calgary",
     review: {
         questions: [
             "Overall score",

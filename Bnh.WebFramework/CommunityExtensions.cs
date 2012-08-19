@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using Bnh.Entities;
+using Bnh.Core.Entities;
 using System.Reflection;
 using System.Web;
 using System.Web.Mvc;

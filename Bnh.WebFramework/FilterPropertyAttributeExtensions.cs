@@ -2,9 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using Bnh.Entities;
+using Bnh.Core.Entities;
 using System.Web;
 using System.Web.Mvc;
+using Bnh.Core.Entities.Attributes;
 
 namespace Bnh.WebFramework
 {

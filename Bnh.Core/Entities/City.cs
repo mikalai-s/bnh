@@ -2,14 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using MongoDB.Bson;
-using MongoDB.Bson.Serialization.Attributes;
 
-namespace Bnh.Entities
+namespace Bnh.Core.Entities
 {
     public class City
     {
-        [BsonRepresentation(BsonType.ObjectId), BsonId]
         public string CityId { get; set; }
         
         public string Name { get; set; }

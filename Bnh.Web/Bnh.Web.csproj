@@ -123,9 +123,7 @@
     <Reference Include="System.Data" />
     <Reference Include="System.Data.Entity" />
     <Reference Include="System.Drawing" />
-    <Reference Include="System.Net.Http, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.Net.Http.2.0.20505.0\lib\net40\System.Net.Http.dll</HintPath>
-    </Reference>
+    <Reference Include="System.Net.Http, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
     <Reference Include="System.Net.Http.Formatting, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.AspNet.WebApi.Client.4.0.20505.0\lib\net40\System.Net.Http.Formatting.dll</HintPath>
     </Reference>
@@ -142,9 +140,7 @@
       <Private>True</Private>
       <HintPath>..\packages\Microsoft.AspNet.WebPages.2.0.20505.0\lib\net40\System.Web.Helpers.dll</HintPath>
     </Reference>
-    <Reference Include="System.Web.Http, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.AspNet.WebApi.Core.4.0.20505.0\lib\net40\System.Web.Http.dll</HintPath>
-    </Reference>
+    <Reference Include="System.Web.Http, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
     <Reference Include="System.Web.Http.WebHost, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.AspNet.WebApi.WebHost.4.0.20505.0\lib\net40\System.Web.Http.WebHost.dll</HintPath>
     </Reference>
@@ -187,7 +183,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Code\AutofacModule.cs" />
-    <Compile Include="Code\Configuration.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\CommunityController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -278,6 +273,12 @@
     <Content Include="Scripts\libs\jquery\jquery-ui-1.8.20.js" />
     <Content Include="Scripts\libs\jquery\jquery-ui-1.8.20.min.js">
       <DependentUpon>jquery-ui-1.8.20.js</DependentUpon>
+    </Content>
+    <Content Include="config.debug.json">
+      <DependentUpon>config.json</DependentUpon>
+    </Content>
+    <Content Include="config.release.json">
+      <DependentUpon>config.json</DependentUpon>
     </Content>
     <None Include="Scripts\libs\jquery\jquery-1.7.2-vsdoc.js" />
     <Content Include="Scripts\libs\jquery\jquery-1.7.2.js" />
@@ -620,9 +621,13 @@
     <Content Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Bnh.Entities\Bnh.Entities.csproj">
-      <Project>{a383d25f-9ab2-4ea2-b155-c4fb9827e9a5}</Project>
-      <Name>Bnh.Entities</Name>
+    <ProjectReference Include="..\Bnh.Core\Bnh.Core.csproj">
+      <Project>{5b8f0d49-8ebb-41a1-9deb-43d32011e657}</Project>
+      <Name>Bnh.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Bnh.Infrastructure\Bnh.Infrastructure.csproj">
+      <Project>{88443f7e-b6df-44f6-9ca0-8e7842a25597}</Project>
+      <Name>Bnh.Infrastructure</Name>
     </ProjectReference>
     <ProjectReference Include="..\Bnh.WebFramework\Bnh.WebFramework.csproj">
       <Project>{291a879a-93d4-47a2-9749-bee9e2a2dd62}</Project>

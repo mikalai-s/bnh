@@ -68,10 +68,6 @@
     <Content Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Bnh.Entities\Bnh.Entities.csproj">
-      <Project>{a383d25f-9ab2-4ea2-b155-c4fb9827e9a5}</Project>
-      <Name>Bnh.Entities</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Bnh.Web\Bnh.Web.csproj">
       <Project>{0A805134-A1F2-4A14-84A7-16C701FB95AA}</Project>
       <Name>Bnh.Web</Name>
