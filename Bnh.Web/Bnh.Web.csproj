@@ -186,6 +186,13 @@
     <Compile Include="Models\AccountProfile.cs" />
     <Compile Include="Models\Pager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Web\CommunityExtensions.cs" />
+    <Compile Include="Web\Encoding.cs" />
+    <Compile Include="Web\ExternalProperty.cs" />
+    <Compile Include="Web\FilterPropertyAttributeExtensions.cs" />
+    <Compile Include="Web\HtmlExtensions.cs" />
+    <Compile Include="Web\NavigationMenu.cs" />
+    <Compile Include="Web\UrlExtensions.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="App_Readme\RequestReduce.readme.txt" />
@@ -620,10 +627,6 @@
     <ProjectReference Include="..\Bnh.Infrastructure\Bnh.Infrastructure.csproj">
       <Project>{88443f7e-b6df-44f6-9ca0-8e7842a25597}</Project>
       <Name>Bnh.Infrastructure</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Bnh.WebFramework\Bnh.WebFramework.csproj">
-      <Project>{291a879a-93d4-47a2-9749-bee9e2a2dd62}</Project>
-      <Name>Bnh.WebFramework</Name>
     </ProjectReference>
     <ProjectReference Include="..\Ms.Cms\Ms.Cms.csproj">
       <Project>{E59F60B4-ED10-474B-8FB0-F7C4E290D8F0}</Project>
