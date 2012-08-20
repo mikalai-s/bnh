@@ -21,7 +21,7 @@ namespace MongoDB.Web.Providers
         /// <param name="config"></param>
         /// <param name="defaultCollection"></param>
         /// <returns></returns>
-        public static MongoCollection<BsonDocument> GetCollection(NameValueCollection settings, Configuration config, string defaultCollection)
+        public static MongoCollection<BsonDocument> GetCollection(NameValueCollection settings, Config config, string defaultCollection)
         {
             return GetDatabase(settings, config).GetCollection(settings["collection"] ?? defaultCollection);
         }
@@ -33,7 +33,7 @@ namespace MongoDB.Web.Providers
         /// </summary>
         /// <param name="settings"></param>
         /// <returns></returns>
-        public static MongoDatabase GetDatabase(NameValueCollection settings, Configuration config)
+        public static MongoDatabase GetDatabase(NameValueCollection settings, Config config)
         {
             string database = settings["database"];
             return string.IsNullOrEmpty(database) ?
@@ -47,7 +47,7 @@ namespace MongoDB.Web.Providers
         /// </summary>
         /// <param name="settings"></param>
         /// <returns></returns>
-        public static string GetConnectionString(NameValueCollection settings, Configuration config)
+        public static string GetConnectionString(NameValueCollection settings, Config config)
         {
             string connectionString = null;
             var nameOrConnectionString = settings["connectionString"];

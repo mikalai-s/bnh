@@ -15,9 +15,9 @@ namespace Bnh.Controllers
     public class CommunityController : Controller
     {
         private IEntityRepositories repositories = null;
-        private Configuration config = null;
+        private Config config = null;
 
-        public CommunityController(IEntityRepositories repositories, Configuration config)
+        public CommunityController(IEntityRepositories repositories, Config config)
         {
             this.repositories = repositories;
             this.config = config;
@@ -176,6 +176,7 @@ namespace Bnh.Controllers
             // save current id so we can reuse it in review
             ViewBag.CommunityUrlId = id;
             ViewBag.CommunityName = community.Name;
+            ViewBag.Questions = this.config.Review.Questions;
 
             var total = this.repositories.Reviews.Where(r => r.TargetId == community.CommunityId).Count();
             var pager = new Pager<Review>(page - 1, size, total, this.repositories.Reviews.Where(r => r.TargetId == community.CommunityId));
@@ -193,6 +194,7 @@ namespace Bnh.Controllers
 
             ViewBag.CommunityUrlId = id;
             ViewBag.CommunityName = community.Name;
+            ViewBag.Questions = this.config.Review.Questions;
 
             return View(new Review { TargetId = community.CommunityId });
         }

@@ -17,7 +17,7 @@ namespace Bnh.Infrastructure.Repositories
 
         public IRepository<Review> Reviews { get; private set; }
 
-        public EntityRepositories(Configuration config)
+        public EntityRepositories(Config config)
         {
             this.Communities = new MongoRepository<Community>(config.ConnectionStrings["mongo"]);
             this.Cities = new MongoRepository<City>(config.ConnectionStrings["mongo"]);

@@ -39,7 +39,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Configuration.cs" />
+    <Compile Include="Config.cs" />
     <Compile Include="Entities\Attributes\ExternalPropertyAttribute.cs" />
     <Compile Include="Entities\Attributes\FilterPropertyAttribute.cs" />
     <Compile Include="IEntityRepositories.cs" />

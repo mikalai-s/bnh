@@ -116,7 +116,7 @@ namespace MongoDB.Web.Providers
 
         public override void Initialize(string name, NameValueCollection settings)
         {
-            var config = DependencyResolver.Current.GetService<Bnh.Core.Configuration>();
+            var config = DependencyResolver.Current.GetService<Bnh.Core.Config>();
 
             this.ApplicationName = settings["applicationName"] ?? HostingEnvironment.ApplicationVirtualPath;
 

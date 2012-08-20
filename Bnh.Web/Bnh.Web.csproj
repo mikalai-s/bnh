@@ -585,6 +585,7 @@
     <Content Include="Styles\Layout.css" />
     <Content Include="Styles\Login.css" />
     <EmbeddedResource Include="Styles\MapEditor.css" />
+    <Content Include="Styles\Review.css" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>

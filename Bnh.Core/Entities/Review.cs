@@ -15,7 +15,7 @@ namespace Bnh.Core.Entities
 
         public string Message { get; set; }
 
-        public int[] Ratings { get; set; }
+        public IDictionary<string, int?> Ratings { get; set; }
 
         public DateTime Created { get; set; }
     }

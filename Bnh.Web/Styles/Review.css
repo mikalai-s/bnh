@@ -1,0 +1,3 @@
+﻿.review { margin: 15px 0; border-bottom: solid 1px gray; }
+    .review .rating label { display: inline-block; width: 100px; }
+    .review .message { padding: 7px; }

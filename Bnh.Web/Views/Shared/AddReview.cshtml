@@ -1,11 +1,18 @@
 ﻿@model Review
 
+@section Styles
+{
+    <link href="@Url.Content("~/Styles/Review.css")" rel="stylesheet" type="text/css" />
+}
+
 @section Scripts {
     <script>require(["review-add"])</script>
 }
 
 @{
     ViewBag.Title = "Add " + ViewBag.CommunityName + " Review";
+    var ratings = Enumerable.Range(1, 10).Select(i => new { name = i.ToString(), value = i - 1 });
+    var questions = (ViewBag.Questions as IEnumerable<KeyValuePair<string, string>>).ToArray();
 }
 
 <div class="page-view">
@@ -15,8 +22,17 @@
         @Html.HiddenFor(m => m.TargetId)
 
         <h4>Please rate the community by following parameters:</h4>
-        
-        
+
+        for (int i = 0; i < questions.Length; i ++)
+        {
+            var question = questions[i];
+            <div>
+                <label>@question.Value</label>
+                @Html.Hidden("ratings[" + i + "].key", question.Key)
+                @Html.DropDownList("ratings[" + i + "].value", new SelectList(ratings, "value", "name"), "")
+            </div>
+        }
+
         <h4>And also leave us a review:</h4>
         @Html.TextAreaFor(m => m.Message)
 

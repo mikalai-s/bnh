@@ -48,7 +48,7 @@ namespace MongoDB.Web.Providers
 
         public override void Initialize(string name, NameValueCollection settings)
         {
-            var config = DependencyResolver.Current.GetService<Configuration>();
+            var config = DependencyResolver.Current.GetService<Config>();
 
             var configuration = WebConfigurationManager.OpenWebConfiguration(HostingEnvironment.ApplicationVirtualPath);
             this.sessionStateSection = configuration.GetSection("system.web/sessionState") as SessionStateSection;

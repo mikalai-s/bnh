@@ -27,6 +27,11 @@
     }
 }
 
+@section Styles
+{
+    <link href="@Url.Content("~/Styles/Review.css")" rel="stylesheet" type="text/css" />
+}
+
 @{
     ViewBag.Title = ViewBag.CommunityName + " Reviews";
 }
@@ -40,11 +45,20 @@
 
 @foreach (var review in Model.PageItems)
 {
-    <div id="@review.ReviewId">
-        <section>
+    <div id="@review.ReviewId" class="review">
+        <section class="rating">
+            @foreach(KeyValuePair<string, string> question in ViewBag.Questions)
+            {
+                <div>
+                    <label>@(question.Value):</label>
+                    <span>@review.Ratings[question.Key]</span>
+                </div>
+            }
+        </section>
+        <section class="message">
             @MvcHtmlString.Create(review.Message)
         </section>
-        <section>
+        <section class="user">
             by @review.UserName at @review.Created.ToLocalTime()
         </section>
     </div>
