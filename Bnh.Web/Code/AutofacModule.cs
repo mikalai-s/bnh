@@ -10,6 +10,8 @@ using Newtonsoft.Json;
 
 using Bnh.Core;
 using Bnh.Infrastructure.Repositories;
+using System.Web.Security;
+using MongoDB.Web.Providers;
 
 namespace Bnh.Web.Code
 {
@@ -20,7 +22,7 @@ namespace Bnh.Web.Code
             base.Load(builder);
 
             builder.Register<Configuration>(c => GetConfiguration()).InstancePerLifetimeScope();
-            builder.RegisterType<EntityRepositories>().As<IEntityRepositories>().InstancePerLifetimeScope();
+            builder.RegisterType<EntityRepositories>().AsImplementedInterfaces().As<IEntityRepositories>().InstancePerLifetimeScope();
         }
 
         private Configuration GetConfiguration()

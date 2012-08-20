@@ -4,14 +4,16 @@ using System.Collections.Specialized;
 using System.Configuration;
 using System.Linq;
 using System.Web.Hosting;
+using System.Web.Mvc;
 using System.Web.Profile;
+using Bnh.Core;
 using MongoDB.Bson;
 using MongoDB.Driver;
 using MongoDB.Driver.Builders;
 
 namespace MongoDB.Web.Providers
 {
-    public class MongoDBProfileProvider : ProfileProvider
+    public class MongoDbProfileProvider : ProfileProvider
     {
         private MongoCollection mongoCollection;
 
@@ -112,11 +114,13 @@ namespace MongoDB.Web.Providers
             return settingsPropertyValueCollection;
         }
 
-        public override void Initialize(string name, NameValueCollection config)
+        public override void Initialize(string name, NameValueCollection settings)
         {
-            this.ApplicationName = config["applicationName"] ?? HostingEnvironment.ApplicationVirtualPath;
+            var config = DependencyResolver.Current.GetService<Bnh.Core.Configuration>();
 
-            this.mongoCollection = ConnectionUtils.GetCollection(config, "Profiles");
+            this.ApplicationName = settings["applicationName"] ?? HostingEnvironment.ApplicationVirtualPath;
+
+            this.mongoCollection = ConnectionUtils.GetCollection(settings, config, "Profiles");
             this.mongoCollection.EnsureIndex("ApplicationName");
             this.mongoCollection.EnsureIndex("ApplicationName", "IsAnonymous");
             this.mongoCollection.EnsureIndex("ApplicationName", "IsAnonymous", "LastActivityDate");
@@ -126,7 +130,7 @@ namespace MongoDB.Web.Providers
             this.mongoCollection.EnsureIndex("ApplicationName", "Username");
             this.mongoCollection.EnsureIndex("ApplicationName", "Username", "IsAnonymous");
 
-            base.Initialize(name, config);
+            base.Initialize(name, settings);
         }
 
         public override void SetPropertyValues(SettingsContext context, SettingsPropertyValueCollection collection)

@@ -4,14 +4,16 @@ using System.IO;
 using System.Web;
 using System.Web.Configuration;
 using System.Web.Hosting;
+using System.Web.Mvc;
 using System.Web.SessionState;
+using Bnh.Core;
 using MongoDB.Bson;
 using MongoDB.Driver;
 using MongoDB.Driver.Builders;
 
 namespace MongoDB.Web.Providers
 {
-    public class MongoDBSessionStateProvider : SessionStateStoreProviderBase
+    public class MongoDbSessionStateProvider : SessionStateStoreProviderBase
     {
         private MongoCollection mongoCollection;
         private SessionStateSection sessionStateSection;
@@ -44,16 +46,18 @@ namespace MongoDB.Web.Providers
             return GetSessionStateStoreData(true, context, id, out locked, out lockAge, out lockId, out actions);
         }
 
-        public override void Initialize(string name, NameValueCollection config)
+        public override void Initialize(string name, NameValueCollection settings)
         {
+            var config = DependencyResolver.Current.GetService<Configuration>();
+
             var configuration = WebConfigurationManager.OpenWebConfiguration(HostingEnvironment.ApplicationVirtualPath);
             this.sessionStateSection = configuration.GetSection("system.web/sessionState") as SessionStateSection;
 
-            this.mongoCollection = ConnectionUtils.GetCollection(config, "SessionState");
+            this.mongoCollection = ConnectionUtils.GetCollection(settings, config, "SessionState");
             this.mongoCollection.EnsureIndex("applicationVirtualPath", "id");
             this.mongoCollection.EnsureIndex("applicationVirtualPath", "id", "lockId");
 
-            base.Initialize(name, config);
+            base.Initialize(name, settings);
         }
 
         public override void InitializeRequest(HttpContext context)

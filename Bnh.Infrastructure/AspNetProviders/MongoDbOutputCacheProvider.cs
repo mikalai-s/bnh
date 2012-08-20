@@ -2,13 +2,15 @@
 using System.Collections.Specialized;
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
+using System.Web.Mvc;
+using Bnh.Core;
 using MongoDB.Bson;
 using MongoDB.Driver;
 using MongoDB.Driver.Builders;
 
 namespace MongoDB.Web.Providers
 {
-    public class MongoDBOutputCacheProvider : System.Web.Caching.OutputCacheProvider
+    public class MongoDbOutputCacheProvider : System.Web.Caching.OutputCacheProvider
     {
         private MongoCollection mongoCollection;
 
@@ -39,11 +41,12 @@ namespace MongoDB.Web.Providers
             }
         }
 
-        public override void Initialize(string name, NameValueCollection config)
+        public override void Initialize(string name, NameValueCollection settings)
         {
-            this.mongoCollection = ConnectionUtils.GetCollection(config, "OutputCache");
+            var config = DependencyResolver.Current.GetService<Configuration>();
+            this.mongoCollection = ConnectionUtils.GetCollection(settings, config, "OutputCache");
             this.mongoCollection.EnsureIndex("Key");
-            base.Initialize(name, config);
+            base.Initialize(name, settings);
         }
 
         public override void Remove(string key)

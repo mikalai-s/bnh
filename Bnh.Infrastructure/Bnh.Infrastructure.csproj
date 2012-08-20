@@ -39,7 +39,11 @@
       <HintPath>..\packages\mongocsharpdriver.1.5\lib\net35\MongoDB.Driver.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.configuration" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.ApplicationServices" />
+    <Reference Include="System.Web.Mvc, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -47,6 +51,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AspNetProviders\ConnectionUtils.cs" />
+    <Compile Include="AspNetProviders\MongoDbMembershipProvider.cs" />
+    <Compile Include="AspNetProviders\MongoDbOutputCacheProvider.cs" />
+    <Compile Include="AspNetProviders\MongoDbProfileProvider.cs" />
+    <Compile Include="AspNetProviders\MongoDbRoleProvider.cs" />
+    <Compile Include="AspNetProviders\MongoDbSessionStateProvider.cs" />
+    <Compile Include="AspNetProviders\MongoDbWebEventProvider.cs" />
+    <Compile Include="AspNetProviders\WebEvent.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\EntityRepositories.cs" />
     <Compile Include="Repositories\MongoRepository.cs" />

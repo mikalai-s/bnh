@@ -108,14 +108,6 @@
       <Private>True</Private>
       <HintPath>..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
     </Reference>
-    <Reference Include="MongoDB.Bson, Version=1.5.0.4566, Culture=neutral, PublicKeyToken=f686731cfb9cc103, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\mongocsharpdriver.1.5\lib\net35\MongoDB.Bson.dll</HintPath>
-    </Reference>
-    <Reference Include="MongoDB.Driver, Version=1.5.0.4566, Culture=neutral, PublicKeyToken=f686731cfb9cc103, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\mongocsharpdriver.1.5\lib\net35\MongoDB.Driver.dll</HintPath>
-    </Reference>
     <Reference Include="Newtonsoft.Json, Version=4.5.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.4.5.7\lib\net40\Newtonsoft.Json.dll</HintPath>
     </Reference>
@@ -632,10 +624,6 @@
     <ProjectReference Include="..\Bnh.WebFramework\Bnh.WebFramework.csproj">
       <Project>{291a879a-93d4-47a2-9749-bee9e2a2dd62}</Project>
       <Name>Bnh.WebFramework</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\MongoDB.Web\MongoDB.Web.csproj">
-      <Project>{90bb8808-e091-463d-aafd-5134183bdcf7}</Project>
-      <Name>MongoDB.Web</Name>
     </ProjectReference>
     <ProjectReference Include="..\Ms.Cms\Ms.Cms.csproj">
       <Project>{E59F60B4-ED10-474B-8FB0-F7C4E290D8F0}</Project>

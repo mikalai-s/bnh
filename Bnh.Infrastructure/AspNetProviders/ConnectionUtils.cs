@@ -4,8 +4,8 @@ using System.Linq;
 using System.Text;
 using MongoDB.Driver;
 using System.Collections.Specialized;
-using System.Configuration;
 using MongoDB.Bson;
+using Bnh.Core;
 
 namespace MongoDB.Web.Providers
 {
@@ -21,9 +21,9 @@ namespace MongoDB.Web.Providers
         /// <param name="config"></param>
         /// <param name="defaultCollection"></param>
         /// <returns></returns>
-        public static MongoCollection<BsonDocument> GetCollection(NameValueCollection config, string defaultCollection)
+        public static MongoCollection<BsonDocument> GetCollection(NameValueCollection settings, Configuration config, string defaultCollection)
         {
-            return GetDatabase(config).GetCollection(config["collection"] ?? defaultCollection);
+            return GetDatabase(settings, config).GetCollection(settings["collection"] ?? defaultCollection);
         }
 
         /// <summary>
@@ -31,35 +31,36 @@ namespace MongoDB.Web.Providers
         /// If "database" setting is not specified then it's assumed that
         /// connection string contains database name
         /// </summary>
-        /// <param name="config"></param>
+        /// <param name="settings"></param>
         /// <returns></returns>
-        public static MongoDatabase GetDatabase(NameValueCollection config)
+        public static MongoDatabase GetDatabase(NameValueCollection settings, Configuration config)
         {
-            string database = config["database"];
+            string database = settings["database"];
             return string.IsNullOrEmpty(database) ?
-                MongoDatabase.Create(GetConnectionString(config)) :
-                MongoServer.Create(GetConnectionString(config)).GetDatabase(database);
+                MongoDatabase.Create(GetConnectionString(settings, config)) :
+                MongoServer.Create(GetConnectionString(settings, config)).GetDatabase(database);
         }
 
         /// <summary>
         /// Returns connection string to MongoDb by checking whether "connectionString" 
         /// contains connection string name or connection string itself
         /// </summary>
-        /// <param name="config"></param>
+        /// <param name="settings"></param>
         /// <returns></returns>
-        public static string GetConnectionString(NameValueCollection config)
+        public static string GetConnectionString(NameValueCollection settings, Configuration config)
         {
             string connectionString = null;
-            var nameOrConnectionString = config["connectionString"];
+            var nameOrConnectionString = settings["connectionString"];
             if (!string.IsNullOrEmpty(nameOrConnectionString))
             {
                 connectionString = nameOrConnectionString;
-                if (ConfigurationManager.ConnectionStrings[nameOrConnectionString] != null)
+                if (config.ConnectionStrings.ContainsKey(nameOrConnectionString))
                 {
-                    connectionString = ConfigurationManager.ConnectionStrings[nameOrConnectionString].ConnectionString;
+                    connectionString = config.ConnectionStrings[nameOrConnectionString];
                 }
             }
             return connectionString ?? "mongodb://localhost";
+
         }
     }
 }

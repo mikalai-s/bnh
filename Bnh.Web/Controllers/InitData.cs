@@ -4,7 +4,6 @@ using System.Linq;
 using System.Web;
 using System.Web.Security;
 using Bnh.Web.Models;
-using MongoDB.Driver;
 using System.Configuration;
 
 namespace Bnh.Web.Controllers

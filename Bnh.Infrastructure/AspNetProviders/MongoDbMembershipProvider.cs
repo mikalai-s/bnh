@@ -4,14 +4,16 @@ using System.Configuration.Provider;
 using System.Security.Cryptography;
 using System.Text;
 using System.Web.Hosting;
+using System.Web.Mvc;
 using System.Web.Security;
+using Bnh.Core;
 using MongoDB.Bson;
 using MongoDB.Driver;
 using MongoDB.Driver.Builders;
 
 namespace MongoDB.Web.Providers
 {
-    public class MongoDBMembershipProvider : MembershipProvider
+    public class MongoDbMembershipProvider : MembershipProvider
     {
         private bool enablePasswordReset;
         private bool enablePasswordRetrieval;
@@ -24,6 +26,8 @@ namespace MongoDB.Web.Providers
         private string passwordStrengthRegularExpression;
         private bool requiresQuestionAndAnswer;
         private bool requiresUniqueEmail;
+
+        public Configuration Config { get; set; }
 
         public override string ApplicationName { get; set; }
 
@@ -323,31 +327,32 @@ namespace MongoDB.Web.Providers
             return bsonDocument != null ? bsonDocument["Username"].AsString : null;
         }
 
-        public override void Initialize(string name, NameValueCollection config)
+        public override void Initialize(string name, NameValueCollection settigns)
         {
-            this.ApplicationName = config["applicationName"] ?? HostingEnvironment.ApplicationVirtualPath;
-            this.enablePasswordReset = Boolean.Parse(config["enablePasswordReset"] ?? "true");
-            this.enablePasswordRetrieval = Boolean.Parse(config["enablePasswordRetrieval"] ?? "false");
-            this.maxInvalidPasswordAttempts = Int32.Parse(config["maxInvalidPasswordAttempts"] ?? "5");
-            this.minRequiredNonAlphanumericCharacters = Int32.Parse(config["minRequiredNonAlphanumericCharacters"] ?? "1");
-            this.minRequiredPasswordLength = Int32.Parse(config["minRequiredPasswordLength"] ?? "7");
-            this.passwordAttemptWindow = Int32.Parse(config["passwordAttemptWindow"] ?? "10");
-            this.passwordFormat = (MembershipPasswordFormat)Enum.Parse(typeof(MembershipPasswordFormat), config["passwordFormat"] ?? "Hashed");
-            this.passwordStrengthRegularExpression = config["passwordStrengthRegularExpression"] ?? String.Empty;
-            this.requiresQuestionAndAnswer = Boolean.Parse(config["requiresQuestionAndAnswer"] ?? "false");
-            this.requiresUniqueEmail = Boolean.Parse(config["requiresUniqueEmail"] ?? "true");
+            var config = DependencyResolver.Current.GetService<Configuration>();
+            this.ApplicationName = settigns["applicationName"] ?? HostingEnvironment.ApplicationVirtualPath;
+            this.enablePasswordReset = Boolean.Parse(settigns["enablePasswordReset"] ?? "true");
+            this.enablePasswordRetrieval = Boolean.Parse(settigns["enablePasswordRetrieval"] ?? "false");
+            this.maxInvalidPasswordAttempts = Int32.Parse(settigns["maxInvalidPasswordAttempts"] ?? "5");
+            this.minRequiredNonAlphanumericCharacters = Int32.Parse(settigns["minRequiredNonAlphanumericCharacters"] ?? "1");
+            this.minRequiredPasswordLength = Int32.Parse(settigns["minRequiredPasswordLength"] ?? "7");
+            this.passwordAttemptWindow = Int32.Parse(settigns["passwordAttemptWindow"] ?? "10");
+            this.passwordFormat = (MembershipPasswordFormat)Enum.Parse(typeof(MembershipPasswordFormat), settigns["passwordFormat"] ?? "Hashed");
+            this.passwordStrengthRegularExpression = settigns["passwordStrengthRegularExpression"] ?? String.Empty;
+            this.requiresQuestionAndAnswer = Boolean.Parse(settigns["requiresQuestionAndAnswer"] ?? "false");
+            this.requiresUniqueEmail = Boolean.Parse(settigns["requiresUniqueEmail"] ?? "true");
 
             if (this.PasswordFormat == MembershipPasswordFormat.Hashed && this.EnablePasswordRetrieval)
             {
                 throw new ProviderException("Configured settings are invalid: Hashed passwords cannot be retrieved. Either set the password format to different type, or set enablePasswordRetrieval to false.");
             }
 
-            this.mongoCollection = ConnectionUtils.GetCollection(config, "Users");
+            this.mongoCollection = ConnectionUtils.GetCollection(settigns, config, "Users");
             this.mongoCollection.EnsureIndex("ApplicationName");
             this.mongoCollection.EnsureIndex("ApplicationName", "Email");
             this.mongoCollection.EnsureIndex("ApplicationName", "Username");
 
-            base.Initialize(name, config);
+            base.Initialize(name, settigns);
         }
 
         public override string ResetPassword(string username, string answer)

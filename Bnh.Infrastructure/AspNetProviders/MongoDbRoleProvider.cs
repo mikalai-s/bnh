@@ -3,14 +3,16 @@ using System.Collections.Specialized;
 using System.Configuration.Provider;
 using System.Linq;
 using System.Web.Hosting;
+using System.Web.Mvc;
 using System.Web.Security;
+using Bnh.Core;
 using MongoDB.Bson;
 using MongoDB.Driver;
 using MongoDB.Driver.Builders;
 
 namespace MongoDB.Web.Providers
 {
-    public class MongoDBRoleProvider : RoleProvider
+    public class MongoDbRoleProvider : RoleProvider
     {
         private MongoCollection rolesMongoCollection;
         private MongoCollection usersInRolesMongoCollection;
@@ -123,12 +125,14 @@ namespace MongoDB.Web.Providers
             return this.usersInRolesMongoCollection.FindAs<BsonDocument>(query).ToList().Select(bsonDocument => bsonDocument["Username"].AsString).ToArray();
         }
 
-        public override void Initialize(string name, NameValueCollection config)
+        public override void Initialize(string name, NameValueCollection settings)
         {
-            this.ApplicationName = config["applicationName"] ?? HostingEnvironment.ApplicationVirtualPath;
+            var config = DependencyResolver.Current.GetService<Configuration>();
 
-            var mongoDatabase = ConnectionUtils.GetDatabase(config);
-            this.rolesMongoCollection = mongoDatabase.GetCollection(config["collection"] ?? "Roles");
+            this.ApplicationName = settings["applicationName"] ?? HostingEnvironment.ApplicationVirtualPath;
+
+            var mongoDatabase = ConnectionUtils.GetDatabase(settings, config);
+            this.rolesMongoCollection = mongoDatabase.GetCollection(settings["collection"] ?? "Roles");
             this.usersInRolesMongoCollection = mongoDatabase.GetCollection("UsersInRoles");
 
             this.rolesMongoCollection.EnsureIndex("ApplicationName");
@@ -137,7 +141,7 @@ namespace MongoDB.Web.Providers
             this.usersInRolesMongoCollection.EnsureIndex("ApplicationName", "Username");
             this.usersInRolesMongoCollection.EnsureIndex("ApplicationName", "Role", "Username");
 
-            base.Initialize(name, config);
+            base.Initialize(name, settings);
         }
 
         public override bool IsUserInRole(string username, string roleName)
