@@ -613,9 +613,7 @@
     <Content Include="Views\Shared\Reviews.cshtml" />
     <Content Include="Views\Shared\AddReview.cshtml" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="App_Data\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Content Include="packages.config" />
   </ItemGroup>
