@@ -1,19 +1,16 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>
-    </ProductVersion>
-    <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{60CF4AAD-7085-4A3E-B2D8-D1E77EF8E5BE}</ProjectGuid>
+    <ProjectGuid>{88443F7E-B6DF-44F6-9CA0-8E7842A25597}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Bnh.Tests</RootNamespace>
-    <AssemblyName>Bnh.Tests</AssemblyName>
+    <RootNamespace>Bnh.Infrastructure</RootNamespace>
+    <AssemblyName>Bnh.Infrastructure</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
-    <ProjectTypeGuids>{3AC096D0-A1C2-E12C-1390-A8335801FDAB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
     <RestorePackages>true</RestorePackages>
   </PropertyGroup>
@@ -35,52 +32,47 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Microsoft.CSharp" />
-    <Reference Include="Microsoft.VisualStudio.QualityTools.UnitTestFramework, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
-    <Reference Include="MongoDB.Bson, Version=1.5.0.4566, Culture=neutral, PublicKeyToken=f686731cfb9cc103, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
+    <Reference Include="MongoDB.Bson">
       <HintPath>..\packages\mongocsharpdriver.1.5\lib\net35\MongoDB.Bson.dll</HintPath>
     </Reference>
-    <Reference Include="MongoDB.Driver, Version=1.5.0.4566, Culture=neutral, PublicKeyToken=f686731cfb9cc103, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
+    <Reference Include="MongoDB.Driver">
       <HintPath>..\packages\mongocsharpdriver.1.5\lib\net35\MongoDB.Driver.dll</HintPath>
     </Reference>
     <Reference Include="System" />
-    <Reference Include="System.ComponentModel.DataAnnotations" />
-    <Reference Include="System.Configuration" />
+    <Reference Include="System.configuration" />
     <Reference Include="System.Core" />
-    <Reference Include="System.Data" />
-    <Reference Include="System.Data.Entity" />
     <Reference Include="System.Web" />
     <Reference Include="System.Web.ApplicationServices" />
-    <Reference Include="System.Web.Extensions" />
-    <Reference Include="System.Web.Abstractions" />
     <Reference Include="System.Web.Mvc, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
-    <Reference Include="System.Web.Routing" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Pager.cs" />
+    <Compile Include="AspNetProviders\ConnectionUtils.cs" />
+    <Compile Include="AspNetProviders\MongoDbMembershipProvider.cs" />
+    <Compile Include="AspNetProviders\MongoDbOutputCacheProvider.cs" />
+    <Compile Include="AspNetProviders\MongoDbProfileProvider.cs" />
+    <Compile Include="AspNetProviders\MongoDbRoleProvider.cs" />
+    <Compile Include="AspNetProviders\MongoDbSessionStateProvider.cs" />
+    <Compile Include="AspNetProviders\MongoDbWebEventProvider.cs" />
+    <Compile Include="AspNetProviders\WebEvent.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Controllers\HomeControllerTest.cs" />
+    <Compile Include="Repositories\EntityRepositories.cs" />
+    <Compile Include="Repositories\MongoRepository.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="App.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Bnh.Web\Bnh.Web.csproj">
-      <Project>{0A805134-A1F2-4A14-84A7-16C701FB95AA}</Project>
-      <Name>Bnh.Web</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Ms.Cms\Ms.Cms.csproj">
-      <Project>{E59F60B4-ED10-474B-8FB0-F7C4E290D8F0}</Project>
-      <Name>Ms.Cms</Name>
+    <ProjectReference Include="..\Bnh.Core\Bnh.Core.csproj">
+      <Project>{5b8f0d49-8ebb-41a1-9deb-43d32011e657}</Project>
+      <Name>Bnh.Core</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
-  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\nuget.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

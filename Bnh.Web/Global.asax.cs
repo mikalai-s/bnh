@@ -69,23 +69,21 @@ namespace Bnh.Web
 
         protected void Application_Start()
         {
+            RegisterAutofacModules();
+
+            ViewEngines.Engines.Clear();
+            ViewEngines.Engines.Add(new RazorViewEngine());
+
             MsCms.Setup(this, 
                 layout: "~/Views/Shared/_Layout.cshtml", 
                 designer: "content_manager",
                 tinymce: "~/Scripts/tiny_mce/tiny_mce_src.js",
                 googleMaps: "//maps.googleapis.com/maps/api/js?sensor=false");
 
-            Bnh.Web.Controllers.InitData.Init();
-            Bnh.Entities.InitData.Init();
-
             AreaRegistration.RegisterAllAreas();
 
             RegisterGlobalFilters(GlobalFilters.Filters);
             RegisterRoutes(RouteTable.Routes);
-
-            RegisterAutofacModules();
-
-            //BundleTable.Bundles.RegisterTemplateBundles();
 
             ModelBinders.Binders.DefaultBinder = new BnhModelBinder();
         }

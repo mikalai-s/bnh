@@ -3,9 +3,15 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Web;
+
 using Autofac;
-using Bnh.Entities;
+
 using Newtonsoft.Json;
+
+using Bnh.Core;
+using Bnh.Infrastructure.Repositories;
+using System.Web.Security;
+using MongoDB.Web.Providers;
 
 namespace Bnh.Web.Code
 {
@@ -16,13 +22,29 @@ namespace Bnh.Web.Code
             base.Load(builder);
 
             builder.Register<Configuration>(c => GetConfiguration()).InstancePerLifetimeScope();
-            builder.Register<BleEntities>(c => new BleEntities()).InstancePerLifetimeScope();
+            builder.RegisterType<EntityRepositories>().AsImplementedInterfaces().As<IEntityRepositories>().InstancePerLifetimeScope();
         }
 
         private Configuration GetConfiguration()
         {
-            return JsonConvert.DeserializeObject<Configuration>(
-                File.ReadAllText(HttpContext.Current.Server.MapPath("~/config.json")));
+            // config file
+            var configFile = HttpContext.Current.Server.MapPath("~/config.json");
+#if RELEASE
+            // release specific config file
+            var privateConfigFile = HttpContext.Current.Server.MapPath("~/config.release.json");
+#else
+            // debug specific config file
+            var privateConfigFile = HttpContext.Current.Server.MapPath("~/config.debug.json");
+#endif
+            if (!File.Exists(privateConfigFile))
+                throw new Exception("Private config file doesn't exist!");
+
+            // deserialize config file into object
+            var config = JsonConvert.DeserializeObject<Configuration>(File.ReadAllText(configFile));
+
+            // override its values from private config file
+            JsonConvert.PopulateObject(File.ReadAllText(privateConfigFile), config);
+            return config;
         }
     }
 }

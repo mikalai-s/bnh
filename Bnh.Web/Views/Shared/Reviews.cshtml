@@ -1,5 +1,5 @@
 ﻿@using Bnh.Web.Models
-@using Bnh.Entities
+@using Bnh.Core.Entities
 
 @model Pager<Review>
 
@@ -45,7 +45,7 @@
             @MvcHtmlString.Create(review.Message)
         </section>
         <section>
-            by @review.UserName at @review.Created
+            by @review.UserName at @review.Created.ToLocalTime()
         </section>
     </div>
 }

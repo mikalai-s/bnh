@@ -84,13 +84,13 @@
     <Compile Include="UrlExtensions.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Bnh.Entities\Bnh.Entities.csproj">
-      <Project>{A383D25F-9AB2-4EA2-B155-C4FB9827E9A5}</Project>
-      <Name>Bnh.Entities</Name>
-    </ProjectReference>
+    <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="packages.config" />
+    <ProjectReference Include="..\Bnh.Core\Bnh.Core.csproj">
+      <Project>{5b8f0d49-8ebb-41a1-9deb-43d32011e657}</Project>
+      <Name>Bnh.Core</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\nuget.targets" />
