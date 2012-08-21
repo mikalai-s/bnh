@@ -1,3 +1,6 @@
-﻿.review { margin: 15px 0; border-bottom: solid 1px gray; }
+﻿.review { margin: 20px 0; border: solid 1px lightgrey; padding: 10px; position: relative; }
     .review .rating label { display: inline-block; width: 100px; }
     .review .message { padding: 7px; }
+    .review .delete { position: absolute; right: 0; top: 0; }
+
+.add-review { }

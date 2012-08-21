@@ -32,6 +32,10 @@
     <link href="@Url.Content("~/Styles/Review.css")" rel="stylesheet" type="text/css" />
 }
 
+@section Scripts {
+    <script>require(["review-index"])</script>
+}
+
 @{
     ViewBag.Title = ViewBag.CommunityName + " Reviews";
 }
@@ -61,6 +65,10 @@
         <section class="user">
             by @review.UserName at @review.Created.ToLocalTime()
         </section>
+        @if (Context.User.IsInRole("content_manager"))
+        {
+        <sup class="alter delete">@Html.ActionLink("x", "DeleteReview", null, new { title = "Delete", reviewid = review.ReviewId })</sup>
+        }
     </div>
 }
 

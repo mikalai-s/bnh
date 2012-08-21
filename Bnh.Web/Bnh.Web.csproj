@@ -261,6 +261,7 @@
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\community-edit.js" />
     <Content Include="Scripts\community-index.js" />
+    <Content Include="Scripts\review-index.js" />
     <Content Include="Scripts\encoding.js" />
     <Content Include="Scripts\libs\jquery\jquery.balloon.js" />
     <Content Include="Scripts\libs\jquery\jquery.json-2.3.js" />

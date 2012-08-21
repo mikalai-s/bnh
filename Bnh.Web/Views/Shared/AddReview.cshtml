@@ -21,20 +21,26 @@
     @using (Html.BeginForm()) {
         @Html.HiddenFor(m => m.TargetId)
 
-        <h4>Please rate the community by following parameters:</h4>
+        <div class="add-review">
+            <section class="rating">
+                <h4>Please rate the community by following parameters:</h4>
+                @for (int i = 0; i < questions.Length; i ++)
+                {
+                    var question = questions[i];
+                    <div>
+                        <label>@question.Value</label>
+                        @Html.Hidden("ratings[" + i + "].key", question.Key)
+                        @Html.DropDownList("ratings[" + i + "].value", new SelectList(ratings, "value", "name"), "")
+                    </div>
+                }
+            </section>
 
-        for (int i = 0; i < questions.Length; i ++)
-        {
-            var question = questions[i];
-            <div>
-                <label>@question.Value</label>
-                @Html.Hidden("ratings[" + i + "].key", question.Key)
-                @Html.DropDownList("ratings[" + i + "].value", new SelectList(ratings, "value", "name"), "")
-            </div>
-        }
+            <section>
+                <h4>And also leave us a review:</h4>
+                @Html.TextAreaFor(m => m.Message)
+            </section>
 
-        <h4>And also leave us a review:</h4>
-        @Html.TextAreaFor(m => m.Message)
+        </div>
 
         <p>
             <span class="alter"><input type="submit" value="Create" /></span>

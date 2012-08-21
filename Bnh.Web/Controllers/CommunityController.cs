@@ -209,6 +209,14 @@ namespace Bnh.Controllers
             return Redirect(Url.Action("Reviews", new { id = this.RouteData.Values["id"] }) + "#" + review.ReviewId);
         }
 
+        [HttpDelete]
+        [Authorize(Roles = "content_manager")]
+        public ActionResult DeleteReview(string reviewId)
+        {
+            this.repositories.Reviews.Delete(reviewId);
+            return Json(null);
+        }
+
 
         private Community GetCommunity(string id)
         {
