@@ -91,7 +91,8 @@ namespace Bnh.Web
         private void RegisterAutofacModules()
         {
             var builder = new ContainerBuilder();
-            builder.RegisterModule<AutofacModule>();
+            builder.RegisterModule<Bnh.Infrastructure.AutofacModule>();
+            builder.RegisterModule<Bnh.Web.Code.AutofacModule>();
             builder.RegisterControllers(typeof(MvcApplication).Assembly);
             var container = builder.Build();
             DependencyResolver.SetResolver(new AutofacDependencyResolver(container));

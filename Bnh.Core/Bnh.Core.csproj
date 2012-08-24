@@ -40,6 +40,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Config.cs" />
+    <Compile Include="IRatingCalculator.cs" />
     <Compile Include="Entities\Attributes\ExternalPropertyAttribute.cs" />
     <Compile Include="Entities\Attributes\FilterPropertyAttribute.cs" />
     <Compile Include="IEntityRepositories.cs" />

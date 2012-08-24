@@ -22,14 +22,13 @@ namespace Bnh.Web.Code
             base.Load(builder);
 
             builder.Register<Config>(c => GetConfiguration()).InstancePerLifetimeScope();
-            builder.RegisterType<EntityRepositories>().AsImplementedInterfaces().InstancePerLifetimeScope();
         }
 
         private Config GetConfiguration()
         {
             // config file
             var configFile = HttpContext.Current.Server.MapPath("~/config.json");
-#if RELEASE
+#if !DEBUG
             // release specific config file
             var privateConfigFile = HttpContext.Current.Server.MapPath("~/config.release.json");
 #else

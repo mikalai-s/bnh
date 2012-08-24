@@ -11,7 +11,7 @@
 
 @{
     ViewBag.Title = "Add " + ViewBag.CommunityName + " Review";
-    var ratings = Enumerable.Range(1, 10).Select(i => new { name = i.ToString(), value = i - 1 });
+    var ratings = Enumerable.Range(0, 11).Select(i => new { name = i.ToString(), value = i });
     var questions = (ViewBag.Questions as IEnumerable<KeyValuePair<string, string>>).ToArray();
 }
 

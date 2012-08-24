@@ -45,6 +45,8 @@
 @*TODO: if user has already added a review, then don't show "add review" link*@
 @Html.ActionLink("Add review", "AddReview", new { id = ViewBag.CommunityUrlId })
 
+<h1>Rating: @(ViewBag.Rating ?? "Not rated")</h1>
+
 @RenderPagerControls()
 
 @foreach (var review in Model.PageItems)

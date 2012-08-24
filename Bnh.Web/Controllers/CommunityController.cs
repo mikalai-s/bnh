@@ -14,13 +14,15 @@ namespace Bnh.Controllers
     [Authorize]
     public class CommunityController : Controller
     {
-        private IEntityRepositories repositories = null;
         private Config config = null;
+        private IEntityRepositories repositories = null;
+        private IRatingCalculator rating = null;
 
-        public CommunityController(IEntityRepositories repositories, Config config)
+        public CommunityController(Config config, IEntityRepositories repositories, IRatingCalculator rating)
         {
-            this.repositories = repositories;
             this.config = config;
+            this.repositories = repositories;
+            this.rating = rating;
         }
 
         //
@@ -174,6 +176,7 @@ namespace Bnh.Controllers
             var community = GetCommunity(id);
 
             // save current id so we can reuse it in review
+            ViewBag.Rating = this.rating.GetTargetRating(community.CommunityId);
             ViewBag.CommunityUrlId = id;
             ViewBag.CommunityName = community.Name;
             ViewBag.Questions = this.config.Review.Questions;
