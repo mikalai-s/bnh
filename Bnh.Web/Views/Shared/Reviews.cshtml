@@ -38,6 +38,8 @@
 
 @{
     ViewBag.Title = ViewBag.CommunityName + " Reviews";
+    var questions = ViewBag.Questions as IDictionary<string, string>;
+    var i = 0;
 }
 
 <h2>@ViewBag.CommunityName Reviews</h2>
@@ -53,7 +55,7 @@
 {
     <div id="@review.ReviewId" class="review">
         <section class="rating">
-            @foreach(KeyValuePair<string, string> question in ViewBag.Questions)
+            @foreach(var question in questions.Where(q => review.Ratings[q.Key].HasValue))
             {
                 <div>
                     <label>@(question.Value):</label>
@@ -66,6 +68,35 @@
         </section>
         <section class="user">
             by @review.UserName at @review.Created.ToLocalTime()
+        </section>
+        <section>
+            Was this review useful to you? <a href="#" id="usefulLink">Yes</a>
+            <br />
+            @if (review.Comments.IsEmpty())
+            {
+            <span>No comments left yet</span>
+            }
+            else
+            {
+            <a href="#" class="commentsLink" data-text="Hide comments">Show @review.Comments.Length comments</a>
+            }
+            <a href="#" class="addCommentLink">Add comment</a>
+        </section>
+        @if(!review.Comments.IsEmpty())
+        {
+        <section class="commentsSection">
+            @foreach (var comment in review.Comments)
+            {
+                @comment.Message
+            }
+        </section>
+        }
+        <section class="addCommentSection">
+            <textarea data-index="@(i++)"></textarea>
+            <p>
+                <input type="button" class="postCommentButton" value="Cancel" href="@Url.Action("PostReviewComment")" />
+                <input type="button" class="cancelCommentButton" value="Cancel" />
+            </p>
         </section>
         @if (Context.User.IsInRole("content_manager"))
         {

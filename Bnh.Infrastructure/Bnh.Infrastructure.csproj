@@ -70,6 +70,7 @@
     <Compile Include="RatingCalculator.cs" />
     <Compile Include="Repositories\EntityRepositories.cs" />
     <Compile Include="Repositories\MongoRepository.cs" />
+    <Compile Include="Repositories\ReviewRepository.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Bnh.Core\Bnh.Core.csproj">

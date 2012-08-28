@@ -9,14 +9,18 @@ namespace Bnh.Core.Entities
     {
         public string ReviewId { get; set; }
 
-        public string TargetId { get; set; }
-
         public string UserName { get; set; }
 
         public string Message { get; set; }
 
+        public DateTime Created { get; set; }
+
+        public string TargetId { get; set; }
+
         public IDictionary<string, int?> Ratings { get; set; }
 
-        public DateTime Created { get; set; }
+        public Comment[] Comments { get; set; }
+
+        public int HelpfulCount { get; set; }
     }
 }

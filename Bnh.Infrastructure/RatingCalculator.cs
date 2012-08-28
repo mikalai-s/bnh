@@ -56,7 +56,7 @@ namespace Bnh.Infrastructure
             // that's why we have additional counter to handle such situation
             var rating = 0;
             var count = 0;
-            foreach (var rate in result.value.ratings.Values)
+            foreach (var rate in result.value.ratings.Values.Where(v => v.HasValue).Select(v => v.Value))
             {
                 rating += rate;
                 count++;
@@ -78,7 +78,7 @@ namespace Bnh.Infrastructure
             public class ResultValue
             {
                 public int count { get; set; }
-                public IDictionary<string, int> ratings { get; set; }
+                public IDictionary<string, int?> ratings { get; set; }
             }
         }
     }

@@ -4,3 +4,9 @@
     .review .delete { position: absolute; right: 0; top: 0; }
 
 .add-review { }
+
+.commentsSection { display: none; }
+.addCommentSection { display: none; }
+.hidden { display: none; }
+
+textarea { width: 500px; }

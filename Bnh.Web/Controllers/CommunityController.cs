@@ -220,6 +220,15 @@ namespace Bnh.Controllers
             return Json(null);
         }
 
+        [HttpPost]
+        public ActionResult PostReviewComment(string reviewId, Comment comment)
+        {
+            comment.Created = DateTime.UtcNow;
+            comment.UserName = this.User.Identity.Name;
+            this.repositories.Reviews.AddReviewComment(reviewId, comment);
+            return Json(null);
+        }
+
 
         private Community GetCommunity(string id)
         {

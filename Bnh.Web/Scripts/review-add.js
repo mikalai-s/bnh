@@ -8,11 +8,7 @@
             encoding: "xml",
             theme: "simple",
 
-            forced_root_block: false,
-
-            // Skin options
-            skin: "o2k7",
-            skin_variant: "silver"
+            forced_root_block: false
         });
     }
 );

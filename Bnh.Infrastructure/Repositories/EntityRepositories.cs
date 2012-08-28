@@ -15,13 +15,13 @@ namespace Bnh.Infrastructure.Repositories
 
         public IRepository<City> Cities { get; private set; }
 
-        public IRepository<Review> Reviews { get; private set; }
+        public IReviewRepository Reviews { get; private set; }
 
         public EntityRepositories(Config config)
         {
             this.Communities = new MongoRepository<Community>(config.ConnectionStrings["mongo"]);
             this.Cities = new MongoRepository<City>(config.ConnectionStrings["mongo"]);
-            this.Reviews = new MongoRepository<Review>(config.ConnectionStrings["mongo"]);
+            this.Reviews = new ReviewRepository(config.ConnectionStrings["mongo"]);
 
             EnsureData();
         }
@@ -46,6 +46,11 @@ namespace Bnh.Infrastructure.Repositories
                 cm.AutoMap();
                 cm.MapIdProperty(review => review.ReviewId).SetRepresentation(BsonType.ObjectId);
                 cm.GetMemberMap(review => review.TargetId).SetRepresentation(BsonType.ObjectId);
+            });
+            BsonClassMap.RegisterClassMap<Comment>(cm =>
+            {
+                cm.AutoMap();
+                cm.MapIdProperty(comment => comment.CommentId).SetRepresentation(BsonType.ObjectId);
             });
         }
 
