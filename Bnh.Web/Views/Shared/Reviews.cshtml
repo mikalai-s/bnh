@@ -83,7 +83,6 @@
                 {
                 <a href="#" class="commentsLink" data-text="Hide comments">View comments (@review.Comments.Length)</a>
                 }
-                <a href="#" class="addCommentLink">Add comment</a>
             </section>
             @if(!review.Comments.IsEmpty())
             {
@@ -100,10 +99,11 @@
                 }
             </section>
             }
+            <a href="#" class="addCommentLink">Add comment</a>
             <section class="addCommentSection">
                 <textarea data-index="@(i++)"></textarea>
                 <p>
-                    <input type="button" class="postCommentButton" value="Cancel" href="@Url.Action("PostReviewComment")" />
+                    <input type="button" class="postCommentButton" value="Post" href="@Url.Action("PostReviewComment")" />
                     <input type="button" class="cancelCommentButton" value="Cancel" />
                 </p>
             </section>
