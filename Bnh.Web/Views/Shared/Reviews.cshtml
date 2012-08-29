@@ -53,55 +53,65 @@
 
 @foreach (var review in Model.PageItems)
 {
-    <div id="@review.ReviewId" class="review">
-        <section class="rating">
-            @foreach(var question in questions.Where(q => review.Ratings[q.Key].HasValue))
+    <div id="@review.ReviewId" class="review-container">
+        <img class="avatar" src="@Html.Avatar(review.UserName)"/>
+        <div class="review">
+            <section class="user">@review.UserName</section>
+            <section class="rating">
+                @foreach(var question in questions.Where(q => review.Ratings[q.Key].HasValue))
+                {
+                    <div>
+                        <label>@(question.Value):</label>
+                        @Html.Rating(review.Ratings[question.Key].Value)
+                    </div>
+                }
+            </section>
+            <section class="message">
+                @MvcHtmlString.Create(review.Message)
+            </section>
+            <section class="time">
+                @review.Created.ToLocalTime()
+            </section>
+            <section>
+                Was this review useful to you? <a href="#" id="usefulLink">Yes</a>
+                <br />
+                @if (review.Comments.IsEmpty())
+                {
+                <span>No comments left yet</span>
+                }
+                else
+                {
+                <a href="#" class="commentsLink" data-text="Hide comments">View comments (@review.Comments.Length)</a>
+                }
+                <a href="#" class="addCommentLink">Add comment</a>
+            </section>
+            @if(!review.Comments.IsEmpty())
             {
-                <div>
-                    <label>@(question.Value):</label>
-                    <span>@review.Ratings[question.Key]</span>
-                </div>
+            <section class="commentsSection">
+                @foreach (var comment in review.Comments)
+                {
+                    <div class="comment-container">
+                        <img class="avatar" src="@Html.Avatar(comment.UserName, 32)"/>
+                        <div class="comment">
+                            <div>by <span class="user">@comment.UserName</span> at @comment.Created.ToLocalTime():</div>
+                            <div class="message">@comment.Message</div>
+                        </div>
+                    </div>
+                }
+            </section>
             }
-        </section>
-        <section class="message">
-            @MvcHtmlString.Create(review.Message)
-        </section>
-        <section class="user">
-            by @review.UserName at @review.Created.ToLocalTime()
-        </section>
-        <section>
-            Was this review useful to you? <a href="#" id="usefulLink">Yes</a>
-            <br />
-            @if (review.Comments.IsEmpty())
+            <section class="addCommentSection">
+                <textarea data-index="@(i++)"></textarea>
+                <p>
+                    <input type="button" class="postCommentButton" value="Cancel" href="@Url.Action("PostReviewComment")" />
+                    <input type="button" class="cancelCommentButton" value="Cancel" />
+                </p>
+            </section>
+            @if (Context.User.IsInRole("content_manager"))
             {
-            <span>No comments left yet</span>
+            <sup class="alter delete">@Html.ActionLink("x", "DeleteReview", null, new { title = "Delete", reviewid = review.ReviewId })</sup>
             }
-            else
-            {
-            <a href="#" class="commentsLink" data-text="Hide comments">Show @review.Comments.Length comments</a>
-            }
-            <a href="#" class="addCommentLink">Add comment</a>
-        </section>
-        @if(!review.Comments.IsEmpty())
-        {
-        <section class="commentsSection">
-            @foreach (var comment in review.Comments)
-            {
-                @comment.Message
-            }
-        </section>
-        }
-        <section class="addCommentSection">
-            <textarea data-index="@(i++)"></textarea>
-            <p>
-                <input type="button" class="postCommentButton" value="Cancel" href="@Url.Action("PostReviewComment")" />
-                <input type="button" class="cancelCommentButton" value="Cancel" />
-            </p>
-        </section>
-        @if (Context.User.IsInRole("content_manager"))
-        {
-        <sup class="alter delete">@Html.ActionLink("x", "DeleteReview", null, new { title = "Delete", reviewid = review.ReviewId })</sup>
-        }
+        </div>
     </div>
 }
 

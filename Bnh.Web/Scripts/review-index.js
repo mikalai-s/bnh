@@ -12,7 +12,7 @@
                     dataType: 'json',
                     data: { reviewId: $a.attr("reviewid") },
                     success: function () {
-                        $a.closest(".review").remove();
+                        $a.closest(".review-container").remove();
                     },
                     error: function () {
                         console.error("Unable to delete review!");
@@ -25,7 +25,7 @@
         $(".commentsLink").click(function () {
             var $link = $(this), $commentsSection, text;
 
-            $commentsSection = $link.closest(".review").find(".commentsSection");
+            $commentsSection = $link.closest(".review-container").find(".commentsSection");
             $commentsSection.toggle("fast");
 
             text = $link.attr("data-text");
@@ -36,7 +36,7 @@
         });
 
         $(".addCommentLink").click(function () {
-            var $addCommentSection = $(this).closest(".review").find(".addCommentSection");
+            var $addCommentSection = $(this).closest(".review-container").find(".addCommentSection");
 
             $addCommentSection.toggle("fast");
 
@@ -45,7 +45,7 @@
 
         $(".postCommentButton").click(function (e) {
             var $button = $(this), $review;
-            $review = $button.closest(".review");
+            $review = $button.closest(".review-container");
             $.ajax({
                 url: $button.attr("href"),
                 type: 'post',
