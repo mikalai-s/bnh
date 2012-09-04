@@ -23,6 +23,7 @@ namespace Bnh.Web.ViewModels
         public LinkViewModel AddReviewLink { get; set; }
         public bool Admin { get; set; }
         public string DeleteReviewUrl { get; set; }
+        public string DeleteCommentUrl { get; set; }
 
         public ReviewsViewModel(Controller controller, int? rating, string targetUrlId, string targetName, IDictionary<string, string> ratingQuestions, Pager<Review> pager)
         {
@@ -74,7 +75,8 @@ namespace Bnh.Web.ViewModels
                     PostCommentActionUrl = urlHelper.Action("PostReviewComment")
                 });
             this.Admin = controller.HttpContext.User.IsInRole("content_manager");
-            this.DeleteReviewUrl = urlHelper.Action("DeleteReview");
+            this.DeleteReviewUrl = this.Admin ? urlHelper.Action("DeleteReview") : null;
+            this.DeleteCommentUrl = this.Admin ? urlHelper.Action("DeleteReviewComment") : null;
         }
 
         private static string RatingAnswerHtml(int rating)

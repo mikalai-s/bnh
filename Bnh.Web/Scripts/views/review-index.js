@@ -17,6 +17,7 @@
             this.addReviewLink = record.AddReviewLink;
             this.admin = record.Admin;
             this.deleteReviewUrl = record.DeleteReviewUrl;
+            this.deleteCommentUrl = record.DeleteCommentUrl;
         }
 
         function Review(record, page) {
@@ -54,6 +55,7 @@
 
         function Comment(record, review) {
             this.review = review;
+            this.commentId = record.CommentId;
             this.userName = record.UserName;
             this.message = record.Message;
             this.userAvatarSrc = record.UserAvatarSrc;
@@ -115,14 +117,17 @@
 
         Comment.prototype.onDeleteComment = function () {
             var self = this;
-            if (confirm("Are you sure you want to delete the review?")) {
+            if (confirm("Are you sure you want to delete the comment?")) {
                 $.ajax({
-                    url: this.page.deleteReviewUrl,
+                    url: this.review.page.deleteCommentUrl,
                     type: 'delete',
                     dataType: 'json',
-                    data: { reviewId: this.reviewId },
+                    data: {
+                        reviewId: this.review.reviewId,
+                        commentId: this.commentId
+                    },
                     success: function (data, textStatus, jqXHR) {
-                        self.page.reviews.remove(self);
+                        self.review.comments.remove(self);
                     },
                     error: function (jqXhr, textStatus, errorThrown) {
                         console.error("Unable to delete review!", jqXhr, textStatus, errorThrown);

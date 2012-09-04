@@ -10,6 +10,8 @@ namespace Bnh.Web.ViewModels
 {
     public class CommentViewModel
     {
+        public string CommentId { get; set; }
+
         public string UserName { get; set; }
 
         public string Message { get; set; }
@@ -18,12 +20,13 @@ namespace Bnh.Web.ViewModels
 
         public string Created { get; set; }
 
-        public CommentViewModel(Comment c)
+        public CommentViewModel(Comment comment)
         {
-            this.UserName = c.UserName;
-            this.UserAvatarSrc = Gravatar.GetUrl(c.UserName, 32) + "&d=identicon";
-            this.Created = c.Created.ToLocalTime().ToUserFriendlyString();
-            this.Message = c.Message;
+            this.CommentId = comment.CommentId;
+            this.UserName = comment.UserName;
+            this.UserAvatarSrc = Gravatar.GetUrl(comment.UserName, 32) + "&d=identicon";
+            this.Created = comment.Created.ToLocalTime().ToUserFriendlyString();
+            this.Message = comment.Message;
         }
     }
 }

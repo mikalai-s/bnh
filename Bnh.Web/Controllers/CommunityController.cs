@@ -220,6 +220,14 @@ namespace Bnh.Controllers
             return Json(null);
         }
 
+        [HttpDelete]
+        [Authorize(Roles = "content_manager")]
+        public ActionResult DeleteReviewComment(string reviewId, string commentId)
+        {
+            this.repositories.Reviews.DeleteReviewComment(reviewId, commentId);
+            return Json(null);
+        }
+
         [HttpPost]
         public ActionResult PostReviewComment(string reviewId, string message)
         {

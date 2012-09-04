@@ -40,7 +40,10 @@ namespace Bnh.Infrastructure.Repositories
 
         public void DeleteReviewComment(string reviewId, string commentId)
         {
-            throw new NotImplementedException();
+            var reviewIdQuery = Query.EQ("_id", CastId(reviewId));
+            var commentIdQuery = Query.EQ("_id", CastId(commentId));
+
+            var r = this.Collection.Update(reviewIdQuery, Update.Pull("Comments", commentIdQuery));
         }
 
         public void UpdateComment(string reviewId, Comment comment)
