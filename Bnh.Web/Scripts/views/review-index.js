@@ -113,6 +113,25 @@
         };
 
 
+        Comment.prototype.onDeleteComment = function () {
+            var self = this;
+            if (confirm("Are you sure you want to delete the review?")) {
+                $.ajax({
+                    url: this.page.deleteReviewUrl,
+                    type: 'delete',
+                    dataType: 'json',
+                    data: { reviewId: this.reviewId },
+                    success: function (data, textStatus, jqXHR) {
+                        self.page.reviews.remove(self);
+                    },
+                    error: function (jqXhr, textStatus, errorThrown) {
+                        console.error("Unable to delete review!", jqXhr, textStatus, errorThrown);
+                    }
+                });
+            }
+        };
+
+
 
         // TODO: move it out of here
         ko.bindingHandlers.slideVisible = {

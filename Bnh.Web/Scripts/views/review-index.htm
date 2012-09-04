@@ -32,12 +32,15 @@
             <a class="commentsLink" data-bind="text: commentsLinkText, attr: { href: comments().length > 0 ? '#' : ''}, click: function() { commentsVisible(!commentsVisible()) }"></a>
         </section>
         <section class="commentsSection" data-bind="slideVisible: commentsVisible, foreach: comments">
-            <div class="comment-container">
+            <div class="comment-container" data-bind="attr: { class: ($index() +1) % 2 ? 'comment-container even' : 'comment-container' }">
                 <img class="avatar" src="" data-bind="attr: { src: userAvatarSrc }"/>
                 <div class="comment">
                     <div><span class="user" data-bind="text: userName"></span><span class="time" data-bind="text: ' on ' + created + ':'"></span></div>
                     <div class="message" data-bind="html: message"></div>
                 </div>
+                <sup class="alter delete" data-bind="visible: $parent.page.admin">
+                    <a href="#" title="Delete comment" data-bind="click: onDeleteComment">x</a>
+                </sup>
             </div>
         </section>
         <section>
@@ -51,7 +54,7 @@
             </p>
         </section>
         <sup class="alter delete" data-bind="visible: $parent.admin">
-            <a data-bind="click: onDeleteReview">x</a>
+            <a href="#" title="Delete review" data-bind="click: onDeleteReview">x</a>
         </sup>
     </div>
 </div>

@@ -120,6 +120,10 @@ input[type="submit"], input[type="button"], button, .button, .button:link, .butt
     .review-container .mceLayout { width: 100% !important; }
     .review-container .mceToolbar { text-align: left; }
     .review-container .mceIframeContainer iframe { height: 75px !important; }
+
+    .review-container .comment-container { position: relative; height: 50px; background-color: #fefefe; }
+        .review-container .comment-container.even { background-color: #fafafa; }
+
     
 
 .addCommentSection { display: none; }
