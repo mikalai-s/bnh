@@ -52,10 +52,10 @@
                 Was this review useful to you? <a href="#" id="usefulLink">Yes</a>
             </section>
             <section>
-                <a href="#" class="addCommentLink">Add comment</a>
+                <a href="#" class="commentsLink">@(review.Comments.Count() > 0 ? "View " + @review.Comments.Count() + " comments" : "No comments left yet")</a>
             </section>
             <section>
-                <a href="#" class="commentsLink">@(review.Comments.Count() > 0 ? "View " + @review.Comments.Count() + " comments" : "No comments left yet")</a>
+                <a href="#" class="addCommentLink">Add comment</a>
             </section>
             @*@if(!review.Comments.IsEmpty())
             {

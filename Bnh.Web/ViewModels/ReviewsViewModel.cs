@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
+using System.Web.Mvc.Html;
+
 using Bnh.Core.Entities;
 using Bnh.Web.Models;
-using Bnh.Web;
+
 using Microsoft.Web.Helpers;
 
 namespace Bnh.Web.ViewModels
@@ -19,10 +21,13 @@ namespace Bnh.Web.ViewModels
         public IEnumerable<LinkViewModel> PagerLinks { get; set; }
         public IEnumerable<ReviewViewModel> Reviews { get; set; }
         public LinkViewModel AddReviewLink { get; set; }
+        public bool Admin { get; set; }
+        public string DeleteReviewUrl { get; set; }
 
         public ReviewsViewModel(Controller controller, int? rating, string targetUrlId, string targetName, IDictionary<string, string> ratingQuestions, Pager<Review> pager)
         {
             var urlHelper = new UrlHelper(controller.HttpContext.Request.RequestContext);
+            var htmlHelper = new HtmlHelper(new ViewContext(controller.ControllerContext, new WebFormView(controller.ControllerContext, "fake"), new ViewDataDictionary(), new TempDataDictionary(), new StringWriter()), new ViewPage());
 
             this.Rating = "Rating: " + (rating.HasValue ? rating.ToString() : "Not rated");
             this.TargetUrlId = targetUrlId;
@@ -68,6 +73,8 @@ namespace Bnh.Web.ViewModels
                         }),
                     PostCommentActionUrl = urlHelper.Action("PostReviewComment")
                 });
+            this.Admin = controller.HttpContext.User.IsInRole("content_manager");
+            this.DeleteReviewUrl = urlHelper.Action("DeleteReview");
         }
 
         private static string RatingAnswerHtml(int rating)

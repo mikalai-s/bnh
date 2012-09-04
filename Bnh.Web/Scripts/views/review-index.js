@@ -4,28 +4,35 @@
         "use strict";
 
         function Page(record) {
+            var self = this;
+
             this.title = record.Title;
             this.rating = record.Rating;
             this.targetUrlId = record.TargetUrlId;
             this.targetName = record.TargetName;
             this.pagerLinks = record.PagerLinks;
-            this.reviews = $.map(record.Reviews, function (r) {
-                return new Review(r);
-            });
+            this.reviews = ko.observableArray($.map(record.Reviews, function (r) {
+                return new Review(r, self);
+            }));
             this.addReviewLink = record.AddReviewLink;
+            this.admin = record.Admin;
+            this.deleteReviewUrl = record.DeleteReviewUrl;
         }
 
-        function Review(record) {
+        function Review(record, page) {
+            var self = this;
+
+            this.page = page;
             this.reviewId = record.ReviewId;
             this.userName = record.UserName;
             this.userAvatarSrc = record.UserAvatarSrc;
             this.ratings = $.map(record.Ratings, function (r) {
-                return new RatingQuestion(r);
+                return new RatingQuestion(r, self);
             });
             this.message = record.Message;
             this.created = record.Created;
             this.comments = ko.observableArray($.map(record.Comments, function (c) {
-                return new Comment(c);
+                return new Comment(c, self);
             }));
             this.postCommentActionUrl = record.PostCommentActionUrl;
 
@@ -45,14 +52,16 @@
             }, this);
         }
 
-        function Comment(record) {
+        function Comment(record, review) {
+            this.review = review;
             this.userName = record.UserName;
             this.message = record.Message;
             this.userAvatarSrc = record.UserAvatarSrc;
             this.created = record.Created;
         }
 
-        function RatingQuestion(record) {
+        function RatingQuestion(record, review) {
+            this.review = review;
             this.question = record.Question;
             this.answerHtml = record.AnswerHtml;
         }
@@ -70,13 +79,37 @@
                     reviewId: this.reviewId,
                     message: this.newComment()
                 }),
-                success: function (postedComment) {
-                    self.comments.push(new Comment(postedComment));
+                success: function (data, textStatus, jqXHR) {
+                    self.comments.push(new Comment(data, self));
+                    self.newComment("");
+                    self.addCommentVisible(false);
                 },
-                error: function (result) {
-                    console.error("Unable to post a comment!", result);
+                error: function (jqXhr, textStatus, errorThrown) {
+                    console.error("Unable to post a comment!", jqXhr, textStatus, errorThrown);
                 }
             });
+        };
+
+        Review.prototype.onCancelComment = function () {
+            this.addCommentVisible(false);
+        };
+
+        Review.prototype.onDeleteReview = function () {
+            var self = this;
+            if (confirm("Are you sure you want to delete the review?")) {
+                $.ajax({
+                    url: this.page.deleteReviewUrl,
+                    type: 'delete',
+                    dataType: 'json',
+                    data: { reviewId: this.reviewId },
+                    success: function (data, textStatus, jqXHR) {
+                        self.page.reviews.remove(self);
+                    },
+                    error: function (jqXhr, textStatus, errorThrown) {
+                        console.error("Unable to delete review!", jqXhr, textStatus, errorThrown);
+                    }
+                });
+            }
         };
 
 
@@ -165,74 +198,6 @@
                 }
             }
         };
-
-        //$(".delete a").click(function () {
-        //    var $a = $(this);
-        //    if (confirm("Are you sure you want to delete the review?")) {
-        //        $.ajax({
-        //            url: $a.attr("href"),
-        //            type: 'delete',
-        //            dataType: 'json',
-        //            data: { reviewId: $a.attr("reviewid") },
-        //            success: function () {
-        //                $a.closest(".review-container").remove();
-        //            },
-        //            error: function () {
-        //                console.error("Unable to delete review!");
-        //            }
-        //        });
-        //    }
-        //    return false;
-        //});
-
-        //$(".commentsLink").click(function () {
-        //    var $link = $(this), $commentsSection, text;
-
-        //    $commentsSection = $link.closest(".review-container").find(".commentsSection");
-        //    $commentsSection.toggle("fast");
-
-        //    text = $link.attr("data-text");
-        //    $link.attr("data-text", $link.text());
-        //    $link.text(text);
-
-        //    return false;
-        //});
-
-        //$(".addCommentLink").click(function () {
-        //    var $addCommentSection = $(this).closest(".review-container").find(".addCommentSection");
-
-        //    $addCommentSection.toggle("fast");
-
-        //    return false;
-        //});
-
-        //$(".postCommentButton").click(function (e) {
-        //    var $button = $(this), $review;
-        //    $review = $button.closest(".review-container");
-        //    $.ajax({
-        //        url: $button.attr("href"),
-        //        type: 'post',
-        //        contentType: 'application/json',
-        //        data: JSON.stringify({ 
-        //            reviewId: $review.attr("id"), 
-        //            comment: { message: tinyMCE.get($review.find("textarea").attr("data-index")).getContent() }
-        //        }),
-        //        success: function () {
-        //            $review.find(".addCommentSection").toggle("fast");
-        //        },
-        //        error: function (result) {
-        //            console.error("Unable to post a comment!", result);
-        //        }
-        //    });
-        //    e.preventDefault();
-        //    return false;
-        //});
-        
-
-        
-
-     
-
 
         return Page;
     }

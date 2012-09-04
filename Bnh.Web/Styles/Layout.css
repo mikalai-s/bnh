@@ -115,12 +115,14 @@ input[type="submit"], input[type="button"], button, .button, .button:link, .butt
         .review-container .scale.r { background-color: #F4F4CF; }
 
     .review-container .comment-container { margin: 10px 0; }
-        .review-container .comment { margin-left: 35px; } 
+        .review-container .comment { margin-left: 35px; }
+
+    .review-container .mceLayout { width: 100% !important; }
+    .review-container .mceToolbar { text-align: left; }
+    .review-container .mceIframeContainer iframe { height: 75px !important; }
     
 
 .addCommentSection { display: none; }
 .hidden { display: none; }
-
-textarea { width: 500px; }
 
 /* end review */

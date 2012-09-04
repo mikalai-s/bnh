@@ -1,9 +1,9 @@
 ﻿define(
-    ["order!tinymce", "order!jqtinymce"],
+    ["order!jquery", "order!tinymce", "order!jqtinymce"],
     function () {
         "use strict";
 
-        $("textarea").tinymce.({
+        $("textarea").tinymce({
             encoding: "xml",
             theme: "simple",
 
