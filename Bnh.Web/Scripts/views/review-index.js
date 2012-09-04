@@ -1,5 +1,5 @@
 ﻿define(
-    ["jquery", "knockout", "tinymce"],
+    ["jquery", "knockout", "order!tinymce", "order!jqtinymce"],
     function ($, ko) {
         "use strict";
 
@@ -144,7 +144,8 @@
                 });
 
                 //$(element).tinymce(options);
-                setTimeout(function () { tinymce.init(options); }, 0);
+           //     options = $.extend(options, { script_url: '/scripts/libs/tiny_mce/tiny_mce.js' });
+                setTimeout(function () { $(element).tinymce(options); }, 0);
                 el.val(value);
 
             },
@@ -232,14 +233,6 @@
 
      
 
-
-        //// initialize all textareas on the page
-        //tinyMCE.init({
-        //    mode: "textareas",
-        //    encoding: "xml",
-        //    theme: "simple",
-        //    forced_root_block: false
-        //});
 
         return Page;
     }

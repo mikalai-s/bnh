@@ -1,10 +1,9 @@
 ﻿define(
-    ["tinymce"],
+    ["order!tinymce", "order!jqtinymce"],
     function () {
         "use strict";
 
-        tinyMCE.init({
-            mode: "textareas",
+        $("textarea").tinymce.({
             encoding: "xml",
             theme: "simple",
 
