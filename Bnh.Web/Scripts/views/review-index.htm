@@ -1,0 +1,61 @@
+﻿<h2 data-bind="text: title"></h2>
+
+<a data-bind="attr : { href: addReviewLink }">Add review</a>
+
+<h1 data-bind="text: rating"></h1>
+
+<!-- ko if: pagerLinks -->
+<div class="pager" data-bind="foreach: pagerLinks">
+    <a data-bind="text: text, css: class, attr: { href: href }"></a>
+</div>
+<!-- /ko -->
+
+<!-- ko foreach: reviews -->
+<div class="review-container" data-bind="attr: { id: reviewId }">
+    <img class="avatar" src="" data-bind="attr: { src: userAvatarSrc }"/>
+    <div class="review">
+        <section class="user" data-bind="text: userName"></section>
+        <section class="rating">
+            <!-- ko foreach: ratings -->
+            <div>
+                <label class="question" data-bind="text: question"></label>
+                <div class="answer" data-bind="html: answerHtml"></div>
+            </div>
+            <!-- /ko -->
+        </section>
+        <section class="message" data-bind="html: message"></section>
+        <section class="time" data-bind="text: created"></section>
+        <section>
+            Was this review useful to you? <a href="#" data-bind="click: onUsefulClick">Yes</a>
+        </section>
+        <section>
+            <a href="#" class="addCommentLink" data-bind="click: function() { addCommentVisible(!addCommentVisible()) }">Add comment</a>
+        </section>
+        <section class="addCommentSection" data-bind="slideVisible: addCommentVisible">
+            <textarea data-bind="tinymce: newComment, tinymceOptions : { mode:'textareas', encoding: 'xml', theme: 'simple', forced_root_block: false }"></textarea>
+            <p>
+                <input type="button" class="postCommentButton" value="Post" data-bind="click: onPostComment" />
+                <input type="button" class="cancelCommentButton" value="Cancel" />
+            </p>
+        </section>
+        <section>
+            <a class="commentsLink" data-bind="text: commentsLinkText, attr: { href: comments().length > 0 ? '#' : ''}, click: function() { commentsVisible(!commentsVisible()) }"></a>
+        </section>
+        <section class="commentsSection" data-bind="slideVisible: commentsVisible, foreach: comments">
+            <div class="comment-container">
+                <img class="avatar" src="" data-bind="attr: { src: userAvatarSrc }"/>
+                <div class="comment">
+                    <div>by <span class="user" data-bind="text: userName"></span><span class="time" data-bind="text: ' on ' + created + ':'"></span></div>
+                    <div class="message" data-bind="html: message"></div>
+                </div>
+            </div>
+        </section>
+    </div>
+</div>
+<!-- /ko -->
+
+<!-- ko if: pagerLinks -->
+<div class="pager" data-bind="foreach: pager.links">
+    <a data-bind="text: text, css: class, attr: { href: href }"></a>
+</div>
+<!-- /ko -->

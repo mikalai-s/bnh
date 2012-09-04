@@ -1,0 +1,17 @@
+﻿@using Newtonsoft.Json;
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<article id="body" data-module="@ViewBag.Module">
+    @RenderBody()
+</article>
+
+@section Scripts
+{
+    <script>
+        var initViewModel = @Html.Raw(JsonConvert.SerializeObject(Model, Formatting.Indented));
+        require(["single-page"]);
+    </script>
+}

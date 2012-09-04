@@ -21,7 +21,7 @@ Thumbs.db
 *.ilk
 *.log
 [Bb]in
-[Dd]ebug*/
+[Dd]ebug*/*
 *.lib
 *.sbr
 obj/
@@ -39,3 +39,5 @@ Bnh.Web/Ms.Cms
 
 #Allow NuGet.exe (do not ignore)
 !NuGet.exe
+#Allow debug scripts
+!debug*/*.js

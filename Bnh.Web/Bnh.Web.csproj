@@ -161,6 +161,7 @@
     <Compile Include="Controllers\CommunityController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\InitData.cs" />
+    <Compile Include="Controllers\SinglePageAttribute.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -168,7 +169,15 @@
     <Compile Include="Models\AccountProfile.cs" />
     <Compile Include="Models\Pager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Content Include="Scripts\single-page.js" />
+    <Content Include="Scripts\views\review-index.htm" />
+    <Compile Include="ViewModels\CommentViewModel.cs" />
+    <Compile Include="ViewModels\LinkViewModel.cs" />
+    <Compile Include="ViewModels\RatingQuestionViewModel.cs" />
+    <Compile Include="ViewModels\ReviewViewModel.cs" />
+    <Compile Include="ViewModels\ReviewsViewModel.cs" />
     <Compile Include="Web\CommunityExtensions.cs" />
+    <Compile Include="Web\DateTimeExtensions.cs" />
     <Compile Include="Web\Encoding.cs" />
     <Compile Include="Web\ExternalProperty.cs" />
     <Compile Include="Web\FilterPropertyAttributeExtensions.cs" />
@@ -243,7 +252,7 @@
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\community-edit.js" />
     <Content Include="Scripts\community-index.js" />
-    <Content Include="Scripts\review-index.js" />
+    <Content Include="Scripts\views\review-index.js" />
     <Content Include="Scripts\encoding.js" />
     <Content Include="Scripts\libs\jquery\jquery.balloon.js" />
     <Content Include="Scripts\libs\jquery\jquery.json-2.3.js" />
@@ -568,7 +577,6 @@
     <Content Include="Styles\Layout.css" />
     <Content Include="Styles\Login.css" />
     <EmbeddedResource Include="Styles\MapEditor.css" />
-    <Content Include="Styles\Review.css" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
@@ -596,6 +604,7 @@
     <Content Include="Views\Home\Copy of About.cshtml" />
     <Content Include="Views\Shared\Reviews.cshtml" />
     <Content Include="Views\Shared\AddReview.cshtml" />
+    <Content Include="Views\Shared\_SinglePageLayout.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

@@ -5,7 +5,7 @@ using System.Web.Mvc;
 using Bnh.Core;
 using Bnh.Core.Entities;
 using Bnh.Web.Models;
-
+using Bnh.Web.ViewModels;
 using Ms.Cms.Controllers;
 using Ms.Cms.Models;
 
@@ -167,7 +167,7 @@ namespace Bnh.Controllers
             return RedirectToAction("Index");
         }
 
-
+        [SinglePage(Module="views/review-index")]
         public ActionResult Reviews(string id, int page = 1, int size = int.MaxValue)
         {
             if (page < 1)
@@ -175,19 +175,19 @@ namespace Bnh.Controllers
 
             var community = GetCommunity(id);
 
-            // save current id so we can reuse it in review
-            ViewBag.Rating = this.rating.GetTargetRating(community.CommunityId);
-            ViewBag.CommunityUrlId = id;
-            ViewBag.CommunityName = community.Name;
-            ViewBag.Questions = this.config.Review.Questions;
-
             var total = this.repositories.Reviews.Where(r => r.TargetId == community.CommunityId).Count();
             var pager = new Pager<Review>(page - 1, size, total, this.repositories.Reviews.Where(r => r.TargetId == community.CommunityId).OrderBy(r => r.Created));
             
             if (page > pager.NumberOfPages)
                 return HttpNotFound();
 
-            return View(pager);
+            return View(new ReviewsViewModel(
+                this,
+                this.rating.GetTargetRating(community.CommunityId), 
+                id,
+                community.Name,
+                this.config.Review.Questions,
+                pager));
         }
 
         [HttpGet]
@@ -221,12 +221,16 @@ namespace Bnh.Controllers
         }
 
         [HttpPost]
-        public ActionResult PostReviewComment(string reviewId, Comment comment)
+        public ActionResult PostReviewComment(string reviewId, string message)
         {
-            comment.Created = DateTime.UtcNow;
-            comment.UserName = this.User.Identity.Name;
+            var comment = new Comment
+            {
+                Created = DateTime.UtcNow,
+                UserName = this.User.Identity.Name,
+                Message = message
+            };
             this.repositories.Reviews.AddReviewComment(reviewId, comment);
-            return Json(null);
+            return Json(new CommentViewModel(comment));
         }
 
 
