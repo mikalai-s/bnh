@@ -6,13 +6,13 @@
 
 <!-- ko if: pagerLinks -->
 <div class="pager" data-bind="foreach: pagerLinks">
-    <a data-bind="text: text, css: class, attr: { href: href }"></a>
+    <a data-bind="text: text, attr: { href: href, class: css }"></a>
 </div>
 <!-- /ko -->
 
 <!-- ko foreach: reviews -->
 <div class="review-container" data-bind="attr: { id: reviewId }">
-    <img class="avatar" src="" data-bind="attr: { src: userAvatarSrc }"/>
+    <img class="avatar" data-bind="attr: { src: userAvatarSrc }"/>
     <div class="review">
         <section class="user" data-bind="text: userName"></section>
         <section class="rating">
@@ -33,7 +33,7 @@
         </section>
         <section class="commentsSection" data-bind="slideVisible: commentsVisible, foreach: comments">
             <div class="comment-container" data-bind="attr: { class: ($index() +1) % 2 ? 'comment-container even' : 'comment-container' }">
-                <img class="avatar" src="" data-bind="attr: { src: userAvatarSrc }"/>
+                <img class="avatar" data-bind="attr: { src: userAvatarSrc }"/>
                 <div class="comment">
                     <div><span class="user" data-bind="text: userName"></span><span class="time" data-bind="text: ' on ' + created + ':'"></span></div>
                     <div class="message" data-bind="html: message"></div>
@@ -44,10 +44,10 @@
             </div>
         </section>
         <section>
-            <a href="#" class="addCommentLink" data-bind="visible: !addCommentVisible(), click: function() { addCommentVisible(!addCommentVisible()) }">Add comment</a>
+            <a href="#" class="addCommentLink" data-bind="visible: !addCommentVisible(), click: onAddComment">Add comment</a>
         </section>
         <section class="addCommentSection" data-bind="slideVisible: addCommentVisible">
-            <textarea data-bind="tinymce: newComment, tinymceOptions : { encoding: 'xml', theme: 'simple', forced_root_block: false }"></textarea>
+            <textarea data-bind="attr: { id: 'textarea_' + reviewId }, tinymce: newComment, tinymceOptions : { initTrigger: tinyMceInitTrigger, encoding: 'xml', theme: 'simple', forced_root_block: false }"></textarea>
             <p>
                 <input type="button" class="postCommentButton" value="Post" data-bind="click: onPostComment" />
                 <input type="button" class="cancelCommentButton" data-bind="click: onCancelComment" value="Cancel" />
@@ -61,7 +61,7 @@
 <!-- /ko -->
 
 <!-- ko if: pagerLinks -->
-<div class="pager" data-bind="foreach: pager.links">
-    <a data-bind="text: text, css: class, attr: { href: href }"></a>
+<div class="pager" data-bind="foreach: pagerLinks">
+    <a data-bind="text: text, attr: { href: href, class: css }"></a>
 </div>
 <!-- /ko -->

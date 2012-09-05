@@ -1,9 +1,12 @@
-﻿define(
-    ["order!jquery", "order!tinymce", "order!jqtinymce"],
+﻿/*global define, tinymce*/
+
+define(
+    ["jquery", "tinymce"],
     function () {
         "use strict";
 
-        $("textarea").tinymce({
+        tinymce.init({
+            mode: "textareas",
             pugins: "emotions,spellchecker,advhr,insertdatetime,preview",
             encoding : "xml",
             theme: "advanced",

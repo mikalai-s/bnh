@@ -9,7 +9,7 @@ namespace Bnh.Web.ViewModels
     {
         public string Text { get; set; }
 
-        public string Class { get; set; }
+        public string Css { get; set; }
 
         public string Href { get; set; }
     }

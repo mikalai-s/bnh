@@ -1,29 +1,37 @@
-﻿define(
-    ["jquery", "knockout", "order!tinymce", "order!jqtinymce"],
+﻿/*global window, define, require, tinymce */
+
+define(
+    ["jquery", "knockout"],
     function ($, ko) {
         "use strict";
 
-        function Page(record) {
-            var self = this;
+        function Link(record) {
+            this.text = record.Text;
+            this.href = record.Href;
+            this.css = record.Css;
+        }
 
-            this.title = record.Title;
-            this.rating = record.Rating;
-            this.targetUrlId = record.TargetUrlId;
-            this.targetName = record.TargetName;
-            this.pagerLinks = record.PagerLinks;
-            this.reviews = ko.observableArray($.map(record.Reviews, function (r) {
-                return new Review(r, self);
-            }));
-            this.addReviewLink = record.AddReviewLink;
-            this.admin = record.Admin;
-            this.deleteReviewUrl = record.DeleteReviewUrl;
-            this.deleteCommentUrl = record.DeleteCommentUrl;
+        function Comment(record, review) {
+            this.review = review;
+            this.commentId = record.CommentId;
+            this.userName = record.UserName;
+            this.message = record.Message;
+            this.userAvatarSrc = record.UserAvatarSrc;
+            this.created = record.Created;
+        }
+
+        function RatingQuestion(record, review) {
+            this.review = review;
+            this.question = record.Question;
+            this.answerHtml = record.AnswerHtml;
         }
 
         function Review(record, page) {
             var self = this;
 
             this.page = page;
+            // deferred object for lazy initialization of tinymce
+            this.tinyMceInitTrigger = $.Deferred();
             this.reviewId = record.ReviewId;
             this.userName = record.UserName;
             this.userAvatarSrc = record.UserAvatarSrc;
@@ -48,27 +56,46 @@
                 if (!comments.length) {
                     this.commentsLinkText("No comments left yet");
                 } else {
-                    this.commentsLinkText(this.commentsVisible() ? "Hide comments" : 'View ' + comments.length + ' comments');
+                    this.commentsLinkText(this.commentsVisible()
+                        ? "Hide comments"
+                        : 'View ' + comments.length + ' comments');
                 }
             }, this);
         }
 
-        function Comment(record, review) {
-            this.review = review;
-            this.commentId = record.CommentId;
-            this.userName = record.UserName;
-            this.message = record.Message;
-            this.userAvatarSrc = record.UserAvatarSrc;
-            this.created = record.Created;
+        function Page(record) {
+            var self = this;
+
+            this.title = record.Title;
+            this.rating = record.Rating;
+            this.targetUrlId = record.TargetUrlId;
+            this.targetName = record.TargetName;
+            this.pagerLinks = record.PagerLinks && $.map(record.PagerLinks, function (r) {
+                return new Link(r);
+            });
+            this.reviews = ko.observableArray($.map(record.Reviews, function (r) {
+                return new Review(r, self);
+            }));
+            this.addReviewLink = record.AddReviewLink;
+            this.admin = record.Admin;
+            this.deleteReviewUrl = record.DeleteReviewUrl;
+            this.deleteCommentUrl = record.DeleteCommentUrl;
         }
 
-        function RatingQuestion(record, review) {
-            this.review = review;
-            this.question = record.Question;
-            this.answerHtml = record.AnswerHtml;
-        }
 
         Review.prototype.onUsefulClick = function () {
+        };
+
+        Review.prototype.onAddComment = function () {
+            var self = this;
+
+            this.addCommentVisible(!this.addCommentVisible());
+            if (this.addCommentVisible()) {
+                // load tineymce and trigger init callbacks
+                require(["tinymce"], function () {
+                    self.tinyMceInitTrigger.resolve();
+                });
+            }
         };
 
         Review.prototype.onPostComment = function () {
@@ -77,17 +104,18 @@
                 url: this.postCommentActionUrl,
                 type: 'post',
                 contentType: 'application/json',
-                data: JSON.stringify({ 
+                data: JSON.stringify({
                     reviewId: this.reviewId,
                     message: this.newComment()
                 }),
-                success: function (data, textStatus, jqXHR) {
+                success: function (data) {
                     self.comments.push(new Comment(data, self));
                     self.newComment("");
                     self.addCommentVisible(false);
                 },
                 error: function (jqXhr, textStatus, errorThrown) {
-                    console.error("Unable to post a comment!", jqXhr, textStatus, errorThrown);
+                    window.console.error("Unable to post a comment!",
+                        jqXhr, textStatus, errorThrown);
                 }
             });
         };
@@ -98,17 +126,18 @@
 
         Review.prototype.onDeleteReview = function () {
             var self = this;
-            if (confirm("Are you sure you want to delete the review?")) {
+            if (window.confirm("Are you sure you want to delete the review?")) {
                 $.ajax({
                     url: this.page.deleteReviewUrl,
                     type: 'delete',
                     dataType: 'json',
                     data: { reviewId: this.reviewId },
-                    success: function (data, textStatus, jqXHR) {
+                    success: function () {
                         self.page.reviews.remove(self);
                     },
                     error: function (jqXhr, textStatus, errorThrown) {
-                        console.error("Unable to delete review!", jqXhr, textStatus, errorThrown);
+                        window.console.error("Unable to delete review!",
+                            jqXhr, textStatus, errorThrown);
                     }
                 });
             }
@@ -117,7 +146,7 @@
 
         Comment.prototype.onDeleteComment = function () {
             var self = this;
-            if (confirm("Are you sure you want to delete the comment?")) {
+            if (window.confirm("Are you sure you want to delete the comment?")) {
                 $.ajax({
                     url: this.review.page.deleteCommentUrl,
                     type: 'delete',
@@ -126,11 +155,12 @@
                         reviewId: this.review.reviewId,
                         commentId: this.commentId
                     },
-                    success: function (data, textStatus, jqXHR) {
+                    success: function () {
                         self.review.comments.remove(self);
                     },
                     error: function (jqXhr, textStatus, errorThrown) {
-                        console.error("Unable to delete review!", jqXhr, textStatus, errorThrown);
+                        window.console.error("Unable to delete review!",
+                            jqXhr, textStatus, errorThrown);
                     }
                 });
             }
@@ -141,47 +171,51 @@
         // TODO: move it out of here
         ko.bindingHandlers.slideVisible = {
             init: function (element, valueAccessor) {
-                var value = ko.utils.unwrapObservable(valueAccessor()); // Get the current value of the current property we're bound to
-                $(element).toggle(value); // jQuery will hide/show the element depending on whether "value" or true or false
+                // Get the current value of the current property we're bound to
+                var value = ko.utils.unwrapObservable(valueAccessor());
+                // jQuery will hide/show the element depending on whether "value" or true or false
+                $(element).toggle(value);
             },
             update: function (element, valueAccessor, allBindingsAccessor) {
                 // First get the latest data that we're bound to
-                var value = valueAccessor(), allBindings = allBindingsAccessor();
+                var value = valueAccessor(), allBindings = allBindingsAccessor(),
+                    valueUnwrapped,
+                    duration;
 
                 // Next, whether or not the supplied model property is observable, get its current value
-                var valueUnwrapped = ko.utils.unwrapObservable(value);
+                valueUnwrapped = ko.utils.unwrapObservable(value);
 
                 // Grab some more data from another binding property
-                var duration = allBindings.slideDuration || 200; // 400ms is default duration unless otherwise specified
+                duration = allBindings.slideDuration || 200; // 400ms is default duration unless otherwise specified
 
                 // Now manipulate the DOM element
-                if (valueUnwrapped == true)
+                if (valueUnwrapped === true) {
                     $(element).show(duration); // Make the element visible
-                else
+                } else {
                     $(element).hide(duration);   // Make the element invisible
+                }
             }
         };
 
         ko.bindingHandlers.tinymce = {
-            init: function (element, valueAccessor, allBindingsAccessor, context) {
-                var options = allBindingsAccessor().tinymceOptions || {};
-                var modelValue = valueAccessor();
-                var value = ko.utils.unwrapObservable(valueAccessor());
-                var el = $(element);
+            init: function (element, valueAccessor, allBindingsAccessor) {
+                var options = allBindingsAccessor().tinymceOptions || {},
+                    modelValue = valueAccessor(),
+                    value = ko.utils.unwrapObservable(valueAccessor()),
+                    el = $(element);
 
-
+                options.mode = "exact";
                 options.setup = function (ed) {
 
-                    ed.onChange.add(function (editor, l) { //handle edits made in the editor. Updates after an undo point is reached.
+                    ed.onChange.add(function (ed) { //handle edits made in the editor. Updates after an undo point is reached.
                         if (ko.isWriteableObservable(modelValue)) {
-                            modelValue(l.content);
+                            modelValue(ed.getContent());
                         }
                     });
 
-                    ed.onInit.add(function (ed, evt) { // Make sure observable is updated when leaving editor.
-                        var dom = ed.dom;
+                    ed.onInit.add(function (ed) { // Make sure observable is updated when leaving editor.
                         var doc = ed.getDoc();
-                        tinymce.dom.Event.add(doc, 'blur', function (e) {
+                        tinymce.dom.Event.add(doc, 'blur', function () {
                             if (ko.isWriteableObservable(modelValue)) {
                                 modelValue(ed.getContent({ format: 'raw' }));
                             }
@@ -192,32 +226,52 @@
 
                 //handle destroying an editor (based on what jQuery plugin does)
                 ko.utils.domNodeDisposal.addDisposeCallback(element, function () {
+                    /*jslint unparam: true */
                     $(element).parent().find("span.mceEditor,div.mceEditor").each(function (i, node) {
-                        var ed = tinyMCE.get(node.id.replace(/_parent$/, ""));
+                        var ed = tinymce.get(node.id.replace(/_parent$/, ""));
                         if (ed) {
                             ed.remove();
                         }
                     });
+                    /*jslint unparam: false */
                 });
 
-                //$(element).tinymce(options);
-           //     options = $.extend(options, { script_url: '/scripts/libs/tiny_mce/tiny_mce.js' });
-                setTimeout(function () { $(element).tinymce(options); }, 0);
                 el.val(value);
 
+                if (options.initTrigger) {
+                    // deferred initialization of tinymce
+                    options.initTrigger.always(function () {
+                        window.setTimeout(function () {
+                            options.elements = el.attr("id");
+                            tinymce.init(options);
+                        }, 0);
+                    });
+                } else {
+                    // otherwise - immidiate initialization
+                    window.setTimeout(function () {
+                        options.elements = el.attr("id");
+                        tinymce.init(options);
+                    }, 0);
+                }
             },
-            update: function (element, valueAccessor, allBindingsAccessor, context) {
-                var el = $(element);
-                var value = ko.utils.unwrapObservable(valueAccessor());
-                var id = el.attr('id');
+            update: function (element, valueAccessor) {
+                var el = $(element),
+                    value = ko.utils.unwrapObservable(valueAccessor()),
+                    id,
+                    tm,
+                    content;
+                id = el.attr('id');
 
                 //handle programmatic updates to the observable
                 // also makes sure it doesn't update it if it's the same.
                 // otherwise, it will reload the instance, causing the cursor to jump.
-                if (id !== undefined && id !== '') {
-                    var content = tinyMCE.getInstanceById(id).getContent({ format: 'raw' });
-                    if (content !== value) {
-                        el.val(value);
+                if (id !== undefined && id !== '' && typeof (tinymce) !== "undefined") {
+                    tm = tinymce.getInstanceById(id);
+                    if (tm) {
+                        content = tm.getContent({ format: 'raw' });
+                        if (content !== value) {
+                            tm.setContent(value, { format: 'raw' });
+                        }
                     }
                 }
             }

@@ -42,7 +42,10 @@ define(
                     if (typeof (pageViewModel) === "function" && initViewModel) {
                         $body.html(pageTemplate);
 
-                        ko.applyBindings(new pageViewModel(initViewModel, $body[0]));
+                        // TODO: vm as global just for debug
+                        vm = new pageViewModel(initViewModel);
+
+                        ko.applyBindings(vm, $body[0]);
 
                         hookSinglePageLinks($body);
                     }

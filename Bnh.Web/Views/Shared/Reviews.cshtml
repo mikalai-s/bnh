@@ -10,7 +10,7 @@
         <div class="pager">
         @foreach (var link in Model.PagerLinks)
         {
-            <a href="@link.Href" class="@link.Class">@link.Text</a>
+            <a href="@link.Href" class="@link.Css">@link.Text</a>
         }
         </div>
     }
@@ -25,7 +25,7 @@
 <h2>@Model.Title</h2>
 
 @*TODO: if user has already added a review, then don't show "add review" link*@
-<a href="@Model.AddReviewLink.Href" class="@Model.AddReviewLink.Class">@Model.AddReviewLink.Text</a>
+<a href="@Model.AddReviewLink.Href" class="@Model.AddReviewLink.Css">@Model.AddReviewLink.Text</a>
 
 <h1>@Model.Rating</h1>
 

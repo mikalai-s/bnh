@@ -50,8 +50,10 @@ namespace Bnh.Web.ViewModels
                     .Select(link => new LinkViewModel
                     {
                         Text = link.Text,
-                        Class = classResolver(link),
-                        Href = (link.Disabled || link.Active) ? string.Empty : urlHelper.Action(link.Action, new { id = targetUrlId, page = link.PageIndex + 1 })
+                        Css = classResolver(link),
+                        Href = (link.Disabled || link.Active) 
+                            ? string.Empty
+                            : urlHelper.Action(link.Action, new { id = targetUrlId, size = pager.PageSize, page = link.PageIndex + 1 })
                     });
             }
             this.Reviews = pager
