@@ -86,6 +86,8 @@ namespace Bnh.Web
             RegisterRoutes(RouteTable.Routes);
 
             ModelBinders.Binders.DefaultBinder = new BnhModelBinder();
+
+            Bnh.Web.Controllers.InitData.Init();
         }
 
         private void RegisterAutofacModules()
