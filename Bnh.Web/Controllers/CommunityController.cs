@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -8,6 +9,7 @@ using Bnh.Web.Models;
 using Bnh.Web.ViewModels;
 using Ms.Cms.Controllers;
 using Ms.Cms.Models;
+using System.Web.Mvc.Html;
 
 namespace Bnh.Controllers
 {
@@ -17,12 +19,20 @@ namespace Bnh.Controllers
         private Config config = null;
         private IEntityRepositories repositories = null;
         private IRatingCalculator rating = null;
+        private HtmlHelper htmlHelper = null;
 
         public CommunityController(Config config, IEntityRepositories repositories, IRatingCalculator rating)
         {
             this.config = config;
             this.repositories = repositories;
             this.rating = rating;
+        }
+
+        protected override void Initialize(System.Web.Routing.RequestContext requestContext)
+        {
+            base.Initialize(requestContext);
+
+            this.htmlHelper = new HtmlHelper(new ViewContext(this.ControllerContext, new WebFormView(this.ControllerContext, "fake"), new ViewDataDictionary(), new TempDataDictionary(), new StringWriter()), new ViewPage());
         }
 
         //
@@ -52,7 +62,7 @@ namespace Bnh.Controllers
                         {
                             deleteUrl = urlHelper.Action("Delete", "Community", new { id = c.UrlId }),
                             detailsUrl = urlHelper.Action("Details", "Community", new { id = c.UrlId }),
-                            infoPopup = "<a href='{0}'>{1}</a>".FormatWith(urlHelper.Action("Details", "Community", new { id = c.UrlId }), c.Name)
+                            infoPopup = GetCommunityInfoPopupHtml(urlHelper, c)
                         }
                     })
                 .OrderBy(g => zones.IndexOf(g.Key))
@@ -61,6 +71,13 @@ namespace Bnh.Controllers
                     g => g.OrderBy(c => c.community.Name));
 
             return Json(communities, JsonRequestBehavior.AllowGet);
+        }
+
+        private string GetCommunityInfoPopupHtml(UrlHelper urlHelper, Community community)
+        {
+            return this.htmlHelper.ActionLink(community.Name, "Details", new { id = community.UrlId }).ToString()
+                + "<br/>"
+                + this.htmlHelper.ActionLink("Reviews", "Reviews", new { id = community.UrlId }).ToString();
         }
 
         public ViewResult Details(string id)
