@@ -74,7 +74,7 @@ namespace Bnh.Infrastructure.Repositories
         /// </summary>
         private void EnsureData()
         {
-            // just a simple check whether there is need to initilize data
+            // just a simple check whether there is need to initialize data
             if (this.Cities.Where(s => s.Name == "Calgary").Any()) { return; }
 
             // insert calgary

@@ -23,6 +23,9 @@ namespace Bnh.Infrastructure
 
         public int? GetTargetRating(string id)
         {
+            var reviews = this.repos.Reviews as MongoRepository<Review>;
+            if (!reviews.Database.CollectionExists(reviews.CollectionName)) { return null;  }
+
             var map =
 @"function Map() {
     emit(
@@ -47,7 +50,7 @@ namespace Bnh.Infrastructure
     });
     return reduced;
 }";
-            var reviews = this.repos.Reviews as MongoRepository<Review>;
+            
             var results = reviews.Collection.MapReduce(Query.EQ("TargetId", BsonValue.Create(ObjectId.Parse(id as string))), map, reduce);
             var result = results.GetResultsAs<Result>().FirstOrDefault();
             if (result == null) return null; // no rating yet
