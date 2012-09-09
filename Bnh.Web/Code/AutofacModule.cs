@@ -21,15 +21,14 @@ namespace Bnh.Web.Code
         {
             base.Load(builder);
 
-            builder.Register<Configuration>(c => GetConfiguration()).InstancePerLifetimeScope();
-            builder.RegisterType<EntityRepositories>().AsImplementedInterfaces().As<IEntityRepositories>().InstancePerLifetimeScope();
+            builder.Register<Config>(c => GetConfiguration()).InstancePerLifetimeScope();
         }
 
-        private Configuration GetConfiguration()
+        private Config GetConfiguration()
         {
             // config file
             var configFile = HttpContext.Current.Server.MapPath("~/config.json");
-#if RELEASE
+#if !DEBUG
             // release specific config file
             var privateConfigFile = HttpContext.Current.Server.MapPath("~/config.release.json");
 #else
@@ -40,7 +39,7 @@ namespace Bnh.Web.Code
                 throw new Exception("Private config file doesn't exist!");
 
             // deserialize config file into object
-            var config = JsonConvert.DeserializeObject<Configuration>(File.ReadAllText(configFile));
+            var config = JsonConvert.DeserializeObject<Config>(File.ReadAllText(configFile));
 
             // override its values from private config file
             JsonConvert.PopulateObject(File.ReadAllText(privateConfigFile), config);

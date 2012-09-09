@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 using System.Web.Mvc.Html;
 using System.Web.Routing;
+using Microsoft.Web.Helpers;
 
 namespace Bnh.WebFramework
 {
@@ -12,6 +13,17 @@ namespace Bnh.WebFramework
     //     Represents support for HTML links in an application.
     public static class HtmlExtensions
     {
+        public static MvcHtmlString Avatar(this HtmlHelper html, string userName, int size = 64)
+        {
+            return new MvcHtmlString(Gravatar.GetUrl(userName, size) + "&d=identicon");
+        }
+
+        public static MvcHtmlString Rating(this HtmlHelper html, int rating)
+        {
+            var format = "<div class='scale l' style='width:{0}px'></div><div class='scale r' style='width:{1}px'></div>";
+            return new MvcHtmlString(string.Format(format, rating * 10, 100 - rating * 10));
+        }
+
         public static MvcHtmlString ActionMenuItem(this HtmlHelper htmlHelper, string linkText, string actionName, string controllerName)
         {
             var tag = new TagBuilder("li");

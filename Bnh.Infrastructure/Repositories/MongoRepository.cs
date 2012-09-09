@@ -15,25 +15,36 @@ namespace Bnh.Infrastructure.Repositories
 {
     public class MongoRepository<T> : IRepository<T> where T : class
     {
-        private readonly string _connectionString;
+        private readonly string connectionString;
+        private readonly Lazy<MongoDatabase> database;
+        private MongoCollection<T> collection;
 
         public MongoRepository(string connectionString)
         {
-            _connectionString = connectionString;
+            this.connectionString = connectionString;
+            this.database = new Lazy<MongoDatabase>(() => MongoDatabase.Create(connectionString));
         }
 
-        private MongoCollection<T> _collection;
+        public virtual string CollectionName
+        {
+            get { return typeof(T).Name; }
+        }
+
+        public MongoDatabase Database
+        {
+            get { return this.database.Value; }
+        }
 
         public MongoCollection<T> Collection
         {
-            get { return _collection ?? (_collection = MongoDatabase.Create(_connectionString).GetCollection<T>(typeof(T).Name)); }
+            get { return this.collection ?? (this.collection = this.Database.GetCollection<T>(this.CollectionName)); }
         }
 
         public virtual void Insert(T item)
         {
             try
             {
-                Collection.Insert(item);
+                this.Collection.Insert(item);
             }
             catch (MongoSafeModeException ex)
             {
@@ -44,17 +55,17 @@ namespace Bnh.Infrastructure.Repositories
 
         public virtual void InsertBatch(IEnumerable<T> items)
         {
-            Collection.InsertBatch(items);
+            this.Collection.InsertBatch(items);
         }
 
         public virtual void Save(T item)
         {
-            Collection.Save(item);
+            this.Collection.Save(item);
         }
 
         public virtual long Count()
         {
-            var count = Collection.Count();
+            var count = this.Collection.Count();
             return count;
         }
 
@@ -69,23 +80,23 @@ namespace Bnh.Infrastructure.Repositories
 
         public virtual T Find(string id)
         {
-            T result = Collection.FindOneById(CastId(id));
+            T result = this.Collection.FindOneById(CastId(id));
             return result;
         }
 
         public virtual IEnumerable<T> List()
         {
-            return Collection.FindAll();
+            return this.Collection.FindAll();
         }
 
         public virtual void Delete(string id)
         {
-            Collection.Remove(Query.EQ("_id", CastId(id)));
+            this.Collection.Remove(Query.EQ("_id", CastId(id)));
         }
 
         public virtual void DeleteAll()
         {
-            Collection.RemoveAll();
+            this.Collection.RemoveAll();
         }
 
         public IEnumerator<T> GetEnumerator()

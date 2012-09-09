@@ -4,11 +4,11 @@
     },
     city: "Calgary",
     review: {
-        questions: [
-            "Overall score",
-            "Roads",
-            "Schools",
-            "Parks",
-        ]
+        questions: {
+            "0": "Overall score",
+            "1": "Roads",
+            "2": "Schools",
+            "3": "Parks"
+        }
     }
 }

@@ -27,7 +27,7 @@ namespace MongoDB.Web.Providers
         private bool requiresQuestionAndAnswer;
         private bool requiresUniqueEmail;
 
-        public Configuration Config { get; set; }
+        public Config Config { get; set; }
 
         public override string ApplicationName { get; set; }
 
@@ -329,7 +329,7 @@ namespace MongoDB.Web.Providers
 
         public override void Initialize(string name, NameValueCollection settigns)
         {
-            var config = DependencyResolver.Current.GetService<Configuration>();
+            var config = DependencyResolver.Current.GetService<Config>();
             this.ApplicationName = settigns["applicationName"] ?? HostingEnvironment.ApplicationVirtualPath;
             this.enablePasswordReset = Boolean.Parse(settigns["enablePasswordReset"] ?? "true");
             this.enablePasswordRetrieval = Boolean.Parse(settigns["enablePasswordRetrieval"] ?? "false");
