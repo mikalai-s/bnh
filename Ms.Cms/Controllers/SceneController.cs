@@ -15,7 +15,6 @@ using Ms.Cms.ViewModels;
 
 namespace Ms.Cms.Controllers
 {
-    [DesignerAuthorizeAttribute]
     public class SceneController : Controller
     {
         private Config config;
@@ -37,6 +36,7 @@ namespace Ms.Cms.Controllers
 
         // POST: /Scene/Edit/5
 
+        [DesignerAuthorizeAttribute]
         [HttpPost]
         public ActionResult Save(Scene scene)
         {
@@ -111,6 +111,7 @@ namespace Ms.Cms.Controllers
             existingBricks.ForEach(db.BrickContents.Delete);
         }
 
+        [DesignerAuthorizeAttribute]
         [HttpPost]
         public ActionResult ApplyTemplate(string sceneId, string templateSceneId)
         {
@@ -123,6 +124,7 @@ namespace Ms.Cms.Controllers
             return PartialView(ContentUrl.Views.Scene.Partial.DesignScene, template.ToViewModel(this.db));
         }
 
+        [DesignerAuthorizeAttribute]
         [HttpPost]
         public ActionResult CanDeleteBrick(Brick brick)
         {
@@ -167,6 +169,7 @@ namespace Ms.Cms.Controllers
             return PartialView(ContentUrl.Views.Scene.View, scene.ToViewModel(this.db));
         }
 
+        [DesignerAuthorizeAttribute]
         public ActionResult Edit(string sceneId, object model)
         {
             var scene = this.db.Scenes.FirstOrDefault(s => s.SceneId == sceneId) ?? new Scene { SceneId = sceneId };

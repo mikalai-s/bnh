@@ -8,7 +8,6 @@ using Ms.Cms.Models;
 
 namespace Ms.Cms.Controllers
 {
-    [DesignerAuthorize]
     public class BrickContentController : Controller
     {
         private Config config;
@@ -23,6 +22,7 @@ namespace Ms.Cms.Controllers
 
         //
         // GET: /BrickContent/Edit/5
+        [DesignerAuthorize]
         public ActionResult Edit(string id)
         {
             var content = db.BrickContents.First(b => b.BrickContentId == id);
@@ -38,6 +38,7 @@ namespace Ms.Cms.Controllers
         }
 
         [HttpPost]
+        [DesignerAuthorize]
         public ActionResult Edit(BrickContent content)
         {
             var htmlContent = content as HtmlContent;
