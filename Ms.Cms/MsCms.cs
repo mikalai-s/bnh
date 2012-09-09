@@ -37,9 +37,6 @@ namespace Ms.Cms
             // do web extraction
             WebExtractor.Extract(app);
 
-            // initialize DB data
-            InitData.Init();
-
             // Register known types map to make possible to deserialize inherited types by descriminator
             foreach (var br in RegisteredBrickTypes)
             {

@@ -13,22 +13,19 @@ namespace Ms.Cms.Models
         /// </summary>
         /// <param name="brick"></param>
         /// <returns></returns>
-        public static BrickContent GetContent(this Brick brick)
+        public static BrickContent GetContent(this Brick brick, CmsEntities db)
         {
-            using(var db = new CmsEntities())
+            var list = db.BrickContents.ToList();
+            var content = db.BrickContents.FirstOrDefault(c => c.BrickContentId == brick.BrickContentId);
+            if (content != null)
             {
-                var list = db.BrickContents.ToList();
-                var content = db.BrickContents.FirstOrDefault(c => c.BrickContentId == brick.BrickContentId);
-                if (content != null)
+                var linkableContent = content as LinkableContent;
+                if (linkableContent != null)
                 {
-                    var linkableContent = content as LinkableContent;
-                    if (linkableContent != null)
-                    {
-                        content = db.BrickContents.FirstOrDefault(c => c.BrickContentId == linkableContent.LinkedContentId);
-                    }
+                    content = db.BrickContents.FirstOrDefault(c => c.BrickContentId == linkableContent.LinkedContentId);
                 }
-                return content ?? new EmptyContent();
             }
+            return content ?? new EmptyContent();
         }
     }
 }

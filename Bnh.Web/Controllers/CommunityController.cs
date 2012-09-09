@@ -19,13 +19,17 @@ namespace Bnh.Controllers
         private Config config = null;
         private IEntityRepositories repositories = null;
         private IRatingCalculator rating = null;
+        private CmsEntities cms = null;
         private HtmlHelper htmlHelper = null;
+        private SceneController sceneController = null;
 
-        public CommunityController(Config config, IEntityRepositories repositories, IRatingCalculator rating)
+        public CommunityController(Config config, IEntityRepositories repositories, IRatingCalculator rating, CmsEntities cms, SceneController sceneController)
         {
             this.config = config;
             this.repositories = repositories;
             this.rating = rating;
+            this.cms = cms;
+            this.sceneController = sceneController;
         }
 
         protected override void Initialize(System.Web.Routing.RequestContext requestContext)
@@ -82,7 +86,8 @@ namespace Bnh.Controllers
 
         public ViewResult Details(string id)
         {
-            return View(GetCommunity(id));
+            var community = GetCommunity(id);
+            return View(community);
         }
 
         //
@@ -91,17 +96,14 @@ namespace Bnh.Controllers
         public ActionResult Create()
         {
             ViewBag.CityZones = new SelectList(this.repositories.Cities.First(c => c.Name == config.City).Zones);
-            using(var cm = new CmsEntities())
-            {
-                var sceneTemplates = from s in cm.Scenes
-                                     where s.IsTemplate
-                                     select new { id = s.SceneId, title = s.Title };
-                ViewBag.Templates = new SelectList(new[] { new { id = string.Empty, title = string.Empty } }.Union(sceneTemplates), "id", "title");
+            var sceneTemplates = from s in cms.Scenes
+                                    where s.IsTemplate
+                                    select new { id = s.SceneId, title = s.Title };
+            ViewBag.Templates = new SelectList(new[] { new { id = string.Empty, title = string.Empty } }.Union(sceneTemplates), "id", "title");
 
-                var city = this.repositories.Cities.First(c => c.Name == config.City);
-                ViewBag.CityZones = new SelectList(city.Zones);
-                ViewBag.CityId = city.CityId;
-            }
+            var city = this.repositories.Cities.First(c => c.Name == config.City);
+            ViewBag.CityZones = new SelectList(city.Zones);
+            ViewBag.CityId = city.CityId;
             return View();
         } 
 
@@ -119,8 +121,7 @@ namespace Bnh.Controllers
                 var templateSceneId = this.Request.Form["templateSceneId"];
                 if (!string.IsNullOrEmpty(templateSceneId))
                 {
-                    var sceneController = new SceneController();
-                    sceneController.ApplyTemplate(community.CommunityId, templateSceneId);
+                    this.sceneController.ApplyTemplate(community.CommunityId, templateSceneId);
                 }
                 return RedirectToAction("Edit", new { id = community.UrlId });
             }
@@ -159,7 +160,8 @@ namespace Bnh.Controllers
         [HttpGet]
         public ActionResult EditScene(string id)
         {
-            return View(GetCommunity(id));
+            var community = GetCommunity(id);
+            return View(community);
         }
 
 

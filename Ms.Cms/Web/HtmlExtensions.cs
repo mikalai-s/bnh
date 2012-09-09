@@ -13,6 +13,7 @@ using Ms.Cms.Models;
 using System.IO;
 using System.Web.WebPages;
 using System.Web.Optimization;
+using Ms.Cms.ViewModels;
 
 namespace Ms.Cms
 {
@@ -38,57 +39,50 @@ namespace Ms.Cms
                    rc.HttpContext.Request.UrlReferrer + "";
         }
 
+        public static ViewContext GetTopViewContext(ViewContext viewContext)
+        {
+            if (viewContext.ParentActionViewContext != null)
+                return GetTopViewContext(viewContext.ParentActionViewContext);
+            return viewContext;
+        }
+
         public static List<string> GetStyleBundle(this WebViewPage page)
         {
-            var bundle = page.ViewContext.Controller.ViewBag._MsCms_StyleBundle as List<string>;
+            var viewBag = GetTopViewContext(page.ViewContext).Controller.ViewBag;
+            var bundle = viewBag._MsCms_StyleBundle as List<string>;
             if (bundle == null)
             {
-                page.ViewContext.Controller.ViewBag._MsCms_StyleBundle = bundle = new List<string>();
+                viewBag._MsCms_StyleBundle = bundle = new List<string>();
             }
             return bundle;
         }
 
         public static List<string> GetScriptBundle(this WebViewPage page)
         {
-            var scriptBundle = page.ViewContext.Controller.ViewBag._MsCms_ScriptBundle as List<string>;
+            var viewBag = GetTopViewContext(page.ViewContext).Controller.ViewBag;
+            var scriptBundle = viewBag._MsCms_ScriptBundle as List<string>;
             if (scriptBundle == null)
             {
-                page.ViewContext.Controller.ViewBag._MsCms_ScriptBundle = scriptBundle = new List<string>();
+                viewBag._MsCms_ScriptBundle = scriptBundle = new List<string>();
             }
             return scriptBundle;
         }
 
 
-        public static MvcHtmlString RenderScene(this WebViewPage page, string sceneId)
+        public static void RenderScene(this WebViewPage page, string sceneId, object model)
         {
-            using (var db = new CmsEntities())
-            {
-                var scene = db.Scenes.FirstOrDefault(s => s.SceneId == sceneId) ?? new Scene { SceneId = sceneId };
-                var view = page.Html.Partial(ContentUrl.Views.Scene.View, scene);
-                page.RenderStylesAndScripts();
-                return view;
-            }
+            page.Html.RenderAction("Details", "Scene", new { sceneId, model });
+            page.RenderStylesAndScripts();
         }
 
-        public static MvcHtmlString RenderDesignScene(this WebViewPage page, string sceneId)
+        public static void RenderDesignScene(this WebViewPage page, string sceneId, object model)
         {
-            using (var db = new CmsEntities())
-            {
-                // save crrent URL in sesion so we know it when redirecting back from brick editing
-                page.Session["_lastUsedSceneDesignUrl"] = page.Request.Url.AbsoluteUri;
+            // save crrent URL in sesion so we know it when redirecting back from brick editing
+            page.Session["_lastUsedSceneDesignUrl"] = page.Request.Url.AbsoluteUri;
 
-                var scene = db.Scenes.FirstOrDefault(s => s.SceneId == sceneId) ?? new Scene { SceneId = sceneId };
-                var templates = db.Scenes
-                    .Where(s => s.IsTemplate && s.SceneId != scene.SceneId)
-                    .Select(s => new { id = s.SceneId, title = s.Title })
-                    .ToList();
-                page.ViewBag.Templates = new SelectList(templates, "id", "title");
-                page.ViewBag.LinkableBricksSceneId = Constants.LinkableBricksSceneId;
+            page.Html.RenderAction("Edit", "Scene", new { sceneId, model });
 
-                var viewString = page.Html.Partial(ContentUrl.Views.Scene.Edit, scene);
-                page.RenderStylesAndScripts();
-                return viewString;
-            }
+            page.RenderStylesAndScripts();
         }
 
         public static void RenderStylesAndScripts(this WebViewPage page)

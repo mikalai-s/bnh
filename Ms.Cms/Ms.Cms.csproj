@@ -50,6 +50,14 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\WebGrease.1.1.0\lib\Antlr3.Runtime.dll</HintPath>
     </Reference>
+    <Reference Include="Autofac, Version=2.6.3.862, Culture=neutral, PublicKeyToken=17863af14b0044da, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Autofac.2.6.3.862\lib\NET40\Autofac.dll</HintPath>
+    </Reference>
+    <Reference Include="Autofac.Configuration, Version=2.6.3.862, Culture=neutral, PublicKeyToken=17863af14b0044da, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Autofac.2.6.3.862\lib\NET40\Autofac.Configuration.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <Private>True</Private>
@@ -135,13 +143,13 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AutofacModule.cs" />
     <Compile Include="Models\BrickContent.cs" />
     <Compile Include="Models\CmsContext.cs" />
     <Compile Include="Models\EmptyContent.cs" />
     <Compile Include="Models\Extensions\BrickContentExtensions.cs" />
+    <Compile Include="Models\Extensions\SceneExtensions.cs" />
     <Compile Include="Models\InitData\InitData.cs" />
-    <Compile Include="Models\IRepository.cs" />
-    <Compile Include="Models\MongoRepository.cs" />
     <Compile Include="Models\SceneRepository.cs" />
     <Compile Include="Models\Utilities\BrickRegistration.cs" />
     <Compile Include="MsCms.cs" />
@@ -165,6 +173,9 @@
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Styles\_wext.cs" />
+    <Compile Include="ViewModels\BrickViewModel.cs" />
+    <Compile Include="ViewModels\SceneViewModel.cs" />
+    <Compile Include="ViewModels\WallViewModel.cs" />
     <Compile Include="Views\BrickContent\Partial\_wext.cs" />
     <Compile Include="Views\BrickContent\_wext.cs" />
     <Compile Include="Views\Scene\Partial\_wext.cs" />
@@ -255,6 +266,19 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Views\Scene\EditLinkable.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Bnh.Core\Bnh.Core.csproj">
+      <Project>{5b8f0d49-8ebb-41a1-9deb-43d32011e657}</Project>
+      <Name>Bnh.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Bnh.Infrastructure\Bnh.Infrastructure.csproj">
+      <Project>{88443f7e-b6df-44f6-9ca0-8e7842a25597}</Project>
+      <Name>Bnh.Infrastructure</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\BrickContent\Partial\ViewBrickContent.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

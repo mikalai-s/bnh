@@ -7,33 +7,22 @@ using System.Configuration;
 
 using MongoDB.Driver.Linq;
 using MongoDB.Bson;
+using Bnh.Core;
+using Bnh.Infrastructure.Repositories;
 
 namespace Ms.Cms.Models
 {
-    public partial class CmsEntities : IDisposable
+    public partial class CmsEntities
     {
-        public CmsEntities(string nameOrConnectionString) 
-        {
-            var connectionString = nameOrConnectionString;
-            if (ConfigurationManager.ConnectionStrings[nameOrConnectionString] != null)
-            {
-                connectionString = ConfigurationManager.ConnectionStrings[nameOrConnectionString].ConnectionString;
-            }
-
-            this.Scenes = new SceneRepository(connectionString);
-            this.BrickContents = new MongoRepository<string, BrickContent>(connectionString);
-        }
-
-        public CmsEntities()
-            : this("Ms.Cms")
-        {
-        }
-
         public SceneRepository Scenes { get; private set; }
-        public MongoRepository<string, BrickContent> BrickContents { get; private set; }
+        public MongoRepository<BrickContent> BrickContents { get; private set; }
 
-        public void Dispose()
+        public CmsEntities(Config config) 
         {
+            this.Scenes = new SceneRepository(config.ConnectionStrings["cms"]);
+            this.BrickContents = new MongoRepository<BrickContent>(config.ConnectionStrings["cms"]);
+
+            InitData.Init(this);
         }
     }
 }
