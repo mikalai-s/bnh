@@ -1,9 +1,11 @@
-﻿define(
-    ["tinymce"],
+﻿/*global define, tinymce*/
+
+define(
+    ["jquery", "tinymce"],
     function () {
         "use strict";
 
-        tinyMCE.init({
+        tinymce.init({
             mode: "textareas",
             pugins: "emotions,spellchecker,advhr,insertdatetime,preview",
             encoding : "xml",

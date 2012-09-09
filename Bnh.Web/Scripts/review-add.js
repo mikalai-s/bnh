@@ -1,18 +1,16 @@
-﻿define(
-    ["tinymce"],
+﻿/*global define, tinymce*/
+
+define(
+    ["jquery", "tinymce"],
     function () {
         "use strict";
 
-        tinyMCE.init({
+        tinymce.init({
             mode: "textareas",
             encoding: "xml",
             theme: "simple",
 
-            forced_root_block: false,
-
-            // Skin options
-            skin: "o2k7",
-            skin_variant: "silver"
+            forced_root_block: false
         });
     }
 );

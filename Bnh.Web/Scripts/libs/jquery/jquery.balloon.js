@@ -270,8 +270,10 @@ define(
 	    };
 
 	    // handle global mousedown event to hide active ballon
-	    $(document).on("mousedown", function() {
-		    activeTarget && activeTarget.hideBalloon();
+	    $(document).on("mousedown", function () {
+	        window.setTimeout(function () {
+	            activeTarget && activeTarget.hideBalloon();
+	        }, 100);
 	    });
     }
 );

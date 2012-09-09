@@ -7,5 +7,8 @@
         , jqballoon: 'libs/jquery/jquery.balloon'
         , jqjson: 'libs/jquery/jquery.json-2.3'
         , tinymce: 'libs/tiny_mce/tiny_mce'
+        , order: 'libs/require/order.min'
+        , text: 'libs/require/text.min'
+        , debug: 'libs/debug/ba-debug.min'
     }
 });

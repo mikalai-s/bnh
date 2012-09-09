@@ -13,6 +13,7 @@ using MongoDB.Bson;
 using MongoDB.Driver;
 using Bnh.Controllers;
 using System.Web.Script.Serialization;
+using Bnh.Infrastructure.Repositories;
 
 namespace Bnh.Tests.Controllers
 {/*
@@ -22,29 +23,16 @@ namespace Bnh.Tests.Controllers
         [TestInitialize]
         public void Setup()
         {
-            BsonClassMap.LookupClassMap(typeof(HtmlContent));
+            //BsonClassMap.LookupClassMap(typeof(HtmlContent));
         }
 
         [TestMethod]
         public void Db()
         {
             var cs = "mongodb://127.0.0.1/bnh?safe=true";
-            using (var db = new BleEntities(cs))
-            {
-                var city = db.Cities.First(c => c.Name == "Calgary");
-                var zones = city.Zones.ToList();
-                var communities = city
-                    .GetCommunities(db)
-                    .GroupBy(
-                        c => c.Zone,
-                        c => c)
-                    .OrderBy(g => zones.IndexOf(g.Key))
-                    .ToDictionary(
-                        g => g.Key,
-                        g => g.OrderBy(c => c.Name));
-                    
-                var s = new JavaScriptSerializer().Serialize(communities);
-            }
+            var db = new ReviewRepository(cs);
+            db.AddReviewComment("503af0f8afce15288815273f", new Core.Entities.Comment { Message = "Asdf as" });
+            
         }
     }*/
 }

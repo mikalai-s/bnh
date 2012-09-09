@@ -1,52 +1,90 @@
 ﻿@using Bnh.Web.Models
 @using Bnh.Core.Entities
 
-@model Pager<Review>
+@model ReviewsViewModel
 
 @helper RenderPagerControls()
 {
-    Func<Pager<Review>.Link, string> classResolver = (link) =>
-        (link.Active && link.Numeric) ? "active page" :
-        link.Numeric ? "page" : "";
-    
-    if(Model.NumberOfPages > 1)
+    if (!Model.PagerLinks.IsEmpty())
     {
         <div class="pager">
-        @foreach(var link in Model.Links)
+        @foreach (var link in Model.PagerLinks)
         {
-            if(link.Disabled || link.Active)
-            {
-                @Html.Label(link.Text, new { @class = classResolver(link) })
-            }
-            else
-            {
-                @Html.ActionLink(link.Text, link.Action, new { id = ViewBag.CommunityUrlId, page = link.PageIndex + 1 }, new { @class = classResolver(link) })
-            }
+            <a href="@link.Href" class="@link.Css">@link.Text</a>
         }
         </div>
     }
 }
 
 @{
-    ViewBag.Title = ViewBag.CommunityName + " Reviews";
+    Layout = "~/Views/Shared/_SinglePageLayout.cshtml";
+    ViewBag.Title = Model.Title;
+    var i = 0;
 }
 
-<h2>@ViewBag.CommunityName Reviews</h2>
+<h2>@Model.Title</h2>
 
 @*TODO: if user has already added a review, then don't show "add review" link*@
-@Html.ActionLink("Add review", "AddReview", new { id = ViewBag.CommunityUrlId })
+<a href="@Model.AddReviewLink.Href" class="@Model.AddReviewLink.Css">@Model.AddReviewLink.Text</a>
+
+<h1>@Model.Rating</h1>
 
 @RenderPagerControls()
 
-@foreach (var review in Model.PageItems)
+@foreach (var review in Model.Reviews)
 {
-    <div id="@review.ReviewId">
-        <section>
-            @MvcHtmlString.Create(review.Message)
-        </section>
-        <section>
-            by @review.UserName at @review.Created.ToLocalTime()
-        </section>
+    <div id="@review.ReviewId" class="review-container">
+        <img class="avatar" src="@review.UserAvatarSrc"/>
+        <div class="review">
+            <section class="user">@review.UserName</section>
+            <section class="rating">
+                @foreach(var rating in review.Ratings)
+                {
+                    <div>
+                        <label class="question">@(rating.Question)</label>
+                        <div class="answer">@Html.Raw(rating.AnswerHtml)</div>
+                    </div>
+                }
+            </section>
+            <section class="message">@Html.Raw(review.Message)</section>
+            <section class="time">@review.Created</section>
+            <section>
+                Was this review useful to you? <a href="#" id="usefulLink">Yes</a>
+            </section>
+            <section>
+                <a href="#" class="commentsLink">@(review.Comments.Count() > 0 ? "View " + @review.Comments.Count() + " comments" : "No comments left yet")</a>
+            </section>
+            <section>
+                <a href="#" class="addCommentLink">Add comment</a>
+            </section>
+            @*@if(!review.Comments.IsEmpty())
+            {
+            <section class="commentsSection">
+                @foreach (var comment in review.Comments)
+                {
+                    <div class="comment-container">
+                        <img class="avatar" src="@Html.Avatar(comment.UserName, 32)"/>
+                        <div class="comment">
+                            <div>by <span class="user">@comment.UserName</span> at @comment.Created.ToLocalTime():</div>
+                            <div class="message">@comment.Message</div>
+                        </div>
+                    </div>
+                }
+            </section>
+            }
+            <a href="#" class="addCommentLink">Add comment</a>
+            <section class="addCommentSection">
+                <textarea data-index="@(i++)"></textarea>
+                <p>
+                    <input type="button" class="postCommentButton" value="Post" href="@Url.Action("PostReviewComment")" />
+                    <input type="button" class="cancelCommentButton" value="Cancel" />
+                </p>
+            </section>
+            @if (Context.User.IsInRole("content_manager"))
+            {
+            <sup class="alter delete">@Html.ActionLink("x", "DeleteReview", null, new { title = "Delete", reviewid = review.ReviewId })</sup>
+            }*@
+        </div>
     </div>
 }
 

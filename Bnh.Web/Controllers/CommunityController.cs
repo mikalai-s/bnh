@@ -1,26 +1,38 @@
 ﻿using System;
+using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using Bnh.Core;
 using Bnh.Core.Entities;
 using Bnh.Web.Models;
-
+using Bnh.Web.ViewModels;
 using Ms.Cms.Controllers;
 using Ms.Cms.Models;
+using System.Web.Mvc.Html;
 
 namespace Bnh.Controllers
 {
     [Authorize]
     public class CommunityController : Controller
     {
+        private Config config = null;
         private IEntityRepositories repositories = null;
-        private Configuration config = null;
+        private IRatingCalculator rating = null;
+        private HtmlHelper htmlHelper = null;
 
-        public CommunityController(IEntityRepositories repositories, Configuration config)
+        public CommunityController(Config config, IEntityRepositories repositories, IRatingCalculator rating)
         {
-            this.repositories = repositories;
             this.config = config;
+            this.repositories = repositories;
+            this.rating = rating;
+        }
+
+        protected override void Initialize(System.Web.Routing.RequestContext requestContext)
+        {
+            base.Initialize(requestContext);
+
+            this.htmlHelper = new HtmlHelper(new ViewContext(this.ControllerContext, new WebFormView(this.ControllerContext, "fake"), new ViewDataDictionary(), new TempDataDictionary(), new StringWriter()), new ViewPage());
         }
 
         //
@@ -50,7 +62,7 @@ namespace Bnh.Controllers
                         {
                             deleteUrl = urlHelper.Action("Delete", "Community", new { id = c.UrlId }),
                             detailsUrl = urlHelper.Action("Details", "Community", new { id = c.UrlId }),
-                            infoPopup = "<a href='{0}'>{1}</a>".FormatWith(urlHelper.Action("Details", "Community", new { id = c.UrlId }), c.Name)
+                            infoPopup = GetCommunityInfoPopupHtml(urlHelper, c)
                         }
                     })
                 .OrderBy(g => zones.IndexOf(g.Key))
@@ -59,6 +71,13 @@ namespace Bnh.Controllers
                     g => g.OrderBy(c => c.community.Name));
 
             return Json(communities, JsonRequestBehavior.AllowGet);
+        }
+
+        private string GetCommunityInfoPopupHtml(UrlHelper urlHelper, Community community)
+        {
+            return this.htmlHelper.ActionLink(community.Name, "Details", new { id = community.UrlId }).ToString()
+                + "<br/>"
+                + this.htmlHelper.ActionLink("Reviews", "Reviews", new { id = community.UrlId }).ToString();
         }
 
         public ViewResult Details(string id)
@@ -165,7 +184,7 @@ namespace Bnh.Controllers
             return RedirectToAction("Index");
         }
 
-
+        [SinglePage(Module="views/review-index")]
         public ActionResult Reviews(string id, int page = 1, int size = int.MaxValue)
         {
             if (page < 1)
@@ -173,17 +192,19 @@ namespace Bnh.Controllers
 
             var community = GetCommunity(id);
 
-            // save current id so we can reuse it in review
-            ViewBag.CommunityUrlId = id;
-            ViewBag.CommunityName = community.Name;
-
             var total = this.repositories.Reviews.Where(r => r.TargetId == community.CommunityId).Count();
-            var pager = new Pager<Review>(page - 1, size, total, this.repositories.Reviews.Where(r => r.TargetId == community.CommunityId));
+            var pager = new Pager<Review>(page - 1, size, total, this.repositories.Reviews.Where(r => r.TargetId == community.CommunityId).OrderBy(r => r.Created));
             
             if (page > pager.NumberOfPages)
                 return HttpNotFound();
 
-            return View(pager);
+            return View(new ReviewsViewModel(
+                this,
+                this.rating.GetTargetRating(community.CommunityId), 
+                id,
+                community.Name,
+                this.config.Review.Questions,
+                pager));
         }
 
         [HttpGet]
@@ -193,6 +214,7 @@ namespace Bnh.Controllers
 
             ViewBag.CommunityUrlId = id;
             ViewBag.CommunityName = community.Name;
+            ViewBag.Questions = this.config.Review.Questions;
 
             return View(new Review { TargetId = community.CommunityId });
         }
@@ -205,6 +227,35 @@ namespace Bnh.Controllers
             review.Created = DateTime.Now.ToUniversalTime();
             this.repositories.Reviews.Insert(review);
             return Redirect(Url.Action("Reviews", new { id = this.RouteData.Values["id"] }) + "#" + review.ReviewId);
+        }
+
+        [HttpDelete]
+        [Authorize(Roles = "content_manager")]
+        public ActionResult DeleteReview(string reviewId)
+        {
+            this.repositories.Reviews.Delete(reviewId);
+            return Json(null);
+        }
+
+        [HttpDelete]
+        [Authorize(Roles = "content_manager")]
+        public ActionResult DeleteReviewComment(string reviewId, string commentId)
+        {
+            this.repositories.Reviews.DeleteReviewComment(reviewId, commentId);
+            return Json(null);
+        }
+
+        [HttpPost]
+        public ActionResult PostReviewComment(string reviewId, string message)
+        {
+            var comment = new Comment
+            {
+                Created = DateTime.UtcNow,
+                UserName = this.User.Identity.Name,
+                Message = message
+            };
+            this.repositories.Reviews.AddReviewComment(reviewId, comment);
+            return Json(new CommentViewModel(comment));
         }
 
 

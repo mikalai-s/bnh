@@ -93,3 +93,40 @@ input[type="submit"], input[type="button"], button, .button, .button:link, .butt
     .pager label { color: gray; border-color: gray; text-decoration: none; cursor:default;}
 
 /* end pager */
+
+
+/* review */
+
+.review-container { margin: 20px 0; border: solid 1px lightgrey; padding: 10px; position: relative; }
+    .review-container .rating label { display: inline-block; width: 100px; }
+    .review-container .message { padding: 7px; }
+    .review-container .delete { position: absolute; right: 0; top: 0; }
+
+    
+    .review-container .review { margin-left: 75px; }
+        .review-container .review .answer { display: inline; }
+
+    .review-container .avatar { position: absolute; }
+    .review-container .user { font-weight: bold; }
+    .review-container .time { font-size: 85%; }
+
+    .review-container .scale { width: 50px; height: 12px; display: inline-block; }
+        .review-container .scale.l { background-color: #FC6; }
+        .review-container .scale.r { background-color: #F4F4CF; }
+
+    .review-container .comment-container { margin: 10px 0; }
+        .review-container .comment { margin-left: 35px; }
+
+    .review-container .mceLayout { width: 100% !important; }
+    .review-container .mceToolbar { text-align: left; }
+    .review-container .mceIframeContainer iframe { height: 75px !important; }
+
+    .review-container .comment-container { position: relative; height: 50px; background-color: #fefefe; }
+        .review-container .comment-container.even { background-color: #fafafa; }
+
+    
+
+.addCommentSection { display: none; }
+.hidden { display: none; }
+
+/* end review */

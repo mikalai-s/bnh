@@ -68,6 +68,14 @@
     <Content Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Bnh.Core\Bnh.Core.csproj">
+      <Project>{5b8f0d49-8ebb-41a1-9deb-43d32011e657}</Project>
+      <Name>Bnh.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Bnh.Infrastructure\Bnh.Infrastructure.csproj">
+      <Project>{88443f7e-b6df-44f6-9ca0-8e7842a25597}</Project>
+      <Name>Bnh.Infrastructure</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Bnh.Web\Bnh.Web.csproj">
       <Project>{0A805134-A1F2-4A14-84A7-16C701FB95AA}</Project>
       <Name>Bnh.Web</Name>

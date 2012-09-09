@@ -39,7 +39,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Configuration.cs" />
+    <Compile Include="Config.cs" />
+    <Compile Include="Entities\Comment.cs" />
+    <Compile Include="Extensions\LinkExtensions.cs" />
+    <Compile Include="IRatingCalculator.cs" />
     <Compile Include="Entities\Attributes\ExternalPropertyAttribute.cs" />
     <Compile Include="Entities\Attributes\FilterPropertyAttribute.cs" />
     <Compile Include="IEntityRepositories.cs" />
@@ -47,6 +50,7 @@
     <Compile Include="Entities\Community.cs" />
     <Compile Include="Entities\Review.cs" />
     <Compile Include="IRepository.cs" />
+    <Compile Include="IReviewRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

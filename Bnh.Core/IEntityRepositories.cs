@@ -13,7 +13,7 @@ namespace Bnh.Core
 
         IRepository<City> Cities { get; }
 
-        IRepository<Review> Reviews { get; }
+        IReviewRepository Reviews { get; }
 
         /// <summary>
         /// Returns true if given string is valid ID representation
