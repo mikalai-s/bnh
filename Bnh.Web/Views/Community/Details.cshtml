@@ -15,5 +15,5 @@
         }
     </h5>
     @Html.ActionLink("Reviews", "Reviews", new { id = Model.UrlId }, null)
-    @this.RenderScene(Model.CommunityId)
+    @{ this.RenderScene(Model.CommunityId, Model); }
 </div>

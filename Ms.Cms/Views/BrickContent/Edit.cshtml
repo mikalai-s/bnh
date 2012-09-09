@@ -1,7 +1,7 @@
 ﻿@model BrickContent
 
 @{
-    var view = ContentUrl.Views.BrickContent.Partial.GetEdit(Model.GetType());
+    var view = Model.GetBrickEditView(this.Server);
 }
 
 <h2>Edit</h2>

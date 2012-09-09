@@ -17,5 +17,7 @@
 }
 else
 {
-    @:No community entity available
+    <div class="map-canvas-wrapper"  zoom="@Model.Zoom" gpsLocation="@Model.GpsLocation">
+        <div id="mapCanvas" style="height: @(Model.Height)px"></div>
+    </div>
 }

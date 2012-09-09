@@ -1,4 +1,4 @@
-﻿@model Scene
+﻿@model SceneViewModel
 @{
     this.GetStyleBundle().Include(new[]
     {
@@ -7,14 +7,13 @@
 }
 
 <div id="scene">
-    @foreach (var wall in Model.Walls)
+    @foreach (var wall in Model.Walls ?? Enumerable.Empty<WallViewModel>())
     {
-        <div class='wall-wrapper' style='width:@wall.Width.ToString("F")%'>
-        @foreach (var brick in wall.Bricks)
+        <div class='wall-wrapper' style='width:@wall.WidthString'>
+        @foreach (var brick in wall.Bricks ?? Enumerable.Empty<BrickViewModel>())
         {
-            var content = brick.GetContent();
-            <div id="@content.GetHtmlId()" class='brick-wrapper' style='width:@brick.Width.ToString("F")%'>
-                @Html.Partial(ContentUrl.Views.BrickContent.View, content)
+            <div id="@brick.Content.GetHtmlId()" class='brick-wrapper' style='width:@brick.WidthString'>
+                @Html.Partial(ContentUrl.Views.BrickContent.View, brick)
             </div>
         }
         </div>

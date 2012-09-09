@@ -1,6 +1,7 @@
 ﻿{
     connectionStrings: {
-        mongo: "mongodb://127.0.0.1/bnh?safe=true"
+        mongo: "mongodb://127.0.0.1/bnh?safe=true",
+        cms: "mongodb://127.0.0.1/bnh?safe=true"
     },
     city: "Calgary",
     review: {

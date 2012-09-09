@@ -2,14 +2,7 @@
 
 @{
     ViewBag.Title = "Edit";
-    IEnumerable<SelectListItem> bricks = null;
-    using(var cm = new CmsEntities())
-    {
-        bricks = cm.Scenes
-            .First(s => s.SceneId == Constants.LinkableBricksSceneId)
-            .Walls.SelectMany(w => w.Bricks)
-            .Select(b => new SelectListItem { Value = b.BrickContentId, Text = b.Title });
-    }
+    var bricks = ViewBag.BricksToLink as IEnumerable<SelectListItem>;
 }
 
 <div class="editor-label">Brick To Link</div>

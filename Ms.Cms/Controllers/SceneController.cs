@@ -9,6 +9,8 @@ using System.Configuration;
 
 using MongoDB.Driver.Linq;
 using MongoDB.Bson;
+using Bnh.Core;
+using Ms.Cms.ViewModels;
 
 
 namespace Ms.Cms.Controllers
@@ -16,7 +18,14 @@ namespace Ms.Cms.Controllers
     [DesignerAuthorizeAttribute]
     public class SceneController : Controller
     {
-        private CmsEntities db = new CmsEntities();
+        private Config config;
+        private CmsEntities db;
+
+        public SceneController(Config config, CmsEntities db)
+        {
+            this.config = config;
+            this.db = db;
+        }
 
 
         [HttpGet]
@@ -35,13 +44,15 @@ namespace Ms.Cms.Controllers
             {
                 SaveScene(scene);
             }
-            
+
+            this.ViewBag.TocBricks = Enumerable.Empty<BrickContent>();
+
             if (Request.IsAjaxRequest())
             {
                 // render real (saved) scene
-                return PartialView(ContentUrl.Views.Scene.Partial.DesignScene, db.Scenes.First(s => s.SceneId == scene.SceneId));
+                return PartialView(ContentUrl.Views.Scene.Partial.DesignScene, db.Scenes.First(s => s.SceneId == scene.SceneId).ToViewModel(db));
             }
-            
+
             return View(ContentUrl.Views.Scene.Partial.DesignScene);
         }
 
@@ -109,7 +120,7 @@ namespace Ms.Cms.Controllers
             template.IsTemplate = false;
             SaveScene(template, true);
 
-            return PartialView(ContentUrl.Views.Scene.Partial.DesignScene, template);
+            return PartialView(ContentUrl.Views.Scene.Partial.DesignScene, template.ToViewModel(this.db));
         }
 
         [HttpPost]
@@ -134,10 +145,40 @@ namespace Ms.Cms.Controllers
             }
         }
 
-        protected override void Dispose(bool disposing)
+        public ActionResult Details(string sceneId, object model)
         {
-            db.Dispose();
-            base.Dispose(disposing);
+            var scene = this.db.Scenes.FirstOrDefault(s => s.SceneId == sceneId) ?? new Scene { SceneId = sceneId };
+
+            var bricks = scene.Walls
+                .SelectMany(w => w.Bricks)
+                .Select(b => b.BrickContentId)
+                .ToList();
+            var tocContents = this.db.BrickContents
+                .Where(c => bricks.Contains(c.BrickContentId))
+                .Where(c => !string.IsNullOrEmpty(c.ContentTitle))
+                .ToList()
+                .Where(c => c.GetType() != typeof(TocContent))
+                .OrderBy(c => bricks.IndexOf(c.BrickContentId))
+                .ToList();
+
+            this.ViewBag.GlobalModel = model;
+            this.ViewBag.TocBricks = tocContents;
+
+            return PartialView(ContentUrl.Views.Scene.View, scene.ToViewModel(this.db));
+        }
+
+        public ActionResult Edit(string sceneId, object model)
+        {
+            var scene = this.db.Scenes.FirstOrDefault(s => s.SceneId == sceneId) ?? new Scene { SceneId = sceneId };
+            var templates = db.Scenes
+                .Where(s => s.IsTemplate && s.SceneId != scene.SceneId)
+                .Select(s => new { id = s.SceneId, title = s.Title })
+                .ToList();
+            this.ViewBag.GlobalModel = model;
+            this.ViewBag.Templates = new SelectList(templates, "id", "title");
+            this.ViewBag.LinkableBricksSceneId = Constants.LinkableBricksSceneId;
+
+            return PartialView(ContentUrl.Views.Scene.Edit, scene.ToViewModel(this.db));
         }
     }
 }
