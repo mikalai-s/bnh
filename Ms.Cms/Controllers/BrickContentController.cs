@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-
+using Bnh.Core;
 using Ms.Cms.Models;
 
 namespace Ms.Cms.Controllers
@@ -11,13 +11,29 @@ namespace Ms.Cms.Controllers
     [DesignerAuthorize]
     public class BrickContentController : Controller
     {
-        private CmsEntities db = new CmsEntities();
-       
+        private Config config;
+        private CmsEntities db;
+
+        public BrickContentController(Config config, CmsEntities db)
+        {
+            this.config = config;
+            this.db = db;
+        }
+
+
         //
         // GET: /BrickContent/Edit/5
         public ActionResult Edit(string id)
         {
             var content = db.BrickContents.First(b => b.BrickContentId == id);
+            var linkableContent = content as LinkableContent;
+            if (linkableContent != null)
+            {
+                this.ViewBag.BricksToLink = this.db.Scenes
+                    .First(s => s.SceneId == Constants.LinkableBricksSceneId)
+                    .Walls.SelectMany(w => w.Bricks)
+                    .Select(b => new SelectListItem { Value = b.BrickContentId, Text = b.Title });
+            }
             return View(ContentUrl.Views.BrickContent.Edit, content);
         }
 
@@ -40,12 +56,6 @@ namespace Ms.Cms.Controllers
         {
             var content = db.BrickContents.First(b => b.BrickContentId == id);
             return View(ContentUrl.Views.BrickContent.View, content);
-        }
-
-        protected override void Dispose(bool disposing)
-        {
-            db.Dispose();
-            base.Dispose(disposing);
         }
     }
 }

@@ -16,6 +16,7 @@ using Newtonsoft.Json;
 
 using Ms.Cms.Models;
 using Ms.Cms.Models.Attributes;
+using Ms.Cms.ViewModels;
 
 namespace Ms.Cms
 {
@@ -67,54 +68,6 @@ namespace Ms.Cms
             return brick.GetType().Name;
         }
 
-        public static string ToJson(this Brick brick)
-        {
-            var properties = new Dictionary<string, object>();
-
-            foreach (var prop in brick.GetType().GetProperties(BindingFlags.Instance | BindingFlags.Public))
-            {
-                var p = prop.GetCustomAttributes(typeof(NonJsExposableAttribute), false);
-                if (p.Length > 0)
-                    continue;
-
-                p = prop.GetCustomAttributes(typeof(BrowsableAttribute), false);
-                if (p.Length > 0 && !(p[0] as BrowsableAttribute).Browsable)
-                    continue;
-
-                var value = prop.GetValue(brick, null);
-                if(value != null)
-                    properties.Add(prop.Name.ToLower(), value);
-            }
-            return JsonConvert.SerializeObject(properties);
-        }
-
-        public static string ToJson(this Wall wall)
-        {
-            var properties = new Dictionary<string, object>();
-
-            foreach (var prop in wall.GetType().GetProperties(BindingFlags.Instance | BindingFlags.Public))
-            {
-                var p = prop.GetCustomAttributes(typeof(NonJsExposableAttribute), false);
-                if (p.Length > 0)
-                    continue;
-
-                p = prop.GetCustomAttributes(typeof(XmlIgnoreAttribute), false);
-                if (p.Length > 0)
-                    continue;
-
-                p = prop.GetCustomAttributes(typeof(SoapIgnoreAttribute), false);
-                if (p.Length > 0)
-                    continue;
-
-                p = prop.GetCustomAttributes(typeof(BrowsableAttribute), false);
-                if (p.Length > 0 && !(p[0] as BrowsableAttribute).Browsable)
-                    continue;
-
-                var value = prop.GetValue(wall, null);
-                if (value != null)
-                    properties.Add(prop.Name.ToLower(), value);
-            }
-            return JsonConvert.SerializeObject(properties);
-        }
+        
     }
 }

@@ -6,5 +6,5 @@
     <h4>
         <a href="@Html.ViewContext.RequestContext.GetBackUrl()">Cancel</a>
     </h4>
-    @this.RenderDesignScene(Constants.LinkableBricksSceneId)
+    @{ this.RenderDesignScene(Constants.LinkableBricksSceneId, null); }
 </div>

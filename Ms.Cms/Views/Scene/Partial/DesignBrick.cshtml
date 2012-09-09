@@ -1,6 +1,6 @@
-﻿@model Brick
+﻿@model BrickViewModel
 
-<div class='brick-wrapper' style='width:@Model.Width.ToString("F")%' entity-data='@Model.ToJson()'>
+<div class='brick-wrapper' style='width:@Model.WidthString' entity-data='@Model.ToJson()'>
     <div class='brick'>
         <div class='header'>
             <span class='title'>@Model.Title</span>
@@ -8,7 +8,7 @@
             @Html.ActionLink("edit", "Edit", "BrickContent", new { id = Model.BrickContentId }, new { @class = "edit" })
         </div>
         <div class='content'>
-            @Html.Partial(ContentUrl.Views.BrickContent.View, Model.GetContent())
+            @Html.Partial(ContentUrl.Views.BrickContent.View, Model)
         </div>
     </div>
 </div>
