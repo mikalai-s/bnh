@@ -7,7 +7,7 @@ using System.Web.Mvc.Html;
 using System.Web.Routing;
 using Microsoft.Web.Helpers;
 
-namespace Bnh.WebFramework
+namespace Bnh
 {
     // Summary:
     //     Represents support for HTML links in an application.

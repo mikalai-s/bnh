@@ -7,7 +7,7 @@ using System.Web;
 using System.Web.Mvc;
 using Bnh.Core.Entities.Attributes;
 
-namespace Bnh.WebFramework
+namespace Bnh
 {
     public static class FilterPropertyAttributeExtensions
     {

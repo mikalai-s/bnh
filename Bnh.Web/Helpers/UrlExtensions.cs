@@ -1,13 +1,7 @@
-﻿// -----------------------------------------------------------------------
-// <copyright file="UrlExtensions.cs" company="">
-// TODO: Update copyright text.
-// </copyright>
-// -----------------------------------------------------------------------
-
-using System.Web.Mvc;
+﻿using System.Web.Mvc;
 using System.Web.Routing;
 
-namespace Bnh.WebFramework
+namespace Bnh
 {
     using System;
     using System.Collections.Generic;

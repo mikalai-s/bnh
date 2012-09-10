@@ -7,7 +7,7 @@ using System.Reflection;
 using System.Web.Mvc;
 using Bnh.Core.Entities.Attributes;
 
-namespace Bnh.WebFramework
+namespace Bnh
 {
     public class ExternalProperty
     {

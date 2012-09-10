@@ -10,7 +10,7 @@ using System.Linq.Expressions;
 using Newtonsoft.Json;
 using System.Web.Routing;
 
-namespace Bnh.WebFramework
+namespace Bnh
 {
     public static class CommunityExtensions
     {

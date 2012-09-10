@@ -11,7 +11,6 @@ using System.Web.Routing;
 using Autofac;
 using Autofac.Integration.Mvc;
 using Bnh.Web.Code;
-using Bnh.WebFramework;
 using Bnh.Cms;
 using Bnh.Cms.Models.Utilities;
 

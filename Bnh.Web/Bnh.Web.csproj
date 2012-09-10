@@ -225,14 +225,13 @@
     <Compile Include="ViewModels\RatingQuestionViewModel.cs" />
     <Compile Include="ViewModels\ReviewViewModel.cs" />
     <Compile Include="ViewModels\ReviewsViewModel.cs" />
-    <Compile Include="Web\CommunityExtensions.cs" />
-    <Compile Include="Web\DateTimeExtensions.cs" />
-    <Compile Include="Web\Encoding.cs" />
-    <Compile Include="Web\ExternalProperty.cs" />
-    <Compile Include="Web\FilterPropertyAttributeExtensions.cs" />
-    <Compile Include="Web\HtmlExtensions.cs" />
-    <Compile Include="Web\NavigationMenu.cs" />
-    <Compile Include="Web\UrlExtensions.cs" />
+    <Compile Include="Helpers\CommunityExtensions.cs" />
+    <Compile Include="Helpers\DateTimeExtensions.cs" />
+    <Compile Include="Helpers\Encoding.cs" />
+    <Compile Include="Helpers\ExternalProperty.cs" />
+    <Compile Include="Helpers\FilterPropertyAttributeExtensions.cs" />
+    <Compile Include="Helpers\HtmlExtensions.cs" />
+    <Compile Include="Helpers\UrlExtensions.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="App_Readme\RequestReduce.readme.txt" />
