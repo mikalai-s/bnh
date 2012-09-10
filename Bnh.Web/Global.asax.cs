@@ -11,9 +11,8 @@ using System.Web.Routing;
 using Autofac;
 using Autofac.Integration.Mvc;
 using Bnh.Web.Code;
-using Bnh.WebFramework;
-using Ms.Cms;
-using Ms.Cms.Models.Utilities;
+using Bnh.Cms;
+using Bnh.Cms.Models.Utilities;
 
 namespace Bnh.Web
 {
@@ -76,7 +75,6 @@ namespace Bnh.Web
 
             MsCms.Setup(this, 
                 layout: "~/Views/Shared/_Layout.cshtml", 
-                designer: "content_manager",
                 tinymce: "~/Scripts/tiny_mce/tiny_mce_src.js",
                 googleMaps: "//maps.googleapis.com/maps/api/js?sensor=false");
 
@@ -95,9 +93,9 @@ namespace Bnh.Web
             var builder = new ContainerBuilder();
             builder.RegisterModule<Bnh.Infrastructure.AutofacModule>();
             builder.RegisterModule<Bnh.Web.Code.AutofacModule>();
-            builder.RegisterModule<Ms.Cms.AutofacModule>();
+            builder.RegisterModule<Bnh.Cms.AutofacModule>();
             builder.RegisterControllers(typeof(MvcApplication).Assembly);
-            builder.RegisterControllers(typeof(Ms.Cms.AutofacModule).Assembly);
+            builder.RegisterControllers(typeof(Bnh.Cms.AutofacModule).Assembly);
             var container = builder.Build();
             DependencyResolver.SetResolver(new AutofacDependencyResolver(container));
         }

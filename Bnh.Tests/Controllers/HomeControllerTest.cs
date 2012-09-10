@@ -6,7 +6,7 @@ using System.Web.Mvc;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Bnh.Web;
 using Bnh.Web.Controllers;
-using Ms.Cms.Models;
+using Bnh.Cms.Models;
 using MongoDB.Bson.Serialization;
 using MongoDB.Driver.Builders;
 using MongoDB.Bson;

@@ -7,8 +7,8 @@ using Bnh.Core;
 using Bnh.Core.Entities;
 using Bnh.Web.Models;
 using Bnh.Web.ViewModels;
-using Ms.Cms.Controllers;
-using Ms.Cms.Models;
+using Bnh.Cms.Controllers;
+using Bnh.Cms.Models;
 using System.Web.Mvc.Html;
 
 namespace Bnh.Controllers
@@ -92,7 +92,7 @@ namespace Bnh.Controllers
 
         //
         // GET: /Community/Create
-        [Authorize(Roles = "content_manager")]
+        [DesignerAuthorize]
         public ActionResult Create()
         {
             ViewBag.CityZones = new SelectList(this.repositories.Cities.First(c => c.Name == config.City).Zones);
@@ -111,7 +111,7 @@ namespace Bnh.Controllers
         // POST: /Community/Create
 
         [HttpPost]
-        [Authorize(Roles = "content_manager")]
+        [DesignerAuthorize]
         public ActionResult Create(Community community)
         {
             if (ModelState.IsValid)
@@ -132,7 +132,7 @@ namespace Bnh.Controllers
         
         //
         // GET: /Community/Edit/5
-        [Authorize(Roles = "content_manager")]
+        [DesignerAuthorize]
         public ActionResult Edit(string id)
         {
             var community = GetCommunity(id);
@@ -144,7 +144,7 @@ namespace Bnh.Controllers
         // POST: /Community/Edit/5
 
         [HttpPost]
-        [Authorize(Roles = "content_manager")]
+        [DesignerAuthorize]
         public ActionResult Edit(Community community)
         {
             if (ModelState.IsValid)
@@ -168,7 +168,7 @@ namespace Bnh.Controllers
 
         //
         // GET: /Community/Delete/5
-        [Authorize(Roles = "content_manager")]
+        [DesignerAuthorize]
         public ActionResult Delete(string id)
         {
             var community = this.repositories.Communities.Single(c => c.CommunityId == id);
@@ -179,7 +179,7 @@ namespace Bnh.Controllers
         // POST: /Community/Delete/5
 
         [HttpPost, ActionName("Delete")]
-        [Authorize(Roles = "content_manager")]
+        [DesignerAuthorize]
         public ActionResult DeleteConfirmed(string id)
         {            
             this.repositories.Communities.Delete(id);
@@ -232,7 +232,7 @@ namespace Bnh.Controllers
         }
 
         [HttpDelete]
-        [Authorize(Roles = "content_manager")]
+        [DesignerAuthorize]
         public ActionResult DeleteReview(string reviewId)
         {
             this.repositories.Reviews.Delete(reviewId);
@@ -240,7 +240,7 @@ namespace Bnh.Controllers
         }
 
         [HttpDelete]
-        [Authorize(Roles = "content_manager")]
+        [DesignerAuthorize]
         public ActionResult DeleteReviewComment(string reviewId, string commentId)
         {
             this.repositories.Reviews.DeleteReviewComment(reviewId, commentId);
