@@ -4,28 +4,29 @@ using System.ComponentModel.DataAnnotations;
 using System.Globalization;
 using System.Web.Mvc;
 using System.Web.Security;
+using Microsoft.Web.Helpers;
 
 namespace Bnh.Web.Models
 {
     public class AccountModel
     {
         [Required]
-        [Display(Name = "First name")]
-        public string FirstName { get; set; }
+        [Display(Name = "Display name")]
+        public string DisplayName { get; set; }
 
-        [Required]
-        [Display(Name = "Last name")]
-        public string LastName { get; set; }
+        [Display(Name = "Real name")]
+        public string RealName { get; set; }
 
-        [Required]
-        //[DataType(DataType.Date)]
-        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:MM/dd/yyyy}")]
-        [Display(Name = "Birthday")]
-        public DateTime Birthday { get; set; }
+        [Display(Name = "Location")]
+        public string Location { get; set; }
 
-        [Required]
-        [Display(Name = "Gender")]
-        public AccountProfile.GenderEnum Gender { get; set; }
+        [Display(Name = "Gravatar e-mail")]
+        public string GravatarEmail{ get; set; }
+
+        public string AvatarImageUrl
+        {
+            get { return Gravatar.GetUrl(this.GravatarEmail, 128) + "&d=identicon"; }
+        }
     }
 
     public class ChangePasswordModel
@@ -63,16 +64,8 @@ namespace Bnh.Web.Models
         public bool RememberMe { get; set; }
     }
 
-    public class RegisterModel
+    public class RegisterModel : AccountModel
     {
-        [Required]
-        [Display(Name = "First name")]
-        public string FirstName { get; set; }
-
-        [Required]
-        [Display(Name = "Last name")]
-        public string LastName { get; set; }
-
         [Required]
         [DataType(DataType.EmailAddress)]
         [Display(Name = "E-mail address")]
@@ -88,14 +81,5 @@ namespace Bnh.Web.Models
         [Display(Name = "Confirm password")]
         [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
         public string ConfirmPassword { get; set; }
-
-        [Required]
-        [DataType(DataType.Date)]
-        [Display(Name = "Birthday")]
-        public DateTime Birthday { get; set; }
-
-        [Required]
-        [Display(Name = "Gender")]
-        public AccountProfile.GenderEnum Gender { get; set; }
     }
 }

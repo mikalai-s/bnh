@@ -18,26 +18,20 @@ namespace Bnh.Web.Controllers
 
             var user = Membership.CreateUser("user@bnh.com", "1", "user@bnh.com");
             var userProfile = AccountProfile.GetProfile(user.UserName);
-            userProfile.Gender = AccountProfile.GenderEnum.Male;
-            userProfile.FirstName = "Bob";
-            userProfile.LastName = "Man";
-            userProfile.Birthday = new DateTime(1969, 1, 6);
+            userProfile.DisplayName = "Bob Man";
+            userProfile.RealName = "Bob Man";
+            userProfile.GravatarEmail = "user@bnh.com";
             userProfile.Save();
-
 
             var admin = Membership.CreateUser("admin@bnh.com", "1", "admin@bnh.com");
             var adminProfile = AccountProfile.GetProfile(admin.UserName);
-            adminProfile.Gender = AccountProfile.GenderEnum.Female;
-            adminProfile.FirstName = "Alice";
-            adminProfile.LastName = "Baker";
-            adminProfile.Birthday = new DateTime(1979, 5, 16);
+            adminProfile.DisplayName = "Alice Baker";
+            adminProfile.RealName = "Alice Baker";
+            adminProfile.GravatarEmail = "admin@bnh.com";
             adminProfile.Save();
-
 
             Roles.CreateRole("content_manager");
             Roles.AddUserToRole(admin.UserName, "content_manager");
-
-
         }
     }
 }

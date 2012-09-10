@@ -85,6 +85,16 @@ input[type="submit"], input[type="button"], button, .button, .button:link, .butt
 /* end misc */
 
 
+/* update profile */
+
+.update-profile .avatar { display: inline-block; text-align: center; }
+    .update-profile .avatar a { display: block; }
+.update-profile table { display: inline-block; margin-left: 10px;  }
+.update-profile .buttons { margin-top: 20px; }
+
+/* end update profile */
+
+
 /* pager */
 
 .pager a, .pager label { margin: 0 1px; }

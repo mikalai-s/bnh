@@ -697,9 +697,7 @@
     <Content Include="Views\Shared\AddReview.cshtml" />
     <Content Include="Views\Shared\_SinglePageLayout.cshtml" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Code\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Content Include="packages.config" />
   </ItemGroup>
