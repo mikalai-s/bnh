@@ -5,10 +5,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bnh.Web", "Bnh.Web\Bnh.Web.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bnh.Tests", "Bnh.Tests\Bnh.Tests.csproj", "{60CF4AAD-7085-4A3E-B2D8-D1E77EF8E5BE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bnh.Core", "Bnh.Core\Bnh.Core.csproj", "{5B8F0D49-8EBB-41A1-9DEB-43D32011E657}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bnh.Infrastructure", "Bnh.Infrastructure\Bnh.Infrastructure.csproj", "{88443F7E-B6DF-44F6-9CA0-8E7842A25597}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{890B9FB4-6AD1-498F-A622-839ACC8DEEF1}"
 	ProjectSection(SolutionItems) = preProject
 		.nuget\packages.config = .nuget\packages.config
@@ -28,14 +24,6 @@ Global
 		{60CF4AAD-7085-4A3E-B2D8-D1E77EF8E5BE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{60CF4AAD-7085-4A3E-B2D8-D1E77EF8E5BE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{60CF4AAD-7085-4A3E-B2D8-D1E77EF8E5BE}.Release|Any CPU.Build.0 = Release|Any CPU
-		{5B8F0D49-8EBB-41A1-9DEB-43D32011E657}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{5B8F0D49-8EBB-41A1-9DEB-43D32011E657}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{5B8F0D49-8EBB-41A1-9DEB-43D32011E657}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{5B8F0D49-8EBB-41A1-9DEB-43D32011E657}.Release|Any CPU.Build.0 = Release|Any CPU
-		{88443F7E-B6DF-44F6-9CA0-8E7842A25597}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{88443F7E-B6DF-44F6-9CA0-8E7842A25597}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{88443F7E-B6DF-44F6-9CA0-8E7842A25597}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{88443F7E-B6DF-44F6-9CA0-8E7842A25597}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
