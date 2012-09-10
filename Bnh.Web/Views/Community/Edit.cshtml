@@ -1,5 +1,5 @@
 ﻿@using Bnh.WebFramework
-@using Ms.Cms
+@using Bnh.Cms
 
 @model Community
 
@@ -35,7 +35,8 @@
         <fieldset>
             <legend>Properties</legend>
 
-            @Html.HiddenFor(model => model.CommunityId)            @Html.HiddenFor(model => model.CityId)
+            @Html.HiddenFor(model => model.CommunityId)
+            @Html.HiddenFor(model => model.CityId)
             @Html.HiddenFor(model => model.GpsLocation)
             @Html.HiddenFor(model => model.GpsBounds)
 
