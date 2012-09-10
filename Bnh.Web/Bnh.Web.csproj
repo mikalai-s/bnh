@@ -44,6 +44,9 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <PublishDatabases>false</PublishDatabases>
+    <PrecompileBeforePublish>false</PrecompileBeforePublish>
+    <PackageAsSingleFile>true</PackageAsSingleFile>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Antlr3.Runtime, Version=3.3.1.7705, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
@@ -187,7 +190,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="App_Readme\RequestReduce.readme.txt" />
-    <None Include="config.json" />
+    <Content Include="config.json" />
     <Content Include="Content\themes\base\images\ui-bg_flat_0_aaaaaa_40x100.png" />
     <Content Include="Content\themes\base\images\ui-bg_flat_75_ffffff_40x100.png" />
     <Content Include="Content\themes\base\images\ui-bg_glass_55_fbf9ee_1x400.png" />
@@ -315,7 +318,7 @@
       <DependentUpon>text.js</DependentUpon>
     </Content>
     <Content Include="Scripts\libs\require\use.js" />
-    <EmbeddedResource Include="Scripts\map.js" />
+    <Content Include="Scripts\map.js" />
     <Content Include="Scripts\libs\modernizr\modernizr-2.5.3.js" />
     <Content Include="Scripts\libs\tiny_mce\langs\en.js" />
     <Content Include="Scripts\libs\tiny_mce\license.txt" />
@@ -570,7 +573,7 @@
     <Content Include="Scripts\libs\tiny_mce\utils\form_utils.js" />
     <Content Include="Scripts\libs\tiny_mce\utils\mctabs.js" />
     <Content Include="Scripts\libs\tiny_mce\utils\validate.js" />
-    <EmbeddedResource Include="Scripts\map-editor.js" />
+    <Content Include="Scripts\map-editor.js" />
     <Content Include="Scripts\review-add.js" />
     <Content Include="Styles\CommunityEdit.css" />
     <Content Include="Styles\CommunityIndex.css" />
@@ -601,7 +604,6 @@
     <Content Include="Views\Web.config">
       <SubType>Designer</SubType>
     </Content>
-    <Content Include="Views\Home\Copy of About.cshtml" />
     <Content Include="Views\Shared\Reviews.cshtml" />
     <Content Include="Views\Shared\AddReview.cshtml" />
     <Content Include="Views\Shared\_SinglePageLayout.cshtml" />
