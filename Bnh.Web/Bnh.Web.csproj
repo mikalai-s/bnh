@@ -195,11 +195,23 @@
     <Compile Include="Areas\Cms\ViewModels\WallViewModel.cs" />
     <Compile Include="Areas\Cms\Helpers\BnhModelBinder.cs" />
     <Compile Include="Areas\Cms\Helpers\ContentUrls.cs" />
+    <Compile Include="Core\Config.cs" />
+    <Compile Include="Core\Entities\Attributes\ExternalPropertyAttribute.cs" />
+    <Compile Include="Core\Entities\Attributes\FilterPropertyAttribute.cs" />
+    <Compile Include="Core\Entities\City.cs" />
+    <Compile Include="Core\Entities\Comment.cs" />
+    <Compile Include="Core\Entities\Community.cs" />
+    <Compile Include="Core\Entities\Review.cs" />
+    <Compile Include="Core\Extensions\LinkExtensions.cs" />
+    <Compile Include="Core\IEntityRepositories.cs" />
+    <Compile Include="Core\IRatingCalculator.cs" />
+    <Compile Include="Core\IRepository.cs" />
+    <Compile Include="Core\IReviewRepository.cs" />
     <Compile Include="Helpers\DesignerAuthorizeAttribute.cs" />
     <Compile Include="Areas\Cms\Helpers\HtmlExtensions.cs" />
     <Compile Include="Helpers\RazorEngine.cs" />
     <Compile Include="Helpers\StirngExtensions.cs" />
-    <Compile Include="Code\AutofacModule.cs" />
+    <Compile Include="AutofacModule.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\CommunityController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -208,6 +220,19 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Infrastructure\AspNetProviders\ConnectionUtils.cs" />
+    <Compile Include="Infrastructure\AspNetProviders\MongoDbMembershipProvider.cs" />
+    <Compile Include="Infrastructure\AspNetProviders\MongoDbOutputCacheProvider.cs" />
+    <Compile Include="Infrastructure\AspNetProviders\MongoDbProfileProvider.cs" />
+    <Compile Include="Infrastructure\AspNetProviders\MongoDbRoleProvider.cs" />
+    <Compile Include="Infrastructure\AspNetProviders\MongoDbSessionStateProvider.cs" />
+    <Compile Include="Infrastructure\AspNetProviders\MongoDbWebEventProvider.cs" />
+    <Compile Include="Infrastructure\AspNetProviders\WebEvent.cs" />
+    <Compile Include="Infrastructure\AutofacModule.cs" />
+    <Compile Include="Infrastructure\RatingCalculator.cs" />
+    <Compile Include="Infrastructure\Repositories\EntityRepositories.cs" />
+    <Compile Include="Infrastructure\Repositories\MongoRepository.cs" />
+    <Compile Include="Infrastructure\Repositories\ReviewRepository.cs" />
     <Compile Include="Models\AccountModels.cs" />
     <Compile Include="Models\AccountProfile.cs" />
     <Compile Include="Models\Pager.cs" />
@@ -672,19 +697,11 @@
     <Content Include="Views\Shared\AddReview.cshtml" />
     <Content Include="Views\Shared\_SinglePageLayout.cshtml" />
   </ItemGroup>
-  <ItemGroup />
   <ItemGroup>
-    <Content Include="packages.config" />
+    <Folder Include="Code\" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Bnh.Core\Bnh.Core.csproj">
-      <Project>{5b8f0d49-8ebb-41a1-9deb-43d32011e657}</Project>
-      <Name>Bnh.Core</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Bnh.Infrastructure\Bnh.Infrastructure.csproj">
-      <Project>{88443f7e-b6df-44f6-9ca0-8e7842a25597}</Project>
-      <Name>Bnh.Infrastructure</Name>
-    </ProjectReference>
+    <Content Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Properties\PublishProfiles\bnh.pubxml" />

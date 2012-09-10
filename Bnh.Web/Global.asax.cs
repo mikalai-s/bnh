@@ -10,7 +10,6 @@ using System.Web.Optimization;
 using System.Web.Routing;
 using Autofac;
 using Autofac.Integration.Mvc;
-using Bnh.Web.Code;
 using Bnh.Cms;
 using Bnh.Cms.Models.Utilities;
 
@@ -92,7 +91,7 @@ namespace Bnh.Web
         {
             var builder = new ContainerBuilder();
             builder.RegisterModule<Bnh.Infrastructure.AutofacModule>();
-            builder.RegisterModule<Bnh.Web.Code.AutofacModule>();
+            builder.RegisterModule<Bnh.Web.AutofacModule>();
             builder.RegisterModule<Bnh.Cms.AutofacModule>();
             builder.RegisterControllers(typeof(MvcApplication).Assembly);
             builder.RegisterControllers(typeof(Bnh.Cms.AutofacModule).Assembly);

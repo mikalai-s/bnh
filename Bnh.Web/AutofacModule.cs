@@ -13,7 +13,7 @@ using Bnh.Infrastructure.Repositories;
 using System.Web.Security;
 using MongoDB.Web.Providers;
 
-namespace Bnh.Web.Code
+namespace Bnh.Web
 {
     public class AutofacModule : Module
     {
