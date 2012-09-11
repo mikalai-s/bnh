@@ -9,6 +9,8 @@ namespace Bnh.Core
 {
     public interface IEntityRepositories
     {
+        IRepository<Profile> Profiles { get; }
+
         IRepository<Community> Communities { get; }
 
         IRepository<City> Cities { get; }

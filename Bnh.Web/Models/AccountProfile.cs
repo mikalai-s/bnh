@@ -1,14 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Web;
 using System.Web.Profile;
-using System.Web.Security;
-using System.ComponentModel.DataAnnotations;
+
+using Bnh.Core.Entities;
 
 namespace Bnh.Web.Models
 {
-    public class AccountProfile : ProfileBase
+    public class AccountProfile : ProfileBase, IAccountProfile
     {
         public string DisplayName
         {

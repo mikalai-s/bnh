@@ -232,10 +232,13 @@
     <Compile Include="Infrastructure\RatingCalculator.cs" />
     <Compile Include="Infrastructure\Repositories\EntityRepositories.cs" />
     <Compile Include="Infrastructure\Repositories\MongoRepository.cs" />
+    <Compile Include="Infrastructure\Repositories\ProfileRepository.cs" />
     <Compile Include="Infrastructure\Repositories\ReviewRepository.cs" />
     <Compile Include="Models\AccountModels.cs" />
     <Compile Include="Models\AccountProfile.cs" />
+    <Compile Include="Core\Entities\IAccountProfile.cs" />
     <Compile Include="Models\Pager.cs" />
+    <Compile Include="Core\Entities\Profile.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Areas\Cms\Scripts\brick-content-map.js" />
     <EmbeddedResource Include="Areas\Cms\Scripts\design-scene.js" />

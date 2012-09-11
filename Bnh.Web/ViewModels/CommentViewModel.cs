@@ -24,7 +24,6 @@ namespace Bnh.Web.ViewModels
         {
             this.CommentId = comment.CommentId;
             this.UserName = comment.UserName;
-            this.UserAvatarSrc = Gravatar.GetUrl(comment.UserName, 32) + "&d=identicon";
             this.Created = comment.Created.ToLocalTime().ToUserFriendlyString();
             this.Message = comment.Message;
         }

@@ -22,5 +22,25 @@ namespace Bnh.Core.Entities
         public Comment[] Comments { get; set; }
 
         public int HelpfulCount { get; set; }
+
+
+        /// <summary>
+        /// Returns participants usernames
+        /// </summary>
+        /// <returns></returns>
+        public IEnumerable<string> GetParticipants()
+        {
+            yield return this.UserName;
+
+            if (this.Comments == null || this.Comments.Length == 0)
+            {
+                yield break;
+            }
+
+            foreach (var comment in this.Comments)
+            {
+                yield return comment.UserName;
+            }
+        }
     }
 }

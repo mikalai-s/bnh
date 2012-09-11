@@ -25,10 +25,11 @@ namespace Bnh.Web.ViewModels
         public string DeleteReviewUrl { get; set; }
         public string DeleteCommentUrl { get; set; }
 
-        public ReviewsViewModel(Controller controller, int? rating, string targetUrlId, string targetName, IDictionary<string, string> ratingQuestions, Pager<Review> pager)
+        public ReviewsViewModel(Controller controller, int? rating, string targetUrlId, string targetName, IDictionary<string, string> ratingQuestions, Pager<Review> pager, List<Profile> profiles)
         {
             var urlHelper = new UrlHelper(controller.HttpContext.Request.RequestContext);
             var htmlHelper = new HtmlHelper(new ViewContext(controller.ControllerContext, new WebFormView(controller.ControllerContext, "fake"), new ViewDataDictionary(), new TempDataDictionary(), new StringWriter()), new ViewPage());
+            var userProfiles = profiles.ToDictionary(p => p.UserName, p => p);
 
             this.Rating = "Rating: " + (rating.HasValue ? rating.ToString() : "Not rated");
             this.TargetUrlId = targetUrlId;
@@ -61,12 +62,16 @@ namespace Bnh.Web.ViewModels
                 .Select(r => new ReviewViewModel
                 {
                     ReviewId = r.ReviewId,
-                    UserName = r.UserName,
-                    UserAvatarSrc = Gravatar.GetUrl(r.UserName, 64) + "&d=identicon",
+                    UserName = userProfiles[r.UserName].DisplayName,
+                    UserAvatarSrc = Gravatar.GetUrl(userProfiles[r.UserName].GravatarEmail, 64) + "&d=identicon",
                     Created = r.Created.ToLocalTime().ToUserFriendlyString(),
                     Message = r.Message,
                     Comments = (r.Comments ?? Enumerable.Empty<Comment>())
-                        .Select(c => new CommentViewModel(c)),
+                        .Select(c => new CommentViewModel(c)
+                        {
+                            UserName = userProfiles[c.UserName].DisplayName,
+                            UserAvatarSrc = Gravatar.GetUrl(userProfiles[c.UserName].GravatarEmail, 32) + "&d=identicon"
+                        }),
                     Ratings = ratingQuestions
                         .Where(q => r.Ratings[q.Key].HasValue)
                         .Select(q => new RatingQuestionViewModel
