@@ -11,6 +11,8 @@ namespace Bnh.Infrastructure.Repositories
 {
     public partial class EntityRepositories : IEntityRepositories, IDisposable
     {
+        public IRepository<Profile> Profiles { get; private set; }
+
         public IRepository<Community> Communities { get; private set; }
 
         public IRepository<City> Cities { get; private set; }
@@ -19,9 +21,12 @@ namespace Bnh.Infrastructure.Repositories
 
         public EntityRepositories(Config config)
         {
-            this.Communities = new MongoRepository<Community>(config.ConnectionStrings["mongo"]);
-            this.Cities = new MongoRepository<City>(config.ConnectionStrings["mongo"]);
-            this.Reviews = new ReviewRepository(config.ConnectionStrings["mongo"]);
+            var connectionString = config.ConnectionStrings["mongo"];
+
+            this.Profiles = new ProfileRepository(connectionString);
+            this.Communities = new MongoRepository<Community>(connectionString);
+            this.Cities = new MongoRepository<City>(connectionString);
+            this.Reviews = new ReviewRepository(connectionString);
 
             EnsureData();
         }
@@ -31,6 +36,12 @@ namespace Bnh.Infrastructure.Repositories
         /// </summary>
         static EntityRepositories()
         {
+            BsonClassMap.RegisterClassMap<Profile>(cm =>
+            {
+                cm.AutoMap();
+                cm.MapIdProperty(p => p.ProfileId).SetRepresentation(BsonType.ObjectId);
+                cm.MapProperty(p => p.UserName).SetElementName("Username");
+            });
             BsonClassMap.RegisterClassMap<City>(cm =>
             {
                 cm.AutoMap();

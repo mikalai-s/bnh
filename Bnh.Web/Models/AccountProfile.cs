@@ -1,47 +1,51 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Web;
 using System.Web.Profile;
-using System.Web.Security;
-using System.ComponentModel.DataAnnotations;
+
+using Bnh.Core.Entities;
 
 namespace Bnh.Web.Models
 {
-    public class AccountProfile : ProfileBase
-    {       
-        public string FirstName
+    public class AccountProfile : ProfileBase, IAccountProfile
+    {
+        public string DisplayName
         {
-            get { return (string)base.GetPropertyValue("FirstName"); }
-            set { base.SetPropertyValue("FirstName", value); }
+            get { return (string)base.GetPropertyValue("DisplayName"); }
+            set { base.SetPropertyValue("DisplayName", value); }
         }
 
-        public string LastName
+        public string RealName
         {
-            get { return ((string)(base["LastName"])); }
-            set { base["LastName"] = value; }
+            get { return (string)base["RealName"]; }
+            set { base["RealName"] = value; }
         }
 
-        public DateTime Birthday
+        public string Location
         {
-            get
+            get { return (string)base["Location"]; }
+            set { base["Location"] = value; }
+        }
+
+        public string GravatarEmail
+        {
+            get { return (string)base["GravatarEmail"]; }
+            set { base["GravatarEmail"] = value; }
+        }
+
+        public string GetSafeName()
+        {
+            if (!string.IsNullOrEmpty(this.RealName)) return this.RealName;
+            if (!string.IsNullOrEmpty(this.DisplayName)) return this.DisplayName;
+            return this.UserName;
+        }
+
+        public override void Save()
+        {
+            if (this.GravatarEmail.IsEmpty())
             {
-                return (DateTime)base["Birthday"];
+                this.GravatarEmail = this.UserName;
             }
-            set { base["Birthday"] = value; }
-        }
-
-     
-        public GenderEnum Gender
-        {
-            get { return ((GenderEnum)(base["Gender"])); }
-            set { base["Gender"] = value; }
-        }
-
-        public string GetFullName()
-        {
-            var fullName = (this.FirstName + " " + this.LastName);
-            return string.IsNullOrWhiteSpace(fullName) ? this.UserName : fullName;
+            base.Save();
         }
 
         /// <summary>
@@ -59,12 +63,6 @@ namespace Bnh.Web.Models
         public static AccountProfile GetProfile(string userName)
         {
             return (AccountProfile) Create(userName);
-        }
-
-        public enum GenderEnum
-        {
-            Male = 0,
-            Female = 1
         }
     }
 }

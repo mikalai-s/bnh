@@ -146,10 +146,10 @@ namespace Bnh.Web.Controllers
                 {
                     // save profile properties
                     var userProfile = AccountProfile.GetProfile(model.Email);
-                    userProfile.FirstName = model.FirstName;
-                    userProfile.LastName = model.LastName;
-                    userProfile.Birthday = model.Birthday;
-                    userProfile.Gender = model.Gender;
+                    userProfile.DisplayName = model.DisplayName;
+                    userProfile.RealName = model.RealName;
+                    userProfile.Location = model.Location;
+                    userProfile.GravatarEmail = model.GravatarEmail.IsEmpty() ? model.Email : model.GravatarEmail;
                     userProfile.Save();
 
                     FormsAuthentication.SetAuthCookie(model.Email, createPersistentCookie: false);
@@ -214,10 +214,10 @@ namespace Bnh.Web.Controllers
             var profile = this.Profile as AccountProfile;
             var model = new AccountModel
             {
-                FirstName = profile.FirstName,
-                LastName = profile.LastName,
-                Birthday = profile.Birthday.ToLocalTime(),
-                Gender = profile.Gender
+                DisplayName = profile.DisplayName,
+                RealName = profile.RealName,
+                Location = profile.Location,
+                GravatarEmail = profile.GravatarEmail
             };
             return View(model);
         }
@@ -228,10 +228,10 @@ namespace Bnh.Web.Controllers
             if (ModelState.IsValid)
             {
                 var profile = this.Profile as AccountProfile;
-                profile.FirstName = model.FirstName;
-                profile.LastName = model.LastName;
-                profile.Birthday = model.Birthday;
-                profile.Gender = model.Gender;
+                profile.DisplayName = model.DisplayName;
+                profile.RealName = model.RealName;
+                profile.Location = model.Location;
+                profile.GravatarEmail = model.GravatarEmail;
                 
                 profile.Save();
             }
@@ -282,7 +282,6 @@ namespace Bnh.Web.Controllers
                     case AuthenticationStatus.Authenticated:
                         // get user email and store it in session
                         var ex = response.GetExtension<ClaimsResponse>();
-
 
                         // redirect from login page
                         FormsAuthentication.RedirectFromLoginPage(ex.Email, true);

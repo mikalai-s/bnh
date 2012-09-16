@@ -196,9 +196,13 @@ namespace Bnh.Controllers
 
             var total = this.repositories.Reviews.Where(r => r.TargetId == community.CommunityId).Count();
             var pager = new Pager<Review>(page - 1, size, total, this.repositories.Reviews.Where(r => r.TargetId == community.CommunityId).OrderBy(r => r.Created));
-            
+
             if (page > pager.NumberOfPages)
                 return HttpNotFound();
+
+            // prepare information about all participants
+            var participants = pager.PageItems.SelectMany(r => r.GetParticipants()).Distinct().ToList();
+            var profiles = this.repositories.Profiles.Where(p => participants.Contains(p.UserName)).ToList();
 
             return View(new ReviewsViewModel(
                 this,
@@ -206,7 +210,8 @@ namespace Bnh.Controllers
                 id,
                 community.Name,
                 this.config.Review.Questions,
-                pager));
+                pager,
+                profiles));
         }
 
         [HttpGet]
