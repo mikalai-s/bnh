@@ -19,6 +19,11 @@ namespace System
             return string.Format(format, args);
         }
 
+        public static bool IsEmpty(this string source)
+        {
+            return string.IsNullOrEmpty(source);
+        }
+
         /// <summary>
         /// Convert string to HTML id by leaving only a-z, A-Z, -, _ characters.
         /// http://www.w3schools.com/tags/att_standard_id.asp

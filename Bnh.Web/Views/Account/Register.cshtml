@@ -26,14 +26,24 @@
         <legend>Registration Form</legend>
         <table>
             <tr>
-                <td>@Html.LabelFor(m => m.FirstName)</td>
-                <td>@Html.TextBoxFor(m => m.FirstName)</td>
-                <td>@Html.ValidationMessageFor(m => m.FirstName)</td>
+                <td>@Html.LabelFor(m => m.DisplayName)</td>
+                <td>@Html.TextBoxFor(m => m.DisplayName)</td>
+                <td>@Html.ValidationMessageFor(m => m.DisplayName)</td>
             </tr>
             <tr>
-                <td>@Html.LabelFor(m => m.LastName)</td>
-                <td>@Html.TextBoxFor(m => m.LastName)</td>
-                <td>@Html.ValidationMessageFor(m => m.LastName)</td>
+                <td>@Html.LabelFor(m => m.RealName)</td>
+                <td>@Html.TextBoxFor(m => m.RealName)</td>
+                <td>@Html.ValidationMessageFor(m => m.RealName)</td>
+            </tr>
+            <tr>
+                <td>@Html.LabelFor(m => m.Location)</td>
+                <td>@Html.TextBoxFor(m => m.Location)</td>
+                <td>@Html.ValidationMessageFor(m => m.Location)</td>
+            </tr>
+            <tr>
+                <td>@Html.LabelFor(m => m.GravatarEmail)</td>
+                <td>@Html.TextBoxFor(m => m.GravatarEmail)</td>
+                <td>@Html.ValidationMessageFor(m => m.GravatarEmail)</td>
             </tr>
             <tr>
                 <td>@Html.LabelFor(m => m.Email)</td>
@@ -49,16 +59,6 @@
                 <td>@Html.LabelFor(m => m.ConfirmPassword)</td>
                 <td>@Html.PasswordFor(m => m.ConfirmPassword)</td>
                 <td>@Html.ValidationMessageFor(m => m.ConfirmPassword)</td>
-            </tr>
-            <tr>
-                <td>@Html.LabelFor(m => m.Birthday)</td>
-                <td>@Html.EditorFor(m => m.Birthday)</td>
-                <td>@Html.ValidationMessageFor(m => m.Birthday)</td>
-            </tr>
-            <tr>
-                <td>@Html.LabelFor(m => m.Gender)</td>
-                <td>@Html.DropDownListFor(m => m.Gender, genderItems)</td>
-                <td>@Html.ValidationMessageFor(m => m.Gender)</td>
             </tr>
         </table>
         <input type="submit" value="Register" />

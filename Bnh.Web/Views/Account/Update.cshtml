@@ -2,12 +2,6 @@
 
 @{
     ViewBag.Title = "Update Information";
-    var genderItems = new[]
-    {
-        new SelectListItem { Selected = true, Text = string.Empty },
-        new SelectListItem { Text = "Male" },
-        new SelectListItem { Text = "Female" },
-    };
 }
 
 <hgroup class="title">
@@ -18,31 +12,37 @@
 @using (Html.BeginForm()) {
     @Html.ValidationSummary(true, "Entered information is not valid. Please correct the errors and try again.")
 
-    <fieldset>
+    <fieldset class="update-profile">
         <legend>Account Information</legend>
+        <div class="avatar">
+            <img src="@Model.AvatarImageUrl"/>
+            <a href="http://gravatar.com/">Change profile picture</a>
+        </div>
         <table>
-            <tr>                    
-                <td>@Html.LabelFor(m => m.FirstName)</td>
-                <td>@Html.TextBoxFor(m => m.FirstName)</td>
-                <td>@Html.ValidationMessageFor(m => m.FirstName)</td>
+            <tr>
+                <td>@Html.LabelFor(m => m.DisplayName)</td>
+                <td>@Html.TextBoxFor(m => m.DisplayName)</td>
+                <td>@Html.ValidationMessageFor(m => m.DisplayName)</td>
             </tr>
             <tr>
-                <td>@Html.LabelFor(m => m.LastName)</td>
-                <td>@Html.TextBoxFor(m => m.LastName)</td>
-                <td>@Html.ValidationMessageFor(m => m.LastName)</td>
+                <td>@Html.LabelFor(m => m.RealName)</td>
+                <td>@Html.TextBoxFor(m => m.RealName)</td>
+                <td>@Html.ValidationMessageFor(m => m.RealName)</td>
             </tr>
             <tr>
-                <td>@Html.LabelFor(m => m.Birthday)</td>
-                <td>@Html.EditorFor(m => m.Birthday)</td>
-                <td>@Html.ValidationMessageFor(m => m.Birthday)</td>
+                <td>@Html.LabelFor(m => m.Location)</td>
+                <td>@Html.TextBoxFor(m => m.Location)</td>
+                <td>@Html.ValidationMessageFor(m => m.Location)</td>
             </tr>
             <tr>
-                <td>@Html.LabelFor(m => m.Gender)</td>
-                <td>@Html.DropDownListFor(m => m.Gender, genderItems)</td>
-                <td>@Html.ValidationMessageFor(m => m.Gender)</td>
+                <td>@Html.LabelFor(m => m.GravatarEmail)</td>
+                <td>@Html.TextBoxFor(m => m.GravatarEmail)</td>
+                <td>@Html.ValidationMessageFor(m => m.GravatarEmail)</td>
             </tr>
         </table>
-        <input type="submit" value="Update" />
-        @Html.ActionInputLink("Change Password", "ChangePassword")
+        <div class="buttons">
+            <input type="submit" value="Update" />
+            @Html.ActionInputLink("Change Password", "ChangePassword")
+        </div>
     </fieldset>
 }
