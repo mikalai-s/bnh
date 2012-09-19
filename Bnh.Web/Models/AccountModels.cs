@@ -21,7 +21,7 @@ namespace Bnh.Web.Models
         public string Location { get; set; }
 
         [Display(Name = "Gravatar e-mail")]
-        public string GravatarEmail{ get; set; }
+        public string GravatarEmail { get; set; }
 
         public string AvatarImageUrl
         {
@@ -46,6 +46,30 @@ namespace Bnh.Web.Models
         [Display(Name = "Confirm new password")]
         [Compare("NewPassword", ErrorMessage = "The new password and confirmation password do not match.")]
         public string ConfirmPassword { get; set; }
+    }
+
+    public class RegisterExternalLoginModel
+    {
+        [Required]
+        [Display(Name = "Display name")]
+        public string DisplayName { get; set; }
+
+        [Required]
+        [Display(Name = "Real name")]
+        public string RealName { get; set; }
+
+        [Required]
+        [Display(Name = "E-mail")]
+        public string Email { get; set; }
+
+        public string ExternalLoginData { get; set; }
+    }
+
+    public class ExternalLogin
+    {
+        public string Provider { get; set; }
+        public string ProviderDisplayName { get; set; }
+        public string ProviderUserId { get; set; }
     }
 
     public class LoginModel

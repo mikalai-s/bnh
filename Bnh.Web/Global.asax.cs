@@ -4,6 +4,7 @@ using System.Configuration;
 using System.Data.Entity;
 using System.Linq;
 using System.Web;
+using System.Dynamic;
 using System.Web.Http;
 using System.Web.Mvc;
 using System.Web.Optimization;
@@ -12,6 +13,8 @@ using Autofac;
 using Autofac.Integration.Mvc;
 using Bnh.Cms;
 using Bnh.Cms.Models.Utilities;
+using Bnh.Core;
+using Bnh.Infrastructure.WebSecurity;
 
 namespace Bnh.Web
 {
@@ -20,6 +23,8 @@ namespace Bnh.Web
 
     public class MvcApplication : System.Web.HttpApplication
     {
+        IContainer container = null;
+
         public static void RegisterGlobalFilters(GlobalFilterCollection filters)
         {
             filters.Add(new HandleErrorAttribute());
@@ -85,6 +90,22 @@ namespace Bnh.Web
             ModelBinders.Binders.DefaultBinder = new BnhModelBinder();
 
             Bnh.Web.Controllers.InitData.Init();
+
+            RegisterExternalLoginServices();
+        }
+
+        private void RegisterExternalLoginServices()
+        {
+            var config = this.container.Resolve<Config>();
+            if (config.Authentification == null)
+            {
+                return;
+            }
+
+            foreach (var client in config.Authentification)
+            {
+                OAuthWebSecurity.RegisterClient(client);
+            }
         }
 
         private void RegisterAutofacModules()
@@ -95,8 +116,8 @@ namespace Bnh.Web
             builder.RegisterModule<Bnh.Cms.AutofacModule>();
             builder.RegisterControllers(typeof(MvcApplication).Assembly);
             builder.RegisterControllers(typeof(Bnh.Cms.AutofacModule).Assembly);
-            var container = builder.Build();
-            DependencyResolver.SetResolver(new AutofacDependencyResolver(container));
+            this.container = builder.Build();
+            DependencyResolver.SetResolver(new AutofacDependencyResolver(this.container));
         }
     }
 }

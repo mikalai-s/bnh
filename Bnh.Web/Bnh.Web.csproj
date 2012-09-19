@@ -18,7 +18,7 @@
     <FileUpgradeFlags>
     </FileUpgradeFlags>
     <OldToolsVersion>4.0</OldToolsVersion>
-    <UseIISExpress>true</UseIISExpress>
+    <UseIISExpress>false</UseIISExpress>
     <IISExpressSSLPort />
     <IISExpressAnonymousAuthentication />
     <IISExpressWindowsAuthentication />
@@ -62,6 +62,9 @@
     <Reference Include="Autofac.Integration.Mvc">
       <HintPath>..\packages\Autofac.Mvc4.2.6.2.859\lib\NET40\Autofac.Integration.Mvc.dll</HintPath>
     </Reference>
+    <Reference Include="DotNetOpenAuth.AspNet">
+      <HintPath>..\packages\DotNetOpenAuth.AspNet.4.1.0.12182\lib\net40-full\DotNetOpenAuth.AspNet.dll</HintPath>
+    </Reference>
     <Reference Include="DotNetOpenAuth.Core, Version=4.1.0.0, Culture=neutral, PublicKeyToken=2780ccd10d57b246, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\DotNetOpenAuth.Core.4.1.0.12182\lib\net40-full\DotNetOpenAuth.Core.dll</HintPath>
@@ -69,6 +72,9 @@
     <Reference Include="DotNetOpenAuth.OAuth, Version=4.1.0.0, Culture=neutral, PublicKeyToken=2780ccd10d57b246, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\DotNetOpenAuth.OAuth.Core.4.1.0.12182\lib\net40-full\DotNetOpenAuth.OAuth.dll</HintPath>
+    </Reference>
+    <Reference Include="DotNetOpenAuth.OAuth.Consumer">
+      <HintPath>..\packages\DotNetOpenAuth.OAuth.Consumer.4.1.0.12182\lib\net40-full\DotNetOpenAuth.OAuth.Consumer.dll</HintPath>
     </Reference>
     <Reference Include="DotNetOpenAuth.OpenId, Version=4.1.0.0, Culture=neutral, PublicKeyToken=2780ccd10d57b246, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -97,7 +103,7 @@
     </Reference>
     <Reference Include="Newtonsoft.Json, Version=4.5.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Newtonsoft.Json.4.5.8\lib\net40\Newtonsoft.Json.dll</HintPath>
+      <HintPath>..\packages\Newtonsoft.Json.4.5.9\lib\net40\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
@@ -112,6 +118,7 @@
     <Reference Include="System.Net.Http.WebRequest, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Net.Http.2.0.20710.0\lib\net40\System.Net.Http.WebRequest.dll</HintPath>
     </Reference>
+    <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
@@ -234,6 +241,16 @@
     <Compile Include="Infrastructure\Repositories\MongoRepository.cs" />
     <Compile Include="Infrastructure\Repositories\ProfileRepository.cs" />
     <Compile Include="Infrastructure\Repositories\ReviewRepository.cs" />
+    <Compile Include="Infrastructure\WebSecurity\AuthenticationClientData.cs" />
+    <Compile Include="Infrastructure\WebSecurity\Clients\Facebook.cs" />
+    <Compile Include="Infrastructure\WebSecurity\Clients\Google.cs" />
+    <Compile Include="Infrastructure\WebSecurity\Clients\Yahoo.cs" />
+    <Compile Include="Infrastructure\WebSecurity\OAuthAccount.cs" />
+    <Compile Include="Infrastructure\WebSecurity\OAuthWebSecurity.cs" />
+    <Compile Include="Infrastructure\WebSecurity\ProviderUserIdSerializationHelper.cs" />
+    <Compile Include="Infrastructure\WebSecurity\WebPagesOAuthDataProvider.cs" />
+    <Compile Include="Infrastructure\WebSecurity\WebPagesOAuthTokenManager.cs" />
+    <Compile Include="Infrastructure\WebSecurity\WebSecurity.cs" />
     <Compile Include="Models\AccountModels.cs" />
     <Compile Include="Models\AccountProfile.cs" />
     <Compile Include="Core\Entities\IAccountProfile.cs" />
@@ -699,6 +716,12 @@
     <Content Include="Views\Shared\Reviews.cshtml" />
     <Content Include="Views\Shared\AddReview.cshtml" />
     <Content Include="Views\Shared\_SinglePageLayout.cshtml" />
+    <Content Include="Views\Account\_ExternalLoginsListPartial.cshtml" />
+    <Content Include="Views\Account\ExternalLoginFailure.cshtml" />
+    <Content Include="Views\Account\_ChangePasswordPartial.cshtml" />
+    <Content Include="Views\Account\_RemoveExternalLoginsPartial.cshtml" />
+    <Content Include="Views\Account\_SetPasswordPartial.cshtml" />
+    <Content Include="Views\Account\ExternalLoginConfirmation.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
@@ -711,7 +734,7 @@
     <Content Include="Views\Community\Details.cshtml" />
     <Content Include="Views\Community\Edit.cshtml" />
     <Content Include="Views\Community\Index.cshtml" />
-    <Content Include="Views\Account\Update.cshtml" />
+    <Content Include="Views\Account\Manage.cshtml" />
     <Content Include="Views\Community\CommunityFilterPartial.cshtml" />
     <Content Include="Views\Community\EditScene.cshtml" />
   </ItemGroup>
@@ -739,7 +762,7 @@
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>49208</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost:11275/</IISUrl>
+          <IISUrl>http://localhost/Bnh.Web</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>
