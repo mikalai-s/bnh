@@ -566,9 +566,11 @@ namespace Bnh.Infrastructure.WebSecurity
             }
             else if (login.Key == "microsoft")
             {
-                OAuthWebSecurity.RegisterMicrosoftClient(
-                    clientId: login.Value["clientId"],
-                    clientSecret: login.Value["clientSecret"]);
+                OAuthWebSecurity.RegisterClient(
+                    new WindowsLive(
+                        login.Value["clientId"],
+                        login.Value["clientSecret"]),
+                    "Windows Live", null);
             }
             else if (login.Key == "facebook")
             {

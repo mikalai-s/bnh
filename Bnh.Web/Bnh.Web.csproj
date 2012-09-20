@@ -244,6 +244,7 @@
     <Compile Include="Infrastructure\WebSecurity\AuthenticationClientData.cs" />
     <Compile Include="Infrastructure\WebSecurity\Clients\Facebook.cs" />
     <Compile Include="Infrastructure\WebSecurity\Clients\Google.cs" />
+    <Compile Include="Infrastructure\WebSecurity\Clients\WindowsLive.cs" />
     <Compile Include="Infrastructure\WebSecurity\Clients\Yahoo.cs" />
     <Compile Include="Infrastructure\WebSecurity\OAuthAccount.cs" />
     <Compile Include="Infrastructure\WebSecurity\OAuthWebSecurity.cs" />
