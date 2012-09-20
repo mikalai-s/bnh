@@ -20,12 +20,6 @@ namespace Bnh.Web.Models
             set { base["RealName"] = value; }
         }
 
-        public string Location
-        {
-            get { return (string)base["Location"]; }
-            set { base["Location"] = value; }
-        }
-
         public string GravatarEmail
         {
             get { return (string)base["GravatarEmail"]; }

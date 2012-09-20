@@ -466,24 +466,20 @@ namespace MongoDB.Web.Providers
 
             BsonValue userId = null;
 
-            var query = Query.EQ("oAuth." + provider.ToLower(), providerUserId.ToLower());
-            var bsonDocument = this.mongoCollection.FindOneAs<BsonDocument>(query);
-            if (bsonDocument == null)
+            var user = this.mongoCollection.FindOneAs<BsonDocument>(Query.EQ("Username", userName));
+            if (user == null)
             {
                 var u = Membership.CreateUser(userName, "f");
-
                 userId = BsonValue.Create((ObjectId)u.ProviderUserKey);
-
-                query = Query.EQ("_id", userId);
-                this.mongoCollection.Update(query, Update.Set("External", true));
+                this.mongoCollection.Update(Query.EQ("_id", userId), Update.Set("External", true));
             }
             else
             {
-                userId = bsonDocument["_id"];
+                userId = user["_id"];
             }
 
             // account already exist. update it
-            query = Query.EQ("_id", userId);
+            var query = Query.EQ("_id", userId);
             this.mongoCollection.Update(query, Update.Set("oAuth." + provider.ToLower(), providerUserId.ToLower()));
         }
 

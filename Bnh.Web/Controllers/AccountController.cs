@@ -87,7 +87,6 @@ namespace Bnh.Web.Controllers
                     var userProfile = AccountProfile.GetProfile(model.Email);
                     userProfile.DisplayName = model.DisplayName;
                     userProfile.RealName = model.RealName;
-                    userProfile.Location = model.Location;
                     userProfile.GravatarEmail = model.GravatarEmail.IsEmpty() ? model.Email : model.GravatarEmail;
                     userProfile.Save();
 
@@ -138,7 +137,6 @@ namespace Bnh.Web.Controllers
             {
                 DisplayName = profile.DisplayName,
                 RealName = profile.RealName,
-                Location = profile.Location,
                 GravatarEmail = profile.GravatarEmail
             };
             return View(model);
@@ -156,7 +154,6 @@ namespace Bnh.Web.Controllers
                 var profile = this.Profile as AccountProfile;
                 profile.DisplayName = model.DisplayName;
                 profile.RealName = model.RealName;
-                profile.Location = model.Location;
                 profile.GravatarEmail = model.GravatarEmail;
 
                 profile.Save();
@@ -202,17 +199,32 @@ namespace Bnh.Web.Controllers
             }
             else
             {
-                // User is new, ask for their desired membership name
-                string loginData = OAuthWebSecurity.SerializeProviderUserId(result.Provider, result.ProviderUserId);
-                ViewBag.ProviderDisplayName = OAuthWebSecurity.GetOAuthClientData(result.Provider).DisplayName;
-                ViewBag.ReturnUrl = returnUrl;
-                return View("ExternalLoginConfirmation", new RegisterExternalLoginModel
+                var email = result.ExtraData["email"];
+                
+                // if there is already user with the same email address
+                // then it means that the user tries to login using different service
+                var user = Membership.GetUser(email);
+                if (user != null)
                 {
-                    DisplayName = result.ExtraData["name"],
-                    RealName = result.ExtraData["name"],
-                    Email = result.ExtraData["email"],
-                    ExternalLoginData = loginData
-                });
+                    // User exists - update his account and login
+                    OAuthWebSecurity.CreateOrUpdateAccount(result.Provider, result.ProviderUserId, email);
+                    OAuthWebSecurity.Login(result.Provider, result.ProviderUserId, createPersistentCookie: true);
+                    return RedirectToLocal(returnUrl);
+                }
+                else
+                {
+                    // User is new, ask for their desired membership name
+                    string loginData = OAuthWebSecurity.SerializeProviderUserId(result.Provider, result.ProviderUserId);
+                    ViewBag.ProviderDisplayName = OAuthWebSecurity.GetOAuthClientData(result.Provider).DisplayName;
+                    ViewBag.ReturnUrl = returnUrl;
+                    return View("ExternalLoginConfirmation", new RegisterExternalLoginModel
+                    {
+                        DisplayName = result.ExtraData["name"],
+                        RealName = result.ExtraData["name"],
+                        Email = result.ExtraData["email"],
+                        ExternalLoginData = loginData
+                    });
+                }
             }
         }
 
@@ -240,6 +252,13 @@ namespace Bnh.Web.Controllers
                 if (user == null)
                 {
                     OAuthWebSecurity.CreateOrUpdateAccount(provider, providerUserId, model.Email);
+
+                    var userProfile = AccountProfile.GetProfile(model.Email);
+                    userProfile.DisplayName = model.DisplayName;
+                    userProfile.RealName = model.RealName;
+                    userProfile.GravatarEmail = model.Email;
+                    userProfile.Save();
+
                     OAuthWebSecurity.Login(provider, providerUserId, createPersistentCookie: true);
 
                     return RedirectToLocal(returnUrl);
