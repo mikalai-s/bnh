@@ -21,6 +21,7 @@
 
 @using (Html.BeginForm("Login", "Account")) {
     @Html.ValidationSummary(true, "Log in was unsuccessful. Please correct the errors and try again.")
+    @Html.AntiForgeryToken()
     <fieldset>
         <legend>Internal Login</legend>
         <table>
@@ -49,14 +50,6 @@
     </fieldset>
 }
 
-@using (Html.BeginForm("LogOn", "Account", FormMethod.Post, new { @id="logonForm"}))
-{
-    @Html.Hidden("loginIdentifier", "https://www.google.com/accounts/o8/id")
-    @Html.Hidden("returnUrl")
-    <fieldset>
-        <legend>External Login</legend>
-        <a href="#" id="submitLink"><img alt="Google Login" src="~/Images/google.gif" /></a>
-    </fieldset>
-}
+@Html.Action("ExternalLoginsList", new { ReturnUrl = ViewBag.ReturnUrl })
 
 </article>

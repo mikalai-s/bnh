@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.Configuration.Provider;
 using System.Security.Cryptography;
@@ -7,6 +8,7 @@ using System.Web.Hosting;
 using System.Web.Mvc;
 using System.Web.Security;
 using Bnh.Core;
+using Bnh.Infrastructure.WebSecurity;
 using MongoDB.Bson;
 using MongoDB.Driver;
 using MongoDB.Driver.Builders;
@@ -123,7 +125,7 @@ namespace MongoDB.Web.Providers
         {
             if (providerUserKey != null)
             {
-                if (!(providerUserKey is Guid))
+                if (!(providerUserKey is ObjectId))
                 {
                     status = MembershipCreateStatus.InvalidProviderUserKey;
                     return null;
@@ -131,7 +133,7 @@ namespace MongoDB.Web.Providers
             }
             else
             {
-                providerUserKey = Guid.NewGuid();
+                providerUserKey = ObjectId.GenerateNewId();
             }
 
             var validatePasswordEventArgs = new ValidatePasswordEventArgs(username, password, true);
@@ -181,7 +183,7 @@ namespace MongoDB.Web.Providers
 
             var bsonDocument = new BsonDocument
             {
-                { "_id", (Guid)providerUserKey },
+                { "_id", (ObjectId)providerUserKey },
                 { "ApplicationName", this.ApplicationName },
                 { "CreationDate", creationDate },
                 { "Email", email },
@@ -303,7 +305,7 @@ namespace MongoDB.Web.Providers
 
         public override MembershipUser GetUser(object providerUserKey, bool userIsOnline)
         {
-            var query = Query.EQ("_id", (Guid)providerUserKey);
+            var query = Query.EQ("_id", (ObjectId)providerUserKey);
             var bsonDocument = this.mongoCollection.FindOneAs<BsonDocument>(query);
 
             if (bsonDocument == null)
@@ -385,7 +387,7 @@ namespace MongoDB.Web.Providers
 
         public override void UpdateUser(MembershipUser user)
         {
-            var query = Query.EQ("_id", (Guid)user.ProviderUserKey);
+            var query = Query.EQ("_id", (ObjectId)user.ProviderUserKey);
             var bsonDocument = this.mongoCollection.FindOneAs<BsonDocument>(query);
 
             if (bsonDocument == null)
@@ -422,6 +424,103 @@ namespace MongoDB.Web.Providers
             this.mongoCollection.Update(query, Update.Inc("FailedPasswordAttemptCount", 1).Set("FailedPasswordAttemptWindowStart", DateTime.UtcNow));
             return false;
         }
+
+        #region Some extended functinonality
+
+        public IEnumerable<OAuthAccount> GetAccountsForUser(string userName)
+        {
+            var query = Query.EQ("Username", userName);
+            var user = this.mongoCollection.FindOneAs<BsonDocument>(query);
+            if (user != null && user.Contains("oAuth"))
+            {
+                var accounts = user["oAuth"];
+                if (accounts != null)
+                {
+                    foreach (var element in accounts.AsBsonDocument.Elements)
+                    {
+                        yield return new OAuthAccount(element.Name, element.Value.AsString);
+                    }
+                }
+            }
+        }
+
+        public bool HasLocalAccount(ObjectId userId)
+        {
+            var query = Query.And(Query.EQ("_id", userId), Query.EQ("External", true));
+            return (this.mongoCollection.Count(query) == 0);
+        }
+
+        public void DeleteOAuthAccount(string provider, string providerUserId)
+        {
+            var providerProperty = "oAuth." + provider.ToLower();
+            var query = Query.EQ(providerProperty, providerUserId.ToLower());
+            this.mongoCollection.Update(query, Update.Unset(providerProperty));
+        }
+
+        public void CreateOrUpdateOAuthAccount(string provider, string providerUserId, string userName)
+        {
+            if (string.IsNullOrEmpty(userName))
+            {
+                throw new MembershipCreateUserException(MembershipCreateStatus.ProviderError);
+            }
+
+            BsonValue userId = null;
+
+            var user = this.mongoCollection.FindOneAs<BsonDocument>(Query.EQ("Username", userName));
+            if (user == null)
+            {
+                var u = Membership.CreateUser(userName, "f");
+                userId = BsonValue.Create((ObjectId)u.ProviderUserKey);
+                this.mongoCollection.Update(Query.EQ("_id", userId), Update.Set("External", true));
+            }
+            else
+            {
+                userId = user["_id"];
+            }
+
+            // account already exist. update it
+            var query = Query.EQ("_id", userId);
+            this.mongoCollection.Update(query, Update.Set("oAuth." + provider.ToLower(), providerUserId.ToLower()));
+        }
+
+        public ObjectId GetUserIdFromOAuth(string provider, string providerUserId)
+        {
+            var query = Query.EQ("oAuth." + provider.ToLower(), providerUserId.ToLower());
+            var bsonDocument = this.mongoCollection.FindOneAs<BsonDocument>(query);
+            return (bsonDocument == null)
+                ? ObjectId.Empty
+                : bsonDocument["_id"].AsObjectId;
+        }
+
+        public string GetUserNameFromId(ObjectId userId)
+        {
+            var query = Query.EQ("_id", BsonValue.Create(userId));
+            var bsonDocument = this.mongoCollection.FindOneAs<BsonDocument>(query);
+            return (bsonDocument == null) ? null : bsonDocument["Username"].AsString;
+        }
+
+        public string GetOAuthTokenSecret(string token)
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <summary>
+        /// Replaces the request token with access token and secret.
+        /// </summary>
+        /// <param name="requestToken">The request token.</param>
+        /// <param name="accessToken">The access token.</param>
+        /// <param name="accessTokenSecret">The access token secret.</param>
+        public void ReplaceOAuthRequestTokenWithAccessToken(string requestToken, string accessToken, string accessTokenSecret)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void StoreOAuthRequestToken(string requestToken, string requestTokenSecret)
+        {
+            throw new NotImplementedException();
+        }
+
+        #endregion
 
         #region Private Methods
 
@@ -480,7 +579,7 @@ namespace MongoDB.Web.Providers
             var email = bsonDocument.Contains("Email") ? bsonDocument["Email"].AsString : null;
             var passwordQuestion = bsonDocument.Contains("PasswordQuestion") ? bsonDocument["PasswordQuestion"].AsString : null;
 
-            return new MembershipUser(this.Name, bsonDocument["Username"].AsString, bsonDocument["_id"].AsGuid, email, passwordQuestion, comment, bsonDocument["IsApproved"].AsBoolean, bsonDocument["IsLockedOut"].AsBoolean, bsonDocument["CreationDate"].AsDateTime, bsonDocument["LastLoginDate"].AsDateTime, bsonDocument["LastActivityDate"].AsDateTime, bsonDocument["LastPasswordChangedDate"].AsDateTime, bsonDocument["LastLockoutDate"].AsDateTime);
+            return new MembershipUser(this.Name, bsonDocument["Username"].AsString, bsonDocument["_id"].AsObjectId, email, passwordQuestion, comment, bsonDocument["IsApproved"].AsBoolean, bsonDocument["IsLockedOut"].AsBoolean, bsonDocument["CreationDate"].AsDateTime, bsonDocument["LastLoginDate"].AsDateTime, bsonDocument["LastActivityDate"].AsDateTime, bsonDocument["LastPasswordChangedDate"].AsDateTime, bsonDocument["LastLockoutDate"].AsDateTime);
         }
 
         private bool VerifyPassword(BsonDocument user, string password)

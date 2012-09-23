@@ -11,6 +11,7 @@
 
 @using (Html.BeginForm()) {
     @Html.ValidationSummary(true, "Entered information is not valid. Please correct the errors and try again.")
+    @Html.AntiForgeryToken()
 
     <fieldset class="update-profile">
         <legend>Account Information</legend>
@@ -30,11 +31,6 @@
                 <td>@Html.ValidationMessageFor(m => m.RealName)</td>
             </tr>
             <tr>
-                <td>@Html.LabelFor(m => m.Location)</td>
-                <td>@Html.TextBoxFor(m => m.Location)</td>
-                <td>@Html.ValidationMessageFor(m => m.Location)</td>
-            </tr>
-            <tr>
                 <td>@Html.LabelFor(m => m.GravatarEmail)</td>
                 <td>@Html.TextBoxFor(m => m.GravatarEmail)</td>
                 <td>@Html.ValidationMessageFor(m => m.GravatarEmail)</td>
@@ -42,7 +38,18 @@
         </table>
         <div class="buttons">
             <input type="submit" value="Update" />
-            @Html.ActionInputLink("Change Password", "ChangePassword")
+            @if(Model.CanChangePassword)
+            {
+                @Html.ActionInputLink("Change Password", "ChangePassword")
+            }
         </div>
+
     </fieldset>
 }
+
+<section id="externalLogins">
+    @Html.Action("RemoveExternalLogins")
+
+    <h3>Add an external login</h3>
+    @Html.Action("ExternalLoginsList", new { ReturnUrl = ViewBag.ReturnUrl })
+</section>
