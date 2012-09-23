@@ -21,6 +21,7 @@
 
 @using (Html.BeginForm("Login", "Account")) {
     @Html.ValidationSummary(true, "Log in was unsuccessful. Please correct the errors and try again.")
+    @Html.AntiForgeryToken()
     <fieldset>
         <legend>Internal Login</legend>
         <table>

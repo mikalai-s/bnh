@@ -27,6 +27,8 @@ namespace Bnh.Web.Models
         {
             get { return Gravatar.GetUrl(this.GravatarEmail, 128) + "&d=identicon"; }
         }
+
+        public bool CanChangePassword { get; set; }
     }
 
     public class ChangePasswordModel

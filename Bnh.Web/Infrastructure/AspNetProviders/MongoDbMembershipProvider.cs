@@ -431,7 +431,7 @@ namespace MongoDB.Web.Providers
         {
             var query = Query.EQ("Username", userName);
             var user = this.mongoCollection.FindOneAs<BsonDocument>(query);
-            if (user != null)
+            if (user != null && user.Contains("oAuth"))
             {
                 var accounts = user["oAuth"];
                 if (accounts != null)

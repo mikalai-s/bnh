@@ -11,6 +11,7 @@
 
 @using (Html.BeginForm()) {
     @Html.ValidationSummary(true, "Entered information is not valid. Please correct the errors and try again.")
+    @Html.AntiForgeryToken()
 
     <fieldset class="update-profile">
         <legend>Account Information</legend>
@@ -35,16 +36,20 @@
                 <td>@Html.ValidationMessageFor(m => m.GravatarEmail)</td>
             </tr>
         </table>
-        <section id="externalLogins">
-            @Html.Action("RemoveExternalLogins")
-
-            <h3>Add an external login</h3>
-            @Html.Action("ExternalLoginsList", new { ReturnUrl = ViewBag.ReturnUrl })
-        </section>
         <div class="buttons">
             <input type="submit" value="Update" />
-            @Html.ActionInputLink("Change Password", "ChangePassword")
+            @if(Model.CanChangePassword)
+            {
+                @Html.ActionInputLink("Change Password", "ChangePassword")
+            }
         </div>
 
     </fieldset>
 }
+
+<section id="externalLogins">
+    @Html.Action("RemoveExternalLogins")
+
+    <h3>Add an external login</h3>
+    @Html.Action("ExternalLoginsList", new { ReturnUrl = ViewBag.ReturnUrl })
+</section>

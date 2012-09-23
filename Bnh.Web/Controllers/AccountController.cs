@@ -16,7 +16,6 @@ using DotNetOpenAuth.AspNet;
 namespace Bnh.Web.Controllers
 {
     [Authorize]
-    //[InitializeSimpleMembership]
     public class AccountController : Controller
     {
         //
@@ -104,6 +103,58 @@ namespace Bnh.Web.Controllers
         }
 
         //
+        // GET: /Account/ChangePassword
+
+        public ActionResult ChangePassword()
+        {
+            return View();
+        }
+
+        //
+        // POST: /Account/ChangePassword
+
+        [HttpPost]
+        public ActionResult ChangePassword(ChangePasswordModel model)
+        {
+            if (ModelState.IsValid)
+            {
+
+                // ChangePassword will throw an exception rather
+                // than return false in certain failure scenarios.
+                bool changePasswordSucceeded;
+                try
+                {
+                    MembershipUser currentUser = Membership.GetUser(Profile.UserName, userIsOnline: true);
+                    changePasswordSucceeded = currentUser.ChangePassword(model.OldPassword, model.NewPassword);
+                }
+                catch (Exception)
+                {
+                    changePasswordSucceeded = false;
+                }
+
+                if (changePasswordSucceeded)
+                {
+                    return RedirectToAction("ChangePasswordSuccess");
+                }
+                else
+                {
+                    ModelState.AddModelError("", "The current password is incorrect or the new password is invalid.");
+                }
+            }
+
+            // If we got this far, something failed, redisplay form
+            return View(model);
+        }
+
+        //
+        // GET: /Account/ChangePasswordSuccess
+
+        public ActionResult ChangePasswordSuccess()
+        {
+            return View();
+        }
+
+        //
         // POST: /Account/Disassociate
 
         [HttpPost]
@@ -137,7 +188,8 @@ namespace Bnh.Web.Controllers
             {
                 DisplayName = profile.DisplayName,
                 RealName = profile.RealName,
-                GravatarEmail = profile.GravatarEmail
+                GravatarEmail = profile.GravatarEmail,
+                CanChangePassword = OAuthWebSecurity.HasLocalAccount(WebSecurity.GetUserId(User.Identity.Name))
             };
             return View(model);
         }
@@ -158,6 +210,8 @@ namespace Bnh.Web.Controllers
 
                 profile.Save();
             }
+
+            model.CanChangePassword = OAuthWebSecurity.HasLocalAccount(WebSecurity.GetUserId(User.Identity.Name));
 
             // If we got this far, something failed, redisplay form
             return View(model);
