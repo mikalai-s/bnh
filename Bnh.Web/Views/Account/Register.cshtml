@@ -21,6 +21,7 @@
 
 @using (Html.BeginForm((string)ViewBag.FormAction, "Account")) {
     @Html.ValidationSummary(true, "Account creation was unsuccessful. Please correct the errors and try again.")
+    @Html.AntiForgeryToken()
 
     <fieldset>
         <legend>Registration Form</legend>

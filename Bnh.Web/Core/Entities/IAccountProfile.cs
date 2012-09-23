@@ -13,8 +13,6 @@ namespace Bnh.Core.Entities
 
         string RealName { get; }
 
-        string Location { get; }
-
         string GravatarEmail { get; }
 
         DateTime LastUpdatedDate { get; }

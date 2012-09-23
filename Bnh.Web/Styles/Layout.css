@@ -7,6 +7,8 @@ body { background-image: url(../Images/background.png); background-position: cen
 
     .page .header .user-display { float: right; margin-top: 30px; }
 
+#logoutForm { display: inline; }
+
     /* menu */
 
     .page .menu { clear: both; }
