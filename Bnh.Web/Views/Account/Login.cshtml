@@ -1,9 +1,5 @@
 @model Bnh.Web.Models.LoginModel
 
-@section Styles {
-    <link href="~/Styles/Login.css" rel="stylesheet" type="text/css" />
-}
-
 @section Scripts {
     <script>require(["account-login"])</script>
 }
@@ -12,44 +8,55 @@
     ViewBag.Title = "Log in";
 }
 
-<hgroup class="title">
-    <h1>@ViewBag.Title</h1>
-    <h2>Enter your user name and password below.</h2>
-</hgroup>
+<div class="body-header">
+    <h1>Log in</h1>
+    <h4>Enter your user name and password below</h4>
+</div>
 
-<article>
+<article class="row">
 
-@using (Html.BeginForm("Login", "Account")) {
-    @Html.ValidationSummary(true, "Log in was unsuccessful. Please correct the errors and try again.")
-    @Html.AntiForgeryToken()
-    <fieldset>
-        <legend>Internal Login</legend>
-        <table>
-            <tr>
-                <td>@Html.LabelFor(m => m.Email)</td>
-                <td>@Html.TextBoxFor(m => m.Email)</td>
-                <td>@Html.ValidationMessageFor(m => m.Email)</td>
-            </tr>
-            <tr>
-                <td>@Html.LabelFor(m => m.Password)</td>
-                <td>@Html.PasswordFor(m => m.Password)</td>
-                <td>@Html.ValidationMessageFor(m => m.Password)</td>
-            </tr>
-            <tr>
-                <td></td>
-                <td colspan="2">
-                    @Html.CheckBoxFor(m => m.RememberMe, new { @checked = "checked" })
-                    @Html.LabelFor(m => m.RememberMe, new { @class = "checkbox" })
-                </td>
-            </tr>
-        </table>
-        <input type="submit" value="Log in" />
-        <p>
-            @Html.ActionLink("Register", "Register") if you don't have an account.
-        </p>
-    </fieldset>
-}
+    <div class="span6">
+        @using (Html.BeginForm("Login", "Account", FormMethod.Post, new { @class = "form-horizontal" }))
+        {
+            @Html.AntiForgeryToken()
+            @Html.ValidationSummary(true, "Log in was unsuccessful. Please correct the errors and try again.", new { @class = "alert alert-error" })
+            <fieldset>
+                <legend>Internal Login</legend>
+                <div class="control-group">
+                    @Html.LabelFor(m => m.Email, new { @class = "control-label" })
+                    <div class="controls">
+                        @Html.TextBoxFor(m => m.Email)
+                        @Html.ValidationMessageFor(m => m.Email, null, new { @class = "alert-error" })
+                    </div>
+                </div>
+                <div class="control-group">
+                    @Html.LabelFor(m => m.Password, new { @class = "control-label" })
+                    <div class="controls">
+                        @Html.TextBoxFor(m => m.Password)
+                        @Html.ValidationMessageFor(m => m.Password, null, new { @class = "alert-error" })
+                    </div>
+                </div>
+                <div class="control-group">
+                    @Html.LabelFor(m => m.RememberMe, new { @class = "control-label" })
+                    <div class="controls">
+                        <label class="checkbox">@Html.CheckBoxFor(m => m.RememberMe)</label>
+                    </div>
+                </div>
+                <div class="form-actions">
+                    <input class="btn btn-primary" type="submit" value="Log in" />
+                </div>
+                
+                <div class="control-group">
+                    <div class="controls">
+                        @Html.ActionLink("Register", "Register") if you don't have an account.
+                    </div>
+                </div>
+            </fieldset>
+        }
+    </div>
 
-@Html.Action("ExternalLoginsList", new { ReturnUrl = ViewBag.ReturnUrl })
+    <div class="span6">
+        @Html.Action("ExternalLoginsList", new { ReturnUrl = ViewBag.ReturnUrl })
+    </div>
 
 </article>
