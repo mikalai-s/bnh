@@ -1,13 +1,19 @@
 @{
-    ViewBag.Title = "Home Page";
+    ViewBag.Title = "Home";
 }
 
-<h2>@ViewBag.Message</h2>
-<p>
-    Quick links:
-    <ul>
-        <li><a href="~/Scene/Edit/7">Martindale Scene Designer</a></li>
+<div class="body-header">
+    <h1>@ViewBag.Title</h1>
+    <h4>Welcome to BrandNewHomes.ca</h4>
+</div>
 
-    </ul>
-    <span aaser="~/aasdv/d"></span>
-</p>
+<div class="row">
+    <div class="span12 hero-movie">
+        <iframe width="560" height="315" src="http://www.youtube.com/embed/9bZkp7q19f0" frameborder="0" allowfullscreen></iframe>
+    </div>
+</div>
+<div class="row">
+    <div class="span12 center margin10">
+        <h4>@Html.ActionLink("Start searching today!", "Index", "Community")</h4>
+    </div>
+</div>
