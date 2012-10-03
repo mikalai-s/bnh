@@ -34,31 +34,36 @@
                         </div>
                     </div>
                 </div>
-
-
-@*                    
-                    <div>
-                        
-                    </div>
-                </div>
-                <div class="container">
-                    
-                </div>*@
             </div>
         </div>
 
         <div id="body" class="container">
             @RenderBody()
 
-            <div class="navbar navbar-static-bottom">
+            <footer class="navbar navbar-static-bottom navbar-inverse">
                 <div class="navbar-inner">
                     <div class="container">
-                        <footer>
-                            <span>© BrandNewHomes.cs 2012</span>
-                        </footer>
+                        <div class="row">
+                            <div class="span4">
+                                <p>About</p>
+                                <p>BrandNewHomes.ca is a first choice to start your new home search. New home buying process has a lot of choises - make the right one!</p>
+                            </div>
+                            <div class="span4">
+                                <div class="small-logo"></div>
+                            </div>
+                            <div class="span3">
+                                <p>Contacts:</p>
+                                <p>E-mail: info@brandnewhomes.ca<br />
+                                Phone: +1 (403) 481-1111<br />
+                                Fax: +1 (403) 366-5995</p>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="copyright">Copyright © 2012 BrandNewHomes.ca All right reserved.</div>
+                        </div>
                     </div>
                 </div>
-            </div>
+            </footer>
         </div>
 
         @RenderSection("Scripts", false)
