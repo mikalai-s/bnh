@@ -18,7 +18,11 @@ else
             @foreach (AuthenticationClientData p in Model)
             {
                 <div class="controls">
-                    <input type="image" name="provider" value="@p.AuthenticationClient.ProviderName" title="Log in using your @p.DisplayName account" src="~/img/Login/@(p.DisplayName)30.png"/>
+                    <input type="submit" id="submit_@p.AuthenticationClient.ProviderName" name="provider" style="display: none" 
+                        value="@p.AuthenticationClient.ProviderName" />
+                    <a href="#" onclick="$('#submit_@p.AuthenticationClient.ProviderName').click()">
+                        <img title="Log in using your @p.DisplayName account" src="~/img/Login/@(p.DisplayName)30.png" />
+                    </a>
                 </div>
             }
         </div>
