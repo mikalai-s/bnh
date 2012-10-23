@@ -43,6 +43,12 @@ namespace Bnh
             return ActionInputLink(htmlHelper, linkText, actionName, controllerName, new RouteValueDictionary(routeValues), htmlAttributes);
         }
 
+        public static MvcHtmlString ActionInputLink(this HtmlHelper htmlHelper, string linkText, string actionName, string controllerName, RouteValueDictionary routeValues, object htmlAttributes)
+        {
+            var attributes = ((IDictionary<string, object>)HtmlHelper.AnonymousObjectToHtmlAttributes(htmlAttributes));
+            return ActionInputLink(htmlHelper, linkText, actionName, controllerName, routeValues, attributes);
+        }
+
         public static MvcHtmlString ActionInputLink(this HtmlHelper htmlHelper, string linkText, string actionName, string controllerName, RouteValueDictionary routeValues, IDictionary<string, object> htmlAttributes)
         {
             var inputBuilder = new TagBuilder("input");
