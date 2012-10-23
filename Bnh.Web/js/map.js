@@ -32,9 +32,10 @@
             });
         }
 
-        function Map(mapCanvas, options) {
+        function Map($mapCanvas, options) {
 
-            var self = this;
+            var self = this,
+                mapCanvas = $mapCanvas.get(0);
             self.deserializeCoordinates = function (coord) {
                 if (!coord || !coord.lat || !coord.lng)
                     return;
@@ -110,6 +111,16 @@
             };
             self.initializeCustomControls();
 
+            // check whether there is need to process initialiiy hidden map
+            if ($mapCanvas.parent().hasClass("initially-hidden-map")) {
+                google.maps.event.addListenerOnce(self.mapInstance, 'idle', function () {
+                    // when map is loaded - attach it to its container (because in markup they are separated)
+                    var $container = $("#" + $mapCanvas.data("mapcontainer"));
+                    if ($container.length) {
+                        $mapCanvas.appendTo($container);
+                    }
+                });
+            }
         };
 
         return Map;

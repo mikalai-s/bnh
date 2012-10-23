@@ -3,17 +3,19 @@
 }
 
 <div class="body-header">
+    <div class="span0"></div>
+    
     <h1>@ViewBag.Title</h1>
     <h4>Welcome to BrandNewHomes.ca</h4>
 </div>
 
 <div class="row">
     <div class="span12 hero-movie">
-        <iframe width="560" height="315" src="http://www.youtube.com/embed/9bZkp7q19f0" frameborder="0" allowfullscreen></iframe>
+        <iframe src="http://player.vimeo.com/video/51520626" width="700" height="393" frameborder="0" webkitAllowFullScreen mozallowfullscreen allowFullScreen></iframe> <p><a href="http://vimeo.com/51520626">Brand New Homes 1</a> from <a href="http://vimeo.com/user5667571">Alexandre Sazanovich</a> on <a href="http://vimeo.com">Vimeo</a>.</p>
     </div>
 </div>
 <div class="row">
-    <div class="span12 center margin10">
-        <h4>@Html.ActionLink("Start searching today!", "Index", "Community")</h4>
+    <div class="span12 center hero-movie">
+        @Html.ActionInputLink("Start search now", "Index", "Community", null, new Dictionary<string, object>() { { "style", "text-transform: uppercase" },  {"class", "btn btn-danger"}})
     </div>
 </div>

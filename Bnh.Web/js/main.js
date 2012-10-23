@@ -10,7 +10,8 @@
         , order: 'libs/require/order.min'
         , text: 'libs/require/text.min'
         , debug: 'libs/debug/ba-debug.min'
-    }
+    },
+    //urlArgs: "bust=" + (new Date()).getTime()
 });
 
 require(["jquery", ""]);

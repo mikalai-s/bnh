@@ -39,12 +39,14 @@
 
         <div id="body" class="container">
             @RenderBody()
+        </div>
 
-            <footer class="navbar navbar-static-bottom navbar-inverse">
-                <div class="navbar-inner">
-                    <div class="container">
-                        <div class="row">
-                            <div class="span4">
+        <footer>
+            <div class="container">
+                <div class="row">
+                    <div class="span12 center">
+                        <div class="inline">
+                            <div class="span3">
                                 <h5>About</h5>
                                 <p>BrandNewHomes.ca is a first choice to start your new home search. New home buying process has a lot of choises - make the right one!</p>
                             </div>
@@ -58,13 +60,14 @@
                                 Fax: +1 (403) 366-5995</p>
                             </div>
                         </div>
-                        <div class="row">
-                            <div class="copyright">Copyright © 2012 BrandNewHomes.ca All right reserved.</div>
-                        </div>
                     </div>
                 </div>
-            </footer>
-        </div>
+                <div class="row">
+                    <div class="span0"></div>
+                    <div class="span12 copyright">Copyright © 2012 BrandNewHomes.ca All rights reserved.</div>
+                </div>
+            </div>
+        </footer>
 
         @RenderSection("Scripts", false)
         @RenderSection("_MsCmsScripts", false)

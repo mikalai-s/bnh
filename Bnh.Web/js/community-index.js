@@ -1,7 +1,11 @@
 ﻿define(
     ["knockout", "jquery", "map", "jqballoon"],
     function (ko, $, Map) {
-        "use strict"
+        "use strict";
+
+        var map,
+            filterLegend = $("#filterLegend"),
+            filterParameters = $("#filterParameters");
 
         function ZoneViewModel(name, communities) {
             var self = this;
@@ -57,21 +61,34 @@
             }
         };
 
-        ko.bindingHandlers.slideVisible = {
+        ko.bindingHandlers.slider = {
             update: function (element, valueAccessor, allBindingsAccessor, viewModel) {
                 // First get the latest data that we're bound to
-                var value = valueAccessor();
+                var value = valueAccessor(),
+                    $slider = $(element),
+                    $slides = $slider.children(),
+                    valueUnwrapped = ko.utils.unwrapObservable(value);
 
-                // Next, whether or not the supplied model property is observable, get its current value
-                var valueUnwrapped = ko.utils.unwrapObservable(value);
+                if (isNaN(valueUnwrapped)) {
+                    throw new Error("Slide index in NaN");
+                }
 
-                element = $(element);
+                if (valueUnwrapped + 1 > $slides.length) {
+                } else {
+                    $slider.animate({ "left": -$($slides[valueUnwrapped]).position().left }, 600, function () { /*$slider.hide();*/ }); // Make the element invisible
+                }
+                
 
                 // Now manipulate the DOM element
-                if (valueUnwrapped == true)
-                    element.show(); // Make the element visible
-                else
-                    element.hide(); // Make the element invisible
+                //if (valueUnwrapped === true && element.is(":visible")) {
+                //}else{
+                    //if (valueUnwrapped == true) {
+                    //    $slider
+                    //}
+                    //else {
+                    //    element.parent().animate({ "left": "600px" }, 600, function () { element.hide(); }); // Make the element invisible
+                    //}
+               // }
                 if (viewModel.associatedMapObject != null) {
                     viewModel.associatedMapObject.setVisible(valueUnwrapped);
                 }
@@ -106,6 +123,7 @@
             var self = this;
             self.zones = ko.observableArray([]);
             self.filter = ko.observable(new CommunityFilterViewModel());
+            self.slide = ko.observable(0);
             self.initialize = function () {
                 $.getJSON("/Community/Zones", function (data) {
                     var zones = $.map(data, function (communities, zone) {
@@ -118,20 +136,11 @@
                 });
             };
             self.initialize();
+
+            self.onToggleSlide = function () {
+                this.slide(this.slide() === 0 ? 1 : 0);
+            };
         }
-
-
-
-        var filterLegend = $("#filterLegend");
-        var filterParameters = $("#filterParameters");
-
-        var map = new Map($("#mapCanvas").get(0), {
-            zoom: 11,
-            center: {
-                lat: 51.02844,
-                lng: -114.071045
-            }
-        });
 
         filterLegend.click(function () {
             if (filterParameters.is(":visible")) {
@@ -143,6 +152,14 @@
             }
         });
 
-        ko.applyBindings(new CommunityPageViewModel());
+        map = new Map($("#mapCanvas"), {
+            zoom: 11,
+            center: {
+                lat: 51.02844,
+                lng: -114.071045
+            }
+        });
+
+        ko.applyBindings((window.vm = new CommunityPageViewModel()));
     }
 );

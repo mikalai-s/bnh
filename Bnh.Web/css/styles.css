@@ -10,7 +10,7 @@ legend { font-size: 18px; padding-left: 10px; }
 
 .logo { width: 338px; height: 62px; background-image: url(/img/logo.png); }
 
-.header .navbar-inner { height: 170px; border: none; -webkit-box-shadow: none; box-shadow: none; }
+.header .navbar-inner, footer .navbar-inner { height: 170px; border: none; -webkit-box-shadow: none; box-shadow: none; }
 
 .header nav { font-family: 'Century Gothic', 'Heiti TC', Questrial, sans-serif; font-size: 15px; }
 
@@ -18,16 +18,22 @@ legend { font-size: 18px; padding-left: 10px; }
 
 .padding { padding-left: 10px; }
 
+.hidden { display: none; }
 
-#body { position: relative; margin-top: -100px; background-color: white; border-radius: 5px 5px 5px 5px; box-shadow: 0 0 25px rgba(0, 0, 0, .3);  }
+.header .row { margin-top: 15px; }
 
-.body-header { background-color: rgba(0, 0, 0, .02); padding: 5px 10px; border-radius: 5px 5px 0 0; height: 90px; }
+
+#body { position: relative; margin-top: -80px; background-color: white; border-radius: 5px 5px 5px 5px; box-shadow: 0 0 25px rgba(0, 0, 0, .3);  }
+
+.body-header { background-color: rgba(0, 0, 0, .02); padding: 5px 25px; border-radius: 5px 5px 0 0; height: 90px; }
 
 /* footer */
+footer { margin: -50px 0 0 0; }
+footer { background-image: -webkit-linear-gradient(top,#F2F2F2,white); }
+    footer .container { padding-top: 60px; }
+    footer .inline { display: inline-block; text-align: left; }
 
-footer.navbar { margin: 0; color: lightGrey; }
-footer.navbar-inverse .navbar-inner { border-radius: 0 0 4px 4px; background: #183f66; }
-footer .copyright { text-align: center; font-size: 12px; }
+footer .copyright { text-align: center; font-size: 12px; border-top: solid 1px #D5D5D5;}
 footer .small-logo { background-image: url(/img/logo-inverse.png); height: 50px; background-repeat: no-repeat; margin-top: 20px; margin-left: 20px; }
 
 
@@ -50,10 +56,23 @@ footer .small-logo { background-image: url(/img/logo-inverse.png); height: 50px;
 
 /* home */
 
-.hero-movie { text-align: center; margin: 50px; margin-left: 30px; }
+.hero-movie { text-align: center; margin: 50px 0; padding-left: 20px;}
 
 /* general */
 
 .center { text-align: center; vertical-align: middle; }
 
 .margin10 { margin: 10px; }
+
+/* map */
+
+.initially-hidden-map { display: block; position: absolute; }
+.initially-hidden-map div { position: relative; left: -2000px; top: 0; }
+
+/*  slide */
+
+/* note: all the slides together should fit slider's width */
+.slider { overflow: hidden; }
+    .slider > div { width: 3000px; position: relative;}
+
+.slider .slide { width: 700px; position: relative; display: inline-block; vertical-align:top; }
