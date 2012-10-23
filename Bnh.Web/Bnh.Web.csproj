@@ -611,7 +611,6 @@
     <Compile Include="Helpers\UrlExtensions.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="App_Readme\RequestReduce.readme.txt" />
     <Content Include="config.json" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
