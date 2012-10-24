@@ -1,6 +1,7 @@
 ﻿@model IEnumerable<Community>
 @{
     ViewBag.Title = "Calgary Communities";
+    ViewBag.Description = "Pick a community";
 }
 
 @section Scripts
@@ -8,14 +9,10 @@
     <script>require(["community-index"]);</script>
 }
 
-<div class="body-header">
-    <h1>@ViewBag.Title</h1>
-    <h4>Pick a community</h4>
-    @if (Context.User.IsInRole("content_manager"))
-    {
-        <sup class="alter">@Html.ActionLink("create new", "Create", null, new { title = "Create new community" })</sup>
-    }
-</div>
+@if (Context.User.IsInRole("content_manager"))
+{
+    <sup class="alter">@Html.ActionLink("create new", "Create", null, new { title = "Create new community" })</sup>
+}
 
 <div class="row">
     <div class="span3"></div>

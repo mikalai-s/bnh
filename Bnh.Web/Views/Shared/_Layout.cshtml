@@ -37,8 +37,15 @@
             </div>
         </div>
 
-        <div id="body" class="container">
+        <div id="page" class="container">
+
+            <header>
+                <h1>@ViewBag.Title</h1>
+                <h4>@ViewBag.Description</h4>
+            </header>
+
             @RenderBody()
+
         </div>
 
         <footer>

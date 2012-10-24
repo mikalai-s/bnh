@@ -16,10 +16,9 @@
 @{
     Layout = "~/Views/Shared/_SinglePageLayout.cshtml";
     ViewBag.Title = Model.Title;
+    ViewBag.Description = "Participate in community rating - leave a review";
     var i = 0;
 }
-
-<h2>@Model.Title</h2>
 
 @*TODO: if user has already added a review, then don't show "add review" link*@
 <a href="@Model.AddReviewLink.Href" class="@Model.AddReviewLink.Css">@Model.AddReviewLink.Text</a>
