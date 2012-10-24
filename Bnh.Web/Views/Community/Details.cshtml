@@ -5,7 +5,7 @@
 }
 
 <div class="page-view">
-    <h5>            
+    <h5>
         @if (Context.User.IsInRole("content_manager"))
         {
             @Html.ActionLink("edit properties", "Edit", new { id = Model.UrlId }, null)<br />
