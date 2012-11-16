@@ -88,8 +88,7 @@ namespace Bnh.Web.ViewModels
 
         private static string RatingAnswerHtml(int rating)
         {
-            return "<div class='scale l' style='width:{0}px'></div><div class='scale r' style='width:{1}px'></div>"
-                .FormatWith(rating * 10, 100 - rating * 10);
+            return "<div class='scale'><div class='l' style='width:{0}%'></div></div>".FormatWith(rating * 10);
         }
     }
 }

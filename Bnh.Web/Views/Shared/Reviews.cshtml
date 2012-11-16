@@ -32,7 +32,10 @@
     <div id="@review.ReviewId" class="review-container">
         <img class="avatar" src="@review.UserAvatarSrc"/>
         <div class="review">
-            <section class="user">@review.UserName</section>
+            <section>
+                <span class="user">@review.UserName</span>
+                <span class="time">on @review.Created</span>
+            </section>
             <section class="rating">
                 @foreach(var rating in review.Ratings)
                 {
@@ -43,9 +46,8 @@
                 }
             </section>
             <section class="message">@Html.Raw(review.Message)</section>
-            <section class="time">@review.Created</section>
-            <section>
-                Was this review useful to you? <a href="#" id="usefulLink">Yes</a>
+            <section class="useful">
+                Was this review useful to you? <a href="#">Yes</a>
             </section>
             <section>
                 <a href="#" class="commentsLink">@(review.Comments.Count() > 0 ? "View " + @review.Comments.Count() + " comments" : "No comments left yet")</a>
