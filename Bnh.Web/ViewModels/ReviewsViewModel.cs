@@ -31,7 +31,7 @@ namespace Bnh.Web.ViewModels
             var htmlHelper = new HtmlHelper(new ViewContext(controller.ControllerContext, new WebFormView(controller.ControllerContext, "fake"), new ViewDataDictionary(), new TempDataDictionary(), new StringWriter()), new ViewPage());
             var userProfiles = profiles.ToDictionary(p => p.UserName, p => p);
 
-            this.Rating = "Rating: " + (rating.HasValue ? rating.ToString() : "Not rated");
+            this.Rating = rating.HasValue ? RatingAnswerHtml(rating.Value / 10) : "Not rated yet";
             this.TargetUrlId = targetUrlId;
             this.TargetName = targetName;
             this.Title = targetName + " Reviews";

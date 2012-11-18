@@ -107,7 +107,7 @@ fieldset legend { text-align: center; }
 
 
 
-.review-container { margin: 20px 0; border: solid 1px lightgrey; padding: 10px; position: relative; }
+.review-container { margin: 10px; border: solid 1px lightgrey; padding: 10px; position: relative; }
     .review-container .rating div { line-height: normal; font-size: 100%; }
     .review-container .rating label { display: inline-block; width: 100px; margin: 0; font-size: 85%; line-height: normal; }
     .review-container .message { padding: 7px; }
@@ -121,7 +121,7 @@ fieldset legend { text-align: center; }
     .review-container .user { font-weight: bold; }
     .review-container .time { font-size: 85%; }
 
-    .review-container .scale { width: 50px; height: 10px; display: inline-block; background-image: url(/img/stars-small.png); background-position: 0 10px; }
+    .review-container .scale { width: 50px; height: 10px; overflow: hidden; display: inline-block; background-image: url(/img/stars-small.png); background-position: 0 10px; }
     .review-container .scale .l { height: 100%; background-image: url(/img/stars-small.png); }
 
     .review-container .comment-container { margin: 10px 0; }
@@ -131,5 +131,9 @@ fieldset legend { text-align: center; }
     .review-container .mceToolbar { text-align: left; }
     .review-container .mceIframeContainer iframe { height: 75px !important; }
 
-    .review-container .comment-container { position: relative; height: 50px; background-color: #fefefe; }
+    .review-container .comment-container { position: relative; background-color: #fefefe; }
         .review-container .comment-container.even { background-color: #fafafa; }
+
+
+.community-rating .scale { width: 125px; height: 25px; display: inline-block; background-image: url(/img/stars-big.png); background-position: 0 25px; }
+    .community-rating .scale .l { height: 100%; background-image: url(/img/stars-big.png); }

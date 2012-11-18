@@ -20,70 +20,78 @@
     var i = 0;
 }
 
-@*TODO: if user has already added a review, then don't show "add review" link*@
-<a href="@Model.AddReviewLink.Href" class="@Model.AddReviewLink.Css">@Model.AddReviewLink.Text</a>
-
-<h1>@Model.Rating</h1>
-
-@RenderPagerControls()
-
-@foreach (var review in Model.Reviews)
-{
-    <div id="@review.ReviewId" class="review-container">
-        <img class="avatar" src="@review.UserAvatarSrc"/>
-        <div class="review">
-            <section>
-                <span class="user">@review.UserName</span>
-                <span class="time">on @review.Created</span>
-            </section>
-            <section class="rating">
-                @foreach(var rating in review.Ratings)
-                {
-                    <div>
-                        <label class="question">@(rating.Question)</label>
-                        <div class="answer">@Html.Raw(rating.AnswerHtml)</div>
-                    </div>
-                }
-            </section>
-            <section class="message">@Html.Raw(review.Message)</section>
-            <section class="useful">
-                Was this review useful to you? <a href="#">Yes</a>
-            </section>
-            <section>
-                <a href="#" class="commentsLink">@(review.Comments.Count() > 0 ? "View " + @review.Comments.Count() + " comments" : "No comments left yet")</a>
-            </section>
-            <section>
-                <a href="#" class="addCommentLink">Add comment</a>
-            </section>
-            @*@if(!review.Comments.IsEmpty())
-            {
-            <section class="commentsSection">
-                @foreach (var comment in review.Comments)
-                {
-                    <div class="comment-container">
-                        <img class="avatar" src="@Html.Avatar(comment.UserName, 32)"/>
-                        <div class="comment">
-                            <div>by <span class="user">@comment.UserName</span> at @comment.Created.ToLocalTime():</div>
-                            <div class="message">@comment.Message</div>
-                        </div>
-                    </div>
-                }
-            </section>
-            }
-            <a href="#" class="addCommentLink">Add comment</a>
-            <section class="addCommentSection">
-                <textarea data-index="@(i++)"></textarea>
-                <p>
-                    <input type="button" class="postCommentButton" value="Post" href="@Url.Action("PostReviewComment")" />
-                    <input type="button" class="cancelCommentButton" value="Cancel" />
-                </p>
-            </section>
-            @if (Context.User.IsInRole("content_manager"))
-            {
-            <sup class="alter delete">@Html.ActionLink("x", "DeleteReview", null, new { title = "Delete", reviewid = review.ReviewId })</sup>
-            }*@
-        </div>
+<div class="row center">
+    <div>
+        <div class="community-rating">@Html.Raw(Model.Rating)</div>
+        <a href="@Model.AddReviewLink.Href" class="@Model.AddReviewLink.Css btn btn-danger">@Model.AddReviewLink.Text</a>
     </div>
-}
+</div>
 
-@RenderPagerControls()
+<div class="row">
+    <div class="span12">
+
+        @RenderPagerControls()
+
+        @foreach (var review in Model.Reviews)
+        {
+            <div id="@review.ReviewId" class="review-container">
+                <img class="avatar" src="@review.UserAvatarSrc"/>
+                <div class="review">
+                    <section>
+                        <span class="user">@review.UserName</span>
+                        <span class="time">on @review.Created</span>
+                    </section>
+                    <section class="rating">
+                        @foreach(var rating in review.Ratings)
+                        {
+                            <div>
+                                <label class="question">@(rating.Question)</label>
+                                <div class="answer">@Html.Raw(rating.AnswerHtml)</div>
+                            </div>
+                        }
+                    </section>
+                    <section class="message">@Html.Raw(review.Message)</section>
+                    <section class="useful">
+                        Was this review useful to you? <a href="#">Yes</a>
+                    </section>
+                    <section>
+                        <a href="#" class="commentsLink">@(review.Comments.Count() > 0 ? "View " + @review.Comments.Count() + " comments" : "No comments left yet")</a>
+                    </section>
+                    <section>
+                        <a href="#" class="btn addCommentLink">Add comment</a>
+                    </section>
+                    @*@if(!review.Comments.IsEmpty())
+                    {
+                    <section class="commentsSection">
+                        @foreach (var comment in review.Comments)
+                        {
+                            <div class="comment-container">
+                                <img class="avatar" src="@Html.Avatar(comment.UserName, 32)"/>
+                                <div class="comment">
+                                    <div>by <span class="user">@comment.UserName</span> at @comment.Created.ToLocalTime():</div>
+                                    <div class="message">@comment.Message</div>
+                                </div>
+                            </div>
+                        }
+                    </section>
+                    }
+                    <a href="#" class="addCommentLink">Add comment</a>
+                    <section class="addCommentSection">
+                        <textarea data-index="@(i++)"></textarea>
+                        <p>
+                            <input type="button" class="postCommentButton" value="Post" href="@Url.Action("PostReviewComment")" />
+                            <input type="button" class="cancelCommentButton" value="Cancel" />
+                        </p>
+                    </section>
+                    @if (Context.User.IsInRole("content_manager"))
+                    {
+                    <sup class="alter delete">@Html.ActionLink("x", "DeleteReview", null, new { title = "Delete", reviewid = review.ReviewId })</sup>
+                    }*@
+                </div>
+            </div>
+        }
+
+        @RenderPagerControls()
+
+    </div>
+</div>
