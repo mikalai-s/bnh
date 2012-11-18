@@ -45,7 +45,8 @@ namespace Bnh.Web.ViewModels
             {
                 Func<Pager<Review>.Link, string> classResolver = (link) =>
                     (link.Active && link.Numeric) ? "active page" :
-                    link.Numeric ? "page" : "";
+                    link.Numeric ? "page" : 
+                    link.Disabled ? "disabled" : "";
 
                 this.PagerLinks = pager.Links
                     .Select(link => new LinkViewModel

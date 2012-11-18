@@ -4,12 +4,14 @@
 {
     if (!Model.PagerLinks.IsEmpty())
     {
-        <div class="pager">
+        <ul class="pager">
         @foreach (var link in Model.PagerLinks)
         {
-            <a href="@link.Href" class="@link.Css">@link.Text</a>
+            <li class="@link.Css">
+                <a href="@link.Href">@link.Text</a>
+            </li>
         }
-        </div>
+        </ul>
     }
 }
 
@@ -39,7 +41,7 @@
                 <div class="review">
                     <section>
                         <span class="user">@review.UserName</span>
-                        <span class="time">on @review.Created</span>
+                        <span class="time">on @(review.Created):</span>
                     </section>
                     <section class="rating">
                         @foreach(var rating in review.Ratings)

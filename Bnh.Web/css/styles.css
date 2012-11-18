@@ -137,3 +137,11 @@ fieldset legend { text-align: center; }
 
 .community-rating .scale { width: 125px; height: 25px; display: inline-block; background-image: url(/img/stars-big.png); background-position: 0 25px; }
     .community-rating .scale .l { height: 100%; background-image: url(/img/stars-big.png); }
+
+
+/* pager */
+
+.pager a { padding: 1px 8px; font-size: 12px; border-radius: 4px; -moz-border-radius: 4px; -webkit-border-radius: 4px; }
+.pager .active a { background-color: #F5F5F5; }
+
+/* end pager */

@@ -230,7 +230,7 @@ namespace Bnh.Controllers
         public ActionResult AddReview(Review review)
         {
             review.UserName = User.Identity.Name;
-            review.Message = Encoding.FromBase64(review.Message);
+            review.Message = review.Message.IsEmpty() ? string.Empty : Encoding.FromBase64(review.Message);
             review.Created = DateTime.Now.ToUniversalTime();
             this.repositories.Reviews.Insert(review);
             return Redirect(Url.Action("Reviews", new { id = this.RouteData.Values["id"] }) + "#" + review.ReviewId);

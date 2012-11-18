@@ -9,9 +9,11 @@
     <div class="span12 reviews">
 
         <!-- ko if: pagerLinks -->
-        <div class="pager" data-bind="foreach: pagerLinks">
-            <a data-bind="text: text, attr: { href: href, class: css }"></a>
-        </div>
+        <ul class="pager" data-bind="foreach: pagerLinks">
+            <li data-bind="attr: { class: css }">
+                <a data-bind="text: text, attr: { href: href }"></a>
+            </li>
+        </ul>
         <!-- /ko -->
 
         <!-- ko foreach: reviews -->
@@ -67,9 +69,11 @@
         <!-- /ko -->
 
         <!-- ko if: pagerLinks -->
-        <div class="pager" data-bind="foreach: pagerLinks">
-            <a data-bind="text: text, attr: { href: href, class: css }"></a>
-        </div>
+        <ul class="pager" data-bind="foreach: pagerLinks">
+            <li data-bind="attr: { class: css }">
+                <a data-bind="text: text, attr: { href: href }"></a>
+            </li>
+        </ul>
         <!-- /ko -->
 
     </div>
