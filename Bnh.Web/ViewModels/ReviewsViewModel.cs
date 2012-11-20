@@ -68,11 +68,7 @@ namespace Bnh.Web.ViewModels
                     Created = r.Created.ToLocalTime().ToUserFriendlyString(),
                     Message = r.Message,
                     Comments = (r.Comments ?? Enumerable.Empty<Comment>())
-                        .Select(c => new CommentViewModel(c)
-                        {
-                            UserName = userProfiles[c.UserName].DisplayName,
-                            UserAvatarSrc = Gravatar.GetUrl(userProfiles[c.UserName].GravatarEmail, 32) + "&d=identicon"
-                        }),
+                        .Select(c => new CommentViewModel(c, userProfiles[c.UserName])),
                     Ratings = ratingQuestions
                         .Where(q => r.Ratings[q.Key].HasValue)
                         .Select(q => new RatingQuestionViewModel

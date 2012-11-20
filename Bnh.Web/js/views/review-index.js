@@ -53,9 +53,7 @@ define(
 
             ko.computed(function () {
                 var comments = this.comments();
-                if (!comments.length) {
-                    this.commentsLinkText("No comments left yet");
-                } else {
+                if (comments.length) {
                     this.commentsLinkText(this.commentsVisible()
                         ? "Hide comments"
                         : 'View ' + comments.length + ' comments');
@@ -130,7 +128,7 @@ define(
                 $.ajax({
                     url: this.page.deleteReviewUrl,
                     type: 'delete',
-                    dataType: 'json',
+                    contentType: 'application/json',
                     data: { reviewId: this.reviewId },
                     success: function () {
                         self.page.reviews.remove(self);
@@ -150,7 +148,7 @@ define(
                 $.ajax({
                     url: this.review.page.deleteCommentUrl,
                     type: 'delete',
-                    dataType: 'json',
+                    contentType: 'application/json',
                     data: {
                         reviewId: this.review.reviewId,
                         commentId: this.commentId

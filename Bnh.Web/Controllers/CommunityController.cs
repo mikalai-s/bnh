@@ -262,7 +262,7 @@ namespace Bnh.Controllers
                 Message = message
             };
             this.repositories.Reviews.AddReviewComment(reviewId, comment);
-            return Json(new CommentViewModel(comment));
+            return Json(new CommentViewModel(comment, this.repositories));
         }
 
 

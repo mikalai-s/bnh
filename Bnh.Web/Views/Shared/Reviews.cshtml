@@ -56,9 +56,12 @@
                     <section class="useful">
                         Was this review useful to you? <a href="#">Yes</a>
                     </section>
+                    @if(review.Comments.Count() > 0)
+                    {
                     <section>
-                        <a href="#" class="commentsLink">@(review.Comments.Count() > 0 ? "View " + @review.Comments.Count() + " comments" : "No comments left yet")</a>
+                        <a href="#" class="commentsLink">View @review.Comments.Count() comments</a>
                     </section>
+                    }
                     <section>
                         <a href="#" class="btn addCommentLink">Add comment</a>
                     </section>
