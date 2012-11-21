@@ -1,7 +1,7 @@
 ﻿/*global window, define, require, tinymce */
 
 define(
-    ["jquery", "knockout"],
+    ["jquery", "knockout", "jqjson"],
     function ($, ko) {
         "use strict";
 
@@ -127,9 +127,12 @@ define(
             if (window.confirm("Are you sure you want to delete the review?")) {
                 $.ajax({
                     url: this.page.deleteReviewUrl,
-                    type: 'delete',
+                    headers: {
+                        'X-HTTP-Method-Override': 'DELETE'
+                    },
+                    type: 'post',
                     contentType: 'application/json',
-                    data: { reviewId: this.reviewId },
+                    data: jQuery.toJSON({ reviewId: this.reviewId }),
                     success: function () {
                         self.page.reviews.remove(self);
                     },
@@ -147,12 +150,15 @@ define(
             if (window.confirm("Are you sure you want to delete the comment?")) {
                 $.ajax({
                     url: this.review.page.deleteCommentUrl,
-                    type: 'delete',
+                    headers: {
+                        'X-HTTP-Method-Override': 'DELETE'
+                    },
+                    type: 'post',
                     contentType: 'application/json',
-                    data: {
+                    data: jQuery.toJSON({
                         reviewId: this.review.reviewId,
                         commentId: this.commentId
-                    },
+                    }),
                     success: function () {
                         self.review.comments.remove(self);
                     },
