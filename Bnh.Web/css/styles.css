@@ -137,8 +137,8 @@ fieldset legend { text-align: center; }
         .review-container .comment-container.even { background-color: #fafafa; }
 
 
-.community-rating .scale { width: 125px; height: 25px; display: inline-block; background-image: url(/img/stars-big.png); background-position: 0 25px; }
-    .community-rating .scale .l { height: 100%; background-image: url(/img/stars-big.png); }
+.description .scale { width: 125px; height: 25px; display: inline-block; background-image: url(/img/stars-big.png); background-position: 0 25px; }
+    .description .scale .l { height: 100%; background-image: url(/img/stars-big.png); }
 
 
 /* pager */

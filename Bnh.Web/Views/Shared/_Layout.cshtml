@@ -40,8 +40,8 @@
         <div id="page" class="container">
 
             <header>
-                <h1>@ViewBag.Title</h1>
-                <h4>@ViewBag.Description</h4>
+                <h1 class="title">@Html.Raw(ViewBag.Title)</h1>
+                <h4 class="description">@Html.Raw(ViewBag.Description)</h4>
             </header>
 
             @RenderBody()

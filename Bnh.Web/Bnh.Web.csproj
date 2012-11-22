@@ -604,6 +604,7 @@
     <Content Include="js\views\review-index.js" />
     <Compile Include="ViewModels\CommentViewModel.cs" />
     <Compile Include="ViewModels\LinkViewModel.cs" />
+    <Compile Include="ViewModels\PageViewModel.cs" />
     <Compile Include="ViewModels\RatingQuestionViewModel.cs" />
     <Compile Include="ViewModels\ReviewViewModel.cs" />
     <Compile Include="ViewModels\ReviewsViewModel.cs" />

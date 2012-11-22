@@ -5,7 +5,9 @@ define(
     ["jquery", "knockout", "debug"],
     function ($, ko) {
 
-        var $body = $("#body");
+        var $page = $("#page"),
+            $body = $page.find("#body");
+
 
         // checks whether given browser support History API
         function supportsHistoryApi() {
@@ -14,6 +16,10 @@ define(
 
         // initialize current page
         function init() {
+            // add title and description binding for the page
+            $page.find("header .title").attr("data-bind", "html: title");
+            $page.find("header .description").attr("data-bind", "html: description");
+
             // handle popstate event only if browser supports History API
             if (supportsHistoryApi()) {
                 // Hook popstate event in 1 second to prevent Chrome's popstate on page load
@@ -45,9 +51,9 @@ define(
                         // TODO: vm as global just for debug
                         vm = new pageViewModel(initViewModel);
 
-                        ko.applyBindings(vm, $body[0]);
+                        ko.applyBindings(vm, $page[0]);
 
-                        hookSinglePageLinks($body);
+                        hookSinglePageLinks($page);
                     }
                 });
             }
@@ -70,13 +76,13 @@ define(
             }
         }
 
-        function initPage($body, module, html, viewModel) {
+        function initPage(module, html, viewModel) {
             $body.html(html);
 
             ko.applyBindings(viewModel, document.getElementsByTagName("html")[0]);
 
             // handle single page link in given template
-            hookSinglePageLinks($body);
+            hookSinglePageLinks($page);
 
             // everything is loaded and binded - load module script
             require([module]);
@@ -93,11 +99,11 @@ define(
 
                     if (requiresTemplate) {
                         require(["text!" + module + ".htm"], function (template) {
-                            initPage($body, module, template, $.extend(true, data, { title: title }));
+                            initPage(module, template, $.extend(true, data, { title: title }));
                         });
                     }
                     else {
-                        initPage($body, module, data, { title: title });
+                        initPage(module, data, { title: title });
                     }
                 }
             });

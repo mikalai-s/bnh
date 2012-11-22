@@ -64,7 +64,8 @@ define(
         function Page(record) {
             var self = this;
 
-            this.title = record.Title;
+            this.title = ko.observable(record.Title);
+            this.description = ko.observable(record.Description);
             this.rating = record.Rating;
             this.targetUrlId = record.TargetUrlId;
             this.targetName = record.TargetName;
