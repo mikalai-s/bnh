@@ -111,6 +111,7 @@ define(
                     self.comments.push(new Comment(data, self));
                     self.newComment("");
                     self.addCommentVisible(false);
+                    self.commentsVisible(true);
                 },
                 error: function (jqXhr, textStatus, errorThrown) {
                     window.console.error("Unable to post a comment!",

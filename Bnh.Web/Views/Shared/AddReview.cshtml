@@ -10,36 +10,44 @@
     var questions = (ViewBag.Questions as IEnumerable<KeyValuePair<string, string>>).ToArray();
 }
 
-<div class="page-view">
-    <h2>Add @ViewBag.CommunityName Review</h2>
+<div class="row">
+    <div class="span12">
+        @using (Html.BeginForm("AddReview", attributes: new { @class = "form-horizontal" })) 
+        {
+            @Html.HiddenFor(m => m.TargetId);
+            
+            <fieldset>
+                <legend>Rate @ViewBag.CommunityName community</legend>
 
-    @using (Html.BeginForm()) {
-        @Html.HiddenFor(m => m.TargetId)
-
-        <div class="add-review">
-            <section class="rating">
-                <h4>Please rate the community by following parameters:</h4>
                 @for (int i = 0; i < questions.Length; i ++)
                 {
                     var question = questions[i];
-                    <div>
-                        <label>@question.Value</label>
-                        @Html.Hidden("ratings[" + i + "].key", question.Key)
-                        @Html.DropDownList("ratings[" + i + "].value", new SelectList(ratings, "value", "name"), "")
+                    <div class="control-group">
+                        <label class="control-label">@question.Value</label>
+                        <div class="controls">
+                            @Html.Hidden("ratings[" + i + "].key", question.Key)
+                            @Html.DropDownList("ratings[" + i + "].value", new SelectList(ratings, "value", "name"), "")
+                        </div>
                     </div>
                 }
-            </section>
 
-            <section>
-                <h4>And also leave us a review:</h4>
-                @Html.TextAreaFor(m => m.Message)
-            </section>
+            </fieldset>
+            
+            <fieldset>
+                <legend>Leave @ViewBag.CommunityName review</legend>
 
-        </div>
+                <div class="control-group">
+                    <label class="control-label">Review</label>
+                    <div class="controls">
+                        @Html.TextAreaFor(m => m.Message)
+                    </div>
+                </div>
+            </fieldset>
 
-        <p>
-            <span class="alter"><input type="submit" value="Create" /></span>
-            @Html.ActionInputLink("Cancel", "Reviews")
-        </p>
-    }
+            <div class="form-actions">
+                <span class="alter"><input type="submit" value="Create" class="btn btn-danger" /></span>
+                @Html.ActionInputLink("Cancel", "Reviews", attributes: new { @class = "btn"})
+            </div>
+        }
+    </div>
 </div>

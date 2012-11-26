@@ -10,6 +10,6 @@
 </div>
 <div class="row">
     <div class="span12 center hero-movie">
-        @Html.ActionInputLink("Start search now", "Index", "Community", null, new Dictionary<string, object>() { { "style", "text-transform: uppercase" },  {"class", "btn btn-danger"}})
+        @Html.ActionInputLink("Start search now", "Index", "Community", attributes: new { @class = "btn btn-danger uppercase" })
     </div>
 </div>

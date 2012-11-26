@@ -81,7 +81,7 @@ footer .small-logo { background-image: url(/img/logo-inverse.png); height: 50px;
 
 /* general */
 
-fieldset legend { text-align: center; }
+fieldset legend { box-sizing: border-box; padding-left: 25px; }
 
 .center { text-align: center; vertical-align: middle; }
 
@@ -147,3 +147,6 @@ fieldset legend { text-align: center; }
 .pager .active a { background-color: #F5F5F5; }
 
 /* end pager */
+
+
+.uppercase { text-transform: uppercase; }
