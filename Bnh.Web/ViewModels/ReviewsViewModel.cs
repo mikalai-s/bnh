@@ -5,6 +5,8 @@ using System.Linq;
 using System.Web.Mvc;
 using System.Web.Mvc.Html;
 
+
+using Bnh;
 using Bnh.Core.Entities;
 using Bnh.Web.Models;
 
@@ -24,12 +26,12 @@ namespace Bnh.Web.ViewModels
         public string DeleteReviewUrl { get; set; }
         public string DeleteCommentUrl { get; set; }
 
-        public ReviewsViewModel(Controller controller, int? rating, string targetUrlId, string targetName, IDictionary<string, string> ratingQuestions, Pager<Review> pager, List<Profile> profiles)
+        public ReviewsViewModel(Controller controller, double? rating, string targetUrlId, string targetName, IDictionary<string, string> ratingQuestions, Pager<Review> pager, List<Profile> profiles)
             : base(controller)
         {
             var userProfiles = profiles.ToDictionary(p => p.UserName, p => p);
 
-            this.Rating = rating.HasValue ? RatingAnswerHtml(rating.Value / 10) : "Not rated yet";
+            this.Rating = this.HtmlHelper.RatingStars(rating).ToString();
             this.Description = this.Rating;
             this.TargetUrlId = targetUrlId;
             this.TargetName = targetName;
@@ -73,18 +75,13 @@ namespace Bnh.Web.ViewModels
                         .Select(q => new RatingQuestionViewModel
                         {
                             Question = q.Value + ":",
-                            AnswerHtml = RatingAnswerHtml(r.Ratings[q.Key].Value)
+                            AnswerHtml = this.HtmlHelper.RatingStars(r.Ratings[q.Key]).ToString()
                         }),
                     PostCommentActionUrl = this.UrlHelper.Action("PostReviewComment")
                 });
             this.Admin = controller.HttpContext.User.IsInRole("content_manager");
             this.DeleteReviewUrl = this.Admin ? this.UrlHelper.Action("DeleteReview") : null;
             this.DeleteCommentUrl = this.Admin ? this.UrlHelper.Action("DeleteReviewComment") : null;
-        }
-
-        private static string RatingAnswerHtml(int rating)
-        {
-            return "<div class='scale'><div class='l' style='width:{0}%'></div></div>".FormatWith(rating * 10);
         }
     }
 }

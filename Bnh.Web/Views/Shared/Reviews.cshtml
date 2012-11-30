@@ -35,7 +35,7 @@
         @foreach (var review in Model.Reviews)
         {
             <div id="@review.ReviewId" class="review-container">
-                <img class="avatar" src="@review.UserAvatarSrc"/>
+                <img class="avatar img-polaroid" src="@review.UserAvatarSrc"/>
                 <div class="review">
                     <section>
                         <span class="user">@review.UserName</span>

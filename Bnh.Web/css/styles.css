@@ -109,14 +109,14 @@ fieldset legend { box-sizing: border-box; padding-left: 25px; }
 
 
 
-.review-container { margin: 10px; border: solid 1px lightgrey; padding: 10px; position: relative; }
+.review-container { margin: 10px; border-top: solid 1px lightgrey; padding: 10px; position: relative; }
     .review-container .rating div { line-height: normal; font-size: 100%; }
     .review-container .rating label { display: inline-block; width: 100px; margin: 0; font-size: 85%; line-height: normal; }
     .review-container .message { padding: 7px; }
     .review-container .useful { font-size: 85%; }
     .review-container .delete { position: absolute; right: 0; top: 0; }
 
-    .review-container .review { margin-left: 75px; }
+    .review-container .review { margin-left: 85px; }
         .review-container .review .answer { display: inline; }
 
     .review-container .avatar { position: absolute; }
@@ -127,7 +127,7 @@ fieldset legend { box-sizing: border-box; padding-left: 25px; }
     .review-container .scale .l { height: 100%; background-image: url(/img/stars-small.png); }
 
     .review-container .comment-container { margin: 10px 0; }
-        .review-container .comment { margin-left: 35px; }
+        .review-container .comment { margin-left: 50px; }
 
     .review-container .mceLayout { width: 100% !important; }
     .review-container .mceToolbar { text-align: left; }
@@ -150,3 +150,12 @@ fieldset legend { box-sizing: border-box; padding-left: 25px; }
 
 
 .uppercase { text-transform: uppercase; }
+
+/* review-add */
+
+.review-add .scale { width: 125px; height: 25px; display: inline-block; background-image: url(/img/stars-big.png); background-position: 0 25px; cursor: pointer; }
+    .review-add .scale .l { height: 100%; background-image: url(/img/stars-big.png); }
+
+    .review-add .mceLayout, .review-add textarea { width: 550px !important; height: 150px;}
+
+/* end review-add */

@@ -10,7 +10,7 @@
     var questions = (ViewBag.Questions as IEnumerable<KeyValuePair<string, string>>).ToArray();
 }
 
-<div class="row">
+<div class="row review-add">
     <div class="span12">
         @using (Html.BeginForm("AddReview", attributes: new { @class = "form-horizontal" })) 
         {
@@ -19,6 +19,7 @@
             <fieldset>
                 <legend>Rate @ViewBag.CommunityName community</legend>
 
+                <div class="span5">
                 @for (int i = 0; i < questions.Length; i ++)
                 {
                     var question = questions[i];
@@ -26,13 +27,19 @@
                         <label class="control-label">@question.Value</label>
                         <div class="controls">
                             @Html.Hidden("ratings[" + i + "].key", question.Key)
-                            @Html.DropDownList("ratings[" + i + "].value", new SelectList(ratings, "value", "name"), "")
+                            @Html.Hidden("ratings[" + i + "].value", null, new { @class = "value" })
+                            @Html.RatingStars(0)
                         </div>
                     </div>
                 }
+                </div>
+                <div class="alert alert-block span4">
+                    <h4>Hint!</h4>
+                    Move mouse over stars to adjust rating and click left button when you are done.
+                </div>
 
             </fieldset>
-            
+
             <fieldset>
                 <legend>Leave @ViewBag.CommunityName review</legend>
 

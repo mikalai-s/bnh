@@ -17,5 +17,20 @@ define(
                 });
             }
         });
+
+        $(".scale")
+            .on("mousemove", function (e) {
+                var scale = $(this);
+                scale.find(".l").width(e.offsetX / scale.width() * 100 - 1 + "%");
+            })
+            .on("click", function (e) {
+                var scale = $(this);
+                scale.closest(".controls").find("input.value").val(e.offsetX / scale.width());
+            })
+            .on("mouseout", function (e) {
+                var scale = $(this),
+                    value = scale.closest(".controls").find("input.value").val();
+                scale.find(".l").width(value * 100 + "%");
+            });
     }
 );

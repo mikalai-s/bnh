@@ -123,5 +123,21 @@ namespace Bnh
             items[lastFormNumKey] = num;
             return num;
         }
+
+        /// <summary>
+        /// Creates rating stars HTML, where rating is in percents
+        /// </summary>
+        /// <param name="helper"></param>
+        /// <param name="rating"></param>
+        /// <returns></returns>
+        public static MvcHtmlString RatingStars(this HtmlHelper helper, double? rating)
+        {
+            if (rating.HasValue)
+            {
+                return new MvcHtmlString("<div class='scale'><div class='l' style='width:{0}%'></div></div>".FormatWith(rating * 100));
+            }
+
+            return new MvcHtmlString("Not rated");
+        }
     }
 }
