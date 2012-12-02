@@ -12,7 +12,7 @@
             var gpsLocation = gpsLocationAttr ? $.parseJSON(gpsLocationAttr) : null;
             var gpsBounds = gpsBoundsAttr ? $.parseJSON(gpsBoundsAttr) : null;
 
-            var map = new Map(elem.find("#mapCanvas").get(0), {
+            var map = new Map(elem.find("#mapCanvas"), {
                 zoom: elem.attr("zoom") * 1,
                 center: gpsLocation
             });

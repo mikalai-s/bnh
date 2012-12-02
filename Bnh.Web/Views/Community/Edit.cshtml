@@ -96,7 +96,7 @@
                 <span class="alter">
                     <input type="submit" value="Save" />
                 </span>
-                @Html.ActionInputLink("View", "Details", new { id = Model.UrlId })
+                @Html.ActionInputLink("View", "Details", attributes: new { id = Model.UrlId })
             </div>
 
         </fieldset>

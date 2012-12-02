@@ -1,0 +1,79 @@
+﻿<div class="row center">
+    <div>
+        <a class="btn btn-danger" data-bind="attr : { href: addReviewLink.Href }">Add review</a>
+    </div>
+</div>
+
+<div class="row">
+    <div class="span12 reviews">
+
+        <!-- ko if: pagerLinks -->
+        <ul class="pager" data-bind="foreach: pagerLinks">
+            <li data-bind="attr: { class: css }">
+                <a data-bind="text: text, attr: { href: href }"></a>
+            </li>
+        </ul>
+        <!-- /ko -->
+
+        <!-- ko foreach: reviews -->
+        <div class="review-container" data-bind="attr: { id: reviewId }">
+            <img class="avatar img-polaroid" data-bind="attr: { src: userAvatarSrc }"/>
+            <div class="review">
+                <section>
+                    <span class="user" data-bind="text: userName"></span>
+                    <span class="time" data-bind="text: ' on ' + created + ':'"></span>
+                </section>
+                <section class="rating">
+                    <!-- ko foreach: ratings -->
+                    <div>
+                        <label class="question" data-bind="text: question"></label>
+                        <div class="answer" data-bind="html: answerHtml"></div>
+                    </div>
+                    <!-- /ko -->
+                </section>
+                <section class="message" data-bind="html: message"></section>
+                <section class="useful">
+                    Was this review useful to you? <a href="#" data-bind="click: onUsefulClick">Yes</a>
+                </section>
+                <section data-bind="visible: comments().length">
+                    <a class="commentsLink" href="#" data-bind="text: commentsLinkText, click: function() { commentsVisible(!commentsVisible()) }"></a>
+                </section>
+                <section class="commentsSection" data-bind="slideVisible: commentsVisible, foreach: comments">
+                    <div class="comment-container" data-bind="attr: { class: ($index() +1) % 2 ? 'comment-container even' : 'comment-container' }">
+                        <img class="avatar img-polaroid" data-bind="attr: { src: userAvatarSrc }"/>
+                        <div class="comment">
+                            <div><span class="user" data-bind="text: userName"></span><span class="time" data-bind="text: ' on ' + created + ':'"></span></div>
+                            <div class="message" data-bind="html: message"></div>
+                        </div>
+                        <sup class="alter delete" data-bind="visible: $parent.page.admin">
+                            <a href="#" title="Delete comment" data-bind="click: onDeleteComment">x</a>
+                        </sup>
+                    </div>
+                </section>
+                <section>
+                    <a href="#" class="btn addCommentLink" data-bind="visible: !addCommentVisible(), click: onAddComment">Add comment</a>
+                </section>
+                <section class="addCommentSection" data-bind="slideVisible: addCommentVisible">
+                    <textarea data-bind="attr: { id: 'textarea_' + reviewId }, tinymce: newComment, tinymceOptions : { initTrigger: tinyMceInitTrigger, encoding: 'xml', theme: 'simple', forced_root_block: false }"></textarea>
+                    <p>
+                        <input type="button" class="btn btn-danger" value="Post" data-bind="click: onPostComment" />
+                        <input type="button" class="btn" data-bind="click: onCancelComment" value="Cancel" />
+                    </p>
+                </section>
+                <sup class="alter delete" data-bind="visible: $parent.admin">
+                    <a href="#" title="Delete review" data-bind="click: onDeleteReview">x</a>
+                </sup>
+            </div>
+        </div>
+        <!-- /ko -->
+
+        <!-- ko if: pagerLinks -->
+        <ul class="pager" data-bind="foreach: pagerLinks">
+            <li data-bind="attr: { class: css }">
+                <a data-bind="text: text, attr: { href: href }"></a>
+            </li>
+        </ul>
+        <!-- /ko -->
+
+    </div>
+</div>

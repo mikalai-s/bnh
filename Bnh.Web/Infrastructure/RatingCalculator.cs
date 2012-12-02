@@ -21,7 +21,7 @@ namespace Bnh.Infrastructure
             this.repos = repos;
         }
 
-        public int? GetTargetRating(string id)
+        public double? GetTargetRating(string id)
         {
             var reviews = this.repos.Reviews as MongoRepository<Review>;
             if (!reviews.Database.CollectionExists(reviews.CollectionName)) { return null;  }
@@ -57,7 +57,7 @@ namespace Bnh.Infrastructure
 
             // NOTE: Reduce function is not getting executed when there is only one element in map
             // that's why we have additional counter to handle such situation
-            var rating = 0;
+            var rating = 0.0;
             var count = 0;
             foreach (var rate in result.value.ratings.Values.Where(v => v.HasValue).Select(v => v.Value))
             {
@@ -66,7 +66,7 @@ namespace Bnh.Infrastructure
             }
             if (result.value.count == 0 && count == 0) return null;
 
-            return rating * 10 / ((result.value.count > 0) ? result.value.count : count);
+            return rating / ((result.value.count > 0) ? (double)result.value.count : (double)count);
         }
 
         /// <summary>
@@ -81,7 +81,7 @@ namespace Bnh.Infrastructure
             public class ResultValue
             {
                 public int count { get; set; }
-                public IDictionary<string, int?> ratings { get; set; }
+                public IDictionary<string, double?> ratings { get; set; }
             }
         }
     }

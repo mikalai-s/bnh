@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using Bnh.Core;
 using Bnh.Core.Entities;
 using Microsoft.Web.Helpers;
 
@@ -19,6 +20,18 @@ namespace Bnh.Web.ViewModels
         public string UserAvatarSrc { get; set; }
 
         public string Created { get; set; }
+
+        public CommentViewModel(Comment comment, IEntityRepositories repos) 
+            : this(comment, repos.Profiles.First(p => p.UserName == comment.UserName))
+        {
+        }
+
+        public CommentViewModel(Comment comment, Profile user) 
+            : this(comment)
+        {
+            this.UserName = user.DisplayName;
+            this.UserAvatarSrc = Gravatar.GetUrl(user.GravatarEmail, 32) + "&d=identicon";
+        }
 
         public CommentViewModel(Comment comment)
         {

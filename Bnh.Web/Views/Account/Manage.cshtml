@@ -2,54 +2,75 @@
 
 @{
     ViewBag.Title = "Update Information";
+    ViewBag.Description = "Use the form below to change your information";
 }
 
-<hgroup class="title">
-    <h1>@ViewBag.Title</h1>
-    <h2>Use the form below to change your information.</h2>
-</hgroup>
+<article class="row">
 
-@using (Html.BeginForm()) {
-    @Html.ValidationSummary(true, "Entered information is not valid. Please correct the errors and try again.")
-    @Html.AntiForgeryToken()
+    <div class="span6">
 
-    <fieldset class="update-profile">
-        <legend>Account Information</legend>
-        <div class="avatar">
-            <img src="@Model.AvatarImageUrl"/>
-            <a href="http://gravatar.com/">Change profile picture</a>
-        </div>
-        <table>
-            <tr>
-                <td>@Html.LabelFor(m => m.DisplayName)</td>
-                <td>@Html.TextBoxFor(m => m.DisplayName)</td>
-                <td>@Html.ValidationMessageFor(m => m.DisplayName)</td>
-            </tr>
-            <tr>
-                <td>@Html.LabelFor(m => m.RealName)</td>
-                <td>@Html.TextBoxFor(m => m.RealName)</td>
-                <td>@Html.ValidationMessageFor(m => m.RealName)</td>
-            </tr>
-            <tr>
-                <td>@Html.LabelFor(m => m.GravatarEmail)</td>
-                <td>@Html.TextBoxFor(m => m.GravatarEmail)</td>
-                <td>@Html.ValidationMessageFor(m => m.GravatarEmail)</td>
-            </tr>
-        </table>
-        <div class="buttons">
-            <input type="submit" value="Update" />
-            @if(Model.CanChangePassword)
-            {
-                @Html.ActionInputLink("Change Password", "ChangePassword")
-            }
-        </div>
+        @using (Html.BeginForm("Manage", "Account", FormMethod.Post, new { @class = "form-horizontal" }))
+        {
+            @Html.ValidationSummary(true, "Entered information is not valid. Please correct the errors and try again.")
+            @Html.AntiForgeryToken()
 
-    </fieldset>
-}
+            <fieldset>
+                <legend>Account Information</legend>
 
-<section id="externalLogins">
-    @Html.Action("RemoveExternalLogins")
+                <div class="control-group">
+                    <div class="controls">
+                        <img src="@Model.AvatarImageUrl"/>
+                        <div>
+                            <a href="http://gravatar.com/">Change profile picture</a>
+                         </div>
+                    </div>
+                </div>
 
-    <h3>Add an external login</h3>
-    @Html.Action("ExternalLoginsList", new { ReturnUrl = ViewBag.ReturnUrl })
-</section>
+                <div class="control-group">
+                    @Html.LabelFor(m => m.DisplayName, new { @class = "control-label" })
+                    <div class="controls">
+                        @Html.TextBoxFor(m => m.DisplayName)
+                        @Html.ValidationMessageFor(m => m.DisplayName)
+                    </div>
+                </div>
+
+                <div class="control-group">
+                    @Html.LabelFor(m => m.RealName, new { @class = "control-label" })
+                    <div class="controls">
+                        @Html.TextBoxFor(m => m.RealName)
+                        @Html.ValidationMessageFor(m => m.RealName)
+                    </div>
+                </div>
+
+                <div class="control-group">
+                    @Html.LabelFor(m => m.GravatarEmail, new { @class = "control-label" })
+                    <div class="controls">
+                        @Html.TextBoxFor(m => m.GravatarEmail)
+                        @Html.ValidationMessageFor(m => m.GravatarEmail)
+                    </div>
+                </div>
+
+                <div class="form-actions">
+                    <input type="submit" value="Update" class="btn btn-primary" />
+                    @if(Model.CanChangePassword)
+                    {
+                        @Html.ActionInputLink("Change Password", "ChangePassword", "Account", null, new { @class = "btn" })
+                    }
+                </div>
+
+            </fieldset>
+        }
+
+    </div>
+
+    <div class="span6">
+
+        <section id="externalLogins">
+            @Html.Action("RemoveExternalLogins")
+
+            @Html.Action("ExternalLoginsList", new { ReturnUrl = ViewBag.ReturnUrl })
+        </section>
+
+    <div>
+
+</article>

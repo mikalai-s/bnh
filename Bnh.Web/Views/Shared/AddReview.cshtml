@@ -10,36 +10,51 @@
     var questions = (ViewBag.Questions as IEnumerable<KeyValuePair<string, string>>).ToArray();
 }
 
-<div class="page-view">
-    <h2>Add @ViewBag.CommunityName Review</h2>
+<div class="row review-add">
+    <div class="span12">
+        @using (Html.BeginForm("AddReview", attributes: new { @class = "form-horizontal" })) 
+        {
+            @Html.HiddenFor(m => m.TargetId);
+            
+            <fieldset>
+                <legend>Rate @ViewBag.CommunityName community</legend>
 
-    @using (Html.BeginForm()) {
-        @Html.HiddenFor(m => m.TargetId)
-
-        <div class="add-review">
-            <section class="rating">
-                <h4>Please rate the community by following parameters:</h4>
+                <div class="span5">
                 @for (int i = 0; i < questions.Length; i ++)
                 {
                     var question = questions[i];
-                    <div>
-                        <label>@question.Value</label>
-                        @Html.Hidden("ratings[" + i + "].key", question.Key)
-                        @Html.DropDownList("ratings[" + i + "].value", new SelectList(ratings, "value", "name"), "")
+                    <div class="control-group">
+                        <label class="control-label">@question.Value</label>
+                        <div class="controls">
+                            @Html.Hidden("ratings[" + i + "].key", question.Key)
+                            @Html.Hidden("ratings[" + i + "].value", null, new { @class = "value" })
+                            @Html.RatingStars(0)
+                        </div>
                     </div>
                 }
-            </section>
+                </div>
+                <div class="alert alert-block span4">
+                    <h4>Hint!</h4>
+                    Move mouse over stars to adjust rating and click left button when you are done.
+                </div>
 
-            <section>
-                <h4>And also leave us a review:</h4>
-                @Html.TextAreaFor(m => m.Message)
-            </section>
+            </fieldset>
 
-        </div>
+            <fieldset>
+                <legend>Leave @ViewBag.CommunityName review</legend>
 
-        <p>
-            <span class="alter"><input type="submit" value="Create" /></span>
-            @Html.ActionInputLink("Cancel", "Reviews")
-        </p>
-    }
+                <div class="control-group">
+                    <label class="control-label">Review</label>
+                    <div class="controls">
+                        @Html.TextAreaFor(m => m.Message)
+                    </div>
+                </div>
+            </fieldset>
+
+            <div class="form-actions">
+                <span class="alter"><input type="submit" value="Create" class="btn btn-danger" /></span>
+                @Html.ActionInputLink("Cancel", "Reviews", attributes: new { @class = "btn"})
+            </div>
+        }
+    </div>
 </div>

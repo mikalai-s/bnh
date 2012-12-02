@@ -2,6 +2,7 @@
 
 @{
     ViewBag.Title = "Register";
+    ViewBag.Description = "Use the form below to create a new account";
     var genderItems = new[]
     {
         new SelectListItem { Selected = true, Text = string.Empty, Value = string.Empty},
@@ -10,58 +11,87 @@
     };
 }
 
-<hgroup class="title">
-    <h1>@ViewBag.Title</h1>
-    <h2>Use the form below to create a new account.</h2>
-</hgroup>
+<div class="row">
+    <div class="span12">
+        @using (Html.BeginForm("", attributes: new { @class = "form-horizontal" }))
+        {
+            @Html.AntiForgeryToken()
+            @Html.ValidationSummary(true, "Account creation was unsuccessful. Please correct the errors and try again.", new { @class = "alert alert-error" })
 
-<p class="message-info">
-    Passwords are required to be a minimum of @Membership.MinRequiredPasswordLength characters in length.
-</p>
+            <fieldset>
+                <legend>Registration Form</legend>
 
-@using (Html.BeginForm((string)ViewBag.FormAction, "Account")) {
-    @Html.ValidationSummary(true, "Account creation was unsuccessful. Please correct the errors and try again.")
-    @Html.AntiForgeryToken()
+                <div class="span6">
 
-    <fieldset>
-        <legend>Registration Form</legend>
-        <table>
-            <tr>
-                <td>@Html.LabelFor(m => m.DisplayName)</td>
-                <td>@Html.TextBoxFor(m => m.DisplayName)</td>
-                <td>@Html.ValidationMessageFor(m => m.DisplayName)</td>
-            </tr>
-            <tr>
-                <td>@Html.LabelFor(m => m.RealName)</td>
-                <td>@Html.TextBoxFor(m => m.RealName)</td>
-                <td>@Html.ValidationMessageFor(m => m.RealName)</td>
-            </tr>
-            <tr>
-                <td>@Html.LabelFor(m => m.Location)</td>
-                <td>@Html.TextBoxFor(m => m.Location)</td>
-                <td>@Html.ValidationMessageFor(m => m.Location)</td>
-            </tr>
-            <tr>
-                <td>@Html.LabelFor(m => m.GravatarEmail)</td>
-                <td>@Html.TextBoxFor(m => m.GravatarEmail)</td>
-                <td>@Html.ValidationMessageFor(m => m.GravatarEmail)</td>
-            </tr>
-            <tr>
-                <td>@Html.LabelFor(m => m.Email)</td>
-                <td>@Html.TextBoxFor(m => m.Email)</td>
-                <td>@Html.ValidationMessageFor(m => m.Email)</td>
-            </tr>
-            <tr>
-                <td>@Html.LabelFor(m => m.Password)</td>
-                <td>@Html.PasswordFor(m => m.Password)</td>
-                <td>@Html.ValidationMessageFor(m => m.Password)</td>
-            </tr>
-            <tr>
-                <td>@Html.LabelFor(m => m.ConfirmPassword)</td>
-                <td>@Html.PasswordFor(m => m.ConfirmPassword)</td>
-                <td>@Html.ValidationMessageFor(m => m.ConfirmPassword)</td>
-            </tr>
-        </table>
-        <input type="submit" value="Register" />
-    </fieldset>
-}
+                    <div class="control-group">
+                        @Html.LabelFor(m => m.DisplayName, new { @class = "control-label" })
+                        <div class="controls">
+                            @Html.TextBoxFor(m => m.DisplayName)
+                            @Html.ValidationMessageFor(m => m.DisplayName, null, new { @class = "alert-error" })
+                        </div>
+                    </div>
+
+                    <div class="control-group">
+                        @Html.LabelFor(m => m.RealName, new { @class = "control-label" })
+                        <div class="controls">
+                            @Html.TextBoxFor(m => m.RealName)
+                            @Html.ValidationMessageFor(m => m.RealName, null, new { @class = "alert-error" })
+                        </div>
+                    </div>
+
+                    <div class="control-group">
+                        @Html.LabelFor(m => m.Location, new { @class = "control-label" })
+                        <div class="controls">
+                            @Html.TextBoxFor(m => m.Location)
+                            @Html.ValidationMessageFor(m => m.Location, null, new { @class = "alert-error" })
+                        </div>
+                    </div>
+
+                    <div class="control-group">
+                        @Html.LabelFor(m => m.GravatarEmail, new { @class = "control-label" })
+                        <div class="controls">
+                            @Html.TextBoxFor(m => m.GravatarEmail)
+                            @Html.ValidationMessageFor(m => m.GravatarEmail, null, new { @class = "alert-error" })
+                        </div>
+                    </div>
+
+                    <div class="control-group">
+                        @Html.LabelFor(m => m.Email, new { @class = "control-label" })
+                        <div class="controls">
+                            @Html.TextBoxFor(m => m.Email)
+                            @Html.ValidationMessageFor(m => m.Email, null, new { @class = "alert-error" })
+                        </div>
+                    </div>
+
+                    <div class="control-group">
+                        @Html.LabelFor(m => m.Password, new { @class = "control-label" })
+                        <div class="controls">
+                            @Html.TextBoxFor(m => m.Password)
+                            @Html.ValidationMessageFor(m => m.Password, null, new { @class = "alert-error" })
+                        </div>
+                    </div>
+
+                    <div class="control-group">
+                        @Html.LabelFor(m => m.ConfirmPassword, new { @class = "control-label" })
+                        <div class="controls">
+                            @Html.TextBoxFor(m => m.ConfirmPassword)
+                            @Html.ValidationMessageFor(m => m.ConfirmPassword, null, new { @class = "alert-error" })
+                        </div>
+                    </div>
+                </div>
+
+                <div class="span5">
+                    <div class="alert alert-block span4">
+                        <h4>Hint!</h4>
+                        Passwords are required to be a minimum of @Membership.MinRequiredPasswordLength characters in length.
+                    </div>
+                </div>
+
+            </fieldset>
+            
+            <div class="form-actions">
+                <input type="submit" value="Register" class="btn btn-danger" />
+            </div>
+        }
+    </div>
+</div>
