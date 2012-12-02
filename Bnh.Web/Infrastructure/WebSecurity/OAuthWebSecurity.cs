@@ -570,7 +570,7 @@ namespace Bnh.Infrastructure.WebSecurity
                     new WindowsLive(
                         login.Value["clientId"],
                         login.Value["clientSecret"]),
-                    "Windows Live", null);
+                    "Microsoft", null);
             }
             else if (login.Key == "facebook")
             {

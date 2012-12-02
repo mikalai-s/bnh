@@ -12,6 +12,6 @@ namespace Bnh.Core
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        int? GetTargetRating(string id);
+        double? GetTargetRating(string id);
     }
 }

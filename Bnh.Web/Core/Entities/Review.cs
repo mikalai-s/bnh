@@ -17,7 +17,7 @@ namespace Bnh.Core.Entities
 
         public string TargetId { get; set; }
 
-        public IDictionary<string, int?> Ratings { get; set; }
+        public IDictionary<string, double?> Ratings { get; set; }
 
         public Comment[] Comments { get; set; }
 

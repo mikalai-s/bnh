@@ -230,7 +230,7 @@ namespace Bnh.Controllers
         public ActionResult AddReview(Review review)
         {
             review.UserName = User.Identity.Name;
-            review.Message = HttpUtility.HtmlDecode(review.Message);
+            review.Message = review.Message.IsEmpty() ? string.Empty : Encoding.FromBase64(review.Message);
             review.Created = DateTime.Now.ToUniversalTime();
             this.repositories.Reviews.Insert(review);
             return Redirect(Url.Action("Reviews", new { id = this.RouteData.Values["id"] }) + "#" + review.ReviewId);
@@ -262,7 +262,7 @@ namespace Bnh.Controllers
                 Message = message
             };
             this.repositories.Reviews.AddReviewComment(reviewId, comment);
-            return Json(new CommentViewModel(comment));
+            return Json(new CommentViewModel(comment, this.repositories));
         }
 
 

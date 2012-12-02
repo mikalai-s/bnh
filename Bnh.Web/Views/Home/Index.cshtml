@@ -1,13 +1,15 @@
 @{
-    ViewBag.Title = "Home Page";
+    ViewBag.Title = "Home";
+    ViewBag.Description = "Welcome to BrandNewHomes.ca";
 }
 
-<h2>@ViewBag.Message</h2>
-<p>
-    Quick links:
-    <ul>
-        <li><a href="~/Scene/Edit/7">Martindale Scene Designer</a></li>
-
-    </ul>
-    <span aaser="~/aasdv/d"></span>
-</p>
+<div class="row">
+    <div class="span12 hero-movie">
+        <iframe src="http://player.vimeo.com/video/51971595" width="700" height="393" frameborder="0" webkitAllowFullScreen mozallowfullscreen allowFullScreen></iframe>
+    </div>
+</div>
+<div class="row">
+    <div class="span12 center hero-movie">
+        @Html.ActionInputLink("Start search now", "Index", "Community", attributes: new { @class = "btn btn-danger uppercase" })
+    </div>
+</div>
