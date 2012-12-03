@@ -159,3 +159,6 @@ fieldset legend { box-sizing: border-box; padding-left: 25px; }
     .review-add .mceLayout, .review-add textarea { width: 550px !important; height: 150px;}
 
 /* end review-add */
+
+.popover { width: auto; }
+.popover-content { height: auto; }

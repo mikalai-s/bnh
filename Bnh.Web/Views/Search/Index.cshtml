@@ -1,0 +1,26 @@
+﻿@model SearchViewModel
+
+@{
+    ViewBag.Title = "Search";
+}
+
+
+<div class="row">
+    <div class="span12">
+        <form class="form-search">
+            <input type="text" name="query" placeholder="Search Criteria" class="input-medium search-query" value="@Model.Query" />
+            <button type="submit" class="btn btn-primary">Search</button>
+        </form>
+    </div>
+</div>
+
+<div class="row">
+    <div class="span12">
+        @foreach(var entry in Model.Result)
+        {
+            <div>
+                @entry.Text
+            </div>
+        }
+    </div>
+</div>
