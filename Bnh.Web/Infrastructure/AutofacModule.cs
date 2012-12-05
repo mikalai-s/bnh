@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using Autofac;
 using Bnh.Infrastructure.Repositories;
+using Bnh.Web.Infrastructure.Search;
 
 namespace Bnh.Infrastructure
 {
@@ -15,6 +16,7 @@ namespace Bnh.Infrastructure
 
             builder.RegisterType<EntityRepositories>().AsImplementedInterfaces().InstancePerLifetimeScope();
             builder.RegisterType<RatingCalculator>().AsImplementedInterfaces().InstancePerLifetimeScope();
+            builder.RegisterType<SearchProvider>().AsImplementedInterfaces().InstancePerLifetimeScope();
         }
     }
 }

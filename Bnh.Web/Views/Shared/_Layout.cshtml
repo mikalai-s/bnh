@@ -76,6 +76,15 @@
             </div>
         </footer>
 
+        <div class="hidden">
+            
+            <form id="popover-search-form" action='@Url.Action("Index", "Search")' class='form-search' style='margin:0'>
+                <input type='text' name='query' placeholder='Search Criteria' class='input-medium search-query'>
+                <button type='submit' class='btn btn-primary'>Search</button>
+            </form>
+
+        </div>
+
         @RenderSection("Scripts", false)
         @RenderSection("_MsCmsScripts", false)
     </body>

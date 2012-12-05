@@ -548,7 +548,7 @@ namespace Bnh.Infrastructure.WebSecurity
 
         internal static bool GetIsAuthenticatedWithOAuthCore(HttpContextBase context)
         {
-            return new OpenAuthSecurityManager(context).IsAuthenticatedWithOpenAuth;
+            return new OpenAuthSecurityManager(context, null, null).IsAuthenticatedWithOpenAuth;
         }
 
 

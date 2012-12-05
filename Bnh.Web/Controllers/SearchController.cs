@@ -3,12 +3,21 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using Bnh.Core;
+using Bnh.Web.Infrastructure.Search;
 using Bnh.Web.ViewModels;
 
 namespace Bnh.Web.Controllers
 {
     public class SearchController : Controller
     {
+        ISearchProvider Search { get; set; }
+
+        public SearchController(ISearchProvider search)
+        {
+            this.Search = search;
+        }
+
         //
         // GET: /Search/
 
@@ -17,18 +26,21 @@ namespace Bnh.Web.Controllers
             return View(new SearchViewModel()
             {
                 Query = criteria.Query,
-                Result = new [] 
-                {
-                    new SearchResultEntryViewModel()
+                Result = this.Search.Search(criteria.Query)
+                    .Cast<SearchResult>()
+                    .Select(r => new SearchResultEntryViewModel
                     {
-                        Text = "Result 1"
-                    },
-                    new SearchResultEntryViewModel()
-                    {
-                        Text = "Result 2"
-                    },
-                }
+                        Text = r.Content
+                    })
+                    .ToList()
             });
+        }
+
+        public ActionResult RebuildIndex()
+        {
+            this.Search.RebuildIndex();
+
+            return this.JavaScript("alert('done')");
         }
     }
 }

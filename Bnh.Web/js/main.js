@@ -22,9 +22,8 @@ require(["order!jquery", "order!twitter"], function ($) {
     $('#search-button').popover({
         placement: "left",
         html: true,
-        content: "<form action='Search' class='form-search' style='margin:0'><input type='text' name='query' placeholder='Search Criteria' class='input-medium search-query'><button type='submit' class='btn btn-primary'>Search</button></form>",
+        content: $("#popover-search-form")[0].outerHTML,
         template: '<div class="popover"><div class="arrow"></div><div class="popover-inner"><h3 class="popover-title" style="display:none"></h3><div class="popover-content"><p></p></div></div></div>'
     });
-
 });
 

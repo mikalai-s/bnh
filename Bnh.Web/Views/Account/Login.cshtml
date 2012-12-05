@@ -28,7 +28,7 @@
                 <div class="control-group">
                     @Html.LabelFor(m => m.Password, new { @class = "control-label" })
                     <div class="controls">
-                        @Html.TextBoxFor(m => m.Password)
+                        @Html.PasswordFor(m => m.Password)
                         @Html.ValidationMessageFor(m => m.Password, null, new { @class = "alert-error" })
                     </div>
                 </div>
