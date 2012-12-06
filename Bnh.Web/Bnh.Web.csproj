@@ -86,6 +86,9 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\DotNetOpenAuth.OpenId.RelyingParty.4.1.4.12333\lib\net40-full\DotNetOpenAuth.OpenId.RelyingParty.dll</HintPath>
     </Reference>
+    <Reference Include="HtmlAgilityPack">
+      <HintPath>..\packages\HtmlAgilityPack.1.4.6\lib\Net40\HtmlAgilityPack.dll</HintPath>
+    </Reference>
     <Reference Include="ICSharpCode.SharpZipLib">
       <HintPath>..\packages\SharpZipLib.0.86.0\lib\20\ICSharpCode.SharpZipLib.dll</HintPath>
     </Reference>
@@ -258,6 +261,7 @@
     <Compile Include="Core\Entities\Review.cs" />
     <Compile Include="Core\Extensions\LinkExtensions.cs" />
     <Compile Include="Core\IEntityRepositories.cs" />
+    <Compile Include="Core\IPathMapper.cs" />
     <Compile Include="Core\IRatingCalculator.cs" />
     <Compile Include="Core\IRepository.cs" />
     <Compile Include="Core\IReviewRepository.cs" />
@@ -292,6 +296,7 @@
     <Compile Include="Infrastructure\Repositories\ReviewRepository.cs" />
     <Compile Include="Infrastructure\Search\SearchProvider.cs" />
     <Compile Include="Infrastructure\Search\SearchResult.cs" />
+    <Compile Include="Infrastructure\ServerPathMapper.cs" />
     <Compile Include="Infrastructure\WebSecurity\AuthenticationClientData.cs" />
     <Compile Include="Infrastructure\WebSecurity\Clients\Facebook.cs" />
     <Compile Include="Infrastructure\WebSecurity\Clients\Google.cs" />

@@ -12,6 +12,7 @@ namespace Bnh.Core
         public IDictionary<string, IDictionary<string, string>> Authentification;
         public string City { get; set; }
         public ReviewConfig Review { get; set; }
+        public string SearchIndexFolder { get; set; }
     }
 
     public class ReviewConfig

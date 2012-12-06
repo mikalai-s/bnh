@@ -17,6 +17,7 @@ namespace Bnh.Infrastructure
             builder.RegisterType<EntityRepositories>().AsImplementedInterfaces().InstancePerLifetimeScope();
             builder.RegisterType<RatingCalculator>().AsImplementedInterfaces().InstancePerLifetimeScope();
             builder.RegisterType<SearchProvider>().AsImplementedInterfaces().InstancePerLifetimeScope();
+            builder.RegisterType<ServerPathMapper>().AsImplementedInterfaces().InstancePerLifetimeScope();
         }
     }
 }

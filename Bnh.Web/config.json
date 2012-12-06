@@ -11,5 +11,6 @@
             "2": "Schools",
             "3": "Parks"
         }
-    }
+    },
+	searchIndexFolder: "SearchIndex"
 }

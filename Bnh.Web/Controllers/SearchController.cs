@@ -11,11 +11,11 @@ namespace Bnh.Web.Controllers
 {
     public class SearchController : Controller
     {
-        ISearchProvider Search { get; set; }
+        ISearchProvider Searcher { get; set; }
 
-        public SearchController(ISearchProvider search)
+        public SearchController(ISearchProvider searcher)
         {
-            this.Search = search;
+            this.Searcher = searcher;
         }
 
         //
@@ -23,22 +23,28 @@ namespace Bnh.Web.Controllers
 
         public ActionResult Index(SearchViewModel criteria)
         {
-            return View(new SearchViewModel()
+            var searchViewModel = new SearchViewModel()
             {
-                Query = criteria.Query,
-                Result = this.Search.Search(criteria.Query)
+                Query = criteria.Query
+            };
+
+            if (!criteria.Query.IsEmpty())
+            {
+                searchViewModel.Result = this.Searcher.Search(criteria.Query)
                     .Cast<SearchResult>()
                     .Select(r => new SearchResultEntryViewModel
                     {
                         Text = r.Content
                     })
-                    .ToList()
-            });
+                    .ToList();
+            }
+
+            return View(searchViewModel);
         }
 
         public ActionResult RebuildIndex()
         {
-            this.Search.RebuildIndex();
+            this.Searcher.RebuildIndex();
 
             return this.JavaScript("alert('done')");
         }

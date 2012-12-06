@@ -9,6 +9,11 @@ namespace Bnh.Web.ViewModels
     {
         public string Query { get; set; }
 
-        public ICollection<SearchResultEntryViewModel> Result { get; set; }
+        public IEnumerable<SearchResultEntryViewModel> Result { get; set; }
+
+        public SearchViewModel()
+        {
+            Result = Enumerable.Empty<SearchResultEntryViewModel>();
+        }
     }
 }
