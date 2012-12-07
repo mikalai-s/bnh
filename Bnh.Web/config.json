@@ -12,5 +12,5 @@
             "3": "Parks"
         }
     },
-	searchIndexFolder: "SearchIndex"
+	searchIndexFolder: "~\\SearchIndex"
 }

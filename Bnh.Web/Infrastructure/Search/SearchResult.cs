@@ -6,7 +6,7 @@ using Bnh.Core;
 
 namespace Bnh.Web.Infrastructure.Search
 {
-    public class SearchResult : ISearchResult
+    public class CommunitySearchResult : ISearchResult
     {
         public string CommunityId { get; set; }
         public string ContentId { get; set; }

@@ -137,7 +137,7 @@ namespace Bnh.Web.Infrastructure.Search
             {
                 var doc = searcher.Doc(scoreDoc.Doc);
 
-                yield return new SearchResult
+                yield return new CommunitySearchResult
                 {
                     CommunityId = doc.Get("community-id"),
                     ContentId = doc.Get("content-id"),

@@ -17,12 +17,15 @@
     </div>
 </div>
 
-<div class="row">
+<div class="row padding">
     <div class="span12">
         @foreach(var entry in Model.Result)
         {
             <div>
-                @Html.Raw(entry.Text)
+                on @Html.Raw(entry.Category) @Html.Raw(entry.Link) found:
+                <div class="well well-small">
+                    ...@Html.Raw(entry.Description)...
+                </div>
             </div>
         }
     </div>
