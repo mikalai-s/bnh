@@ -67,7 +67,9 @@ namespace Bnh.Web.Infrastructure.Search
             {
                 System.IO.Directory.CreateDirectory(path);
             }
+            // remove all files in the folder
             var dir = FSDirectory.Open(path);
+            System.IO.Directory.GetFiles(path).ToList().ForEach(dir.DeleteFile);
 
             // create an analyzer to process the text
             var analyzer = new StandardAnalyzer(Lucene.Net.Util.Version.LUCENE_30);
@@ -119,30 +121,33 @@ namespace Bnh.Web.Infrastructure.Search
             }
             catch (FileNotFoundException)
             {
-                // Index wasn't bulid yet
+                // Index wasn't build yet
                 this.RebuildIndex();
 
                 searcher = new IndexSearcher(dir);
             }
 
-            var parser = new QueryParser(Lucene.Net.Util.Version.LUCENE_30, "content", analyzer);
-
-            var que = parser.Parse(query);
-            var results = searcher.Search(que, 10).ScoreDocs;
-
-            var formatter = new SimpleHTMLFormatter("<strong>", "</strong>");
-            var highlighter = new Highlighter(formatter, new QueryScorer(searcher.Rewrite(que)));
-
-            foreach (var scoreDoc in results)
+            using (searcher)
             {
-                var doc = searcher.Doc(scoreDoc.Doc);
+                var parser = new QueryParser(Lucene.Net.Util.Version.LUCENE_30, "content", analyzer);
 
-                yield return new CommunitySearchResult
+                var que = parser.Parse(query);
+                var results = searcher.Search(que, 10).ScoreDocs;
+
+                var formatter = new SimpleHTMLFormatter("<strong>", "</strong>");
+                var highlighter = new Highlighter(formatter, new QueryScorer(searcher.Rewrite(que)));
+
+                foreach (var scoreDoc in results)
                 {
-                    CommunityId = doc.Get("community-id"),
-                    ContentId = doc.Get("content-id"),
-                    Content = highlighter.GetBestFragment(analyzer, "content", doc.Get("content")) 
-                };
+                    var doc = searcher.Doc(scoreDoc.Doc);
+
+                    yield return new CommunitySearchResult
+                    {
+                        CommunityId = doc.Get("community-id"),
+                        ContentId = doc.Get("content-id"),
+                        Content = highlighter.GetBestFragment(analyzer, "content", doc.Get("content"))
+                    };
+                }
             }
         }
     }
