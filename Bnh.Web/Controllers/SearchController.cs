@@ -50,7 +50,7 @@ namespace Bnh.Web.Controllers
                     {
                         Category = "community",
                         Link = htmlHelper.ActionLink(community.Name, "Details", "Community", null, null, r.ContentId, new { id = community.UrlId }, null).ToString(),
-                        Description = r.Content
+                        Fragments = r.Fragments
                     };
             }
 

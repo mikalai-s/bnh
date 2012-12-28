@@ -24,7 +24,10 @@
             <div>
                 on @Html.Raw(entry.Category) @Html.Raw(entry.Link) found:
                 <div class="well well-small">
-                    ...@Html.Raw(entry.Description)...
+                    @foreach(var fragment in entry.Fragments)
+                    {
+                        <p>@Html.Raw(fragment)</p>
+                    }
                 </div>
             </div>
         }

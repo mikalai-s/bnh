@@ -1,17 +1,21 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Text;
 using System.Web;
 using Bnh.Cms.Models;
 using Bnh.Core;
 using HtmlAgilityPack;
+using Lucene.Net.Analysis.Snowball;
 using Lucene.Net.Analysis.Standard;
 using Lucene.Net.Documents;
 using Lucene.Net.Index;
 using Lucene.Net.QueryParsers;
 using Lucene.Net.Search;
 using Lucene.Net.Search.Highlight;
+using Lucene.Net.Search.Vectorhighlight;
 using Lucene.Net.Store;
 using MongoDB.Driver.Linq;
 
@@ -23,6 +27,10 @@ namespace Bnh.Web.Infrastructure.Search
         CmsEntities Cms { get; set; }
         Config Config { get; set; }
         IPathMapper PathMapper { get; set; }
+
+        private const Lucene.Net.Util.Version LuceneVersion = Lucene.Net.Util.Version.LUCENE_30;
+
+        SnowballAnalyzer analyzer = new SnowballAnalyzer(LuceneVersion, "English");
 
         public SearchProvider(IEntityRepositories entites, CmsEntities cms, Config config, IPathMapper pathMapper)
         {
@@ -71,11 +79,8 @@ namespace Bnh.Web.Infrastructure.Search
             var dir = FSDirectory.Open(path);
             System.IO.Directory.GetFiles(path).ToList().ForEach(dir.DeleteFile);
 
-            // create an analyzer to process the text
-            var analyzer = new StandardAnalyzer(Lucene.Net.Util.Version.LUCENE_30);
-
             // create the index writer with the directory and analyzer defined.
-            using (var indexWriter = new IndexWriter(dir, analyzer, true, IndexWriter.MaxFieldLength.UNLIMITED))
+            using (var indexWriter = new IndexWriter(dir, this.analyzer, true, IndexWriter.MaxFieldLength.UNLIMITED))
             {
                 foreach (var groups in contentGroups)
                 {
@@ -87,7 +92,7 @@ namespace Bnh.Web.Infrastructure.Search
                         doc.Add(new Field("community-id", groups.Key, Field.Store.YES, Field.Index.NO));
                         doc.Add(new Field("content-id", content.BrickContentId, Field.Store.YES, Field.Index.NO));
                         doc.Add(new Field("type", "community", Field.Store.YES, Field.Index.NO));
-                        doc.Add(new Field("content", EscapeHtml(content.Html), Field.Store.YES, Field.Index.ANALYZED, Field.TermVector.YES));
+                        doc.Add(new Field("content", EscapeHtml(content.Html), Field.Store.YES, Field.Index.ANALYZED, Field.TermVector.WITH_POSITIONS_OFFSETS));
 
                         // write the document to the index
                         indexWriter.AddDocument(doc);
@@ -108,34 +113,37 @@ namespace Bnh.Web.Infrastructure.Search
 
         public IEnumerable<ISearchResult> Search(string query)
         {
-            // create an analyzer to process the text
-            var analyzer = new StandardAnalyzer(Lucene.Net.Util.Version.LUCENE_30);
-
             //create an index searcher that will perform the search
             var dir = FSDirectory.Open(this.PathMapper.Map(this.Config.SearchIndexFolder));
 
-            IndexSearcher searcher = null;
+            var reader = default(IndexReader);
+            var searcher = default(IndexSearcher);
             try
             {
-                searcher = new IndexSearcher(dir);
+                reader = IndexReader.Open(dir, true);
+                searcher = new IndexSearcher(reader);
             }
             catch (FileNotFoundException)
             {
                 // Index wasn't build yet
                 this.RebuildIndex();
 
-                searcher = new IndexSearcher(dir);
+                reader = IndexReader.Open(dir, true);
+                searcher = new IndexSearcher(reader);
             }
 
             using (searcher)
             {
-                var parser = new QueryParser(Lucene.Net.Util.Version.LUCENE_30, "content", analyzer);
+                var parser = new QueryParser(LuceneVersion, "content", this.analyzer);
 
                 var que = parser.Parse(query);
                 var results = searcher.Search(que, 10).ScoreDocs;
 
-                var formatter = new SimpleHTMLFormatter("<strong>", "</strong>");
-                var highlighter = new Highlighter(formatter, new QueryScorer(searcher.Rewrite(que)));
+                var highlighter = new FastVectorHighlighter(true, true, new SimpleFragListBuilder(), new MyFRagmentBuilder());
+                var fieldQuery = highlighter.GetFieldQuery(que);
+                //var formatter = new SimpleHTMLFormatter("<strong>", "</strong>");
+                //var highlighter = new Highlighter(formatter, new QueryScorer(searcher.Rewrite(que)));
+               
 
                 foreach (var scoreDoc in results)
                 {
@@ -145,10 +153,135 @@ namespace Bnh.Web.Infrastructure.Search
                     {
                         CommunityId = doc.Get("community-id"),
                         ContentId = doc.Get("content-id"),
-                        Content = highlighter.GetBestFragment(analyzer, "content", doc.Get("content"))
+                        Fragments = highlighter.GetBestFragments(fieldQuery, reader, scoreDoc.Doc, "content", 20, 5)
+                        //Fragments = highlighter.GetBestFragments(analyzer, "content", doc.Get("content"), 5)
                     };
                 }
             }
+        }
+    }
+
+ 
+    // TODO: fix large sentences
+    public class MyFRagmentBuilder : BaseFragmentsBuilder
+    {
+        protected override string MakeFragment(System.Text.StringBuilder buffer, int[] index, Field[] values, FieldFragList.WeightedFragInfo fragInfo)
+        {
+            var builder = new FragmentBuilder(values[0].StringValue, GetField<int>(fragInfo, "startOffset"), GetField<int>(fragInfo, "endOffset"));
+
+            var subInfos = GetField<IEnumerable>(fragInfo, "subInfos");
+            foreach(var subInfoObject in subInfos)
+            {
+                var subInfoseqnum = GetField<int>(subInfoObject, "seqnum");
+
+                var phrases = GetField<IEnumerable<FieldPhraseList.WeightedPhraseInfo.Toffs>>(subInfoObject, "termsOffsets")
+                    .Select(to => Tuple.Create(GetField<int>(to, "startOffset"), GetField<int>(to, "endOffset")));
+
+                builder.BuildPhrases(phrases, this.GetPreTag(subInfoseqnum), this.GetPostTag(subInfoseqnum));
+            }
+
+            return builder.ToString();
+        }
+
+        private T GetField<T>(object o, string name)
+        {
+            return (T)o.GetType().GetField(name, System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.NonPublic).GetValue(o);
+        }
+
+        public override List<FieldFragList.WeightedFragInfo> GetWeightedFragInfoList(List<FieldFragList.WeightedFragInfo> src)
+        {
+            return src;
+        }
+    }
+
+    public class FragmentBuilder
+    {
+        private int startOffset;
+        private int endOffset;
+        private StringBuilder fragment;
+        private int srcIndex;
+        private string text;
+
+        public FragmentBuilder(string text, int start, int end)
+        {
+            var stopChars = new[] { '.', '!', '?' };
+
+            this.startOffset = start;
+            this.endOffset = end;
+
+            while (startOffset > 0 && !stopChars.Any(c => c == text[startOffset]))
+            {
+                startOffset--;
+            }
+
+            if (startOffset > 0)
+            {
+                startOffset++;
+            }
+
+            while (endOffset < text.Length && !stopChars.Any(c => c == text[endOffset]))
+            {
+                endOffset++;
+            }
+
+            if (endOffset < text.Length - 1)
+            {
+                endOffset++;
+            }
+            else if (endOffset > text.Length - 1)
+            {
+                endOffset = text.Length - 1;
+            }
+
+
+            var le = endOffset - startOffset + 1;
+            this.text = text.Substring(startOffset, (startOffset + le) <= text.Length ? le : text.Length - startOffset);
+
+
+            this.fragment = new StringBuilder();
+            this.srcIndex = 0;
+        }
+    
+        internal void BuildPhrases(IEnumerable<Tuple<int,int>> phrases,string preTag,string postTag)
+        {
+            var s = this.startOffset;
+
+            foreach(var t in phrases)
+            {
+                var tostartOffset = t.Item1;
+                var toendOffset = t.Item2;
+
+                fragment
+                    .Append(text.Substring(srcIndex, (tostartOffset - s) - srcIndex))
+                    .Append(preTag)
+                    .Append(text.Substring(tostartOffset - s, (toendOffset - s) - (tostartOffset - s)))
+                    .Append(postTag);
+                srcIndex = toendOffset - s;
+            }
+        }
+
+        public override string ToString()
+        {
+            fragment.Append(text.Substring(srcIndex));
+            return fragment.ToString();
+        }
+    }
+
+    public class MyWeightedFragInfo
+    {
+        // Fields
+        public int endOffset;
+        public int startOffset;
+        public List<SubInfo> subInfos;
+        public float totalBoost;           
+
+        // Nested Types
+        public class SubInfo
+        {
+            // Fields
+            public int seqnum;
+            public List<FieldPhraseList.WeightedPhraseInfo.Toffs> termsOffsets;
+            public string text;
         }
     }
 }

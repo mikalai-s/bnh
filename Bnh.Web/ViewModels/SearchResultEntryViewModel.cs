@@ -11,6 +11,6 @@ namespace Bnh.Web.ViewModels
 
         public string Link { get; set; }
 
-        public string Description { get; set; }
+        public string[] Fragments { get; set; }
     }
 }

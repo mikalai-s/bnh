@@ -10,6 +10,6 @@ namespace Bnh.Web.Infrastructure.Search
     {
         public string CommunityId { get; set; }
         public string ContentId { get; set; }
-        public string Content { get; set; }
+        public string[] Fragments { get; set; }
     }
 }
