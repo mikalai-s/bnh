@@ -90,7 +90,7 @@ namespace Bnh.Web.Infrastructure.Search
                         var doc = new Document();
 
                         doc.Add(new Field("community-id", groups.Key, Field.Store.YES, Field.Index.NO));
-                        doc.Add(new Field("content-id", content.BrickContentId, Field.Store.YES, Field.Index.NO));
+                        doc.Add(new Field("content-id", content.GetHtmlId(), Field.Store.YES, Field.Index.NO));
                         doc.Add(new Field("type", "community", Field.Store.YES, Field.Index.NO));
                         doc.Add(new Field("content", EscapeHtml(content.Html), Field.Store.YES, Field.Index.ANALYZED, Field.TermVector.WITH_POSITIONS_OFFSETS));
 

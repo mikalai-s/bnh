@@ -24,7 +24,7 @@ namespace Bnh.Cms.Models
         /// <returns></returns>
         public static string GetHtmlId(this BrickContent content)
         {
-            return content.ContentTitle.ToHtmlId();
+            return content.ContentTitle.IsEmpty() ? content.BrickContentId.ToHtmlId() : content.ContentTitle.ToHtmlId();
         }
 
         /// <summary>
