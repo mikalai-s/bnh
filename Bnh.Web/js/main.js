@@ -10,8 +10,20 @@
         , order: 'libs/require/order.min'
         , text: 'libs/require/text.min'
         , debug: 'libs/debug/ba-debug.min'
+        , twitter: 'libs/twitter/bootstrap'
     },
     //urlArgs: "bust=" + (new Date()).getTime()
 });
 
-require(["jquery", ""]);
+// common setup for all pages
+require(["order!jquery", "order!twitter"], function ($) {
+
+    // setup search popup
+    $('#search-button').popover({
+        placement: "left",
+        html: true,
+        content: $("#popover-search-form")[0].outerHTML,
+        template: '<div class="popover"><div class="arrow"></div><div class="popover-inner"><h3 class="popover-title" style="display:none"></h3><div class="popover-content"><p></p></div></div></div>'
+    });
+});
+

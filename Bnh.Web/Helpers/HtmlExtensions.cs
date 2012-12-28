@@ -33,7 +33,7 @@ namespace Bnh
             return new MvcHtmlString(string.Format(format, rating * 10, 100 - rating * 10));
         }
 
-        public static MvcHtmlString ActionMenuItem(this HtmlHelper htmlHelper, string linkText, string actionName, string controllerName)
+        public static MvcHtmlString ActionMenuItem(this HtmlHelper htmlHelper, string linkText, string actionName, string controllerName, object attributes = null)
         {
             var tag = new TagBuilder("li");
 
@@ -42,7 +42,7 @@ namespace Bnh
                 tag.AddCssClass("current");
             }
 
-            tag.InnerHtml = htmlHelper.ActionLink(linkText, actionName, controllerName).ToString();
+            tag.InnerHtml = htmlHelper.ActionLink(linkText, actionName, controllerName, null, attributes).ToString();
 
             return MvcHtmlString.Create(tag.ToString());
         }

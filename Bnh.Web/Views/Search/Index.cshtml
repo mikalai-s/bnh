@@ -1,0 +1,46 @@
+﻿@model SearchViewModel
+
+@{
+    ViewBag.Title = "Search";
+}
+
+
+<div class="row">
+    <div class="span6">
+        <form class="form-search form-search-padding">
+            <input type="text" name="query" placeholder="Search Criteria" class="input-medium search-query" value="@Model.Query" />
+            <button type="submit" class="btn btn-primary">Search</button>
+        </form>
+    </div>
+    @if (Context.User.IsInRole("content_manager"))
+    {
+        <div class="span6">
+            @Html.ActionLink("Rebuild Index", "RebuildIndex")
+        </div>
+    }
+</div>
+
+<div class="row padding">
+    <div class="span12">
+        @foreach(var entry in Model.Result)
+        {
+            <div class="span11">
+                on @Html.Raw(entry.Category) @Html.Raw(entry.Link) found:
+                <div class="well well-small">
+                    @foreach(var fragment in entry.Fragments)
+                    {
+                        <p>@Html.Raw(fragment)</p>
+                    }
+                </div>
+            </div>
+        }
+        @if (!Model.Result.Any())
+        {
+            <div class="span11">
+                <div class="alert">
+                    No results found. Try to adjust search criteria.
+                </div>
+            </div>
+        }
+    </div>
+</div>
