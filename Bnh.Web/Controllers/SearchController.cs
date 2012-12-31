@@ -8,6 +8,7 @@ using Bnh.Web.Infrastructure.Search;
 using Bnh.Web.ViewModels;
 using System.Web.Mvc.Html;
 using System.IO;
+using Elmah;
 
 namespace Bnh.Web.Controllers
 {
@@ -37,7 +38,19 @@ namespace Bnh.Web.Controllers
             {
                 var htmlHelper = new HtmlHelper(new ViewContext(this.ControllerContext, new WebFormView(this.ControllerContext, "fake"), new ViewDataDictionary(), new TempDataDictionary(), new StringWriter()), new ViewPage());
 
-                var found = this.Searcher.Search(criteria.Query).ToList();
+                var found = default(List<ISearchResult>);
+                try
+                {
+                    found = this.Searcher.Search(criteria.Query).ToList();
+                }
+                catch(Exception ex)
+                {
+                    // just lof the exception
+                    ErrorSignal.FromCurrentContext().Raise(ex);
+
+                    // and return empty result set
+                    found = new List<ISearchResult>();
+                }
 
                 var communitiesFound = found.OfType<CommunitySearchResult>().ToList();
                 var communitiesIdsFound = communitiesFound.Select(r => r.CommunityId).ToList();
