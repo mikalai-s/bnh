@@ -383,10 +383,6 @@
     <Content Include="js\libs\require\maps.js" />
     <Content Include="js\libs\require\mdown.js" />
     <Content Include="js\libs\require\noext.js" />
-    <Content Include="js\libs\require\order.js" />
-    <Content Include="js\libs\require\order.min.js">
-      <DependentUpon>order.js</DependentUpon>
-    </Content>
     <Content Include="js\libs\require\template.js" />
     <Content Include="js\libs\require\text.js" />
     <Content Include="js\libs\require\text.min.js">

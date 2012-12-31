@@ -7,16 +7,20 @@
         , jqballoon: 'libs/jquery/jquery.balloon'
         , json: 'libs/json2/json2'
         , tinymce: 'libs/tiny_mce/tiny_mce'
-        , order: 'libs/require/order.min'
         , text: 'libs/require/text.min'
         , debug: 'libs/debug/ba-debug.min'
         , twitter: 'libs/twitter/bootstrap'
     },
+    shim: {
+        twitter: {
+            deps: ["jquery"]
+        }
+    }
     //urlArgs: "bust=" + (new Date()).getTime()
 });
 
 // common setup for all pages
-require(["order!jquery", "order!twitter"], function ($) {
+require(["jquery", "twitter"], function ($) {
 
     // setup search popup
     $('#search-button').popover({
