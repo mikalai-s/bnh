@@ -86,6 +86,12 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\DotNetOpenAuth.OpenId.RelyingParty.4.1.4.12333\lib\net40-full\DotNetOpenAuth.OpenId.RelyingParty.dll</HintPath>
     </Reference>
+    <Reference Include="Elmah">
+      <HintPath>..\packages\elmah.corelibrary.1.2.2\lib\Elmah.dll</HintPath>
+    </Reference>
+    <Reference Include="Elmah.MongoDB">
+      <HintPath>..\packages\elmah.mongodb.1.7\lib\net35\Elmah.MongoDB.dll</HintPath>
+    </Reference>
     <Reference Include="HtmlAgilityPack">
       <HintPath>..\packages\HtmlAgilityPack.1.4.6\lib\Net40\HtmlAgilityPack.dll</HintPath>
     </Reference>
@@ -269,6 +275,7 @@
     <Compile Include="Core\ISearchResult.cs" />
     <Compile Include="Helpers\DesignerAuthorizeAttribute.cs" />
     <Compile Include="Areas\Cms\Helpers\HtmlExtensions.cs" />
+    <Compile Include="Helpers\MongoErrorLog.cs" />
     <Compile Include="Helpers\RazorEngine.cs" />
     <Compile Include="Helpers\StirngExtensions.cs" />
     <Compile Include="AutofacModule.cs" />
@@ -322,6 +329,8 @@
     <EmbeddedResource Include="Areas\Cms\Styles\DesignBrick.css" />
     <EmbeddedResource Include="Areas\Cms\Styles\DesignScene.css" />
     <EmbeddedResource Include="Areas\Cms\Styles\Scene.css" />
+    <Content Include="App_Readme\Elmah.MongoDB.txt" />
+    <Content Include="App_Readme\Elmah.txt" />
     <Content Include="css\styles.css" />
     <Content Include="img\glyphicons-halflings-white.png" />
     <Content Include="img\glyphicons-halflings.png" />
@@ -714,6 +723,7 @@
     </Content>
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
+      <SubType>Designer</SubType>
     </Content>
     <Content Include="Web.Release.config">
       <DependentUpon>Web.config</DependentUpon>
