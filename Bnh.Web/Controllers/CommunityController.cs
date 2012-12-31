@@ -268,10 +268,15 @@ namespace Bnh.Controllers
 
         private Community GetCommunity(string id)
         {
-            if(this.repositories.IsValidId(id))
+            if (this.repositories.IsValidId(id))
+            {
                 return this.repositories.Communities.Single(c => c.CommunityId == id);
+            }
             else
-                return this.repositories.Communities.Single(c => c.UrlId == id);
+            {
+                id = id.ToLower();
+                return this.repositories.Communities.Single(c => c.UrlId.ToLower() == id);
+            }
         }
 
         protected override void Dispose(bool disposing)
