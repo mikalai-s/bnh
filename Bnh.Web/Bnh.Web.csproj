@@ -348,6 +348,8 @@
     <Content Include="img\stars-big.png" />
     <Content Include="img\stars-small.png" />
     <Content Include="js\account-login.js" />
+    <Content Include="js\libs\knockout\knockout-postbox.js" />
+    <Content Include="js\libs\knockout\knockout-postbox.min.js" />
     <Content Include="js\libs\twitter\bootstrap.js" />
     <Content Include="js\libs\twitter\bootstrap.min.js" />
     <Content Include="js\community-edit.js" />
@@ -357,25 +359,11 @@
     <Content Include="js\libs\debug\ba-debug.min.js">
       <DependentUpon>ba-debug.js</DependentUpon>
     </Content>
-    <None Include="js\libs\jquery\jquery-1.7.2-vsdoc.js" />
-    <Content Include="js\libs\jquery\jquery-1.7.2.js" />
-    <Content Include="js\libs\jquery\jquery-1.7.2.min.js">
-      <DependentUpon>jquery-1.7.2.js</DependentUpon>
-    </Content>
     <Content Include="js\libs\jquery\jquery-ui-1.8.20.js" />
     <Content Include="js\libs\jquery\jquery-ui-1.8.20.min.js">
       <DependentUpon>jquery-ui-1.8.20.js</DependentUpon>
     </Content>
     <Content Include="js\libs\jquery\jquery.balloon.js" />
-    <Content Include="js\libs\jquery\jquery.json-2.3.js" />
-    <Content Include="js\libs\jquery\jquery.json-2.3.min.js" />
-    <Content Include="js\libs\knockout\knockout-2.1.0.debug.js" />
-    <Content Include="js\libs\knockout\knockout-2.1.0.js" />
-    <Content Include="js\libs\knockout\knockout-postbox.js" />
-    <Content Include="js\libs\knockout\knockout-postbox.min.js">
-      <DependentUpon>knockout-postbox.js</DependentUpon>
-    </Content>
-    <Content Include="js\libs\modernizr\modernizr-2.5.3.js" />
     <Content Include="js\libs\require\async.js" />
     <Content Include="js\libs\require\cache.uncompressed.js" />
     <Content Include="js\libs\require\cached.js" />
@@ -398,10 +386,6 @@
     <Content Include="js\libs\require\order.js" />
     <Content Include="js\libs\require\order.min.js">
       <DependentUpon>order.js</DependentUpon>
-    </Content>
-    <Content Include="js\libs\require\require.js" />
-    <Content Include="js\libs\require\require.min.js">
-      <DependentUpon>require.js</DependentUpon>
     </Content>
     <Content Include="js\libs\require\template.js" />
     <Content Include="js\libs\require\text.js" />
@@ -682,6 +666,16 @@
     <Compile Include="Helpers\FilterPropertyAttributeExtensions.cs" />
     <Compile Include="Helpers\HtmlExtensions.cs" />
     <Compile Include="Helpers\UrlExtensions.cs" />
+    <None Include="js\libs\jquery\jquery-1.8.3.intellisense.js" />
+    <Content Include="js\libs\jquery\jquery-1.8.3.js" />
+    <Content Include="js\libs\jquery\jquery-1.8.3.min.js" />
+    <Content Include="js\libs\knockout\knockout-2.2.0.debug.js" />
+    <Content Include="js\libs\knockout\knockout-2.2.0.js" />
+    <Content Include="js\libs\require\r.js" />
+    <Content Include="js\libs\require\require.js" />
+    <Content Include="js\libs\modernizr\modernizr-2.6.2.js" />
+    <Content Include="js\libs\json2\json2.js" />
+    <Content Include="js\libs\json2\json2.min.js" />
     <Content Include="Views\Search\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>

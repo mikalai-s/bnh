@@ -1,7 +1,7 @@
 ﻿/*global window, define, require, tinymce */
 
 define(
-    ["jquery", "knockout", "jqjson"],
+    ["jquery", "knockout", "json"],
     function ($, ko) {
         "use strict";
 

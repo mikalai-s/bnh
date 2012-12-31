@@ -1,5 +1,5 @@
 ﻿define(
-    ["jquery", "jqui", "jqjson"],
+    ["jquery", "jqui", "json"],
     function ($) {
         "use strict";
 

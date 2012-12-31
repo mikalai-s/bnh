@@ -1,5 +1,5 @@
 ﻿define(
-    ["jquery", "map-editor", "jqjson"],
+    ["jquery", "map-editor", "json"],
     function ($, MapEditor) {
         "use strict"
 
