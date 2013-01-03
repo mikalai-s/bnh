@@ -13,7 +13,6 @@ using System.Web.Mvc.Html;
 
 namespace Bnh.Controllers
 {
-    [Authorize]
     public class CommunityController : Controller
     {
         private Config config = null;
@@ -215,6 +214,7 @@ namespace Bnh.Controllers
         }
 
         [HttpGet]
+        [Authorize]
         public ActionResult AddReview(string id)
         {
             var community = GetCommunity(id);
@@ -227,6 +227,7 @@ namespace Bnh.Controllers
         }
 
         [HttpPost]
+        [Authorize]
         public ActionResult AddReview(Review review)
         {
             review.UserName = User.Identity.Name;
