@@ -28,5 +28,13 @@ namespace Bnh.Web.Controllers
 
             return View();
         }
+
+        [HttpPost]
+        public ActionResult Feedback(string message)
+        {
+            ViewBag.BackUrl = HttpContext.Request.UrlReferrer.AbsoluteUri;
+
+            return View();
+        }
     }
 }

@@ -1,91 +1,116 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="utf-8" />
-        <title>@ViewBag.Title - Brand New Homes</title>
-        <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
-        <link href="~/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
-        <link href="~/css/styles.css" rel="stylesheet" type="text/css" />
-        @RenderSection("Styles", false)
-        @RenderSection("_MsCmsStyles", false)
-        <meta name="viewport" content="width=device-width" />
-        <script src="~/js/libs/require/require.js" data-main="@Url.Content("~/js/main")"></script>
-    </head>
-    <body>
+<head>
+    <meta charset="utf-8" />
+    <title>@ViewBag.Title - Brand New Homes</title>
+    <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+    <link href="~/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <link href="~/css/styles.css" rel="stylesheet" type="text/css" />
+    @RenderSection("Styles", false)
+    @RenderSection("_MsCmsStyles", false)
+    <meta name="viewport" content="width=device-width" />
+    <script src="~/js/libs/require/require.js" data-main="@Url.Content("~/js/main")"></script>
+</head>
+<body>
 
-        <div class="header navbar navbar-static-top">
-            <div class="navbar-inner">
-                <div class="container">
-                    <div class="row">
-                        <div class="span4">
-                            <div class="logo"></div>
-                        </div>
-                        <div class="span8">
-                            <div class="pull-right right">
-                                <div>@Html.Partial("_LoginPartial")</div>
-                                <nav>
-                                    <ul class="nav">
-                                        @Html.ActionMenuItem("Home", "Index", "Home")
-                                        @Html.ActionMenuItem("Communities", "Index", "Community")
-                                        @Html.ActionMenuItem("Search", "Index", "Search", new { id = "search-button", rel = "popover", href="#" })
-                                    </ul>
-                                </nav>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div id="page" class="container">
-
-            <header>
-                <h1 class="title">@Html.Raw(ViewBag.Title)</h1>
-                <h4 class="description">@Html.Raw(ViewBag.Description)</h4>
-            </header>
-
-            @RenderBody()
-
-        </div>
-
-        <footer>
+    <div class="header navbar navbar-static-top">
+        <div class="navbar-inner">
             <div class="container">
                 <div class="row">
-                    <div class="span12 center">
-                        <div class="inline">
-                            <div class="span3">
-                                <h5>About</h5>
-                                <p>BrandNewHomes.ca is a first choice to start your new home search. New home buying process has a lot of choises - make the right one!</p>
-                            </div>
-                            <div class="span4">
-                                <div class="small-logo"></div>
-                            </div>
-                            <div class="span3">
-                                <h5>Contacts</h5>
-                                <p>E-mail: info@brandnewhomes.ca<br />
-                                Phone: +1 (403) 481-1111<br />
-                                Fax: +1 (403) 366-5995</p>
-                            </div>
+                    <div class="span4">
+                        <div class="logo"></div>
+                    </div>
+                    <div class="span8">
+                        <div class="pull-right right">
+                            <div>@Html.Partial("_LoginPartial")</div>
+                            <nav>
+                                <ul class="nav">
+                                    @Html.ActionMenuItem("Home", "Index", "Home")
+                                    @Html.ActionMenuItem("Communities", "Index", "Community")
+                                    @Html.ActionMenuItem("Search", "Index", "Search", new { id = "search-button", rel = "popover", href = "#" })
+                                </ul>
+                            </nav>
                         </div>
                     </div>
                 </div>
-                <div class="row">
-                    <div class="span0"></div>
-                    <div class="span12 copyright">Copyright © 2012 BrandNewHomes.ca All rights reserved.</div>
+            </div>
+        </div>
+    </div>
+
+    <div id="page" class="container">
+
+        <header>
+            <h1 class="title">@Html.Raw(ViewBag.Title)</h1>
+            <h4 class="description">@Html.Raw(ViewBag.Description)</h4>
+        </header>
+
+        <a href="#feedback-modal" data-toggle="modal" class="feedback alert alert-success rotate270" title="Leave a feedback...">
+            <div class="feedback-icon"></div>
+            feedback
+        </a>
+
+        @RenderBody()
+
+    </div>
+
+    <footer>
+        <div class="container">
+            <div class="row">
+                <div class="span12 center">
+                    <div class="inline">
+                        <div class="span3">
+                            <h5>About</h5>
+                            <p>BrandNewHomes.ca is a first choice to start your new home search. New home buying process has a lot of choises - make the right one!</p>
+                        </div>
+                        <div class="span4">
+                            <div class="small-logo"></div>
+                        </div>
+                        <div class="span3">
+                            <h5>Contacts</h5>
+                            <p>
+                                E-mail: info@brandnewhomes.ca<br />
+                                Phone: +1 (403) 481-1111<br />
+                                Fax: +1 (403) 366-5995
+                            </p>
+                        </div>
+                    </div>
                 </div>
             </div>
-        </footer>
-
-        <div class="hidden">
-            
-            <form id="popover-search-form" action='@Url.Action("Index", "Search")' class='form-search' style='margin:0'>
-                <input type='text' name='query' placeholder='Search Criteria' class='input-medium search-query'>
-                <button type='submit' class='btn btn-primary'>Search</button>
-            </form>
-
+            <div class="row">
+                <div class="span0"></div>
+                <div class="span12 copyright">Copyright © 2012 BrandNewHomes.ca All rights reserved.</div>
+            </div>
         </div>
+    </footer>
 
-        @RenderSection("Scripts", false)
-        @RenderSection("_MsCmsScripts", false)
-    </body>
+    <div class="hidden">
+
+        <form id="popover-search-form" action='@Url.Action("Index", "Search")' class='form-search' style='margin:0'>
+            <input type='text' name='query' placeholder='Search Criteria' class='input-medium search-query'>
+            <button type='submit' class='btn btn-primary'>Search</button>
+        </form>
+
+    </div>
+
+    <!-- Modal -->
+    @using(Html.BeginForm("Feedback", "Home"))
+    {
+        <div id="feedback-modal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="feedback-modal-label" aria-hidden="true">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">x</button>
+                <h3 id="feedback-modal-label">Send us you feedback</h3>
+            </div>
+            <div class="modal-body">
+                <p>Your feedback helps us improve the quality of the website. We do review all submissions, though we cannot respond due to volume.</p>
+                <textarea id="message" name="message" placeholder="Type your comments and suggestions here"></textarea>
+            </div>
+            <div class="modal-footer">
+                <button class="btn" data-dismiss="modal" aria-hidden="true">Cancel</button>
+                <button class="btn btn-primary" type="submit">Send Feedback</button>
+            </div>
+        </div>
+    }
+    @RenderSection("Scripts", false)
+    @RenderSection("_MsCmsScripts", false)
+</body>
 </html>
