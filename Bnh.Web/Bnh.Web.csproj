@@ -257,6 +257,7 @@
     <Compile Include="Areas\Cms\ViewModels\WallViewModel.cs" />
     <Compile Include="Areas\Cms\Helpers\BnhModelBinder.cs" />
     <Compile Include="Areas\Cms\Helpers\ContentUrls.cs" />
+    <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\SearchController.cs" />
     <Compile Include="Core\Config.cs" />
     <Compile Include="Core\Entities\Attributes\ExternalPropertyAttribute.cs" />
@@ -675,6 +676,8 @@
     <Content Include="js\libs\json2\json2.min.js" />
     <Content Include="Views\Search\Index.cshtml" />
     <Content Include="Views\Home\Feedback.cshtml" />
+    <Content Include="Views\Admin\Index.cshtml" />
+    <Content Include="Views\Admin\FeedbackReport.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="config.json" />
