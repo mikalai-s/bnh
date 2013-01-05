@@ -1,0 +1,13 @@
+﻿@model IEnumerable<Comment>
+
+@{
+    ViewBag.Title = "Feedback";
+}
+
+@foreach (var comment in Model)
+{
+    <div>
+        <div>@comment.Created.ToLocalTime() by @comment.UserName</div>
+        <div>@comment.Message</div>
+    </div>
+}

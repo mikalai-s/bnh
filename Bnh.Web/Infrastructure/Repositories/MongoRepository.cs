@@ -18,16 +18,18 @@ namespace Bnh.Infrastructure.Repositories
         private readonly string connectionString;
         private readonly Lazy<MongoDatabase> database;
         private MongoCollection<T> collection;
+        private string collectionName;
 
-        public MongoRepository(string connectionString)
+        public MongoRepository(string connectionString, string collectionName = null)
         {
             this.connectionString = connectionString;
             this.database = new Lazy<MongoDatabase>(() => MongoDatabase.Create(connectionString));
+            this.collectionName = collectionName.IsEmpty() ? typeof(T).Name : collectionName;
         }
 
         public virtual string CollectionName
         {
-            get { return typeof(T).Name; }
+            get { return this.collectionName; }
         }
 
         public MongoDatabase Database

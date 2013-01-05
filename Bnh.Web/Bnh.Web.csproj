@@ -257,6 +257,7 @@
     <Compile Include="Areas\Cms\ViewModels\WallViewModel.cs" />
     <Compile Include="Areas\Cms\Helpers\BnhModelBinder.cs" />
     <Compile Include="Areas\Cms\Helpers\ContentUrls.cs" />
+    <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\SearchController.cs" />
     <Compile Include="Core\Config.cs" />
     <Compile Include="Core\Entities\Attributes\ExternalPropertyAttribute.cs" />
@@ -332,6 +333,7 @@
     <Content Include="App_Readme\Elmah.MongoDB.txt" />
     <Content Include="App_Readme\Elmah.txt" />
     <Content Include="css\styles.css" />
+    <Content Include="img\feedback.gif" />
     <Content Include="img\glyphicons-halflings-white.png" />
     <Content Include="img\glyphicons-halflings.png" />
     <Content Include="img\house.jpg" />
@@ -673,6 +675,9 @@
     <Content Include="js\libs\json2\json2.js" />
     <Content Include="js\libs\json2\json2.min.js" />
     <Content Include="Views\Search\Index.cshtml" />
+    <Content Include="Views\Home\Feedback.cshtml" />
+    <Content Include="Views\Admin\Index.cshtml" />
+    <Content Include="Views\Admin\FeedbackReport.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="config.json" />
