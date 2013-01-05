@@ -19,6 +19,8 @@ namespace Bnh.Infrastructure.Repositories
 
         public IReviewRepository Reviews { get; private set; }
 
+        public IRepository<Comment> Feedback { get; private set; }
+
         public EntityRepositories(Config config)
         {
             var connectionString = config.ConnectionStrings["mongo"];
@@ -27,6 +29,7 @@ namespace Bnh.Infrastructure.Repositories
             this.Communities = new MongoRepository<Community>(connectionString);
             this.Cities = new MongoRepository<City>(connectionString);
             this.Reviews = new ReviewRepository(connectionString);
+            this.Feedback = new MongoRepository<Comment>(connectionString, "Feedback");
 
             EnsureData();
         }

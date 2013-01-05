@@ -17,6 +17,8 @@ namespace Bnh.Core
 
         IReviewRepository Reviews { get; }
 
+        IRepository<Comment> Feedback { get; }
+
         /// <summary>
         /// Returns true if given string is valid ID representation
         /// </summary>
