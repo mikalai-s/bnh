@@ -1,5 +1,5 @@
 ﻿define(
-    ["async!gmaps!callback"],
+    ["gmaps"],
     function () {
         "use strict"
 

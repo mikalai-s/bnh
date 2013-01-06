@@ -7,8 +7,8 @@
         var gpsBoundsField = $("#GpsBounds");
 
         var overlays = {
-            marker: gpsLocationField.val() ? $.parseJSON(gpsLocationField.val()) : null,
-            polygon: gpsBoundsField.val() ? $.parseJSON(gpsBoundsField.val()) : null,
+            marker: gpsLocationField.val() ? JSON.parse(gpsLocationField.val()) : null,
+            polygon: gpsBoundsField.val() ? JSON.parse(gpsBoundsField.val()) : null,
             zoom: 14
         };
 

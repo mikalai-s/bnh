@@ -1,5 +1,5 @@
 ﻿define(
-    ["jquery", "map"],
+    ["jquery", "map", "json"],
     function ($, Map) {
         "use strict";
 
@@ -9,8 +9,8 @@
             var gpsLocationAttr = elem.attr("gpsLocation");
             var gpsBoundsAttr = elem.attr("gpsBounds");
 
-            var gpsLocation = gpsLocationAttr ? $.parseJSON(gpsLocationAttr) : null;
-            var gpsBounds = gpsBoundsAttr ? $.parseJSON(gpsBoundsAttr) : null;
+            var gpsLocation = gpsLocationAttr ? JSON.parse(gpsLocationAttr) : null;
+            var gpsBounds = gpsBoundsAttr ? JSON.parse(gpsBoundsAttr) : null;
 
             var map = new Map(elem.find("#mapCanvas"), {
                 zoom: elem.attr("zoom") * 1,

@@ -96,7 +96,7 @@
 
         function initWall(wall, customData) {
             // parse and assign entity object to brick
-            var data = $.parseJSON(wall.attr("entity-data"));
+            var data = JSON.parse(wall.attr("entity-data"));
 
             // extend result data with custom one
             $.extend(data, customData);
@@ -204,7 +204,7 @@
 
         function initializeBrick(brick, customData) {
             // parse and assign entity object to brick
-            var data = $.parseJSON(brick.attr("entity-data"));
+            var data = JSON.parse(brick.attr("entity-data"));
 
             // extend result data with custom one
             $.extend(data, customData);

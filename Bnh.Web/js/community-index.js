@@ -32,10 +32,10 @@
             self.detailsUrl = ko.observable(uiHelpers.detailsUrl);
             self.infoPopup = ko.observable(uiHelpers.infoPopup);
             if ((community.GpsBounds != null) && (community.GpsBounds != 'null')) {
-                self.gpsBounds = $.map($.parseJSON(community.GpsBounds), map.deserializeCoordinates);
+                self.gpsBounds = $.map(JSON.parse(community.GpsBounds), map.deserializeCoordinates);
                 self.associatedMapObject = map.addPolygon(self.gpsBounds, self.infoPopup());
             }
-            self.gpsLocation = map.deserializeCoordinates($.parseJSON(community.GpsLocation));
+            self.gpsLocation = map.deserializeCoordinates(JSON.parse(community.GpsLocation));
 
             self.communityMouseover = function () {
                 map.highlightPolygon(self.associatedMapObject);

@@ -1,5 +1,5 @@
 ﻿define(
-    ["jquery", "async!gmaps!callback"],
+    ["jquery", "gmaps-drawing"],
     function ($) {
 
         "use strict";
