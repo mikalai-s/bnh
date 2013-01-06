@@ -333,6 +333,7 @@
     <Content Include="Areas\Cms\Styles\Scene.css" />
     <Content Include="App_Readme\Elmah.MongoDB.txt" />
     <Content Include="App_Readme\Elmah.txt" />
+    <Content Include="css\jquery-ui-1.9.2.custom.css" />
     <Content Include="css\styles.css" />
     <Content Include="img\feedback.gif" />
     <Content Include="img\glyphicons-halflings-white.png" />
