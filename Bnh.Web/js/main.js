@@ -9,7 +9,9 @@
         , tinymce: 'libs/tiny_mce/tiny_mce'
         , text: 'libs/require/text.min'
         , debug: 'libs/debug/ba-debug.min'
-        , twitter: 'libs/twitter/bootstrap'
+        , twitter: 'libs/twitter/bootstrap',
+        map: 'http://maps.googleapis.com/maps/api/js?key=AIzaSyBXgUOTPfgbS4kHE7fm_xr2za_O1ApA_TM&sensor=false'
+        //map : 'http://maps.googleapis.com/maps/api/js?sensor=false'
     },
     shim: {
         twitter: {
