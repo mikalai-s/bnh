@@ -134,7 +134,7 @@ define(
                     },
                     type: 'post',
                     contentType: 'application/json',
-                    data: jQuery.toJSON({ reviewId: this.reviewId }),
+                    data: JSON.stringify({ reviewId: this.reviewId }),
                     success: function () {
                         self.page.reviews.remove(self);
                     },
@@ -157,7 +157,7 @@ define(
                     },
                     type: 'post',
                     contentType: 'application/json',
-                    data: jQuery.toJSON({
+                    data: JSON.stringify({
                         reviewId: this.review.reviewId,
                         commentId: this.commentId
                     }),

@@ -16,8 +16,8 @@
 
         // handle onsubmit event to gather gps coordiates from map
         $("input:submit, button:submit").click(function () {
-            gpsLocationField.val($.toJSON(mapEditor.getLocation()));
-            gpsBoundsField.val($.toJSON(mapEditor.getBounds()));
+            gpsLocationField.val(JSON.stringify(mapEditor.getLocation()));
+            gpsBoundsField.val(JSON.stringify(mapEditor.getBounds()));
         });
     }
 );

@@ -13,7 +13,7 @@
         function initScene() {
             initWalls();
 
-            originalSceneData = jQuery.toJSON(getSceneData());
+            originalSceneData = JSON.stringify(getSceneData());
         }
 
         function onSaveSceneButton() {
@@ -24,7 +24,7 @@
                 type: "POST",
                 contentType: "application/json",
                 async: false,
-                data: jQuery.toJSON(data),
+                data: JSON.stringify(data),
                 success: function (result) {
                     getScene().replaceWith(result);
                     initScene();
@@ -268,7 +268,7 @@
                 type: "POST",
                 contentType: "application/json",
                 async: true,
-                data: jQuery.toJSON(brick.data("entity")),
+                data: JSON.stringify(brick.data("entity")),
                 success: function (result) {
                     if (result === true) {
                         brick.remove();
@@ -283,7 +283,7 @@
         }
 
         function ensureSceneSaved() {
-            var newData = jQuery.toJSON(getSceneData());
+            var newData = JSON.stringify(getSceneData());
             var modified = (originalSceneData !== newData);
 
             if (modified) {
@@ -357,7 +357,7 @@
                 url: "/Scene/ApplyTemplate",
                 type: "POST",
                 contentType: "application/json",
-                data: jQuery.toJSON(data),
+                data: JSON.stringify(data),
                 success: function (result) {
                     getScene().replaceWith(result);
                     initScene();
