@@ -10,6 +10,7 @@ using Bnh.Web.ViewModels;
 using Bnh.Cms.Controllers;
 using Bnh.Cms.Models;
 using System.Web.Mvc.Html;
+using Bnh.Web.Helpers;
 
 namespace Bnh.Controllers
 {
@@ -254,6 +255,7 @@ namespace Bnh.Controllers
         }
 
         [HttpPost]
+        [AjaxAuthorize]
         public ActionResult PostReviewComment(string reviewId, string message)
         {
             var comment = new Comment

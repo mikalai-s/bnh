@@ -274,6 +274,7 @@
     <Compile Include="Core\IReviewRepository.cs" />
     <Compile Include="Core\ISearchProvider.cs" />
     <Compile Include="Core\ISearchResult.cs" />
+    <Compile Include="Helpers\AjaxAuthorizeAttribute.cs" />
     <Compile Include="Helpers\DesignerAuthorizeAttribute.cs" />
     <Compile Include="Areas\Cms\Helpers\HtmlExtensions.cs" />
     <Compile Include="Helpers\MongoErrorLog.cs" />
