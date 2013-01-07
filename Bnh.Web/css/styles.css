@@ -180,3 +180,10 @@ fieldset legend { box-sizing: border-box; padding-left: 25px; }
 #feedback-modal textarea { width: 97%; height: 200px; }
 
 /* end feedback */
+
+
+/* fixes twitter bootstrap and gmaps issue */
+
+#mapCanvas img { max-width: inherit; }
+
+/* end of issue fix */
