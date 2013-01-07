@@ -42,6 +42,29 @@ namespace Bnh.Web.Infrastructure.Search
 
         public void RebuildIndex()
         {
+            // state the file location of the index
+            var path = this.PathMapper.Map(this.Config.SearchIndexFolder);
+            if (!System.IO.Directory.Exists(path))
+            {
+                System.IO.Directory.CreateDirectory(path);
+            }
+            // remove all files in the folder
+            var dir = FSDirectory.Open(path);
+            System.IO.Directory.GetFiles(path).ToList().ForEach(dir.DeleteFile);
+
+            // create the index writer with the directory and analyzer defined.
+            using (var indexWriter = new IndexWriter(dir, this.analyzer, true, IndexWriter.MaxFieldLength.UNLIMITED))
+            {
+                IndexCommunities(indexWriter);
+                IndexReviews(indexWriter);
+
+                //optimize and close the writer
+                indexWriter.Optimize();
+            }
+        }
+
+        private void IndexCommunities(IndexWriter indexWriter)
+        {
             // all content IDs
             var contentWithScenes = from scene in this.Cms.Scenes.ToList()
                                     from wall in scene.Walls
@@ -67,41 +90,27 @@ namespace Bnh.Web.Infrastructure.Search
                                 group content by contentWithScene.SceneId;
             // var dictionary = contentGroups.ToDictionary(c => c.Key, c => c.ToList());
 
-            // NOTE: we indexing only communities now
-
-            // state the file location of the index
-            var path = this.PathMapper.Map(this.Config.SearchIndexFolder);
-            if (!System.IO.Directory.Exists(path))
+            foreach (var groups in contentGroups)
             {
-                System.IO.Directory.CreateDirectory(path);
-            }
-            // remove all files in the folder
-            var dir = FSDirectory.Open(path);
-            System.IO.Directory.GetFiles(path).ToList().ForEach(dir.DeleteFile);
-
-            // create the index writer with the directory and analyzer defined.
-            using (var indexWriter = new IndexWriter(dir, this.analyzer, true, IndexWriter.MaxFieldLength.UNLIMITED))
-            {
-                foreach (var groups in contentGroups)
+                foreach (var content in groups)
                 {
-                    foreach (var content in groups)
-                    {
-                        // create a document, add in a single field
-                        var doc = new Document();
+                    // create a document, add in a single field
+                    var doc = new Document();
 
-                        doc.Add(new Field("community-id", groups.Key, Field.Store.YES, Field.Index.NO));
-                        doc.Add(new Field("content-id", content.GetHtmlId(), Field.Store.YES, Field.Index.NO));
-                        doc.Add(new Field("type", "community", Field.Store.YES, Field.Index.NO));
-                        doc.Add(new Field("content", EscapeHtml(content.Html), Field.Store.YES, Field.Index.ANALYZED, Field.TermVector.WITH_POSITIONS_OFFSETS));
+                    doc.Add(new Field("community-id", groups.Key, Field.Store.YES, Field.Index.NO));
+                    doc.Add(new Field("content-id", content.GetHtmlId(), Field.Store.YES, Field.Index.NO));
+                    doc.Add(new Field("type", "community", Field.Store.YES, Field.Index.NO));
+                    doc.Add(new Field("content", EscapeHtml(content.Html), Field.Store.YES, Field.Index.ANALYZED, Field.TermVector.WITH_POSITIONS_OFFSETS));
 
-                        // write the document to the index
-                        indexWriter.AddDocument(doc);
-                    }
+                    // write the document to the index
+                    indexWriter.AddDocument(doc);
                 }
-
-                //optimize and close the writer
-                indexWriter.Optimize();
             }
+        }
+
+        private void IndexReviews(IndexWriter indexWriter)
+        {
+            // TODO: implement when there is need
         }
 
         private string EscapeHtml(string content)
