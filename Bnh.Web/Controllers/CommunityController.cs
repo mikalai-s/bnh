@@ -11,6 +11,7 @@ using Bnh.Cms.Controllers;
 using Bnh.Cms.Models;
 using System.Web.Mvc.Html;
 using Bnh.Web.Helpers;
+using System.Collections.Generic;
 
 namespace Bnh.Controllers
 {
@@ -43,11 +44,16 @@ namespace Bnh.Controllers
         // GET: /Community/
         public ViewResult Index()
         {
-            return View();
+            return View(GetZones());
         }
 
         [HttpGet]
         public JsonResult Zones()
+        {
+            return Json(GetZones(), JsonRequestBehavior.AllowGet);
+        }
+
+        private Dictionary<string, IEnumerable<CommunityViewModel>> GetZones()
         {
             var urlHelper = new UrlHelper(this.HttpContext.Request.RequestContext);
 
@@ -59,22 +65,19 @@ namespace Bnh.Controllers
                 .ToList()
                 .GroupBy(
                     c => c.Zone,
-                    c => new
+                    c => new CommunityViewModel
                     {
-                        community = c,
-                        uiHelpers = new
-                        {
-                            deleteUrl = urlHelper.Action("Delete", "Community", new { id = c.UrlId }),
-                            detailsUrl = urlHelper.Action("Details", "Community", new { id = c.UrlId }),
-                            infoPopup = GetCommunityInfoPopupHtml(urlHelper, c)
-                        }
+                        Community = c,
+                        DeleteUrl = urlHelper.Action("Delete", "Community", new { id = c.UrlId }),
+                        DetailsUrl = urlHelper.Action("Details", "Community", new { id = c.UrlId }),
+                        InfoPopupHtml = GetCommunityInfoPopupHtml(urlHelper, c)
                     })
                 .OrderBy(g => zones.IndexOf(g.Key))
                 .ToDictionary(
                     g => g.Key,
-                    g => g.OrderBy(c => c.community.Name));
+                    g => g.OrderBy(c => c.Community.Name).Cast<CommunityViewModel>());
 
-            return Json(communities, JsonRequestBehavior.AllowGet);
+            return communities;
         }
 
         private string GetCommunityInfoPopupHtml(UrlHelper urlHelper, Community community)

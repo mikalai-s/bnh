@@ -323,6 +323,7 @@
     <Compile Include="Models\Pager.cs" />
     <Compile Include="Core\Entities\Profile.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ViewModels\CommunityViewModel.cs" />
     <Compile Include="ViewModels\SearchResultEntryViewModel.cs" />
     <Compile Include="ViewModels\SearchViewModel.cs" />
     <Content Include="Areas\Cms\Scripts\brick-content-map.js" />

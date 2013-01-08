@@ -102,6 +102,10 @@ fieldset legend { box-sizing: border-box; padding-left: 25px; }
 
 .slider .slide { width: 700px; position: relative; display: inline-block; vertical-align:top; }
 
+/* */
+.slider .slide .anchor { height: 200px; width: 20px; border: solid 1px red; float: left; }
+
+
 
 /* scene */
 
@@ -187,3 +191,6 @@ fieldset legend { box-sizing: border-box; padding-left: 25px; }
 #mapCanvas img { max-width: inherit; }
 
 /* end of issue fix */
+
+
+/* */
