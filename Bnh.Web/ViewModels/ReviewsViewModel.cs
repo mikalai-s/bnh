@@ -26,12 +26,11 @@ namespace Bnh.Web.ViewModels
         public string DeleteReviewUrl { get; set; }
         public string DeleteCommentUrl { get; set; }
 
-        public ReviewsViewModel(Controller controller, double? rating, string targetUrlId, string targetName, IDictionary<string, string> ratingQuestions, Pager<Review> pager, List<Profile> profiles)
-            : base(controller)
+        public ReviewsViewModel(ViewModelContext context, double? rating, string targetUrlId, string targetName, IDictionary<string, string> ratingQuestions, Pager<Review> pager, List<Profile> profiles)
         {
             var userProfiles = profiles.ToDictionary(p => p.UserName, p => p);
 
-            this.Rating = this.HtmlHelper.RatingStars(rating).ToString();
+            this.Rating = context.HtmlHelper.RatingStars(rating).ToString();
             this.Description = this.Rating;
             this.TargetUrlId = targetUrlId;
             this.TargetName = targetName;
@@ -39,7 +38,7 @@ namespace Bnh.Web.ViewModels
             this.AddReviewLink = new LinkViewModel
             {
                 Text = "Add review",
-                Href = this.UrlHelper.Action("AddReview", new { id = targetUrlId })
+                Href = context.UrlHelper.Action("AddReview", new { id = targetUrlId })
             };
 
             if (pager.NumberOfPages > 1)
@@ -56,7 +55,7 @@ namespace Bnh.Web.ViewModels
                         Css = classResolver(link),
                         Href = (link.Disabled || link.Active) 
                             ? string.Empty
-                            : this.UrlHelper.Action(link.Action, new { id = targetUrlId, size = pager.PageSize, page = link.PageIndex + 1 })
+                            : context.UrlHelper.Action(link.Action, new { id = targetUrlId, size = pager.PageSize, page = link.PageIndex + 1 })
                     });
             }
             this.Reviews = pager
@@ -75,13 +74,13 @@ namespace Bnh.Web.ViewModels
                         .Select(q => new RatingQuestionViewModel
                         {
                             Question = q.Value + ":",
-                            AnswerHtml = this.HtmlHelper.RatingStars(r.Ratings[q.Key]).ToString()
+                            AnswerHtml = context.HtmlHelper.RatingStars(r.Ratings[q.Key]).ToString()
                         }),
-                    PostCommentActionUrl = this.UrlHelper.Action("PostReviewComment")
+                    PostCommentActionUrl = context.UrlHelper.Action("PostReviewComment")
                 });
-            this.Admin = controller.HttpContext.User.IsInRole("content_manager");
-            this.DeleteReviewUrl = this.Admin ? this.UrlHelper.Action("DeleteReview") : null;
-            this.DeleteCommentUrl = this.Admin ? this.UrlHelper.Action("DeleteReviewComment") : null;
+            this.Admin = context.IsUserContentManager;
+            this.DeleteReviewUrl = this.Admin ? context.UrlHelper.Action("DeleteReview") : null;
+            this.DeleteCommentUrl = this.Admin ? context.UrlHelper.Action("DeleteReviewComment") : null;
         }
     }
 }

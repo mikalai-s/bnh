@@ -17,7 +17,7 @@
 <div class="row">
     <div class="span3"></div>
     <div class="span8 center">
-        <a href="#">Go to map view --></a>
+        <a href="#" data-bind="click: onToggleSlide.bind($root)">Go to map view --></a>
     </div>
 </div>
 
@@ -34,34 +34,22 @@
 
     <div class="slider">
 
-        <div>
+        <div data-bind="slider: slide">
 
-            <div class="slide">
-
-                @foreach(var zone in Model.Zones)
-                {
+            <div class="slide" data-bind="foreach: zones">
                 <div class="span2">
-                    <div class="zone-header">@zone.Key</div>
-                    <div>
-                        @foreach(var community in zone.Value)
-                        {
-                        <div class="zone-community">
+                    <div class="zone-header" data-bind="text: name"></div>
+                    <div data-bind="foreach: communities">
+                        <div class="zone-community" data-bind="visible: $root.filter().isCommunityVisible($data)" >
                             @if (Context.User.IsInRole("content_manager"))
                             {
-                            <sup class="alter"><a href="@community.DeleteUrl">x</a></sup>
+                            <sup class="alter"><a data-bind="attr: { href: deleteUrl, title: deleteTitle}">x</a></sup>
                             }
-                            <a class="community" href="@community.DetailsUrl">@community.Name</a>
+                            <a class="community" data-bind="text: name, infoPopup: infoPopup, attr: { href: detailsUrl }, event: {mouseover: communityMouseover, mouseout:communityMouseout }" ></a>
                         </div>
-                        }
                     </div>
             
                  </div>
-                }
-
-                <div class="anchor">
-                     <a href="#" data-bind="click: onToggleSlide.bind($root)">Go to map view --></a>
-                </div>
-
             </div>
 
             <div class="slide">
@@ -74,3 +62,4 @@
         </div>
     </div>
 </div>
+
