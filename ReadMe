@@ -24,7 +24,7 @@ Here is sample instruction of installing MongoDb on a machine:
 
 		- run the following command to register service:
 			
-			c:\data\bin\mongod --config "c:\data\bin\mongod.config" –install
+			c:\data\bin\mongod --config "c:\data\bin\mongod.config" -–install
 
 		- start service (I recommend to update service to start automatically)
 
