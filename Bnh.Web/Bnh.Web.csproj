@@ -355,12 +355,13 @@
     <Content Include="img\stars-big.png" />
     <Content Include="img\stars-small.png" />
     <Content Include="js\account-login.js" />
+    <Content Include="js\community-index.js" />
     <Content Include="js\libs\knockout\knockout-postbox.js" />
     <Content Include="js\libs\knockout\knockout-postbox.min.js" />
     <Content Include="js\libs\twitter\bootstrap.js" />
     <Content Include="js\libs\twitter\bootstrap.min.js" />
     <Content Include="js\community-edit.js" />
-    <Content Include="js\community-index.js" />
+    <Content Include="js\community-index-old.js" />
     <Content Include="js\encoding.js" />
     <Content Include="js\libs\debug\ba-debug.js" />
     <Content Include="js\libs\debug\ba-debug.min.js">

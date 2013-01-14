@@ -59,7 +59,7 @@ footer .small-logo { background-image: url(/img/logo-inverse.png); height: 50px;
 
 
 /* right scenarios */
-.right { text-align: right; }
+.text-right { text-align: right; }
 .navbar .right .nav { margin-right: -15px; }
 
 
@@ -97,14 +97,16 @@ fieldset legend { box-sizing: border-box; padding-left: 25px; }
 /*  slide */
 
 /* note: all the slides together should fit slider's width */
-.slider { overflow: hidden; }
-    .slider > div { width: 3000px; position: relative;}
+.slider { overflow: hidden; width: 100%; }
+    .slider > div { white-space: nowrap; position: relative; }
 
-.slider .slide { width: 700px; position: relative; display: inline-block; vertical-align:top; }
+.slider .slide { width: 100%; position: relative; display: inline-block; vertical-align: top; white-space: nowrap; }
 
-/* */
-.slider .slide .anchor { height: 200px; width: 20px; border: solid 1px red; float: left; }
+.slider .slide .anchor { height: 200px; width: 20px; border: solid 1px red; }
 
+.slider .anchor.left { float: left; }
+
+.slider .anchor.right { float: right; }
 
 
 /* scene */
@@ -193,4 +195,8 @@ fieldset legend { box-sizing: border-box; padding-left: 25px; }
 /* end of issue fix */
 
 
-/* */
+/* community list */
+
+.zone-community { padding: 2px 0; }
+
+/* end community list*/
