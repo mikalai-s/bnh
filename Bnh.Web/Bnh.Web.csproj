@@ -342,6 +342,7 @@
     <Content Include="img\glyphicons-halflings-white.png" />
     <Content Include="img\glyphicons-halflings.png" />
     <Content Include="img\house.jpg" />
+    <Content Include="img\list-icon.png" />
     <Content Include="img\Login\facebook.jpg" />
     <Content Include="img\Login\facebook30.png" />
     <Content Include="img\Login\google.jpg" />
@@ -352,6 +353,7 @@
     <Content Include="img\Login\yahoo30.png" />
     <Content Include="img\logo-inverse.png" />
     <Content Include="img\logo.png" />
+    <Content Include="img\map-icon.png" />
     <Content Include="img\stars-big.png" />
     <Content Include="img\stars-small.png" />
     <Content Include="js\account-login.js" />

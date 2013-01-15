@@ -102,7 +102,8 @@ fieldset legend { box-sizing: border-box; padding-left: 25px; }
 
 .slider .slide { width: 100%; position: relative; display: inline-block; vertical-align: top; white-space: nowrap; }
 
-.slider .slide .anchor { height: 200px; width: 20px; border: solid 1px red; }
+.slider .slide .anchor { height: 200px; width: 40px; }
+    .slider .slide .anchor img { border: solid 1px #D5D5D5; }
 
 .slider .anchor.left { float: left; }
 
