@@ -42,7 +42,6 @@ namespace Bnh.Controllers
 
         //
         // GET: /Community/
-        [SinglePage(Module="views/community-index")]
         public ViewResult Index()
         {
             var city = this.repositories.Cities.First(c => c.Name == config.City);

@@ -195,4 +195,6 @@ fieldset legend { -moz-box-sizing: border-box; -webkit-box-sizing: border-box; b
 
     .community-filter input[type=text] { width: 140px; }
 
+.slide legend .info { color: #a20e0e; }
+
 /*#endregion */

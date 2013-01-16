@@ -3,9 +3,7 @@
     function (ko, $, Map) {
         "use strict";
 
-        //var map,
-        //    filterLegend = $("#filterLegend"),
-        //    filterParameters = $("#filterParameters");
+        var map;
 
         //function ZoneViewModel(name, communities) {
         //    var self = this;
@@ -86,34 +84,96 @@
             }
         };
 
-        //function CommunityFilterViewModel(config) {
-        //    var self = this;
-        //    self.remoteness = ko.observable();
-        //    self.hasLake = ko.observable(false);
-        //    self.hasWaterFeature = ko.observable(false);
-        //    self.hasClubOrFacility = ko.observable(false);
-        //    self.hasMountainView = ko.observable(false);
-        //    self.hasParksAndPathways = ko.observable(false);
-        //    self.hasShoppingPlaza = ko.observable(false);
+        function CommunityFilterViewModel(config) {
 
-        //    this.isCommunityVisible = function (cp) {
-        //        var visible =
-        //         (!(self.remoteness()) || self.remoteness() >= cp.distanceToCityCenter()) &&
-        //             (!(self.hasLake()) || self.hasLake() === cp.hasLake()) &&
-        //                 (!(self.hasWaterFeature()) || self.hasWaterFeature() === cp.hasWaterFeature()) &&
-        //                     (!(self.hasClubOrFacility()) || self.hasClubOrFacility() === cp.hasClubOrFacility()) &&
-        //                         (!(self.hasMountainView()) || self.hasMountainView() === cp.hasMountainView()) &&
-        //                             (!(self.hasParksAndPathways()) || self.hasParksAndPathways() === cp.hasParksAndPathways()) &&
-        //                                 (!(self.hasShoppingPlaza()) || self.hasShoppingPlaza() === cp.hasShoppingPlaza()) &&
-        //                                     true;
-        //        return visible;
-        //    };
-        //}
+            this.properties = {
+                remoteness: ko.observable(),
+                hasLake: ko.observable(false),
+                hasWaterFeature: ko.observable(false),
+                hasClubOrFacility: ko.observable(false),
+                hasMountainView: ko.observable(false),
+                hasParksAndPathways: ko.observable(false),
+                hasShoppingPlaza: ko.observable(false)
+            };
+
+            this.dirty = ko.dirtyFlag(this.properties);
+        }
+
+        CommunityFilterViewModel.prototype.isVisible = function (communityUrlId) {
+            var cp = communityData[communityUrlId];
+            var self = this.properties;
+            var visible = (!(self.remoteness()) || self.remoteness() >= cp.Remoteness) &&
+                             (!(self.hasLake()) || self.hasLake() === cp.HasLake) &&
+                                 (!(self.hasWaterFeature()) || self.hasWaterFeature() === cp.HasWaterFeature) &&
+                                     (!(self.hasClubOrFacility()) || self.hasClubOrFacility() === cp.HasClubOrFacility) &&
+                                         (!(self.hasMountainView()) || self.hasMountainView() === cp.HasMountainView) &&
+                                             (!(self.hasParksAndPathways()) || self.hasParksAndPathways() === cp.HasParksAndPathways) &&
+                                                 (!(self.hasShoppingPlaza()) || self.hasShoppingPlaza() === cp.HasShoppingPlaza) &&
+                                                     true;
+            return visible;
+        };
+
+        //-------------------------------------------
+        // Implementation of dirty flag inspired by
+        // http://www.knockmeout.net/2011/05/creating-smart-dirty-flag-in-knockoutjs.html
+        ko.dirtyFlag = function createDirtyFlag(root, isSuspended) {
+            var originalJSON, currentJSON, isDirty,
+                resumeResetRequested = false,
+                isSuspendedObservable = ko.observable(!!isSuspended);
+
+            // subscribe to all observables in root (recursively),
+            // which causes this dependent observable to re-evaluate
+            // every time any observable in "root" changes
+            currentJSON = ko.computed(function () {
+                if (isSuspendedObservable()) {
+                    return null; // while dirtyFlag is suspended, only subscribe to isSuspendedObservable changes
+                }
+                var rootJson = ko.toJSON(root); // subscribe to every observable in the model
+                if (resumeResetRequested) {
+                    resumeResetRequested = false;
+                    originalJSON(rootJson); // when this computation function finishes, dirtyTest function will run (subcribed to currentJSON); it will set isDirty to false (because both original and current JSON now point to the same value)
+                }
+                return rootJson;
+            });
+
+            // take snapshot of "root" at creation time
+            // (can be updated with "reset" function, see below)
+            originalJSON = ko.observable(currentJSON());
+
+            // initialize isDirty observable
+            isDirty = ko.observable(false);
+            isDirty.originalJSON = originalJSON;
+            isDirty.currentJSON = currentJSON;
+            isDirty.reset = function () {
+                isDirty.resume(true);
+            };
+            isDirty.suspend = function () {
+                isSuspendedObservable(true);
+            };
+            isDirty.resume = function (resetOnResume) {
+                if (isSuspendedObservable()) {
+                    resumeResetRequested = resetOnResume;
+                    isSuspendedObservable(false);
+                } else if (resetOnResume) {
+                    originalJSON(currentJSON());
+                    isDirty(false);
+                }
+            };
+
+            // recompute dirty flag each time currentJSON changes
+            currentJSON.subscribe(function dirtyTest() {
+                if (!isSuspendedObservable()) { // only update isDirty if not suspended
+                    isDirty(currentJSON() !== originalJSON());
+                }
+            });
+
+            return isDirty;
+        };
 
         function CommunityPageViewModel() {
             var self = this;
             //self.zones = ko.observableArray([]);
-            //self.filter = ko.observable(new CommunityFilterViewModel());
+            self.filter = new CommunityFilterViewModel();
             self.slide = ko.observable(0);
             //self.initialize = function () {
             //    $.getJSON("/Community/Zones", function (data) {
@@ -128,22 +188,13 @@
             //};
             //self.initialize();
 
-            self.onToggleSlide = function () {
-                this.slide(this.slide() === 0 ? 1 : 0);
-            };
         }
 
-        //filterLegend.click(function () {
-        //    if (filterParameters.is(":visible")) {
-        //        filterParameters.hide("fast");
-        //        filterLegend.text("[show]");
-        //    } else {
-        //        filterParameters.show("fast");
-        //        filterLegend.text("[hide]");
-        //    }
-        //});
+        CommunityPageViewModel.prototype.onToggleSlide = function () {
+            this.slide(this.slide() === 0 ? 1 : 0);
+        };
 
-        var map = new Map($("#mapCanvas"), {
+        map = new Map($("#mapCanvas"), {
             zoom: 11,
             center: {
                 lat: 51.02844,
@@ -152,5 +203,6 @@
         });
 
         ko.applyBindings((window.vm = new CommunityPageViewModel()));
+
     }
 );

@@ -10,10 +10,16 @@ namespace Bnh.Web.ViewModels
     public class CommunityViewModel
     {
         public string DeleteUrl { get; private set; }
+
         public string DetailsUrl { get; private set; }
+
         public string ReviewsUrl { get; private set; }
 
         public string Name { get; private set; }
+
+        public string UrlId { get; set; }
+
+        public Community Entity { get; set; }
 
         public CommunityViewModel(ViewModelContext context, Community community)
         {
@@ -21,6 +27,8 @@ namespace Bnh.Web.ViewModels
             this.DetailsUrl = context.UrlHelper.Action("Details", "Community", new { id = community.UrlId });
             this.ReviewsUrl = context.UrlHelper.Action("Reviews", "Reviews", new { id = community.UrlId });
             this.Name = community.Name;
+            this.UrlId = community.UrlId;
+            this.Entity = community;
         }
     }
 }

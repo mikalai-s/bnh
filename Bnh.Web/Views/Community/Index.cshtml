@@ -2,6 +2,12 @@
 @{
     ViewBag.Title = "Calgary Communities";
     ViewBag.Description = "Pick a community";
+
+    // TODO: Optimize this to render only filterable properties to reduce page size
+    var communityData = Model.Zones.Values
+        .SelectMany(c => c)
+        .Select(c => c.Entity)
+        .ToDictionary(c => c.UrlId, c => c);
 }
 
 @section Scripts
@@ -30,7 +36,7 @@
             <div>
 
                 <fieldset class="slide">
-                    <legend>Community List View</legend>
+                    <legend>Community List View<sup class="info" data-bind="visible: filter.dirty">(filtered)</sup></legend>
 
                     @foreach(var zone in Model.Zones)
                     {
@@ -39,7 +45,7 @@
                         <div>
                             @foreach(var community in zone.Value)
                             {
-                            <div class="zone-community">
+                            <div class="zone-community" data-bind="visible: filter.isVisible('@community.UrlId')">
                                 @if (Context.User.IsInRole("content_manager"))
                                 {
                                 <sup class="alter"><a href="@community.DeleteUrl">x</a></sup>
@@ -58,7 +64,7 @@
                 </fieldset>@* remove white spaces for inline-blocks
 
                 *@<fieldset class="slide">
-                    <legend>Community Map View</legend>
+                    <legend>Community Map View<sup class="info" data-bind="visible: filter.dirty">(filtered)</sup></legend>
 
                     <div class="anchor left">
                         <a href="#" data-bind="click: onToggleSlide.bind($root)" title="Go to list view"><img src="~/img/list-icon.png" /><br />List</a>
@@ -77,3 +83,7 @@
     </div>
 
 </div>
+
+<script>
+    var communityData = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(communityData));
+</script>
