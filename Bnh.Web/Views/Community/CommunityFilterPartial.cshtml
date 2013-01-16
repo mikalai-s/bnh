@@ -4,16 +4,19 @@
     var properties = FilterProperty.Get(typeof(Community));
 }
 
-<div id="filterParameters" data-bind="with: filter">
+<div class="community-filter" data-bind="with: filter">
     @foreach (var jsp in properties)
     {
         if (jsp.Property.PropertyType == typeof(bool))
-        { 
-    <div><input id="@jsp.Name" type="checkbox" class="filter" data-bind="checked: @jsp.Name" /> @jsp.Title</div>
+        {
+            <label class="checkbox">
+                <input id="@jsp.Name" type="checkbox" class="filter" data-bind="checked: @jsp.Name" /> @jsp.Title
+            </label>
         }
         else
-        { 
-    <div>@jsp.Title<input id="@jsp.Name+'_input'" type="text" class="filter" data-bind="value: @jsp.Name" /></div>
+        {
+            <label>@jsp.Title</label>
+            <input id="@jsp.Name+'_input'" type="text" class="filter" data-bind="value: @jsp.Name" />
         }
     }
 </div>

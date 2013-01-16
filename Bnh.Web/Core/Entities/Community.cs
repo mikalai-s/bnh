@@ -38,25 +38,25 @@ namespace Bnh.Core.Entities
         [ExternalProperty]
         public string CurrentPhase { get; set; }
 
-        [FilterProperty(Title = "To city center", Operator = FilterOperator.LessOrEqual)]
+        [FilterProperty(Title = "Distance to city center", Operator = FilterOperator.LessOrEqual)]
         public int Remoteness { get; set; }
 
-        [FilterProperty(Title = "Has Lake")]
+        [FilterProperty(Title = "Lake")]
         public bool HasLake { get; set; }
 
-        [FilterProperty(Title = "Has Water Feature")]
+        [FilterProperty(Title = "Water Feature")]
         public bool HasWaterFeature { get; set; }
 
-        [FilterProperty(Title = "Has Club Or Facility")]
+        [FilterProperty(Title = "Club Or Facility")]
         public bool HasClubOrFacility { get; set; }
 
-        [FilterProperty(Title = "Has Mountain View")]
+        [FilterProperty(Title = "Mountain View")]
         public bool HasMountainView { get; set; }
 
-        [FilterProperty(Title = "Has Parks And Pathways")]
+        [FilterProperty(Title = "Parks And Pathways")]
         public bool HasParksAndPathways { get; set; }
 
-        [FilterProperty(Title = "Has Shopping Plaza")]
+        [FilterProperty(Title = "Shopping Plaza")]
         public bool HasShoppingPlaza { get; set; }
 
         [ExternalProperty(Title = "Number of Playgrounds")]

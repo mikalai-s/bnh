@@ -23,28 +23,16 @@ legend { font-size: 18px; padding-left: 10px; }
 .header .row { margin-top: 15px; }
 
 
-#page { position: relative; margin-top: -80px; background-color: white; border-radius: 5px 5px 5px 5px; -moz-border-radius: 5px 5px 5px 5px; -webkit-border-radius: 5px 5px 5px 5px; box-shadow: 0 0 25px rgba(0, 0, 0, .3);  }
+#page { position: relative; margin-top: -80px; background-color: white; -moz-border-radius: 5px 5px 5px 5px; -webkit-border-radius: 5px 5px 5px 5px; border-radius: 5px 5px 5px 5px; -webkit-box-shadow: 0 0 25px rgba(0, 0, 0, .3); box-shadow: 0 0 25px rgba(0, 0, 0, .3); }
 
-#page header { 
-    background-image: -moz-linear-gradient(top, #18343F, #446A94);
-    background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#18343F), to(#446A94));
-    background-image: -webkit-linear-gradient(top, #18343F, #446A94);
-    background-image: -o-linear-gradient(top, #18343F, #446A94);
-    background-image: linear-gradient(to bottom, #18343F, #446A94);
-    padding: 5px 25px;
-    border-radius: 5px 5px 0 0;
-    -moz-border-radius: 5px 5px 0 0;
-    -webkit-border-radius: 5px 5px 0 0;
-    height: 90px;
-    color: white;
-}
+    #page header { background-image: -moz-linear-gradient(top, #18343F, #446A94); background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#18343F), to(#446A94)); background-image: -webkit-linear-gradient(top, #18343F, #446A94); background-image: -o-linear-gradient(top, #18343F, #446A94); background-image: linear-gradient(to bottom, #18343F, #446A94); padding: 5px 25px; -moz-border-radius: 5px 5px 0 0; -webkit-border-radius: 5px 5px 0 0; border-radius: 5px 5px 0 0; height: 90px; color: white; }
 
     #page header h1, h2, h3, h4, h5, h6 { font-family: 'Segoe UI Light', 'Segoe UI'; }
 
 /* footer */
-footer { margin: -50px 0 0 0; }
 footer
 {
+    margin: -50px 0 0 0; 
     background-image: -moz-linear-gradient(top, #F2F2F2, white);
     background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#F2F2F2), to(white));
     background-image: -webkit-linear-gradient(top, #F2F2F2, white);
@@ -81,7 +69,7 @@ footer .small-logo { background-image: url(/img/logo-inverse.png); height: 50px;
 
 /* general */
 
-fieldset legend { box-sizing: border-box; padding-left: 25px; }
+fieldset legend { -moz-box-sizing: border-box; -webkit-box-sizing: border-box; box-sizing: border-box; padding-left: 25px; }
 
 .center { text-align: center; vertical-align: middle; }
 
@@ -136,16 +124,13 @@ fieldset legend { box-sizing: border-box; padding-left: 25px; }
     .review-container .scale { width: 50px; height: 10px; overflow: hidden; display: inline-block; background-image: url(/img/stars-small.png); background-position: 0 10px; }
     .review-container .scale .l { height: 100%; background-image: url(/img/stars-small.png); }
 
-    .review-container .comment-container { margin: 10px 0; }
-        .review-container .comment { margin-left: 50px; }
-
     .review-container .mceLayout { width: 100% !important; }
     .review-container .mceToolbar { text-align: left; }
     .review-container .mceIframeContainer iframe { height: 75px !important; }
 
-    .review-container .comment-container { position: relative; background-color: #fefefe; }
+    .review-container .comment-container { position: relative; background-color: #fefefe; margin: 10px 0; }
+        .review-container .comment { margin-left: 50px; }
         .review-container .comment-container.even { background-color: #fafafa; }
-
 
 .description .scale { width: 125px; height: 25px; display: inline-block; background-image: url(/img/stars-big.png); background-position: 0 25px; }
     .description .scale .l { height: 100%; background-image: url(/img/stars-big.png); }
@@ -153,7 +138,7 @@ fieldset legend { box-sizing: border-box; padding-left: 25px; }
 
 /* pager */
 
-.pager a { padding: 1px 8px; font-size: 12px; border-radius: 4px; -moz-border-radius: 4px; -webkit-border-radius: 4px; }
+.pager a { padding: 1px 8px; font-size: 12px; -moz-border-radius: 4px; -webkit-border-radius: 4px; border-radius: 4px; }
 .pager .active a { background-color: #F5F5F5; }
 
 /* end pager */
@@ -202,3 +187,12 @@ fieldset legend { box-sizing: border-box; padding-left: 25px; }
 .zone-community { padding: 2px 0; }
 
 /* end community list*/
+
+
+/*#region community filter */
+
+.community-filter { -moz-box-sizing: border-box; -webkit-box-sizing: border-box; box-sizing: border-box; padding-left: 20px; }
+
+    .community-filter input[type=text] { width: 140px; }
+
+/*#endregion */
