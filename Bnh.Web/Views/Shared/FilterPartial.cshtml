@@ -1,13 +1,11 @@
 ﻿@using Bnh.Core.Entities.Attributes
 
-@{
-    var properties = FilterProperty.Get(typeof(Community));
-}
+@model IEnumerable<FilterPropertyViewModel>
 
 <div class="community-filter" data-bind="with: filter">
-    @foreach (var jsp in properties)
+    @foreach (var jsp in Model)
     {
-        if (jsp.Property.PropertyType == typeof(bool))
+        if (jsp.Type == typeof(bool))
         {
             <label class="checkbox">
                 <input id="@jsp.Name" type="checkbox" class="filter" data-bind="checked: properties.@jsp.Name" /> @jsp.Title
@@ -16,7 +14,7 @@
         else
         {
             <label>@jsp.Title</label>
-            <input id="@jsp.Name+'_input'" type="text" class="filter" data-bind="value: properties.@jsp.Name" />
+            <input id="@jsp.Name+'_input'" type="text" class="filter" data-bind="value: properties.@jsp.Name, valueUpdate: 'afterkeydown'" />
         }
     }
 </div>

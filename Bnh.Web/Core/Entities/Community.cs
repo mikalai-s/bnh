@@ -38,7 +38,7 @@ namespace Bnh.Core.Entities
         [ExternalProperty]
         public string CurrentPhase { get; set; }
 
-        [FilterProperty(Title = "Distance to city center", Operator = FilterOperator.LessOrEqual)]
+        [FilterProperty(Title = "Distance to city center", Operator = FilterOperator.LessOrEqual, Default="")]
         public int Remoteness { get; set; }
 
         [FilterProperty(Title = "Lake")]

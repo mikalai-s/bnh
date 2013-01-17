@@ -19,6 +19,8 @@ namespace Bnh.Core.Entities.Attributes
     {
         public FilterOperator Operator { get; set; }
 
+        public object Default { get; set; }
+
         public FilterPropertyAttribute()
         {
             Operator = FilterOperator.Equal;

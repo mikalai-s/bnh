@@ -11,8 +11,8 @@ namespace Bnh
 {
     public class ExternalProperty
     {
-        public IHtmlString Name { get; protected set; }
-        public IHtmlString Title { get; protected set; }
+        public string Name { get; protected set; }
+        public string Title { get; protected set; }
         public ExternalPropertyAttribute Attribute { get; protected set; }
 
         public PropertyInfo Property { get; protected set; }
@@ -30,8 +30,8 @@ namespace Bnh
                    let attribute = (property.GetCustomAttributes(typeof(ExternalPropertyAttribute), false).First() as ExternalPropertyAttribute)
                    select new ExternalProperty
                    {
-                       Name = new MvcHtmlString(name),
-                       Title = new MvcHtmlString(attribute.Title ?? property.Name),
+                       Name = name,
+                       Title = attribute.Title ?? property.Name,
                        Attribute = attribute,
                        Property = property
                    };
@@ -40,8 +40,9 @@ namespace Bnh
 
     public class FilterProperty : ExternalProperty
     {
-        public IHtmlString Operator { get; private set; }
+        public string Operator { get; private set; }
         public new FilterPropertyAttribute Attribute { get; protected set; }
+        public object Default { get; protected set; } 
 
         public static new IEnumerable<FilterProperty> Get(Type type)
         {
@@ -54,7 +55,8 @@ namespace Bnh
                        Title = property.Title,
                        Attribute = attribute,
                        Property = property.Property,
-                       Operator = attribute.GetJsOperator()
+                       Operator = attribute.GetJsOperator(),
+                       Default = attribute.Default ?? (property.Property.PropertyType.IsValueType ? Activator.CreateInstance(property.Property.PropertyType) : null)
                    };
         }
     }

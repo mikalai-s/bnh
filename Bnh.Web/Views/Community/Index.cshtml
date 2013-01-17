@@ -1,4 +1,7 @@
-﻿@model CommunityIndexViewModel
+﻿@using Newtonsoft.Json
+
+@model CommunityIndexViewModel
+
 @{
     ViewBag.Title = "Calgary Communities";
     ViewBag.Description = "Pick a community";
@@ -8,6 +11,17 @@
         .SelectMany(c => c)
         .Select(c => c.Entity)
         .ToDictionary(c => c.UrlId, c => c);
+
+    var filterProperties = from jsp in FilterProperty.Get(typeof(Community))
+                           select new FilterPropertyViewModel
+                               {
+                                   Name = jsp.Property.Name,
+                                   Title = jsp.Title,
+                                   Comparer = "(function(a, b) {{ return a {0} b; }})".FormatWith(jsp.Operator),
+                                   DefaultValue = jsp.Default,
+                                   Type = jsp.Property.PropertyType
+                               };
+    
 }
 
 @section Scripts
@@ -25,7 +39,7 @@
     <div class="span3">
         <fieldset>
             <legend>Filter</a></legend>
-            @Html.Partial("CommunityFilterPartial")
+            @Html.Partial("FilterPartial", filterProperties)
         </fieldset>
     </div>
 
@@ -85,5 +99,6 @@
 </div>
 
 <script>
-    var communityData = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(communityData));
+    var page_communityData = @Html.Raw(JsonConvert.SerializeObject(communityData));
+    var page_filterProperties = @Html.Raw(JsonConvert.SerializeObject(filterProperties));
 </script>

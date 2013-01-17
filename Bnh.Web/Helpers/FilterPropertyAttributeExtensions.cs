@@ -11,27 +11,27 @@ namespace Bnh
 {
     public static class FilterPropertyAttributeExtensions
     {
-        public static IHtmlString GetJsOperator(this FilterPropertyAttribute attr)
+        public static string GetJsOperator(this FilterPropertyAttribute attr)
         {
             switch(attr.Operator)
             {
                 case FilterOperator.Equal:
-                    return new MvcHtmlString("===");
+                    return "===";
 
                 case FilterOperator.Greater:
-                    return new MvcHtmlString(">");
+                    return ">";
 
                 case FilterOperator.GreaterOrEqual:
-                    return new MvcHtmlString(">=");
+                    return ">=";
 
                 case FilterOperator.Less:
-                    return new MvcHtmlString("<");
+                    return "<";
 
                 case FilterOperator.LessOrEqual:
-                    return new MvcHtmlString("<=");
+                    return "<=";
 
                 case FilterOperator.NotEqual:
-                    return new MvcHtmlString("!==");
+                    return "!==";
             }
 
             throw new NotSupportedException("Given filter operator is not supported");

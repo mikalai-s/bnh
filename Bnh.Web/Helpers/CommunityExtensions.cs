@@ -19,7 +19,7 @@ namespace Bnh
             var properties = new Dictionary<string, object>();
             foreach (var jsp in FilterProperty.Get(typeof(Community)))
             {
-                properties[jsp.Name.ToHtmlString()] = jsp.Property.GetValue(community, null);
+                properties[jsp.Name] = jsp.Property.GetValue(community, null);
             }
             return JsonConvert.SerializeObject(properties);
         }

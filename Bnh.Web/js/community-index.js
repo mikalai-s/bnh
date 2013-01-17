@@ -86,30 +86,27 @@
 
         function CommunityFilterViewModel(config) {
 
-            this.properties = {
-                remoteness: ko.observable(),
-                hasLake: ko.observable(false),
-                hasWaterFeature: ko.observable(false),
-                hasClubOrFacility: ko.observable(false),
-                hasMountainView: ko.observable(false),
-                hasParksAndPathways: ko.observable(false),
-                hasShoppingPlaza: ko.observable(false)
-            };
+            this.properties = {};
+
+            for(var i = 0; i < page_filterProperties.length; i += 1) {
+                var property = page_filterProperties[i];
+                this.properties[property.Name] = ko.observable(property.DefaultValue);
+            }
 
             this.dirty = ko.dirtyFlag(this.properties);
         }
 
         CommunityFilterViewModel.prototype.isVisible = function (communityUrlId) {
-            var cp = communityData[communityUrlId];
+            var cp = page_communityData[communityUrlId];
             var self = this.properties;
-            var visible = (!(self.remoteness()) || self.remoteness() >= cp.Remoteness) &&
-                             (!(self.hasLake()) || self.hasLake() === cp.HasLake) &&
-                                 (!(self.hasWaterFeature()) || self.hasWaterFeature() === cp.HasWaterFeature) &&
-                                     (!(self.hasClubOrFacility()) || self.hasClubOrFacility() === cp.HasClubOrFacility) &&
-                                         (!(self.hasMountainView()) || self.hasMountainView() === cp.HasMountainView) &&
-                                             (!(self.hasParksAndPathways()) || self.hasParksAndPathways() === cp.HasParksAndPathways) &&
-                                                 (!(self.hasShoppingPlaza()) || self.hasShoppingPlaza() === cp.HasShoppingPlaza) &&
-                                                     true;
+            var visible = true;
+            for (var i = 0; i < page_filterProperties.length; i += 1) {
+                var property = page_filterProperties[i];
+                var value = this.properties[property.Name]();
+
+                visible = visible && (!value || eval(property.Comparer)(value, cp[property.Name]));
+            }
+
             return visible;
         };
 
