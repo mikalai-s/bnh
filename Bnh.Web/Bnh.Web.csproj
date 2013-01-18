@@ -374,7 +374,6 @@
     <Content Include="js\libs\jquery\jquery-ui-1.8.20.min.js">
       <DependentUpon>jquery-ui-1.8.20.js</DependentUpon>
     </Content>
-    <Content Include="js\libs\jquery\jquery.balloon.js" />
     <Content Include="js\libs\require\async.js" />
     <Content Include="js\libs\require\cache.uncompressed.js" />
     <Content Include="js\libs\require\cached.js" />

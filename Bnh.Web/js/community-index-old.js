@@ -1,5 +1,5 @@
 ﻿define(
-    ["knockout", "jquery", "map", "jqballoon"],
+    ["knockout", "jquery", "map"],
     function (ko, $, Map) {
         "use strict";
 

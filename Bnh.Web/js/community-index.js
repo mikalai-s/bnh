@@ -201,5 +201,20 @@
 
         ko.applyBindings((window.vm = new CommunityPageViewModel()));
 
+
+        // setup search popup
+        $('.community').popover({
+            animation: true,
+            placement: "right",
+            html: true,
+            content: function () { return $(this)[0].innerHTML; },
+            trigger: 'hover',
+            template: '<div class="popover"><div class="arrow"></div><div class="popover-inner"><h3 class="popover-title" style="display:none"></h3><div class="popover-content"><p></p></div></div></div>',
+            delay: {
+                show: 300,
+                hide: 200
+            }
+        });
+
     }
 );
