@@ -184,7 +184,10 @@ fieldset legend { -moz-box-sizing: border-box; -webkit-box-sizing: border-box; b
 
 /* community list */
 
-.zone-community { padding: 2px 0; }
+.community { padding: 2px 0; }
+
+.scale { width: 50px; height: 10px; overflow: hidden; display: inline-block; background-image: url(/img/stars-small.png); background-position: 0 10px; }
+    .scale .l { height: 100%; background-image: url(/img/stars-small.png); }
 
 /* end community list*/
 

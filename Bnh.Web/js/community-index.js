@@ -1,5 +1,5 @@
-﻿define(
-    ["knockout", "jquery", "map"],
+﻿define( 
+    ["knockout", "jquery", "map", "twitteroverrides"],
     function (ko, $, Map) {
         "use strict";
 
@@ -77,10 +77,6 @@
                     offset = valueUnwrapped * -($slides.first().width());
                     $slider.animate({ "left": offset + "px" }, 600);
                 }
-
-                //if (viewModel.associatedMapObject != null) {
-                //    viewModel.associatedMapObject.setVisible(valueUnwrapped);
-                //}
             }
         };
 
@@ -104,7 +100,7 @@
                 var property = page_filterProperties[i];
                 var value = this.properties[property.Name]();
 
-                visible = visible && (!value || eval(property.Comparer)(value, cp[property.Name]));
+                visible = visible && (!value || eval(property.Comparer)(value, cp.Properties[property.Name]));
             }
 
             return visible;
@@ -169,22 +165,10 @@
 
         function CommunityPageViewModel() {
             var self = this;
-            //self.zones = ko.observableArray([]);
+
             self.filter = new CommunityFilterViewModel();
             self.slide = ko.observable(0);
-            //self.initialize = function () {
-            //    $.getJSON("/Community/Zones", function (data) {
-            //        var zones = $.map(data, function (communities, zone) {
-            //            var communities = $.map(communities, function (item) {
-            //                return new CommuntiyViewModel(item.community, item.uiHelpers);
-            //            });
-            //            return new ZoneViewModel(zone, communities);
-            //        });
-            //        self.zones(zones);
-            //    });
-            //};
-            //self.initialize();
-
+            self.communities = page_communityData;
         }
 
         CommunityPageViewModel.prototype.onToggleSlide = function () {
@@ -203,16 +187,15 @@
 
 
         // setup search popup
-        $('.community').popover({
+        $('.community a').popover({
             animation: true,
             placement: "right",
             html: true,
-            content: function () { return $(this)[0].innerHTML; },
             trigger: 'hover',
-            template: '<div class="popover"><div class="arrow"></div><div class="popover-inner"><h3 class="popover-title" style="display:none"></h3><div class="popover-content"><p></p></div></div></div>',
+            template: '<div class="popover"><div class="arrow"></div><div class="popover-inner"><h3 class="popover-title" style="display: none"></h3><div class="popover-content"><p></p></div></div></div>',
             delay: {
                 show: 300,
-                hide: 200
+                hide: 100
             }
         });
 

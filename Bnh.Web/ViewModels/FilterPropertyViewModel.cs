@@ -15,6 +15,19 @@ namespace Bnh.Web.ViewModels
 
         public object DefaultValue { get; set; }
 
-        public Type Type { get; set; }
+        public string Type { get; set; }
+
+        public static IEnumerable<FilterPropertyViewModel> EnumerateProperties(Type type)
+        {
+            return from jsp in FilterProperty.Get(type)
+                   select new FilterPropertyViewModel
+                   {
+                       Name = jsp.Property.Name,
+                       Title = jsp.Title,
+                       Comparer = "(function(a, b) {{ return a {0} b; }})".FormatWith(jsp.Operator),
+                       DefaultValue = jsp.Default,
+                       Type = jsp.Property.PropertyType.Name
+                   };
+        }
     }
 }

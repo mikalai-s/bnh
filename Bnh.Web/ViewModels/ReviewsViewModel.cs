@@ -16,7 +16,6 @@ namespace Bnh.Web.ViewModels
 {
     public class ReviewsViewModel : PageViewModel
     {
-        public string Rating { get; set; }
         public string TargetUrlId { get; set; }
         public string TargetName { get; set; }
         public IEnumerable<LinkViewModel> PagerLinks { get; set; }
@@ -30,8 +29,7 @@ namespace Bnh.Web.ViewModels
         {
             var userProfiles = profiles.ToDictionary(p => p.UserName, p => p);
 
-            this.Rating = context.HtmlHelper.RatingStars(rating).ToString();
-            this.Description = this.Rating;
+            this.Description = context.HtmlHelper.RatingStars(rating).ToString();
             this.TargetUrlId = targetUrlId;
             this.TargetName = targetName;
             this.Title = targetName + " Reviews";

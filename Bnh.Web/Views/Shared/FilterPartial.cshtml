@@ -5,7 +5,7 @@
 <div class="community-filter" data-bind="with: filter">
     @foreach (var jsp in Model)
     {
-        if (jsp.Type == typeof(bool))
+        if (jsp.Type == typeof(bool).Name)
         {
             <label class="checkbox">
                 <input id="@jsp.Name" type="checkbox" class="filter" data-bind="checked: properties.@jsp.Name" /> @jsp.Title

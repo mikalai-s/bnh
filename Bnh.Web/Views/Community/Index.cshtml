@@ -9,19 +9,9 @@
     // TODO: Optimize this to render only filterable properties to reduce page size
     var communityData = Model.Zones.Values
         .SelectMany(c => c)
-        .Select(c => c.Entity)
-        .ToDictionary(c => c.UrlId, c => c);
+        .ToDictionary(c => c.UrlId);
 
-    var filterProperties = from jsp in FilterProperty.Get(typeof(Community))
-                           select new FilterPropertyViewModel
-                               {
-                                   Name = jsp.Property.Name,
-                                   Title = jsp.Title,
-                                   Comparer = "(function(a, b) {{ return a {0} b; }})".FormatWith(jsp.Operator),
-                                   DefaultValue = jsp.Default,
-                                   Type = jsp.Property.PropertyType
-                               };
-    
+    var filterProperties = FilterPropertyViewModel.EnumerateProperties(typeof(Community));
 }
 
 @section Scripts
@@ -59,12 +49,12 @@
                         <div>
                             @foreach(var community in zone.Value)
                             {
-                            <div class="zone-community" data-bind="visible: filter.isVisible('@community.UrlId')">
+                            <div class="community" data-bind="visible: filter.isVisible('@community.UrlId'), with: communities['@community.UrlId']">
                                 @if (Context.User.IsInRole("content_manager"))
                                 {
                                 <sup class="alter"><a href="@community.DeleteUrl">x</a></sup>
                                 }
-                                <a class="community" href="@community.DetailsUrl">@community.Name</a>
+                                <a href="@community.DetailsUrl" data-content="@community.PopupHtml">@community.Name</a>
                             </div>
                             }
                         </div>

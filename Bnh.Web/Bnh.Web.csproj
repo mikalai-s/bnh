@@ -652,6 +652,7 @@
     <Content Include="js\libs\tiny_mce\utils\form_utils.js" />
     <Content Include="js\libs\tiny_mce\utils\mctabs.js" />
     <Content Include="js\libs\tiny_mce\utils\validate.js" />
+    <Content Include="js\libs\twitter\overrides.js" />
     <Content Include="js\main.js" />
     <Content Include="js\map-editor.js" />
     <Content Include="js\map.js" />
