@@ -24,7 +24,7 @@
     <sup class="alter">@Html.ActionLink("create new", "Create", null, new { title = "Create new community" })</sup>
 }
 
-<div class="row" style="height:850px">
+<div class="row" style="height:880px">
 
     <div class="span3">
         <fieldset>
@@ -40,7 +40,7 @@
             <div>
 
                 <fieldset class="slide">
-                    <legend>Community List View<sup class="info" data-bind="visible: filter.dirty">(filtered)</sup></legend>
+                    <legend>Community List View<sup class="info" data-bind="text: '(filtered)', visible: filter.dirty"></sup></legend>
 
                     @foreach(var zone in Model.Zones)
                     {
@@ -49,7 +49,7 @@
                         <div>
                             @foreach(var community in zone.Value)
                             {
-                            <div class="community" data-bind="visible: filter.isVisible('@community.UrlId'), with: communities['@community.UrlId']">
+                            <div class="community" data-bind="visible: communities['@community.UrlId'].visible, with: communities['@community.UrlId']">
                                 @if (Context.User.IsInRole("content_manager"))
                                 {
                                 <sup class="alter"><a href="@community.DeleteUrl">x</a></sup>

@@ -23,6 +23,8 @@ namespace Bnh.Web.ViewModels
 
         public string GpsBounds { get; private set; }
 
+        public string GpsLocation { get; private set; }
+
         public IDictionary<string, object> Properties { get; private set; }
 
         public string PopupHtml { get; private set; }
@@ -31,10 +33,11 @@ namespace Bnh.Web.ViewModels
         {
             this.DeleteUrl = context.UrlHelper.Action("Delete", "Community", new { id = community.UrlId });
             this.DetailsUrl = context.UrlHelper.Action("Details", "Community", new { id = community.UrlId });
-            this.ReviewsUrl = context.UrlHelper.Action("Reviews", "Reviews", new { id = community.UrlId });
+            this.ReviewsUrl = context.UrlHelper.Action("Reviews", "Community", new { id = community.UrlId });
             this.Name = community.Name;
             this.UrlId = community.UrlId;
             this.GpsBounds = community.GpsBounds;
+            this.GpsLocation = community.GpsLocation;
 
             this.Properties = FilterProperty.Get(typeof(Community))
                 .ToDictionary(
@@ -42,9 +45,10 @@ namespace Bnh.Web.ViewModels
                     p => p.Property.GetValue(community, null)
                 );
 
-            this.PopupHtml = "<div>{0}</div><div>{1}</div>".FormatWith(
+            this.PopupHtml = "<div><a href='{1}'>{2}</a></div><div>{0}</div><div><a href='{3}'>{4}</a></div>".FormatWith(
                 context.HtmlHelper.RatingStars(ratingCalculator.GetTargetRating(community.CommunityId)),
-                context.HtmlHelper.ActionLink("Reviews", "Reviews", new { id = community.UrlId }));
+                this.DetailsUrl, this.Name,
+                this.ReviewsUrl, "Reviews");
         }
     }
 }

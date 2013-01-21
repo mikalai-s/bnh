@@ -5,59 +5,27 @@
 
         var map;
 
-        //function ZoneViewModel(name, communities) {
-        //    var self = this;
-        //    self.name = ko.observable(name || "");
-        //    self.communities = ko.observableArray(communities || []);
-        //}
+        function CommunityViewModel(community, pageViewModel) {
+            var associatedMapObject;
 
-        //function CommuntiyViewModel(community, uiHelpers) {
-        //    var self = this;
-        //    self.id = ko.observable(community.Id);
-        //    self.name = ko.observable(community.Name);
-        //    self.urlId = ko.observable(community.UrlId);
-        //    self.hasLake = ko.observable(community.HasLake);
-        //    self.distanceToCityCenter = ko.observable(community.DistanceToCenter);
-        //    self.hasWaterFeature = ko.observable(community.HasWaterFeature);
-        //    self.hasClubOrFacility = ko.observable(community.HasClubOfFacility);
-        //    self.hasMountainView = ko.observable(community.HasMountainView);
-        //    self.hasParksAndPathways = ko.observable(community.HasParksAndPathways);
-        //    self.hasShoppingPlaza = ko.observable(community.HasShoppingPlaza);
-        //    self.deleteUrl = ko.observable(uiHelpers.deleteUrl);
-        //    self.deleteTitle = ko.computed(function () {
-        //        return "Delete " + self.name();
-        //    });
-        //    self.detailsUrl = ko.observable(uiHelpers.detailsUrl);
-        //    self.infoPopup = ko.observable(uiHelpers.infoPopup);
-        //    if ((community.GpsBounds != null) && (community.GpsBounds != 'null')) {
-        //        self.gpsBounds = $.map(JSON.parse(community.GpsBounds), map.deserializeCoordinates);
-        //        self.associatedMapObject = map.addPolygon(self.gpsBounds, self.infoPopup());
-        //    }
-        //    self.gpsLocation = map.deserializeCoordinates(JSON.parse(community.GpsLocation));
+            if ((community.GpsBounds != null) && (community.GpsBounds != 'null')) {
+                this.gpsBounds = $.map(JSON.parse(community.GpsBounds), map.deserializeCoordinates);
+                associatedMapObject = map.addPolygon(this.gpsBounds, community.PopupHtml);
+            }
 
-        //    self.communityMouseover = function () {
-        //        map.highlightPolygon(self.associatedMapObject);
+            this.gpsLocation = map.deserializeCoordinates(JSON.parse(community.GpsLocation));
 
-        //    };
-        //    self.communityMouseout = function () {
-        //        map.dehighlightPolygon(self.associatedMapObject);
-        //    };
-        //}
+            this.visible = ko.computed(function() {
+                var visible = pageViewModel.filter.isVisible(community.UrlId);
 
-        //ko.bindingHandlers.infoPopup = {
-        //    init: function (element, valueAccessor) {
-        //        $(element).balloon({
-        //            position: "right",
-        //            contents: valueAccessor(),
-        //            delay: 200,
-        //            minLifetime: 0,
-        //            css: {
-        //                borderRadius: 0,
-        //                backgroundColor: 'white'
-        //            }
-        //        });
-        //    }
-        //};
+                if (associatedMapObject) {
+                    associatedMapObject.setVisible(visible);
+                }
+
+                return visible;
+
+            }, this);
+        }
 
         ko.bindingHandlers.slider = {
             update: function (element, valueAccessor, allBindingsAccessor, viewModel) {
@@ -164,11 +132,15 @@
         };
 
         function CommunityPageViewModel() {
-            var self = this;
+            this.filter = new CommunityFilterViewModel();
+            this.slide = ko.observable(0);
+            this.communities = {};
 
-            self.filter = new CommunityFilterViewModel();
-            self.slide = ko.observable(0);
-            self.communities = page_communityData;
+            for (var urlId in page_communityData) {
+                if (page_communityData.hasOwnProperty(urlId)) {
+                    this.communities[urlId] = new CommunityViewModel(page_communityData[urlId], this);
+                }
+            }
         }
 
         CommunityPageViewModel.prototype.onToggleSlide = function () {
