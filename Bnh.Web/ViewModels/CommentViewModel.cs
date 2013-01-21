@@ -9,7 +9,7 @@ using Microsoft.Web.Helpers;
 
 namespace Bnh.Web.ViewModels
 {
-    public class CommentViewModel
+    public class CommentViewModel : PageViewModel
     {
         public string CommentId { get; set; }
 

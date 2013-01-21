@@ -11,6 +11,7 @@ using Bnh.Cms.Controllers;
 using Bnh.Cms.Models;
 using System.Web.Mvc.Html;
 using Bnh.Web.Helpers;
+using System.Collections.Generic;
 
 namespace Bnh.Controllers
 {
@@ -43,46 +44,17 @@ namespace Bnh.Controllers
         // GET: /Community/
         public ViewResult Index()
         {
-            return View();
-        }
-
-        [HttpGet]
-        public JsonResult Zones()
-        {
-            var urlHelper = new UrlHelper(this.HttpContext.Request.RequestContext);
-
             var city = this.repositories.Cities.First(c => c.Name == config.City);
-            var zones = city.Zones.ToList();
-            var communities = this.repositories
-                .Communities
-                .Where(c => c.CityId == city.CityId)
-                .ToList()
-                .GroupBy(
-                    c => c.Zone,
-                    c => new
-                    {
-                        community = c,
-                        uiHelpers = new
-                        {
-                            deleteUrl = urlHelper.Action("Delete", "Community", new { id = c.UrlId }),
-                            detailsUrl = urlHelper.Action("Details", "Community", new { id = c.UrlId }),
-                            infoPopup = GetCommunityInfoPopupHtml(urlHelper, c)
-                        }
-                    })
-                .OrderBy(g => zones.IndexOf(g.Key))
-                .ToDictionary(
-                    g => g.Key,
-                    g => g.OrderBy(c => c.community.Name));
-
-            return Json(communities, JsonRequestBehavior.AllowGet);
+            var communities = this.repositories.Communities.Where(c => c.CityId == city.CityId);
+            var model = new CommunityIndexViewModel(GetViewModelContext(), city.Zones, communities, this.rating);
+            return View(model);
         }
 
-        private string GetCommunityInfoPopupHtml(UrlHelper urlHelper, Community community)
+        private ViewModelContext GetViewModelContext()
         {
-            return this.htmlHelper.ActionLink(community.Name, "Details", new { id = community.UrlId }).ToString()
-                + "<br/>"
-                + this.htmlHelper.ActionLink("Reviews", "Reviews", new { id = community.UrlId }).ToString();
+            return new ViewModelContext(this);
         }
+      
 
         public ViewResult Details(string id)
         {
@@ -205,7 +177,7 @@ namespace Bnh.Controllers
             var profiles = this.repositories.Profiles.Where(p => participants.Contains(p.UserName)).ToList();
 
             return View(new ReviewsViewModel(
-                this,
+                GetViewModelContext(),
                 this.rating.GetTargetRating(community.CommunityId), 
                 id,
                 community.Name,

@@ -12,17 +12,5 @@ namespace Bnh.Web.ViewModels
         public string Title { get; set; }
 
         public string Description { get; set; }
-
-        protected UrlHelper UrlHelper { get; private set; }
-
-        protected HtmlHelper HtmlHelper { get; private set; }
-
-        public PageViewModel(Controller controller)
-        {
-            this.UrlHelper = new UrlHelper(controller.HttpContext.Request.RequestContext);
-
-            this.HtmlHelper = new HtmlHelper(new ViewContext(controller.ControllerContext, new WebFormView(
-                controller.ControllerContext, "fake"), new ViewDataDictionary(), new TempDataDictionary(), new StringWriter()), new ViewPage());
-        }
     }
 }

@@ -23,28 +23,16 @@ legend { font-size: 18px; padding-left: 10px; }
 .header .row { margin-top: 15px; }
 
 
-#page { position: relative; margin-top: -80px; background-color: white; border-radius: 5px 5px 5px 5px; -moz-border-radius: 5px 5px 5px 5px; -webkit-border-radius: 5px 5px 5px 5px; box-shadow: 0 0 25px rgba(0, 0, 0, .3);  }
+#page { position: relative; margin-top: -80px; background-color: white; -moz-border-radius: 5px 5px 5px 5px; -webkit-border-radius: 5px 5px 5px 5px; border-radius: 5px 5px 5px 5px; -webkit-box-shadow: 0 0 25px rgba(0, 0, 0, .3); box-shadow: 0 0 25px rgba(0, 0, 0, .3); }
 
-#page header { 
-    background-image: -moz-linear-gradient(top, #18343F, #446A94);
-    background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#18343F), to(#446A94));
-    background-image: -webkit-linear-gradient(top, #18343F, #446A94);
-    background-image: -o-linear-gradient(top, #18343F, #446A94);
-    background-image: linear-gradient(to bottom, #18343F, #446A94);
-    padding: 5px 25px;
-    border-radius: 5px 5px 0 0;
-    -moz-border-radius: 5px 5px 0 0;
-    -webkit-border-radius: 5px 5px 0 0;
-    height: 90px;
-    color: white;
-}
+    #page header { background-image: -moz-linear-gradient(top, #18343F, #446A94); background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#18343F), to(#446A94)); background-image: -webkit-linear-gradient(top, #18343F, #446A94); background-image: -o-linear-gradient(top, #18343F, #446A94); background-image: linear-gradient(to bottom, #18343F, #446A94); padding: 5px 25px; -moz-border-radius: 5px 5px 0 0; -webkit-border-radius: 5px 5px 0 0; border-radius: 5px 5px 0 0; height: 90px; color: white; }
 
     #page header h1, h2, h3, h4, h5, h6 { font-family: 'Segoe UI Light', 'Segoe UI'; }
 
 /* footer */
-footer { margin: -50px 0 0 0; }
 footer
 {
+    margin: -50px 0 0 0; 
     background-image: -moz-linear-gradient(top, #F2F2F2, white);
     background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#F2F2F2), to(white));
     background-image: -webkit-linear-gradient(top, #F2F2F2, white);
@@ -59,7 +47,7 @@ footer .small-logo { background-image: url(/img/logo-inverse.png); height: 50px;
 
 
 /* right scenarios */
-.right { text-align: right; }
+.text-right { text-align: right; }
 .navbar .right .nav { margin-right: -15px; }
 
 
@@ -81,7 +69,7 @@ footer .small-logo { background-image: url(/img/logo-inverse.png); height: 50px;
 
 /* general */
 
-fieldset legend { box-sizing: border-box; padding-left: 25px; }
+fieldset legend { -moz-box-sizing: border-box; -webkit-box-sizing: border-box; box-sizing: border-box; padding-left: 25px; }
 
 .center { text-align: center; vertical-align: middle; }
 
@@ -97,10 +85,18 @@ fieldset legend { box-sizing: border-box; padding-left: 25px; }
 /*  slide */
 
 /* note: all the slides together should fit slider's width */
-.slider { overflow: hidden; }
-    .slider > div { width: 3000px; position: relative;}
+.slider { overflow: hidden; width: 100%; }
+    .slider > div { white-space: nowrap; position: relative; }
 
-.slider .slide { width: 700px; position: relative; display: inline-block; vertical-align:top; }
+.slider .slide { width: 100%; position: relative; display: inline-block; vertical-align: top; white-space: nowrap; }
+
+.slider .slide .anchor { height: 200px; width: 40px; text-align: center; }
+    .slider .slide .anchor img { border: solid 1px #D5D5D5; }
+    .slider .slide .anchor a:hover img { border-color: #08c; }
+
+.slider .anchor.left { float: left; }
+
+.slider .anchor.right { float: right; }
 
 
 /* scene */
@@ -128,16 +124,13 @@ fieldset legend { box-sizing: border-box; padding-left: 25px; }
     .review-container .scale { width: 50px; height: 10px; overflow: hidden; display: inline-block; background-image: url(/img/stars-small.png); background-position: 0 10px; }
     .review-container .scale .l { height: 100%; background-image: url(/img/stars-small.png); }
 
-    .review-container .comment-container { margin: 10px 0; }
-        .review-container .comment { margin-left: 50px; }
-
     .review-container .mceLayout { width: 100% !important; }
     .review-container .mceToolbar { text-align: left; }
     .review-container .mceIframeContainer iframe { height: 75px !important; }
 
-    .review-container .comment-container { position: relative; background-color: #fefefe; }
+    .review-container .comment-container { position: relative; background-color: #fefefe; margin: 10px 0; }
+        .review-container .comment { margin-left: 50px; }
         .review-container .comment-container.even { background-color: #fafafa; }
-
 
 .description .scale { width: 125px; height: 25px; display: inline-block; background-image: url(/img/stars-big.png); background-position: 0 25px; }
     .description .scale .l { height: 100%; background-image: url(/img/stars-big.png); }
@@ -145,7 +138,7 @@ fieldset legend { box-sizing: border-box; padding-left: 25px; }
 
 /* pager */
 
-.pager a { padding: 1px 8px; font-size: 12px; border-radius: 4px; -moz-border-radius: 4px; -webkit-border-radius: 4px; }
+.pager a { padding: 1px 8px; font-size: 12px; -moz-border-radius: 4px; -webkit-border-radius: 4px; border-radius: 4px; }
 .pager .active a { background-color: #F5F5F5; }
 
 /* end pager */
@@ -180,3 +173,31 @@ fieldset legend { box-sizing: border-box; padding-left: 25px; }
 #feedback-modal textarea { width: 97%; height: 200px; }
 
 /* end feedback */
+
+
+/* fixes twitter bootstrap and gmaps issue */
+
+#mapCanvas img { max-width: inherit; }
+
+/* end of issue fix */
+
+
+/* community list */
+
+.community { padding: 2px 0; }
+
+.scale { width: 50px; height: 10px; overflow: hidden; display: inline-block; background-image: url(/img/stars-small.png); background-position: 0 10px; }
+    .scale .l { height: 100%; background-image: url(/img/stars-small.png); }
+
+/* end community list*/
+
+
+/*#region community filter */
+
+.community-filter { -moz-box-sizing: border-box; -webkit-box-sizing: border-box; box-sizing: border-box; padding-left: 20px; }
+
+    .community-filter input[type=text] { width: 140px; }
+
+.slide legend .info { color: #a20e0e; }
+
+/*#endregion */

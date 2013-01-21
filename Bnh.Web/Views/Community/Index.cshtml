@@ -1,7 +1,17 @@
-﻿@model IEnumerable<Community>
+﻿@using Newtonsoft.Json
+
+@model CommunityIndexViewModel
+
 @{
     ViewBag.Title = "Calgary Communities";
     ViewBag.Description = "Pick a community";
+
+    // TODO: Optimize this to render only filterable properties to reduce page size
+    var communityData = Model.Zones.Values
+        .SelectMany(c => c)
+        .ToDictionary(c => c.UrlId);
+
+    var filterProperties = FilterPropertyViewModel.EnumerateProperties(typeof(Community));
 }
 
 @section Scripts
@@ -14,52 +24,71 @@
     <sup class="alter">@Html.ActionLink("create new", "Create", null, new { title = "Create new community" })</sup>
 }
 
-<div class="row">
-    <div class="span3"></div>
-    <div class="span8 center">
-        <a href="#" data-bind="click: onToggleSlide.bind($root)">Go to map view --></a>
-    </div>
-</div>
+<div class="row" style="height:880px">
 
-<div class="row" style="height:850px">
-    <div class="span"></div>
     <div class="span3">
         <fieldset>
-            <legend>Filter <a id="filterLegend" href="#">[show]</a></legend>
-            @Html.Partial("CommunityFilterPartial")
+            <legend>Filter</a></legend>
+            @Html.Partial("FilterPartial", filterProperties)
         </fieldset>
     </div>
 
-    
+    <div class="span9">
 
-    <div class="slider">
+        <div class="slider" data-bind="slider: slide">
 
-        <div data-bind="slider: slide">
+            <div>
 
-            <div class="slide" data-bind="foreach: zones">
-                <div class="span2">
-                    <div class="zone-header" data-bind="text: name"></div>
-                    <div data-bind="foreach: communities">
-                        <div class="zone-community" data-bind="visible: $root.filter().isCommunityVisible($data)" >
-                            @if (Context.User.IsInRole("content_manager"))
+                <fieldset class="slide">
+                    <legend>Community List View<sup class="info" data-bind="text: '(filtered)', visible: filter.dirty"></sup></legend>
+
+                    @foreach(var zone in Model.Zones)
+                    {
+                    <div class="span2">
+                        <div class="zone-header">@zone.Key</div>
+                        <div>
+                            @foreach(var community in zone.Value)
                             {
-                            <sup class="alter"><a data-bind="attr: { href: deleteUrl, title: deleteTitle}">x</a></sup>
+                            <div class="community" data-bind="visible: communities['@community.UrlId'].visible, with: communities['@community.UrlId']">
+                                @if (Context.User.IsInRole("content_manager"))
+                                {
+                                <sup class="alter"><a href="@community.DeleteUrl">x</a></sup>
+                                }
+                                <a href="@community.DetailsUrl" data-content="@community.PopupHtml">@community.Name</a>
+                            </div>
                             }
-                            <a class="community" data-bind="text: name, infoPopup: infoPopup, attr: { href: detailsUrl }, event: {mouseover: communityMouseover, mouseout:communityMouseout }" ></a>
                         </div>
-                    </div>
-            
-                 </div>
-            </div>
+                        </div>
+                    }
 
-            <div class="slide">
-                <div id="mapContainer" class="span8"></div>
-                <div class="span8 initially-hidden-map">
-                    <div id="mapCanvas" data-mapcontainer="mapContainer" style="width: 100%; height: 800px;" ></div>
-                </div>
+                    <div class="anchor right">
+                        <a href="#" data-bind="click: onToggleSlide.bind($root)" title="Go to map view"><img src="~/img/map-icon.png" /><br />Map</a>
+                    </div>
+
+                </fieldset>@* remove white spaces for inline-blocks
+
+                *@<fieldset class="slide">
+                    <legend>Community Map View<sup class="info" data-bind="visible: filter.dirty">(filtered)</sup></legend>
+
+                    <div class="anchor left">
+                        <a href="#" data-bind="click: onToggleSlide.bind($root)" title="Go to list view"><img src="~/img/list-icon.png" /><br />List</a>
+                    </div>
+
+                    <div id="mapContainer" class="span8"></div>
+                    <div class="span8 initially-hidden-map">
+                        <div id="mapCanvas" data-mapcontainer="mapContainer" style="width: 100%; height: 800px;" ></div>
+                    </div>
+                </fieldset>
+
             </div>
 
         </div>
+
     </div>
+
 </div>
 
+<script>
+    var page_communityData = @Html.Raw(JsonConvert.SerializeObject(communityData));
+    var page_filterProperties = @Html.Raw(JsonConvert.SerializeObject(filterProperties));
+</script>
