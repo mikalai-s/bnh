@@ -25,7 +25,21 @@ legend { font-size: 18px; padding-left: 10px; }
 
 #page { position: relative; margin-top: -80px; background-color: white; -moz-border-radius: 5px 5px 5px 5px; -webkit-border-radius: 5px 5px 5px 5px; border-radius: 5px 5px 5px 5px; -webkit-box-shadow: 0 0 25px rgba(0, 0, 0, .3); box-shadow: 0 0 25px rgba(0, 0, 0, .3); }
 
-    #page header { background-image: -moz-linear-gradient(top, #18343F, #446A94); background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#18343F), to(#446A94)); background-image: -webkit-linear-gradient(top, #18343F, #446A94); background-image: -o-linear-gradient(top, #18343F, #446A94); background-image: linear-gradient(to bottom, #18343F, #446A94); padding: 5px 25px; -moz-border-radius: 5px 5px 0 0; -webkit-border-radius: 5px 5px 0 0; border-radius: 5px 5px 0 0; height: 90px; color: white; }
+    #page header
+    { 
+        background-image: -moz-linear-gradient(top, #18343F, #446A94); 
+        background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#18343F), to(#446A94)); 
+        background-image: -webkit-linear-gradient(top, #18343F, #446A94); 
+        background-image: -o-linear-gradient(top, #18343F, #446A94); 
+        background-image: linear-gradient(to bottom, #18343F, #446A94); 
+        filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#FF18343F', endColorstr='#FF446A94'); 
+        padding: 5px 25px; 
+        -moz-border-radius: 5px 5px 0 0; 
+        -webkit-border-radius: 5px 5px 0 0; 
+        border-radius: 5px 5px 0 0; 
+        height: 90px; 
+        color: white;
+    }
 
     #page header h1, h2, h3, h4, h5, h6 { font-family: 'Segoe UI Light', 'Segoe UI'; }
 
@@ -38,6 +52,8 @@ footer
     background-image: -webkit-linear-gradient(top, #F2F2F2, white);
     background-image: -o-linear-gradient(top, #F2F2F2, white);
     background-image: linear-gradient(to bottom, #F2F2F2, white);
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#FFF2F2F2', endColorstr='#FFFFFFFF');
+    width: 100%;
 }
     footer .container { padding-top: 60px; }
     footer .inline { display: inline-block; text-align: left; }
