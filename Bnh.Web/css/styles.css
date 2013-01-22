@@ -217,3 +217,10 @@ fieldset legend { -moz-box-sizing: border-box; -webkit-box-sizing: border-box; b
 .slide legend .info { color: #a20e0e; }
 
 /*#endregion */
+
+
+/*#region map container */
+
+#mapContainer { border: solid lightgray 1px; }
+
+/*#endregion */
