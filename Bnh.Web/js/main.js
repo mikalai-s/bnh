@@ -4,13 +4,14 @@ require.config({
         jquery: 'libs/jquery/jquery-1.9.0.min' // '//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min'
         , knockout: 'libs/knockout/knockout-2.2.1'
         , async: 'libs/require/async'
-        , jqui: 'libs/jquery/jquery-ui-1.8.20'
+        , jqui: 'libs/jquery/jquery-ui-1.10.0.custom'
         , json: 'libs/json2/json2'
         , tinymce: 'libs/tiny_mce/tiny_mce'
         , text: 'libs/require/text.min'
         , debug: 'libs/debug/ba-debug.min'
         , twitter: 'libs/twitter/bootstrap'
         , twitteroverrides: 'libs/twitter/overrides'
+        , galleria: 'libs/galleria/galleria-1.2.9'
     },
     shim: {
         twitter: {
@@ -18,6 +19,9 @@ require.config({
         },
         twitteroverrides: {
             deps: ["twitter"]
+        },
+        galleria: {
+            deps: ["jquery"]
         }
     }
     //urlArgs: "bust=" + (new Date()).getTime()
@@ -44,7 +48,7 @@ define(
 
 
 // common setup for all pages
-require(["jquery", "twitter", "twitteroverrides"], function ($) {
+requirejs(["jquery", "twitter", "twitteroverrides"], function ($) {
 
     // setup search popup
     $('#search-button').popover({

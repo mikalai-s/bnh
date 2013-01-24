@@ -1,0 +1,10 @@
+﻿@model GalleryContent
+
+@{
+    var images = (Model.Images == null) ? Enumerable.Empty<string>() : Model.Images;
+}
+
+@foreach(var image in images)
+{
+    <img src="@image" />
+}

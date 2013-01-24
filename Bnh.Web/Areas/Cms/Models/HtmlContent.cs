@@ -10,5 +10,4 @@ namespace Bnh.Cms.Models
         [AllowHtml]
         public string Html { get; set; }
     }
-    
 }

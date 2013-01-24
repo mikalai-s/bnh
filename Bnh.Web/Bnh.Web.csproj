@@ -241,6 +241,7 @@
     <Compile Include="Areas\Cms\Models\Extensions\BrickContentExtensions.cs" />
     <Compile Include="Areas\Cms\Models\Extensions\BrickExtensions.cs" />
     <Compile Include="Areas\Cms\Models\Extensions\SceneExtensions.cs" />
+    <Compile Include="Areas\Cms\Models\GalleryContent.cs" />
     <Compile Include="Areas\Cms\Models\HtmlContent.cs" />
     <Compile Include="Areas\Cms\Models\InitData\InitData.cs" />
     <Compile Include="Areas\Cms\Models\LinkableContent.cs" />
@@ -337,7 +338,8 @@
     <Content Include="Areas\Cms\Styles\Scene.css" />
     <Content Include="App_Readme\Elmah.MongoDB.txt" />
     <Content Include="App_Readme\Elmah.txt" />
-    <Content Include="css\jquery-ui-1.9.2.custom.css" />
+    <Content Include="css\jquery-ui-1.10.0.custom.css" />
+    <Content Include="css\jquery-ui-1.10.0.custom.min.css" />
     <Content Include="css\styles.css" />
     <Content Include="img\feedback.gif" />
     <Content Include="img\glyphicons-halflings-white.png" />
@@ -359,6 +361,8 @@
     <Content Include="img\stars-small.png" />
     <Content Include="js\account-login.js" />
     <Content Include="js\community-index.js" />
+    <Content Include="js\libs\jquery\jquery-ui-1.10.0.custom.js" />
+    <Content Include="js\libs\jquery\jquery-ui-1.10.0.custom.min.js" />
     <Content Include="js\libs\knockout\knockout-postbox.js" />
     <Content Include="js\libs\knockout\knockout-postbox.min.js" />
     <Content Include="js\libs\twitter\bootstrap.js" />
@@ -672,6 +676,7 @@
     <Content Include="js\libs\modernizr\modernizr-2.6.2.js" />
     <Content Include="js\libs\json2\json2.js" />
     <Content Include="js\libs\json2\json2.min.js" />
+    <Content Include="Areas\Cms\Views\BrickContent\Partial\EditGalleryContent.cshtml" />
     <None Include="js\libs\jquery\jquery-1.9.0.intellisense.js" />
     <Content Include="js\libs\jquery\jquery-1.9.0.js" />
     <Content Include="js\libs\jquery\jquery-1.9.0.min.js" />
@@ -679,11 +684,32 @@
     <Content Include="js\libs\knockout\knockout-2.2.1.js" />
     <Content Include="js\libs\require\r.js" />
     <Content Include="js\libs\require\require.js" />
+    <Content Include="js\libs\galleria\galleria-1.2.9.js" />
+    <Content Include="js\libs\galleria\galleria-1.2.9.min.js" />
+    <Content Include="js\libs\galleria\plugins\flickr\flickr-demo.html" />
+    <Content Include="js\libs\galleria\plugins\flickr\flickr-loader.gif" />
+    <Content Include="js\libs\galleria\plugins\flickr\galleria.flickr.js" />
+    <Content Include="js\libs\galleria\plugins\flickr\galleria.flickr.min.js" />
+    <Content Include="js\libs\galleria\plugins\flickr\loader.gif" />
+    <Content Include="js\libs\galleria\plugins\history\galleria.history.js" />
+    <Content Include="js\libs\galleria\plugins\history\galleria.history.min.js" />
+    <Content Include="js\libs\galleria\plugins\history\history-demo.html" />
+    <Content Include="js\libs\galleria\plugins\picasa\galleria.picasa.js" />
+    <Content Include="js\libs\galleria\plugins\picasa\galleria.picasa.min.js" />
+    <Content Include="js\libs\galleria\plugins\picasa\loader.gif" />
+    <Content Include="js\libs\galleria\plugins\picasa\picasa-demo.html" />
+    <Content Include="js\libs\galleria\themes\classic\classic-demo.html" />
+    <Content Include="js\libs\galleria\themes\classic\classic-loader.gif" />
+    <Content Include="js\libs\galleria\themes\classic\classic-map.png" />
+    <Content Include="js\libs\galleria\themes\classic\galleria.classic.css" />
+    <Content Include="js\libs\galleria\themes\classic\galleria.classic.js" />
+    <Content Include="js\libs\galleria\themes\classic\galleria.classic.min.js" />
     <Content Include="Views\Search\Index.cshtml" />
     <Content Include="Views\Home\Feedback.cshtml" />
     <Content Include="Views\Admin\Index.cshtml" />
     <Content Include="Views\Admin\FeedbackReport.cshtml" />
     <Content Include="js\libs\jquery\jquery-1.9.0.min.map" />
+    <Content Include="js\libs\galleria\LICENSE" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="config.json" />
