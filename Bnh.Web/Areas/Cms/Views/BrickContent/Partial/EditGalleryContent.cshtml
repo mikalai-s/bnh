@@ -1,10 +1,9 @@
 ﻿@model GalleryContent
 
-@{
-    var images = (Model.Images == null) ? Enumerable.Empty<string>() : Model.Images;
-}
-
-@foreach(var image in images)
-{
-    <img src="@image" />
-}
+<div class="editor-label">
+    @Html.LabelFor(model => model.Height)
+</div>
+<div class="editor-field">
+    @Html.EditorFor(model => model.Height)
+    @Html.ValidationMessageFor(model => model.Height)
+</div>

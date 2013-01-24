@@ -1,0 +1,17 @@
+﻿@model GalleryContent
+
+@{
+    this.GetScriptBundle().Include(new[]
+    {
+        "~/Areas/Cms/Scripts/brick-content-gallery.js"
+    });
+
+    var images = (Model.Images == null) ? Enumerable.Empty<string>() : Model.Images;
+}
+
+<div class="galleria" style="width: 100%; height: @(Model.Height)px">
+    @foreach(var image in images)
+    {
+        <img src="@image" />
+    }
+</div>

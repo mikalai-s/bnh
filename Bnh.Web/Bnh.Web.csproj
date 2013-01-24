@@ -331,6 +331,7 @@
     <Compile Include="ViewModels\SearchViewModel.cs" />
     <Compile Include="ViewModels\ViewModelContext.cs" />
     <Content Include="Areas\Cms\Scripts\brick-content-map.js" />
+    <Content Include="Areas\Cms\Scripts\brick-content-gallery.js" />
     <Content Include="Areas\Cms\Scripts\design-scene.js" />
     <Content Include="Areas\Cms\Scripts\edit-html-brick.js" />
     <Content Include="Areas\Cms\Styles\DesignBrick.css" />
@@ -677,6 +678,7 @@
     <Content Include="js\libs\json2\json2.js" />
     <Content Include="js\libs\json2\json2.min.js" />
     <Content Include="Areas\Cms\Views\BrickContent\Partial\EditGalleryContent.cshtml" />
+    <Content Include="Areas\Cms\Views\BrickContent\Partial\ViewGalleryContent.cshtml" />
     <None Include="js\libs\jquery\jquery-1.9.0.intellisense.js" />
     <Content Include="js\libs\jquery\jquery-1.9.0.js" />
     <Content Include="js\libs\jquery\jquery-1.9.0.min.js" />
