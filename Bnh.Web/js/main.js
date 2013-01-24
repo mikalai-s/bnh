@@ -1,8 +1,8 @@
 ﻿/// <reference path="libs/twitter/bootstrapx-clickover.js" />
 require.config({
     paths: {
-        jquery: 'libs/jquery/jquery-1.8.3.min' // '//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min'
-        , knockout: 'libs/knockout/knockout-2.2.0'
+        jquery: 'libs/jquery/jquery-1.9.0.min' // '//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min'
+        , knockout: 'libs/knockout/knockout-2.2.1'
         , async: 'libs/require/async'
         , jqui: 'libs/jquery/jquery-ui-1.8.20'
         , json: 'libs/json2/json2'

@@ -370,10 +370,6 @@
     <Content Include="js\libs\debug\ba-debug.min.js">
       <DependentUpon>ba-debug.js</DependentUpon>
     </Content>
-    <Content Include="js\libs\jquery\jquery-ui-1.8.20.js" />
-    <Content Include="js\libs\jquery\jquery-ui-1.8.20.min.js">
-      <DependentUpon>jquery-ui-1.8.20.js</DependentUpon>
-    </Content>
     <Content Include="js\libs\require\async.js" />
     <Content Include="js\libs\require\cache.uncompressed.js" />
     <Content Include="js\libs\require\cached.js" />
@@ -673,20 +669,21 @@
     <Compile Include="Helpers\FilterPropertyAttributeExtensions.cs" />
     <Compile Include="Helpers\HtmlExtensions.cs" />
     <Compile Include="Helpers\UrlExtensions.cs" />
-    <None Include="js\libs\jquery\jquery-1.8.3.intellisense.js" />
-    <Content Include="js\libs\jquery\jquery-1.8.3.js" />
-    <Content Include="js\libs\jquery\jquery-1.8.3.min.js" />
-    <Content Include="js\libs\knockout\knockout-2.2.0.debug.js" />
-    <Content Include="js\libs\knockout\knockout-2.2.0.js" />
-    <Content Include="js\libs\require\r.js" />
-    <Content Include="js\libs\require\require.js" />
     <Content Include="js\libs\modernizr\modernizr-2.6.2.js" />
     <Content Include="js\libs\json2\json2.js" />
     <Content Include="js\libs\json2\json2.min.js" />
+    <None Include="js\libs\jquery\jquery-1.9.0.intellisense.js" />
+    <Content Include="js\libs\jquery\jquery-1.9.0.js" />
+    <Content Include="js\libs\jquery\jquery-1.9.0.min.js" />
+    <Content Include="js\libs\knockout\knockout-2.2.1.debug.js" />
+    <Content Include="js\libs\knockout\knockout-2.2.1.js" />
+    <Content Include="js\libs\require\r.js" />
+    <Content Include="js\libs\require\require.js" />
     <Content Include="Views\Search\Index.cshtml" />
     <Content Include="Views\Home\Feedback.cshtml" />
     <Content Include="Views\Admin\Index.cshtml" />
     <Content Include="Views\Admin\FeedbackReport.cshtml" />
+    <Content Include="js\libs\jquery\jquery-1.9.0.min.map" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="config.json" />
