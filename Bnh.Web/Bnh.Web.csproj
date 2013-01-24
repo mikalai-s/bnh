@@ -332,6 +332,7 @@
     <Compile Include="ViewModels\ViewModelContext.cs" />
     <Content Include="Areas\Cms\Scripts\brick-content-map.js" />
     <Content Include="Areas\Cms\Scripts\brick-content-gallery.js" />
+    <Content Include="Areas\Cms\Scripts\edit-gallery-brick.js" />
     <Content Include="Areas\Cms\Scripts\design-scene.js" />
     <Content Include="Areas\Cms\Scripts\edit-html-brick.js" />
     <Content Include="Areas\Cms\Styles\DesignBrick.css" />
