@@ -4,9 +4,7 @@
     var contents = (ViewBag.TocBricks as IEnumerable<BrickContent>) ?? Enumerable.Empty<BrickContent>();
 }
 
-<p>Table of Content
 @foreach (var content in contents)
 {
-    <br /><a href="#@content.GetHtmlId()">@content.ContentTitle</a>
+    <a href="#@content.GetHtmlId()">@content.ContentTitle</a><br />
 }
-</p>

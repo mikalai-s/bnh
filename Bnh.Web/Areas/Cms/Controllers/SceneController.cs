@@ -157,6 +157,7 @@ namespace Bnh.Cms.Controllers
                 .ToList();
             var tocContents = this.db.BrickContents
                 .Where(c => bricks.Contains(c.BrickContentId))
+                .Where(c => c.IsTitleUsedInToC)
                 .Where(c => !string.IsNullOrEmpty(c.ContentTitle))
                 .ToList()
                 .Where(c => c.GetType() != typeof(TocContent))

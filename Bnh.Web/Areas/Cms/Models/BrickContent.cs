@@ -15,6 +15,8 @@ namespace Bnh.Cms.Models
 
         public string ContentTitle { get; set; }
 
-        
+        public bool IsTitleUsedInToC { get; set; }
+
+        public bool IsTitleVisible { get; set; }
     }
 }

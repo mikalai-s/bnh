@@ -6,7 +6,7 @@ using MongoDB.Bson;
 
 namespace Bnh.Cms.Models
 {
-    public partial class Scene
+    public class Scene
     {
         [BsonRepresentation(BsonType.ObjectId), BsonId]
         public string SceneId { get; set; }
