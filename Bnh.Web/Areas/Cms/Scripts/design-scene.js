@@ -62,7 +62,7 @@
             return {
                 sceneId: $("#sceneId").val(),
                 ownerGuidId: $("#ownerId").val(),
-                isTemplate: $isTemplateCheckbox.attr("checked") === "checked",
+                isTemplate: $isTemplateCheckbox.is(':checked'),
                 title: $titleTextbox.val(),
                 walls: walls
             };
@@ -325,21 +325,21 @@
         }
 
         function onLockWallsCheckbox() {
-            var checked = lockWallsCheckbox.attr("checked") === "checked";
+            var checked = lockWallsCheckbox.is(':checked');
             $(".wall-wrapper")
                 .toggleClass("locked", checked)
                 .resizable("option", "disabled", checked);
         }
 
         function onLockBricksCheckbox() {
-            var checked = lockBricksCheckbox.attr("checked") === "checked";
+            var checked = lockBricksCheckbox.is(':checked');
             $(".brick-wrapper")
                 .toggleClass("locked", checked)
                 .resizable("option", "disabled", checked);
         }
 
         function onHideBricksContentCheckbox() {
-            var checked = hideBricksContentCheckbox.attr("checked") === "checked";
+            var checked = hideBricksContentCheckbox.is(':checked');
             $(".brick-wrapper")
                 .toggleClass("hide-content", checked);
         }
