@@ -42,3 +42,6 @@ Bnh.Web/Ms.Cms
 !NuGet.exe
 #Allow debug scripts
 !debug*/*.js
+
+
+MongoLabDumps
