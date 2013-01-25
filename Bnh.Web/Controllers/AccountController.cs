@@ -51,11 +51,13 @@ namespace Bnh.Web.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult LogOff()
+        public ActionResult LogOff(string returnUrl)
         {
             WebSecurity.Logout();
 
-            return RedirectToAction("Index", "Home");
+            return returnUrl.IsEmpty()
+                ? RedirectToAction("Index", "Home")
+                : RedirectToLocal(returnUrl);
         }
 
         //

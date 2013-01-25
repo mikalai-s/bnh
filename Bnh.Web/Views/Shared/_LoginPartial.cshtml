@@ -2,14 +2,14 @@
     <span>
         @Html.ActionLink(AccountProfile.GetProfile().GetSafeName(), "Manage", "Account", routeValues: null, htmlAttributes: new { @class = "username", title = "Update account information" })
         |
-        @using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm" })) {
+        @using (Html.BeginForm("LogOff", "Account", new { ReturnUrl =  Url.GetRequestUrl() }, FormMethod.Post, new { id = "logoutForm" })) {
             @Html.AntiForgeryToken()
             <a href="javascript:document.getElementById('logoutForm').submit()">Log off</a>
         }
     </span>
 } else {
     <span>
-        @Html.ActionLink("Log in", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink", data_dialog_title = "Identification" })
+        @Html.ActionLink("Log in", "Login", "Account", routeValues: new { ReturnUrl =  Url.GetRequestUrl() }, htmlAttributes: new { id = "loginLink", data_dialog_title = "Identification" })
         |
         @Html.ActionLink("Register", "Register", "Account", routeValues: null, htmlAttributes: new { id = "registerLink", data_dialog_title = "Registration" })
     </span>

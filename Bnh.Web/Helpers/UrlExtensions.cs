@@ -40,5 +40,18 @@ namespace Bnh
         {
             return urlHelper.IsCurrent(areaName, controllerName, actionNames) ? "selected" : string.Empty;
         }
+
+        public static string GetReferrerUrl(this UrlHelper urlHelper)
+        {
+            var referrer = urlHelper.RequestContext.HttpContext.Request.UrlReferrer;
+            return (referrer == null)
+                ? string.Empty
+                : referrer.PathAndQuery;
+        }
+
+        public static string GetRequestUrl(this UrlHelper urlHelper)
+        {
+            return urlHelper.RequestContext.HttpContext.Request.Url.PathAndQuery;
+        }
     }
 }
