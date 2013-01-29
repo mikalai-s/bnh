@@ -9,7 +9,7 @@ namespace Bnh.Cms.Models
 {
     public static class SceneExtensions
     {
-        public static SceneViewModel ToViewModel(this Scene scene, CmsRepos db)
+        public static SceneViewModel ToViewModel(this Scene scene, ViewModelContext context, CmsRepos db)
         {
             return new SceneViewModel
             {
@@ -20,7 +20,7 @@ namespace Bnh.Cms.Models
                 {
                     Title = wall.Title,
                     Width = wall.Width,
-                    Bricks = wall.Bricks.Select(brick => BrickViewModel.Create(brick, db))
+                    Bricks = wall.Bricks.Select(brick => BrickViewModel<BrickContent>.Create(context, brick, db))
                 })
             };
         }

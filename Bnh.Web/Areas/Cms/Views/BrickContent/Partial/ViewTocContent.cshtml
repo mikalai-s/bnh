@@ -1,4 +1,4 @@
-﻿@model TocContent
+﻿@model BrickViewModel<TocContent>
 
 @{
     var contents = (ViewBag.TocBricks as IEnumerable<BrickContent>) ?? Enumerable.Empty<BrickContent>();

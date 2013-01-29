@@ -10,7 +10,7 @@
     @Html.Partial(ContentUrl.Views.Scene.Partial.DesignWall, new WallViewModel { Width = 100.0F })
 </div>
 <div id="brickPrototype">
-    @Html.Partial(ContentUrl.Views.Scene.Partial.DesignBrick, new BrickViewModel { Width = 100.0F })
+    @Html.Partial(ContentUrl.Views.Scene.Partial.DesignBrick, BrickViewModel<BrickContent>.Prototype)
 </div>
 
 @{

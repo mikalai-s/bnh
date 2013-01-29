@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using Bnh.Cms.Models;
 using Newtonsoft.Json;
 
 namespace Bnh.Cms.ViewModels
@@ -12,7 +13,7 @@ namespace Bnh.Cms.ViewModels
 
         public float Width { get; set; }
 
-        public IEnumerable<BrickViewModel> Bricks { get; set; }
+        public IEnumerable<IBrickViewModel<BrickContent>> Bricks { get; set; }
 
         public string WidthString
         {

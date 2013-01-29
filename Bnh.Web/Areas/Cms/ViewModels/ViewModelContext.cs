@@ -18,6 +18,8 @@ namespace Bnh.Cms.ViewModels
 
         public HtmlHelper HtmlHelper { get; private set; }
 
+        public dynamic ViewBag { get; set; }
+
         public ViewModelContext(Controller controller)
         {
             this.controller = controller;
@@ -26,6 +28,8 @@ namespace Bnh.Cms.ViewModels
 
             this.HtmlHelper = new HtmlHelper(new ViewContext(controller.ControllerContext, new WebFormView(
                 controller.ControllerContext, "fake"), new ViewDataDictionary(), new TempDataDictionary(), new StringWriter()), new ViewPage());
+
+            this.ViewBag = controller.ViewBag;
         }
 
         public virtual bool IsUserInRole(string role)

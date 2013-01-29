@@ -256,6 +256,7 @@
     <Compile Include="Areas\Cms\Models\Wall.cs" />
     <Compile Include="Areas\Cms\MsCms.cs" />
     <Compile Include="Areas\Cms\ViewModels\BrickViewModel.cs" />
+    <Compile Include="Areas\Cms\ViewModels\ReviewsBrickViewModel.cs" />
     <Compile Include="Areas\Cms\ViewModels\SceneViewModel.cs" />
     <Compile Include="Areas\Cms\ViewModels\WallViewModel.cs" />
     <Compile Include="Areas\Cms\Helpers\BnhModelBinder.cs" />

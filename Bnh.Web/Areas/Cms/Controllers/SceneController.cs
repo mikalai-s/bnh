@@ -51,10 +51,15 @@ namespace Bnh.Cms.Controllers
             if (Request.IsAjaxRequest())
             {
                 // render real (saved) scene
-                return PartialView(ContentUrl.Views.Scene.Partial.DesignScene, db.Scenes.First(s => s.SceneId == scene.SceneId).ToViewModel(db));
+                return PartialView(ContentUrl.Views.Scene.Partial.DesignScene, db.Scenes.First(s => s.SceneId == scene.SceneId).ToViewModel(GetViewModelContext(), db));
             }
 
             return View(ContentUrl.Views.Scene.Partial.DesignScene);
+        }
+
+        private ViewModelContext GetViewModelContext()
+        {
+            return new ViewModelContext(this);
         }
 
         private void SaveScene(Scene scene, bool cloning = false)
@@ -122,7 +127,7 @@ namespace Bnh.Cms.Controllers
             template.IsTemplate = false;
             SaveScene(template, true);
 
-            return PartialView(ContentUrl.Views.Scene.Partial.DesignScene, template.ToViewModel(this.db));
+            return PartialView(ContentUrl.Views.Scene.Partial.DesignScene, template.ToViewModel(GetViewModelContext(), this.db));
         }
 
         [DesignerAuthorizeAttribute]
@@ -168,7 +173,7 @@ namespace Bnh.Cms.Controllers
             this.ViewBag.GlobalModel = model;
             this.ViewBag.TocBricks = tocContents;
 
-            return PartialView(ContentUrl.Views.Scene.View, scene.ToViewModel(this.db));
+            return PartialView(ContentUrl.Views.Scene.View, scene.ToViewModel(GetViewModelContext(), this.db));
         }
 
         [DesignerAuthorizeAttribute]
@@ -183,7 +188,7 @@ namespace Bnh.Cms.Controllers
             this.ViewBag.Templates = new SelectList(templates, "id", "title");
             this.ViewBag.LinkableBricksSceneId = Constants.LinkableBricksSceneId;
 
-            return PartialView(ContentUrl.Views.Scene.Edit, scene.ToViewModel(this.db));
+            return PartialView(ContentUrl.Views.Scene.Edit, scene.ToViewModel(GetViewModelContext(), this.db));
         }
     }
 }

@@ -24,7 +24,7 @@ namespace Bnh
 
         public static MvcHtmlString Avatar(this HtmlHelper html, string userName, int size = 64)
         {
-            return new MvcHtmlString(Gravatar.GetUrl(userName, size) + "&d=identicon");
+            return new MvcHtmlString(Gravatar.GetUrl(userName, size, null, GravatarRating.Default, null) + "&d=identicon");
         }
 
         public static MvcHtmlString Rating(this HtmlHelper html, int rating)

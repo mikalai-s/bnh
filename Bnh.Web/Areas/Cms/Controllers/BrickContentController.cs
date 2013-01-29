@@ -14,7 +14,7 @@ namespace Bnh.Cms.Controllers
         private Config config;
         private CmsRepos db;
 
-        public BrickContentController(Config config, CmsRepos repos)
+        public BrickContentController(Config config, CmsRepos db)
         {
             this.config = config;
             this.db = db;

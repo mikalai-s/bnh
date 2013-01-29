@@ -1,4 +1,4 @@
-﻿@model ReviewsContent
+﻿@model ReviewsBrickViewModel
 
 @helper RenderPagerControls()
 {/*
@@ -15,10 +15,6 @@
     }*/
 }
 
-@{
-    var reviewable = (Bnh.Cms.Models.IReviewable)ViewBag.GlobalMode;
-    var reviews = new Bnh.Cms.ViewModels.ReviewViewModel[] {};
-}
 
 @*<div class="row center">
     <div>
@@ -30,7 +26,7 @@
 
 @RenderPagerControls()
 
-@foreach (var review in reviews)
+@foreach (var review in Model.Reviews)
 {
     <div id="@review.ReviewId" class="review-container">
         <img class="avatar img-polaroid" src="@review.UserAvatarSrc"/>

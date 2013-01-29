@@ -7,7 +7,7 @@
             <a class='delete'>delete</a>
         </div>
         <div class='content'>
-            @foreach (var brick in Model.Bricks ?? Enumerable.Empty<BrickViewModel>())
+            @foreach (var brick in Model.Bricks ?? Enumerable.Empty<IBrickViewModel<BrickContent>>())
             {
                 @Html.Partial(ContentUrl.Views.Scene.Partial.DesignBrick, brick);
             }
