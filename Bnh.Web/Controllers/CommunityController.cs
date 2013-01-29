@@ -12,6 +12,8 @@ using Bnh.Cms.Models;
 using System.Web.Mvc.Html;
 using Bnh.Web.Helpers;
 using System.Collections.Generic;
+using Bnh.Cms.Repositories;
+using Bnh.Cms.ViewModels;
 
 namespace Bnh.Controllers
 {
@@ -20,11 +22,11 @@ namespace Bnh.Controllers
         private Config config = null;
         private IEntityRepositories repositories = null;
         private IRatingCalculator rating = null;
-        private CmsEntities cms = null;
+        private CmsRepos cms = null;
         private HtmlHelper htmlHelper = null;
         private SceneController sceneController = null;
 
-        public CommunityController(Config config, IEntityRepositories repositories, IRatingCalculator rating, CmsEntities cms, SceneController sceneController)
+        public CommunityController(Config config, IEntityRepositories repositories, IRatingCalculator rating, CmsRepos cms, SceneController sceneController)
         {
             this.config = config;
             this.repositories = repositories;
@@ -157,7 +159,7 @@ namespace Bnh.Controllers
             this.repositories.Communities.Delete(id);
             return RedirectToAction("Index");
         }
-
+        /*
         [SinglePage(Module="views/review-index")]
         public ActionResult Reviews(string id, int page = 1, int size = int.MaxValue)
         {
@@ -166,8 +168,8 @@ namespace Bnh.Controllers
 
             var community = GetCommunity(id);
 
-            var total = this.repositories.Reviews.Where(r => r.TargetId == community.CommunityId).Count();
-            var pager = new Pager<Review>(page - 1, size, total, this.repositories.Reviews.Where(r => r.TargetId == community.CommunityId).OrderBy(r => r.Created));
+            var total = this.repositories.Reviews.Where(r => r.TargetId == community.ReviewableTargetId).Count();
+            var pager = new Pager<Review>(page - 1, size, total, this.repositories.Reviews.Where(r => r.TargetId == community.ReviewableTargetId).OrderBy(r => r.Created));
 
             if (page > pager.NumberOfPages)
                 return HttpNotFound();
@@ -239,7 +241,7 @@ namespace Bnh.Controllers
             this.repositories.Reviews.AddReviewComment(reviewId, comment);
             return Json(new CommentViewModel(comment, this.repositories));
         }
-
+        */
 
         private Community GetCommunity(string id)
         {

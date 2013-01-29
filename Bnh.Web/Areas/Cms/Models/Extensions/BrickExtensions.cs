@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using Bnh.Cms.Repositories;
 
 namespace Bnh.Cms.Models
 {
@@ -13,7 +14,7 @@ namespace Bnh.Cms.Models
         /// </summary>
         /// <param name="brick"></param>
         /// <returns></returns>
-        public static BrickContent GetContent(this Brick brick, CmsEntities db)
+        public static BrickContent GetContent(this Brick brick, CmsRepos db)
         {
             var list = db.BrickContents.ToList();
             var content = db.BrickContents.FirstOrDefault(c => c.BrickContentId == brick.BrickContentId);

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using Bnh.Cms.Models;
+using Bnh.Cms.Repositories;
 using Newtonsoft.Json;
 
 namespace Bnh.Cms.ViewModels
@@ -29,6 +30,17 @@ namespace Bnh.Cms.ViewModels
             properties["width"] = this.Width;
             properties["brickcontentid"] = this.BrickContentId;
             return JsonConvert.SerializeObject(properties);
+        }
+
+        internal static BrickViewModel Create(Brick brick, CmsRepos db)
+        {
+            return new BrickViewModel
+            {
+                Title = brick.Title,
+                Width = brick.Width,
+                BrickContentId = brick.BrickContentId,
+                Content = brick.GetContent(db)
+            };
         }
     }
 }

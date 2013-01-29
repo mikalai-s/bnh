@@ -4,7 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 
-namespace Bnh.Web.ViewModels
+namespace Bnh.Cms.ViewModels
 {
     public class ReviewViewModel
     {
@@ -14,7 +14,7 @@ namespace Bnh.Web.ViewModels
 
         public string UserAvatarSrc { get; set; }
 
-        public IEnumerable<RatingQuestionViewModel> Ratings { get; set; }
+        //public IEnumerable<RatingQuestionViewModel> Ratings { get; set; }
 
         public string Message { get; set; }
 

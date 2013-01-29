@@ -2,12 +2,13 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using Bnh.Cms.Repositories;
 
 namespace Bnh.Cms.Models
 {
     internal static class InitData
     {
-        public static void Init(CmsEntities db)
+        public static void Init(CmsRepos db)
         {
             // just a simple check whether there is need to initilize data
             if (db.Scenes.Where(s => s.SceneId == Constants.LinkableBricksSceneId).Any()) { return; }

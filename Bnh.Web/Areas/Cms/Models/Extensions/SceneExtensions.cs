@@ -2,13 +2,14 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using Bnh.Cms.Repositories;
 using Bnh.Cms.ViewModels;
 
 namespace Bnh.Cms.Models
 {
     public static class SceneExtensions
     {
-        public static SceneViewModel ToViewModel(this Scene scene, CmsEntities db)
+        public static SceneViewModel ToViewModel(this Scene scene, CmsRepos db)
         {
             return new SceneViewModel
             {
@@ -19,13 +20,7 @@ namespace Bnh.Cms.Models
                 {
                     Title = wall.Title,
                     Width = wall.Width,
-                    Bricks = wall.Bricks.Select(brick => new BrickViewModel
-                    {
-                        Title = brick.Title,
-                        Width = brick.Width,
-                        BrickContentId = brick.BrickContentId,
-                        Content = brick.GetContent(db),
-                    })
+                    Bricks = wall.Bricks.Select(brick => BrickViewModel.Create(brick, db))
                 })
             };
         }

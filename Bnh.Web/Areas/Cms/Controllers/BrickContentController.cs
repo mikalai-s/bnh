@@ -5,15 +5,16 @@ using System.Web;
 using System.Web.Mvc;
 using Bnh.Core;
 using Bnh.Cms.Models;
+using Bnh.Cms.Repositories;
 
 namespace Bnh.Cms.Controllers
 {
     public class BrickContentController : Controller
     {
         private Config config;
-        private CmsEntities db;
+        private CmsRepos db;
 
-        public BrickContentController(Config config, CmsEntities db)
+        public BrickContentController(Config config, CmsRepos repos)
         {
             this.config = config;
             this.db = db;

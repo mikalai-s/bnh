@@ -4,17 +4,15 @@ using System.IO;
 using System.Linq;
 using System.Web.Mvc;
 using System.Web.Mvc.Html;
-
-
 using Bnh;
+using Bnh.Cms.Models;
 using Bnh.Core.Entities;
 using Bnh.Web.Models;
-
 using Microsoft.Web.Helpers;
 
-namespace Bnh.Web.ViewModels
+namespace Bnh.Cms.ViewModels
 {
-    public class ReviewsViewModel : PageViewModel
+    public class ReviewsViewModel
     {
         public string TargetUrlId { get; set; }
         public string TargetName { get; set; }
@@ -29,10 +27,10 @@ namespace Bnh.Web.ViewModels
         {
             var userProfiles = profiles.ToDictionary(p => p.UserName, p => p);
 
-            this.Description = context.HtmlHelper.RatingStars(rating).ToString();
+            //this.Description = context.HtmlHelper.RatingStars(rating).ToString();
             this.TargetUrlId = targetUrlId;
             this.TargetName = targetName;
-            this.Title = targetName + " Reviews";
+            //this.Title = targetName + " Reviews";
             this.AddReviewLink = new LinkViewModel
             {
                 Text = "Add review",
@@ -67,16 +65,16 @@ namespace Bnh.Web.ViewModels
                     Message = r.Message,
                     Comments = (r.Comments ?? Enumerable.Empty<Comment>())
                         .Select(c => new CommentViewModel(c, userProfiles[c.UserName])),
-                    Ratings = ratingQuestions
-                        .Where(q => r.Ratings[q.Key].HasValue)
-                        .Select(q => new RatingQuestionViewModel
-                        {
-                            Question = q.Value + ":",
-                            AnswerHtml = context.HtmlHelper.RatingStars(r.Ratings[q.Key]).ToString()
-                        }),
+                    //Ratings = ratingQuestions
+                    //    .Where(q => r.Ratings[q.Key].HasValue)
+                    //    .Select(q => new RatingQuestionViewModel
+                    //    {
+                    //        Question = q.Value + ":",
+                    //        AnswerHtml = context.HtmlHelper.RatingStars(r.Ratings[q.Key]).ToString()
+                    //    }),
                     PostCommentActionUrl = context.UrlHelper.Action("PostReviewComment")
                 });
-            this.Admin = context.IsUserContentManager;
+            this.Admin = context.IsUserInRole("content_manager");
             this.DeleteReviewUrl = this.Admin ? context.UrlHelper.Action("DeleteReview") : null;
             this.DeleteCommentUrl = this.Admin ? context.UrlHelper.Action("DeleteReviewComment") : null;
         }

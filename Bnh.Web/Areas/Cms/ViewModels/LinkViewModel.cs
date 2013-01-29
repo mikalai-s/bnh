@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
-namespace Bnh.Web.ViewModels
+namespace Bnh.Cms.ViewModels
 {
     public class LinkViewModel
     {

@@ -11,6 +11,7 @@ using MongoDB.Driver.Linq;
 using MongoDB.Bson;
 using Bnh.Core;
 using Bnh.Cms.ViewModels;
+using Bnh.Cms.Repositories;
 
 
 namespace Bnh.Cms.Controllers
@@ -18,9 +19,9 @@ namespace Bnh.Cms.Controllers
     public class SceneController : Controller
     {
         private Config config;
-        private CmsEntities db;
+        private CmsRepos db;
 
-        public SceneController(Config config, CmsEntities db)
+        public SceneController(Config config, CmsRepos db)
         {
             this.config = config;
             this.db = db;

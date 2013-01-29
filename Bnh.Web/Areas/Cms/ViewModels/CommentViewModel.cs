@@ -3,13 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using Bnh.Cms.Models;
 using Bnh.Core;
 using Bnh.Core.Entities;
 using Microsoft.Web.Helpers;
 
-namespace Bnh.Web.ViewModels
+namespace Bnh.Cms.ViewModels
 {
-    public class CommentViewModel : PageViewModel
+    public class CommentViewModel
     {
         public string CommentId { get; set; }
 

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
-
+using Bnh.Cms.Models;
 using Bnh.Core.Entities;
 
 namespace Bnh.Core
@@ -14,8 +14,6 @@ namespace Bnh.Core
         IRepository<Community> Communities { get; }
 
         IRepository<City> Cities { get; }
-
-        IReviewRepository Reviews { get; }
 
         IRepository<Comment> Feedback { get; }
 

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using Bnh.Cms.Repositories;
 using MongoDB.Bson;
 using MongoDB.Driver.Builders;
 
@@ -9,7 +10,7 @@ namespace Bnh.Cms.Models
 {
     public static class BrickContentExtensions
     {
-        public static string GetSceneId(this BrickContent content, CmsEntities cms)
+        public static string GetSceneId(this BrickContent content, CmsRepos cms)
         {
             return cms.Scenes.Collection
                 .Find(Query.EQ("Walls.Bricks.BrickContentId", ObjectId.Parse(content.BrickContentId)))

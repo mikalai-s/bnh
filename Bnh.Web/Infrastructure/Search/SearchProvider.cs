@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Web;
 using Bnh.Cms.Models;
+using Bnh.Cms.Repositories;
 using Bnh.Core;
 using HtmlAgilityPack;
 using Lucene.Net.Analysis.Snowball;
@@ -24,7 +25,7 @@ namespace Bnh.Web.Infrastructure.Search
     public class SearchProvider : ISearchProvider
     {
         IEntityRepositories Entities { get; set; }
-        CmsEntities Cms { get; set; }
+        CmsRepos Cms { get; set; }
         Config Config { get; set; }
         IPathMapper PathMapper { get; set; }
 
@@ -32,7 +33,7 @@ namespace Bnh.Web.Infrastructure.Search
 
         SnowballAnalyzer analyzer = new SnowballAnalyzer(LuceneVersion, "English");
 
-        public SearchProvider(IEntityRepositories entites, CmsEntities cms, Config config, IPathMapper pathMapper)
+        public SearchProvider(IEntityRepositories entites, CmsRepos cms, Config config, IPathMapper pathMapper)
         {
             this.Entities = entites;
             this.Cms = cms;

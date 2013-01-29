@@ -1,0 +1,68 @@
+﻿@model ReviewsContent
+
+@helper RenderPagerControls()
+{/*
+    if (!Model.PagerLinks.IsEmpty())
+    {
+        <ul class="pager">
+        @foreach (var link in Model.PagerLinks)
+        {
+            <li class="@link.Css">
+                <a href="@link.Href">@link.Text</a>
+            </li>
+        }
+        </ul>
+    }*/
+}
+
+@{
+    var reviewable = (Bnh.Cms.Models.IReviewable)ViewBag.GlobalMode;
+    var reviews = new Bnh.Cms.ViewModels.ReviewViewModel[] {};
+}
+
+@*<div class="row center">
+    <div>
+        <a href="@Model.AddReviewLink.Href" class="@Model.AddReviewLink.Css btn btn-danger">@Model.AddReviewLink.Text</a>
+    </div>
+</div>*@
+
+
+
+@RenderPagerControls()
+
+@foreach (var review in reviews)
+{
+    <div id="@review.ReviewId" class="review-container">
+        <img class="avatar img-polaroid" src="@review.UserAvatarSrc"/>
+        <div class="review">
+            <section>
+                <span class="user">@review.UserName</span>
+                <span class="time">on @(review.Created):</span>
+            </section>
+            <section class="rating">
+               @* @foreach(var rating in review.Ratings)
+                {
+                    <div>
+                        <label class="question">@(rating.Question)</label>
+                        <div class="answer">@Html.Raw(rating.AnswerHtml)</div>
+                    </div>
+                }*@
+            </section>
+            <section class="message">@Html.Raw(review.Message)</section>
+            <section class="useful">
+                Was this review useful to you? <a href="#">Yes</a>
+            </section>
+            @if(review.Comments.Count() > 0)
+            {
+            <section>
+                <a href="#" class="commentsLink">View @review.Comments.Count() comments</a>
+            </section>
+            }
+            <section>
+                <a href="#" class="btn addCommentLink">Add comment</a>
+            </section>
+        </div>
+    </div>
+}
+
+@RenderPagerControls()

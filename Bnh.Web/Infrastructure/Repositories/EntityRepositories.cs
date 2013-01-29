@@ -6,6 +6,7 @@ using Bnh.Core;
 using Bnh.Core.Entities;
 using MongoDB.Bson.Serialization;
 using MongoDB.Bson;
+using Bnh.Cms.Models;
 
 namespace Bnh.Infrastructure.Repositories
 {
@@ -17,8 +18,6 @@ namespace Bnh.Infrastructure.Repositories
 
         public IRepository<City> Cities { get; private set; }
 
-        public IReviewRepository Reviews { get; private set; }
-
         public IRepository<Comment> Feedback { get; private set; }
 
         public EntityRepositories(Config config)
@@ -28,7 +27,6 @@ namespace Bnh.Infrastructure.Repositories
             this.Profiles = new ProfileRepository(connectionString);
             this.Communities = new MongoRepository<Community>(connectionString);
             this.Cities = new MongoRepository<City>(connectionString);
-            this.Reviews = new ReviewRepository(connectionString);
             this.Feedback = new MongoRepository<Comment>(connectionString, "Feedback");
 
             EnsureData();

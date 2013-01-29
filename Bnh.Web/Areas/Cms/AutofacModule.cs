@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using Autofac;
 using Bnh.Cms.Models;
+using Bnh.Cms.Repositories;
 using Bnh.Infrastructure.Repositories;
 
 namespace Bnh.Cms
@@ -14,7 +15,7 @@ namespace Bnh.Cms
         {
             base.Load(builder);
 
-            builder.RegisterType<CmsEntities>().InstancePerLifetimeScope();
+            builder.RegisterType<CmsRepos>().InstancePerLifetimeScope();
         }
     }
 }
