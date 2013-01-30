@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Web;
 using System.Web.Profile;
-
+using Bnh.Cms.Models;
 using Bnh.Core.Entities;
 
 namespace Bnh.Web.Models

@@ -7,27 +7,22 @@ using Bnh.Core.Entities;
 using MongoDB.Bson.Serialization;
 using MongoDB.Bson;
 using Bnh.Cms.Models;
+using Bnh.Cms.Repositories;
 
 namespace Bnh.Infrastructure.Repositories
 {
     public partial class EntityRepositories : IEntityRepositories, IDisposable
     {
-        public IRepository<Profile> Profiles { get; private set; }
-
         public IRepository<Community> Communities { get; private set; }
 
         public IRepository<City> Cities { get; private set; }
-
-        public IRepository<Comment> Feedback { get; private set; }
 
         public EntityRepositories(Config config)
         {
             var connectionString = config.ConnectionStrings["mongo"];
 
-            this.Profiles = new ProfileRepository(connectionString);
             this.Communities = new MongoRepository<Community>(connectionString);
-            this.Cities = new MongoRepository<City>(connectionString);
-            this.Feedback = new MongoRepository<Comment>(connectionString, "Feedback");
+            this.Cities = new MongoRepository<City>(connectionString);            
 
             EnsureData();
         }

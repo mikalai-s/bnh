@@ -11,7 +11,7 @@ using MongoDB.Driver.Linq;
 
 using Bnh.Core;
 
-namespace Bnh.Infrastructure.Repositories
+namespace Bnh.Cms.Repositories
 {
     public class MongoRepository<T> : IRepository<T> where T : class
     {
@@ -27,7 +27,7 @@ namespace Bnh.Infrastructure.Repositories
             this.collectionName = collectionName.IsEmpty() ? typeof(T).Name : collectionName;
         }
 
-        public virtual string CollectionName
+        public string CollectionName
         {
             get { return this.collectionName; }
         }

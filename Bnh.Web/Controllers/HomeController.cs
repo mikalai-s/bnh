@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using Bnh.Cms.Models;
+using Bnh.Cms.Repositories;
 using Bnh.Core;
 using Bnh.Core.Entities;
 
@@ -12,9 +13,12 @@ namespace Bnh.Web.Controllers
     public class HomeController : Controller
     {
         IEntityRepositories Entities { get; set; }
+        CmsRepos cms { get; set; }
 
-        public HomeController(IEntityRepositories entities)
+
+        public HomeController(IEntityRepositories entities, CmsRepos cms)
         {
+            this.cms = cms;
             this.Entities = entities;
         }
 
@@ -44,7 +48,7 @@ namespace Bnh.Web.Controllers
         {
             if(!message.IsEmpty())
             {
-                this.Entities.Feedback.Insert(new Comment
+                this.cms.Feedback.Insert(new Comment
                 {
                     Created = DateTime.UtcNow,
                     Message = message,

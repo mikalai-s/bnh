@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace Bnh.Core.Entities
+namespace Bnh.Cms.Models
 {
     public interface IAccountProfile
     {

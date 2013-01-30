@@ -14,7 +14,7 @@
     <RootNamespace>Bnh.Web</RootNamespace>
     <AssemblyName>Bnh.Web</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
-    <MvcBuildViews>false</MvcBuildViews>
+    <MvcBuildViews>true</MvcBuildViews>
     <FileUpgradeFlags>
     </FileUpgradeFlags>
     <OldToolsVersion>4.0</OldToolsVersion>
@@ -303,8 +303,7 @@
     <Compile Include="Infrastructure\AutofacModule.cs" />
     <Compile Include="Infrastructure\RatingCalculator.cs" />
     <Compile Include="Infrastructure\Repositories\EntityRepositories.cs" />
-    <Compile Include="Infrastructure\Repositories\MongoRepository.cs" />
-    <Compile Include="Infrastructure\Repositories\ProfileRepository.cs" />
+    <Compile Include="Areas\Cms\Repositories\MongoRepository.cs" />
     <Compile Include="Areas\Cms\Repositories\ReviewRepository.cs" />
     <Compile Include="Infrastructure\Search\SearchProvider.cs" />
     <Compile Include="Infrastructure\Search\SearchResult.cs" />
@@ -322,9 +321,9 @@
     <Compile Include="Infrastructure\WebSecurity\WebSecurity.cs" />
     <Compile Include="Models\AccountModels.cs" />
     <Compile Include="Models\AccountProfile.cs" />
-    <Compile Include="Core\Entities\IAccountProfile.cs" />
+    <Compile Include="Areas\Cms\Models\IAccountProfile.cs" />
     <Compile Include="Models\Pager.cs" />
-    <Compile Include="Core\Entities\Profile.cs" />
+    <Compile Include="Areas\Cms\Models\Profile.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ViewModels\CommunityIndexViewModel.cs" />
     <Compile Include="ViewModels\CommunityViewModel.cs" />

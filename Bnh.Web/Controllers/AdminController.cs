@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using Bnh.Cms.Repositories;
 using Bnh.Core;
 
 namespace Bnh.Web.Controllers
@@ -10,11 +11,11 @@ namespace Bnh.Web.Controllers
     [Authorize(Roles = "content_manager")]
     public class AdminController : Controller
     {
-        IEntityRepositories Entities { get; set; }
+        CmsRepos cms { get; set; }
 
-        public AdminController(IEntityRepositories entities)
+        public AdminController(CmsRepos cms)
         {
-            this.Entities = entities;
+            this.cms = cms;
         }
 
         //
@@ -27,7 +28,7 @@ namespace Bnh.Web.Controllers
 
         public ActionResult FeedbackReport()
         {
-            return View(this.Entities.Feedback.OrderBy(c => c.Created));
+            return View(this.cms.Feedback.OrderBy(c => c.Created));
         }
     }
 }

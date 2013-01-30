@@ -22,10 +22,10 @@ namespace Bnh.Cms.ViewModels
 
         public string Created { get; set; }
 
-        public CommentViewModel(Comment comment, IEntityRepositories repos) 
-            : this(comment, repos.Profiles.First(p => p.UserName == comment.UserName))
-        {
-        }
+        //public CommentViewModel(Comment comment, IEntityRepositories repos) 
+        //    : this(comment, repos.Profiles.First(p => p.UserName == comment.UserName))
+        //{
+        //}
 
         public CommentViewModel(Comment comment, Profile user) 
             : this(comment)
