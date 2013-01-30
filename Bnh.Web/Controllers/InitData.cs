@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Security;
-using Bnh.Web.Models;
+using Bnh.Models;
 using System.Configuration;
 
-namespace Bnh.Web.Controllers
+namespace Bnh.Controllers
 {
     public static class InitData
     {

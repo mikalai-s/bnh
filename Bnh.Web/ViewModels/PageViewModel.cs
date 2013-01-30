@@ -5,7 +5,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 
-namespace Bnh.Web.ViewModels
+namespace Bnh.ViewModels
 {
     public abstract class PageViewModel
     {

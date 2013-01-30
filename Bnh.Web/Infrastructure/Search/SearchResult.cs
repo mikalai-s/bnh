@@ -3,8 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Bnh.Core;
+using Cms.Core;
 
-namespace Bnh.Web.Infrastructure.Search
+namespace Bnh.Infrastructure.Search
 {
     public class CommunitySearchResult : ISearchResult
     {

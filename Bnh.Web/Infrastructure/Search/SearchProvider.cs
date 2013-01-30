@@ -5,8 +5,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Web;
-using Bnh.Cms.Models;
-using Bnh.Cms.Repositories;
+using Cms.Models;
 using Bnh.Core;
 using HtmlAgilityPack;
 using Lucene.Net.Analysis.Snowball;
@@ -19,32 +18,31 @@ using Lucene.Net.Search.Highlight;
 using Lucene.Net.Search.Vectorhighlight;
 using Lucene.Net.Store;
 using MongoDB.Driver.Linq;
+using Cms.Core;
 
-namespace Bnh.Web.Infrastructure.Search
+namespace Bnh.Infrastructure.Search
 {
     public class SearchProvider : ISearchProvider
     {
-        IEntityRepositories Entities { get; set; }
-        CmsRepos Cms { get; set; }
-        Config Config { get; set; }
-        IPathMapper PathMapper { get; set; }
+        IBnhRepositories repos { get; set; }
+        IConfig config { get; set; }
+        IPathMapper pathMapper { get; set; }
 
         private const Lucene.Net.Util.Version LuceneVersion = Lucene.Net.Util.Version.LUCENE_30;
 
         SnowballAnalyzer analyzer = new SnowballAnalyzer(LuceneVersion, "English");
 
-        public SearchProvider(IEntityRepositories entites, CmsRepos cms, Config config, IPathMapper pathMapper)
+        public SearchProvider(IBnhRepositories repos, IConfig config, IPathMapper pathMapper)
         {
-            this.Entities = entites;
-            this.Cms = cms;
-            this.Config = config;
-            this.PathMapper = pathMapper;
+            this.repos = repos;
+            this.config = config;
+            this.pathMapper = pathMapper;
         }
 
         public void RebuildIndex()
         {
             // state the file location of the index
-            var path = this.PathMapper.Map(this.Config.SearchIndexFolder);
+            var path = this.pathMapper.Map(this.config.SearchIndexFolder);
             if (!System.IO.Directory.Exists(path))
             {
                 System.IO.Directory.CreateDirectory(path);
@@ -67,7 +65,7 @@ namespace Bnh.Web.Infrastructure.Search
         private void IndexCommunities(IndexWriter indexWriter)
         {
             // all content IDs
-            var contentWithScenes = from scene in this.Cms.Scenes.ToList()
+            var contentWithScenes = from scene in this.repos.Scenes.ToList()
                                     from wall in scene.Walls
                                     from brick in wall.Bricks
                                     select new
@@ -78,7 +76,7 @@ namespace Bnh.Web.Infrastructure.Search
             var contentIds = contentWithScenes.Select(c => c.ContentId);
 
             // all HTML brick contents to index
-            var contents = this.Cms.BrickContents
+            var contents = this.repos.BrickContents
                 .OfType<HtmlContent>()
                 .AsQueryable()
                 .Where(b => b.BrickContentId.In(contentIds))
@@ -124,7 +122,7 @@ namespace Bnh.Web.Infrastructure.Search
         public IEnumerable<ISearchResult> Search(string query)
         {
             //create an index searcher that will perform the search
-            var dir = FSDirectory.Open(this.PathMapper.Map(this.Config.SearchIndexFolder));
+            var dir = FSDirectory.Open(this.pathMapper.Map(this.config.SearchIndexFolder));
 
             var reader = default(IndexReader);
             var searcher = default(IndexSearcher);

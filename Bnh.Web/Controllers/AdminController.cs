@@ -3,17 +3,17 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-using Bnh.Cms.Repositories;
 using Bnh.Core;
+using Cms.Core;
 
-namespace Bnh.Web.Controllers
+namespace Bnh.Controllers
 {
     [Authorize(Roles = "content_manager")]
     public class AdminController : Controller
     {
-        CmsRepos cms { get; set; }
+        IRepositories cms { get; set; }
 
-        public AdminController(CmsRepos cms)
+        public AdminController(IRepositories cms)
         {
             this.cms = cms;
         }

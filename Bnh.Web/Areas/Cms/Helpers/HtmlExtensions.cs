@@ -9,18 +9,30 @@ using System;
 using System.Reflection;
 using System.Text;
 
-using Bnh.Cms.Models;
+using Cms.Models;
 using System.IO;
 using System.Web.WebPages;
 using System.Web.Optimization;
-using Bnh.Cms.ViewModels;
+using Cms.ViewModels;
+using Microsoft.Web.Helpers;
 
-namespace Bnh.Cms
+namespace Cms.Helpers
 {
     // Summary:
     //     Represents support for HTML links in an application.
     public static class HtmlExtensions
     {
+        public static MvcHtmlString Avatar(this HtmlHelper html, string userName, int size = 64)
+        {
+            return new MvcHtmlString(Gravatar.GetUrl(userName, size, null, GravatarRating.Default, null) + "&d=identicon");
+        }
+
+        public static MvcHtmlString Rating(this HtmlHelper html, int rating)
+        {
+            var format = "<div class='scale l' style='width:{0}px'></div><div class='scale r' style='width:{1}px'></div>";
+            return new MvcHtmlString(string.Format(format, rating * 10, 100 - rating * 10));
+        }
+
         public static MvcHtmlString DropDownListForBrickTypes(this HtmlHelper htmlHelper, string name)
         {
             var items = MsCms.RegisteredBrickTypes

@@ -9,6 +9,7 @@ using System.Web.Mvc;
 using System.Web.Security;
 using Bnh.Core;
 using Bnh.Infrastructure.WebSecurity;
+using Cms.Core;
 using MongoDB.Bson;
 using MongoDB.Driver;
 using MongoDB.Driver.Builders;
@@ -29,7 +30,7 @@ namespace MongoDB.Web.Providers
         private bool requiresQuestionAndAnswer;
         private bool requiresUniqueEmail;
 
-        public Config Config { get; set; }
+        public IConfig Config { get; set; }
 
         public override string ApplicationName { get; set; }
 
@@ -331,7 +332,7 @@ namespace MongoDB.Web.Providers
 
         public override void Initialize(string name, NameValueCollection settigns)
         {
-            var config = DependencyResolver.Current.GetService<Config>();
+            var config = DependencyResolver.Current.GetService<IConfig>();
             this.ApplicationName = settigns["applicationName"] ?? HostingEnvironment.ApplicationVirtualPath;
             this.enablePasswordReset = Boolean.Parse(settigns["enablePasswordReset"] ?? "true");
             this.enablePasswordRetrieval = Boolean.Parse(settigns["enablePasswordRetrieval"] ?? "false");

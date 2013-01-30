@@ -5,12 +5,13 @@ using System.Linq;
 using System.Web.Mvc;
 using System.Web.Mvc.Html;
 using Bnh;
-using Bnh.Cms.Models;
+using Cms.Models;
 using Bnh.Core.Entities;
-using Bnh.Web.Models;
+using Bnh.Models;
 using Microsoft.Web.Helpers;
+using Cms.Helpers;
 
-namespace Bnh.Cms.ViewModels
+namespace Cms.ViewModels
 {
     public class ReviewsViewModel
     {

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 
-namespace Bnh.Cms.ViewModels
+namespace Cms.ViewModels
 {
     public class ReviewViewModel
     {

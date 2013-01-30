@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using Bnh.Web.Models;
+using Cms.Models;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace Bnh.Tests

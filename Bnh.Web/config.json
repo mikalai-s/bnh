@@ -12,5 +12,8 @@
             "3": "Parks"
         }
     },
-	searchIndexFolder: "~\\SearchIndex"
+	searchIndexFolder: "~\\SearchIndex",
+	roles: {
+		ContentManager: "content_manager"
+	}
 }

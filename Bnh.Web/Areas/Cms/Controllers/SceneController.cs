@@ -4,24 +4,25 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 
-using Bnh.Cms.Models;
 using System.Configuration;
 
 using MongoDB.Driver.Linq;
 using MongoDB.Bson;
-using Bnh.Core;
-using Bnh.Cms.ViewModels;
-using Bnh.Cms.Repositories;
+using Cms.ViewModels;
+using Cms.Core;
+using Cms.Models;
+using Cms.Infrastructure;
+using Cms.Helpers;
 
 
-namespace Bnh.Cms.Controllers
+namespace Cms.Controllers
 {
     public class SceneController : Controller
     {
-        private Config config;
-        private CmsRepos db;
+        private IConfig config;
+        private IRepositories db;
 
-        public SceneController(Config config, CmsRepos db)
+        public SceneController(IConfig config, IRepositories db)
         {
             this.config = config;
             this.db = db;

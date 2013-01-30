@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Bnh.Core.Entities.Attributes;
-using Bnh.Cms.Models;
+using Cms.Models;
 
 namespace Bnh.Core.Entities
 {

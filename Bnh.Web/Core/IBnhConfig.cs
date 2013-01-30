@@ -2,13 +2,12 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using Cms.Core;
 
 namespace Bnh.Core
 {
-    public interface ISearchProvider
+    public interface IBnhConfig : IConfig
     {
-        void RebuildIndex();
-
-        IEnumerable<ISearchResult> Search(string query);
+        string City { get; set; }
     }
 }

@@ -1,4 +1,4 @@
-﻿namespace Bnh.Cms.Models
+﻿namespace Cms.Models
 {
     /// <summary>
     /// Adds map brick support

@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Bnh.Cms.Models
+namespace Cms.Models
 {
     public partial class RazorContent : HtmlContent
     {

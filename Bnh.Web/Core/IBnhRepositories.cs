@@ -2,16 +2,18 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
-using Bnh.Cms.Models;
+using Cms.Models;
 using Bnh.Core.Entities;
+using Cms.Core;
+using Cms.Infrastructure;
 
 namespace Bnh.Core
 {
-    public interface IEntityRepositories
+    public interface IBnhRepositories : IRepositories
     {
-        IRepository<Community> Communities { get; }
+        MongoRepository<Community> Communities { get; }
 
-        IRepository<City> Cities { get; }
+        MongoRepository<City> Cities { get; }
 
         /// <summary>
         /// Returns true if given string is valid ID representation

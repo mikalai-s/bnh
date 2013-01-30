@@ -9,9 +9,9 @@ using MongoDB.Driver;
 using MongoDB.Driver.Builders;
 using MongoDB.Driver.Linq;
 
-using Bnh.Core;
+using Cms.Core;
 
-namespace Bnh.Cms.Repositories
+namespace Cms.Infrastructure
 {
     public class MongoRepository<T> : IRepository<T> where T : class
     {

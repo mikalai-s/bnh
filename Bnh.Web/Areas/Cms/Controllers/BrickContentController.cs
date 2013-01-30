@@ -4,33 +4,34 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using Bnh.Core;
-using Bnh.Cms.Models;
-using Bnh.Cms.Repositories;
+using Cms.Core;
+using Cms.Helpers;
+using Cms.Infrastructure;
+using Cms.Models;
 
-namespace Bnh.Cms.Controllers
+namespace Cms.Controllers
 {
     public class BrickContentController : Controller
     {
-        private Config config;
-        private CmsRepos db;
+        private IConfig config;
+        private IRepositories repos;
 
-        public BrickContentController(Config config, CmsRepos db)
+        public BrickContentController(IConfig config, IRepositories repos)
         {
             this.config = config;
-            this.db = db;
+            this.repos = repos;
         }
-
 
         //
         // GET: /BrickContent/Edit/5
         [DesignerAuthorize]
         public ActionResult Edit(string id)
         {
-            var content = db.BrickContents.First(b => b.BrickContentId == id);
+            var content = repos.BrickContents.First(b => b.BrickContentId == id);
             var linkableContent = content as LinkableContent;
             if (linkableContent != null)
             {
-                this.ViewBag.BricksToLink = this.db.Scenes
+                this.ViewBag.BricksToLink = this.repos.Scenes
                     .First(s => s.SceneId == Constants.LinkableBricksSceneId)
                     .Walls.SelectMany(w => w.Bricks)
                     .Select(b => new SelectListItem { Value = b.BrickContentId, Text = b.Title });
@@ -47,7 +48,7 @@ namespace Bnh.Cms.Controllers
             {
                 htmlContent.Html = HttpUtility.HtmlDecode(htmlContent.Html);
             }
-            db.BrickContents.Save(content);
+            repos.BrickContents.Save(content);
 
             // redirect to previous url
             return Redirect(this.Request.RequestContext.GetBackUrl());
@@ -56,7 +57,7 @@ namespace Bnh.Cms.Controllers
         [HttpGet]
         public new ActionResult View(string id)
         {
-            var content = db.BrickContents.First(b => b.BrickContentId == id);
+            var content = repos.BrickContents.First(b => b.BrickContentId == id);
             return View(ContentUrl.Views.BrickContent.View, content);
         }
     }

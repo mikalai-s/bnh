@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
-namespace Bnh.Cms.Models
+namespace Cms.Models
 {
     /// <summary>
     /// Adds review brick support to an entity

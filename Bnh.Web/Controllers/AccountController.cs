@@ -4,7 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Security;
-using Bnh.Web.Models;
+using Bnh.Models;
 using DotNetOpenAuth.OpenId.RelyingParty;
 using DotNetOpenAuth.OpenId;
 using DotNetOpenAuth.OpenId.Extensions.SimpleRegistration;
@@ -13,7 +13,7 @@ using System.Web.Routing;
 using Bnh.Infrastructure.WebSecurity;
 using DotNetOpenAuth.AspNet;
 
-namespace Bnh.Web.Controllers
+namespace Bnh.Controllers
 {
     [Authorize]
     public class AccountController : Controller

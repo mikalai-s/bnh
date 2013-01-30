@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
-namespace Bnh.Core
+namespace Cms.Core
 {
     public interface IRepository<T> : IQueryable<T> where T : class
     {

@@ -6,23 +6,25 @@ using Bnh.Core;
 using Bnh.Core.Entities;
 using MongoDB.Bson.Serialization;
 using MongoDB.Bson;
-using Bnh.Cms.Models;
-using Bnh.Cms.Repositories;
+using Cms.Models;
+using Cms.Infrastructure;
+using Cms.Core;
 
-namespace Bnh.Infrastructure.Repositories
+namespace Bnh.Infrastructure
 {
-    public partial class EntityRepositories : IEntityRepositories, IDisposable
+    public class BnhRepositories : Repositories, IBnhRepositories
     {
-        public IRepository<Community> Communities { get; private set; }
+        public MongoRepository<Community> Communities { get; private set; }
 
-        public IRepository<City> Cities { get; private set; }
+        public MongoRepository<City> Cities { get; private set; }
 
-        public EntityRepositories(Config config)
+        public BnhRepositories(IBnhConfig config)
+            : base(config)
         {
             var connectionString = config.ConnectionStrings["mongo"];
 
             this.Communities = new MongoRepository<Community>(connectionString);
-            this.Cities = new MongoRepository<City>(connectionString);            
+            this.Cities = new MongoRepository<City>(connectionString);
 
             EnsureData();
         }
@@ -30,7 +32,7 @@ namespace Bnh.Infrastructure.Repositories
         /// <summary>
         /// Registers class map
         /// </summary>
-        static EntityRepositories()
+        static BnhRepositories()
         {
             BsonClassMap.RegisterClassMap<Profile>(cm =>
             {
@@ -59,10 +61,6 @@ namespace Bnh.Infrastructure.Repositories
                 cm.AutoMap();
                 cm.MapIdProperty(comment => comment.CommentId).SetRepresentation(BsonType.ObjectId);
             });
-        }
-
-        public void Dispose()
-        {
         }
 
         /// <summary>

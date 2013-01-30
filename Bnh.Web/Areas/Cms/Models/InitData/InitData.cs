@@ -2,18 +2,18 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
-using Bnh.Cms.Repositories;
+using Cms.Core;
 
-namespace Bnh.Cms.Models
+namespace Cms.Models
 {
     internal static class InitData
     {
-        public static void Init(CmsRepos db)
+        public static void Init(IRepositories repos)
         {
             // just a simple check whether there is need to initilize data
-            if (db.Scenes.Where(s => s.SceneId == Constants.LinkableBricksSceneId).Any()) { return; }
+            if (repos.Scenes.Where(s => s.SceneId == Constants.LinkableBricksSceneId).Any()) { return; }
                 
-            db.Scenes.Insert(new Scene
+            repos.Scenes.Insert(new Scene
             {
                 SceneId = Constants.LinkableBricksSceneId,
                 Title = "Linkable Bricks Scene",
@@ -28,7 +28,7 @@ namespace Bnh.Cms.Models
             });
 
             // add index to brick content
-            db.Scenes.Collection.EnsureIndex("Walls", "Bricks", "BrickContentId");
+            repos.Scenes.Collection.EnsureIndex("Walls", "Bricks", "BrickContentId");
         }
     }
 }

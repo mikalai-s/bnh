@@ -7,6 +7,7 @@ using System.Web.Hosting;
 using System.Web.Mvc;
 using System.Web.SessionState;
 using Bnh.Core;
+using Cms.Core;
 using MongoDB.Bson;
 using MongoDB.Driver;
 using MongoDB.Driver.Builders;
@@ -48,7 +49,7 @@ namespace MongoDB.Web.Providers
 
         public override void Initialize(string name, NameValueCollection settings)
         {
-            var config = DependencyResolver.Current.GetService<Config>();
+            var config = DependencyResolver.Current.GetService<IConfig>();
 
             var configuration = WebConfigurationManager.OpenWebConfiguration(HostingEnvironment.ApplicationVirtualPath);
             this.sessionStateSection = configuration.GetSection("system.web/sessionState") as SessionStateSection;

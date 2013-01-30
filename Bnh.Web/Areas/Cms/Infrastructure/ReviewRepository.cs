@@ -2,15 +2,14 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using Bnh.Cms.Models;
+using Cms.Models;
 using Bnh.Core;
 using Bnh.Core.Entities;
-using Bnh.Infrastructure.Repositories;
 using MongoDB.Bson;
 using MongoDB.Driver;
 using MongoDB.Driver.Builders;
 
-namespace Bnh.Cms.Repositories
+namespace Cms.Infrastructure
 {
     public class ReviewRepository : MongoRepository<Review>
     {

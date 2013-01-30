@@ -4,11 +4,12 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Mvc.Html;
-using Bnh.Cms.ViewModels;
+using Cms.ViewModels;
 using Bnh.Core;
 using Bnh.Core.Entities;
+using Cms.Core;
 
-namespace Bnh.Web.ViewModels
+namespace Bnh.ViewModels
 {
     public class CommunityViewModel
     {

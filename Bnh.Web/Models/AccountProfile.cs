@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Web;
 using System.Web.Profile;
-using Bnh.Cms.Models;
+using Cms.Models;
 using Bnh.Core.Entities;
 
-namespace Bnh.Web.Models
+namespace Bnh.Models
 {
     public class AccountProfile : ProfileBase, IAccountProfile
     {

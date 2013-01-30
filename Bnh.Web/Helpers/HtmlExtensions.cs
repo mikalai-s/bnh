@@ -22,17 +22,6 @@ namespace Bnh
             lastFormNumKey = new object();
         }
 
-        public static MvcHtmlString Avatar(this HtmlHelper html, string userName, int size = 64)
-        {
-            return new MvcHtmlString(Gravatar.GetUrl(userName, size, null, GravatarRating.Default, null) + "&d=identicon");
-        }
-
-        public static MvcHtmlString Rating(this HtmlHelper html, int rating)
-        {
-            var format = "<div class='scale l' style='width:{0}px'></div><div class='scale r' style='width:{1}px'></div>";
-            return new MvcHtmlString(string.Format(format, rating * 10, 100 - rating * 10));
-        }
-
         public static MvcHtmlString ActionMenuItem(this HtmlHelper htmlHelper, string linkText, string actionName, string controllerName, object attributes = null)
         {
             var tag = new TagBuilder("li");

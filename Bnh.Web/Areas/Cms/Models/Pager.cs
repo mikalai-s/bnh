@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
-namespace Bnh.Web.Models
+namespace Cms.Models
 {
     /// <summary>
     /// Encapsulates information about sequence of pages

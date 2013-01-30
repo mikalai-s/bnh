@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using Bnh.Core;
 using Bnh.Core.Entities;
-using Bnh.Infrastructure.Repositories;
+using Cms.Core;
 using MongoDB.Bson;
 using MongoDB.Driver.Builders;
 
@@ -12,10 +12,10 @@ namespace Bnh.Infrastructure
 {
     public class RatingCalculator : IRatingCalculator
     {
-        Config config = null;
-        IEntityRepositories repos = null;
+        IConfig config = null;
+        IRepositories repos = null;
 
-        public RatingCalculator(Config config, IEntityRepositories repos)
+        public RatingCalculator(IConfig config, IRepositories repos)
         {
             this.config = config;
             this.repos = repos;

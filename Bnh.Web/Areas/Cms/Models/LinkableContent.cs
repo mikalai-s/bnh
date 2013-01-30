@@ -4,7 +4,7 @@ using System.Linq;
 using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
 
-namespace Bnh.Cms.Models
+namespace Cms.Models
 {
     public partial class LinkableContent : BrickContent
     {

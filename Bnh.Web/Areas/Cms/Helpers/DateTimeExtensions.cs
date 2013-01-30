@@ -5,7 +5,7 @@ using System.Linq;
 using System.Threading;
 using System.Web;
 
-namespace Bnh
+namespace Cms.Helpers
 {
     public static class DateTimeExtensions
     {

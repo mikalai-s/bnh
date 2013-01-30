@@ -7,10 +7,10 @@ using System.ComponentModel;
 using System.Collections;
 
 using TypeMap = System.Collections.Generic.Dictionary<string, System.Type>;
-using Bnh.Cms.Controllers;
-using Bnh.Cms.Models;
+using Cms.Controllers;
+using Cms.Models;
 
-namespace Bnh.Cms
+namespace Cms.Helpers
 {
     public class BnhModelBinder : DefaultModelBinder
     {

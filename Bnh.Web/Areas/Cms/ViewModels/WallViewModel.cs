@@ -2,10 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
-using Bnh.Cms.Models;
+using Cms.Models;
 using Newtonsoft.Json;
 
-namespace Bnh.Cms.ViewModels
+namespace Cms.ViewModels
 {
     public class WallViewModel
     {

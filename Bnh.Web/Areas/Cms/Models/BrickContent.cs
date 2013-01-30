@@ -6,7 +6,7 @@ using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
 using MongoDB.Driver.Builders;
 
-namespace Bnh.Cms.Models
+namespace Cms.Models
 {
     public abstract class BrickContent
     {

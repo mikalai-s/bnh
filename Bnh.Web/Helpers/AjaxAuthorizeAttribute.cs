@@ -7,7 +7,7 @@ using System.Web.Mvc;
 using System.Web.Security;
 using Microsoft.Web.Helpers;
 
-namespace Bnh.Web.Helpers
+namespace Bnh.Helpers
 {
     public class AjaxAuthorizeAttribute : AuthorizeAttribute
     {

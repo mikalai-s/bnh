@@ -14,7 +14,7 @@
     <RootNamespace>Bnh.Web</RootNamespace>
     <AssemblyName>Bnh.Web</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
-    <MvcBuildViews>true</MvcBuildViews>
+    <MvcBuildViews>false</MvcBuildViews>
     <FileUpgradeFlags>
     </FileUpgradeFlags>
     <OldToolsVersion>4.0</OldToolsVersion>
@@ -233,9 +233,10 @@
     <Compile Include="Areas\Cms\CmsAreaRegistration.cs" />
     <Compile Include="Areas\Cms\Controllers\BrickContentController.cs" />
     <Compile Include="Areas\Cms\Controllers\SceneController.cs" />
+    <Compile Include="Areas\Cms\Core\IRepositories.cs" />
     <Compile Include="Areas\Cms\Models\Brick.cs" />
     <Compile Include="Areas\Cms\Models\BrickContent.cs" />
-    <Compile Include="Areas\Cms\Repositories\CmsRepos.cs" />
+    <Compile Include="Areas\Cms\Infrastructure\Repositories.cs" />
     <Compile Include="Areas\Cms\Models\Constants.cs" />
     <Compile Include="Areas\Cms\Models\IMappable.cs" />
     <Compile Include="Areas\Cms\Models\IReviewable.cs" />
@@ -263,7 +264,8 @@
     <Compile Include="Areas\Cms\Helpers\ContentUrls.cs" />
     <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\SearchController.cs" />
-    <Compile Include="Core\Config.cs" />
+    <Compile Include="Areas\Cms\Core\IConfig.cs" />
+    <Compile Include="Core\BnhConfig.cs" />
     <Compile Include="Core\Entities\Attributes\ExternalPropertyAttribute.cs" />
     <Compile Include="Core\Entities\Attributes\FilterPropertyAttribute.cs" />
     <Compile Include="Core\Entities\City.cs" />
@@ -271,19 +273,19 @@
     <Compile Include="Core\Entities\Community.cs" />
     <Compile Include="Areas\Cms\Models\Review.cs" />
     <Compile Include="Core\Extensions\LinkExtensions.cs" />
-    <Compile Include="Core\IEntityRepositories.cs" />
-    <Compile Include="Core\IPathMapper.cs" />
-    <Compile Include="Core\IRatingCalculator.cs" />
-    <Compile Include="Core\IRepository.cs" />
-    <Compile Include="Core\ISearchProvider.cs" />
-    <Compile Include="Core\ISearchResult.cs" />
+    <Compile Include="Core\IBnhConfig.cs" />
+    <Compile Include="Core\IBnhRepositories.cs" />
+    <Compile Include="Areas\Cms\Core\IPathMapper.cs" />
+    <Compile Include="Areas\Cms\Core\IRatingCalculator.cs" />
+    <Compile Include="Areas\Cms\Core\IRepository.cs" />
+    <Compile Include="Areas\Cms\Core\ISearchProvider.cs" />
+    <Compile Include="Areas\Cms\Core\ISearchResult.cs" />
     <Compile Include="Helpers\AjaxAuthorizeAttribute.cs" />
-    <Compile Include="Helpers\DesignerAuthorizeAttribute.cs" />
+    <Compile Include="Areas\Cms\Infrastructure\DesignerAuthorizeAttribute.cs" />
     <Compile Include="Areas\Cms\Helpers\HtmlExtensions.cs" />
     <Compile Include="Helpers\MongoErrorLog.cs" />
-    <Compile Include="Helpers\RazorEngine.cs" />
+    <Compile Include="Areas\Cms\Helpers\RazorEngine.cs" />
     <Compile Include="Helpers\StirngExtensions.cs" />
-    <Compile Include="AutofacModule.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\CommunityController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -302,9 +304,9 @@
     <Compile Include="Infrastructure\AspNetProviders\WebEvent.cs" />
     <Compile Include="Infrastructure\AutofacModule.cs" />
     <Compile Include="Infrastructure\RatingCalculator.cs" />
-    <Compile Include="Infrastructure\Repositories\EntityRepositories.cs" />
-    <Compile Include="Areas\Cms\Repositories\MongoRepository.cs" />
-    <Compile Include="Areas\Cms\Repositories\ReviewRepository.cs" />
+    <Compile Include="Infrastructure\BnhRepositories.cs" />
+    <Compile Include="Areas\Cms\Infrastructure\MongoRepository.cs" />
+    <Compile Include="Areas\Cms\Infrastructure\ReviewRepository.cs" />
     <Compile Include="Infrastructure\Search\SearchProvider.cs" />
     <Compile Include="Infrastructure\Search\SearchResult.cs" />
     <Compile Include="Infrastructure\ServerPathMapper.cs" />
@@ -322,7 +324,7 @@
     <Compile Include="Models\AccountModels.cs" />
     <Compile Include="Models\AccountProfile.cs" />
     <Compile Include="Areas\Cms\Models\IAccountProfile.cs" />
-    <Compile Include="Models\Pager.cs" />
+    <Compile Include="Areas\Cms\Models\Pager.cs" />
     <Compile Include="Areas\Cms\Models\Profile.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ViewModels\CommunityIndexViewModel.cs" />
@@ -670,7 +672,7 @@
     <Compile Include="Areas\Cms\ViewModels\ReviewViewModel.cs" />
     <Compile Include="Areas\Cms\ViewModels\ReviewsViewModel.cs" />
     <Compile Include="Helpers\CommunityExtensions.cs" />
-    <Compile Include="Helpers\DateTimeExtensions.cs" />
+    <Compile Include="Areas\Cms\Helpers\DateTimeExtensions.cs" />
     <Compile Include="Helpers\Encoding.cs" />
     <Compile Include="Helpers\ExternalProperty.cs" />
     <Compile Include="Helpers\FilterPropertyAttributeExtensions.cs" />

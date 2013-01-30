@@ -10,7 +10,7 @@ using System.CodeDom.Compiler;
 using Microsoft.CSharp;
 using System.Dynamic;
 
-namespace Bnh
+namespace Cms.Helpers
 {
     public class RazorEngine
     {

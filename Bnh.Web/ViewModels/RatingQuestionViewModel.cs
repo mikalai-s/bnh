@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Web.Mvc;
 
-namespace Bnh.Web.ViewModels
+namespace Bnh.ViewModels
 {
     public class RatingQuestionViewModel
     {

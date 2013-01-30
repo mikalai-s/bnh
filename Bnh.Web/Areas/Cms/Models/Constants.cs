@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using MongoDB.Bson;
 
-namespace Bnh.Cms.Models
+namespace Cms.Models
 {
     public static class Constants
     {

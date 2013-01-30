@@ -3,6 +3,7 @@ using System.Linq;
 using System.Web.Management;
 using System.Web.Mvc;
 using Bnh.Core;
+using Cms.Core;
 using MongoDB.Driver;
 
 namespace MongoDB.Web.Providers
@@ -13,7 +14,7 @@ namespace MongoDB.Web.Providers
 
         public override void Initialize(string name, NameValueCollection settings)
         {
-            var config = DependencyResolver.Current.GetService<Config>();
+            var config = DependencyResolver.Current.GetService<IConfig>();
 
             this.mongoCollection = ConnectionUtils.GetCollection(settings, config, "WebEvents");
 
