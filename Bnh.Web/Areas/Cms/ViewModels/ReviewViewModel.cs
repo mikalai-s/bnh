@@ -14,7 +14,7 @@ namespace Cms.ViewModels
 
         public string UserAvatarSrc { get; set; }
 
-        //public IEnumerable<RatingQuestionViewModel> Ratings { get; set; }
+        public IEnumerable<RatingQuestionViewModel> Ratings { get; set; }
 
         public string Message { get; set; }
 

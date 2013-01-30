@@ -25,8 +25,6 @@ namespace Cms.ViewModels
 
     public class BrickViewModel<T> : IBrickViewModel<T> where T : BrickContent
     {
-        protected IRepositories Repos { get; private set; }
-
         protected ViewModelContext Context { get; private set; }
 
         public string Title { get; private set; }
@@ -42,13 +40,12 @@ namespace Cms.ViewModels
             get { return this.Width.ToString("F") + "%"; }
         }
 
-        public BrickViewModel(ViewModelContext context, string title, float width, string brickContentId, T content, IRepositories repos)
+        public BrickViewModel(ViewModelContext context, string title, float width, string brickContentId, T content)
         {
             this.Title = title;
             this.Width = width;
             this.BrickContentId = brickContentId;
             this.Content = content;
-            this.Repos = repos;
         }
 
 
@@ -61,18 +58,18 @@ namespace Cms.ViewModels
             return JsonConvert.SerializeObject(properties);
         }
 
-        internal static IBrickViewModel<BrickContent> Create(ViewModelContext context, Brick brick, IRepositories repos)
+        internal static IBrickViewModel<BrickContent> Create(ViewModelContext context, Brick brick)
         {
-            var content = brick.GetContent(repos);
+            var content = brick.GetContent(context.Repos);
             if (content is ReviewsContent)
             {
-                return (IBrickViewModel<BrickContent>)new ReviewsBrickViewModel(context, brick.Title, brick.Width, brick.BrickContentId, (ReviewsContent)brick.GetContent(repos), repos);
+                return (IBrickViewModel<BrickContent>)new ReviewsBrickViewModel(context, brick.Title, brick.Width, brick.BrickContentId, (ReviewsContent)content);
             }
             else
             {
                 var viewModelType = typeof(BrickViewModel<>).MakeGenericType(content.GetType());
 
-                return (IBrickViewModel<BrickContent>)Activator.CreateInstance(viewModelType, context, brick.Title, brick.Width, brick.BrickContentId, brick.GetContent(repos), repos);
+                return (IBrickViewModel<BrickContent>)Activator.CreateInstance(viewModelType, context, brick.Title, brick.Width, brick.BrickContentId, content);
             }
         }
 
@@ -80,7 +77,7 @@ namespace Cms.ViewModels
         {
             get
             {
-                return new BrickViewModel<BrickContent>(null, string.Empty, 100.0F, string.Empty, null, null);
+                return new BrickViewModel<BrickContent>(null, string.Empty, 100.0F, string.Empty, null);
             }
         }
     }

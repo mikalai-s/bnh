@@ -66,13 +66,13 @@ namespace Cms.ViewModels
                     Message = r.Message,
                     Comments = (r.Comments ?? Enumerable.Empty<Comment>())
                         .Select(c => new CommentViewModel(c, userProfiles[c.UserName])),
-                    //Ratings = ratingQuestions
-                    //    .Where(q => r.Ratings[q.Key].HasValue)
-                    //    .Select(q => new RatingQuestionViewModel
-                    //    {
-                    //        Question = q.Value + ":",
-                    //        AnswerHtml = context.HtmlHelper.RatingStars(r.Ratings[q.Key]).ToString()
-                    //    }),
+                    Ratings = ratingQuestions
+                        .Where(q => r.Ratings[q.Key].HasValue)
+                        .Select(q => new RatingQuestionViewModel
+                        {
+                            Question = q.Value + ":",
+                            AnswerHtml = context.HtmlHelper.RatingStars(r.Ratings[q.Key]).ToString()
+                        }),
                     PostCommentActionUrl = context.UrlHelper.Action("PostReviewComment")
                 });
             this.Admin = context.IsUserInRole("content_manager");

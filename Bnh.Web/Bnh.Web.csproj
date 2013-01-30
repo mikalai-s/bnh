@@ -668,7 +668,7 @@
     <Compile Include="Areas\Cms\ViewModels\CommentViewModel.cs" />
     <Compile Include="Areas\Cms\ViewModels\LinkViewModel.cs" />
     <Compile Include="ViewModels\PageViewModel.cs" />
-    <Compile Include="ViewModels\RatingQuestionViewModel.cs" />
+    <Compile Include="Areas\Cms\ViewModels\RatingQuestionViewModel.cs" />
     <Compile Include="Areas\Cms\ViewModels\ReviewViewModel.cs" />
     <Compile Include="Areas\Cms\ViewModels\ReviewsViewModel.cs" />
     <Compile Include="Helpers\CommunityExtensions.cs" />

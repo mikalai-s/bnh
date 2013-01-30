@@ -20,12 +20,12 @@ namespace Cms.Controllers
     public class SceneController : Controller
     {
         private IConfig config;
-        private IRepositories db;
+        private IRepositories repos;
 
-        public SceneController(IConfig config, IRepositories db)
+        public SceneController(IConfig config, IRepositories repos)
         {
             this.config = config;
-            this.db = db;
+            this.repos = repos;
         }
 
 
@@ -52,7 +52,7 @@ namespace Cms.Controllers
             if (Request.IsAjaxRequest())
             {
                 // render real (saved) scene
-                return PartialView(ContentUrl.Views.Scene.Partial.DesignScene, db.Scenes.First(s => s.SceneId == scene.SceneId).ToViewModel(GetViewModelContext(), db));
+                return PartialView(ContentUrl.Views.Scene.Partial.DesignScene, repos.Scenes.First(s => s.SceneId == scene.SceneId).ToViewModel(GetViewModelContext()));
             }
 
             return View(ContentUrl.Views.Scene.Partial.DesignScene);
@@ -60,13 +60,13 @@ namespace Cms.Controllers
 
         private ViewModelContext GetViewModelContext()
         {
-            return new ViewModelContext(this);
+            return new ViewModelContext(this, this.config, this.repos);
         }
 
         private void SaveScene(Scene scene, bool cloning = false)
         {
             // enumerate scene's existing brick contents to track deleted ones
-            var existingSceneWalls = db.Scenes
+            var existingSceneWalls = repos.Scenes
                 .Where(s => s.SceneId == scene.SceneId)
                 .ToList() // because SelectMany() is not supported by MongoDB Linq yet
                 .SelectMany(s => s.Walls);
@@ -88,9 +88,9 @@ namespace Cms.Controllers
                     {
                         if (!string.IsNullOrEmpty(brick.BrickContentId)) // doesn't make sense to clone empty brick
                         {
-                            var content = db.BrickContents.First(c => c.BrickContentId == brick.BrickContentId);
+                            var content = repos.BrickContents.First(c => c.BrickContentId == brick.BrickContentId);
                             content.BrickContentId = null;
-                            db.BrickContents.Insert(content);
+                            repos.BrickContents.Insert(content);
                             brick.BrickContentId = content.BrickContentId;
                         }
                     }
@@ -105,30 +105,30 @@ namespace Cms.Controllers
                             .Select(br => br.Type)
                             .First();
                         var newContent = Activator.CreateInstance(contentType) as BrickContent;
-                        db.BrickContents.Insert(newContent);
+                        repos.BrickContents.Insert(newContent);
                         brick.BrickContentId = newContent.BrickContentId;
                     }
                 }
             }
 
             // save scene document
-            db.Scenes.Save(scene);
+            repos.Scenes.Save(scene);
 
             // delete removed bricks
-            existingBricks.ForEach(db.BrickContents.Delete);
+            existingBricks.ForEach(repos.BrickContents.Delete);
         }
 
         [DesignerAuthorizeAttribute]
         [HttpPost]
         public ActionResult ApplyTemplate(string sceneId, string templateSceneId)
         {
-            var template = db.Scenes.First(t => t.SceneId == templateSceneId && t.IsTemplate);
+            var template = repos.Scenes.First(t => t.SceneId == templateSceneId && t.IsTemplate);
             template.SceneId = sceneId;
             template.Title = null;
             template.IsTemplate = false;
             SaveScene(template, true);
 
-            return PartialView(ContentUrl.Views.Scene.Partial.DesignScene, template.ToViewModel(GetViewModelContext(), this.db));
+            return PartialView(ContentUrl.Views.Scene.Partial.DesignScene, template.ToViewModel(GetViewModelContext()));
         }
 
         [DesignerAuthorizeAttribute]
@@ -145,7 +145,7 @@ namespace Cms.Controllers
                 {
                     // because OfType() extension is not implemented in current MongoDd driver
                     // the query is a little bit weird
-                    Data = !db.BrickContents
+                    Data = !repos.BrickContents
                         .Where(b => b is LinkableContent)
                         .Select(b => b as LinkableContent)
                         .ToList()
@@ -156,13 +156,13 @@ namespace Cms.Controllers
 
         public ActionResult Details(string sceneId, object model)
         {
-            var scene = this.db.Scenes.FirstOrDefault(s => s.SceneId == sceneId) ?? new Scene { SceneId = sceneId };
+            var scene = this.repos.Scenes.FirstOrDefault(s => s.SceneId == sceneId) ?? new Scene { SceneId = sceneId };
 
             var bricks = scene.Walls
                 .SelectMany(w => w.Bricks)
                 .Select(b => b.BrickContentId)
                 .ToList();
-            var tocContents = this.db.BrickContents
+            var tocContents = this.repos.BrickContents
                 .Where(c => bricks.Contains(c.BrickContentId))
                 .Where(c => c.IsTitleUsedInToC)
                 .Where(c => !string.IsNullOrEmpty(c.ContentTitle))
@@ -174,14 +174,14 @@ namespace Cms.Controllers
             this.ViewBag.GlobalModel = model;
             this.ViewBag.TocBricks = tocContents;
 
-            return PartialView(ContentUrl.Views.Scene.View, scene.ToViewModel(GetViewModelContext(), this.db));
+            return PartialView(ContentUrl.Views.Scene.View, scene.ToViewModel(GetViewModelContext()));
         }
 
         [DesignerAuthorizeAttribute]
         public ActionResult Edit(string sceneId, object model)
         {
-            var scene = this.db.Scenes.FirstOrDefault(s => s.SceneId == sceneId) ?? new Scene { SceneId = sceneId };
-            var templates = db.Scenes
+            var scene = this.repos.Scenes.FirstOrDefault(s => s.SceneId == sceneId) ?? new Scene { SceneId = sceneId };
+            var templates = repos.Scenes
                 .Where(s => s.IsTemplate && s.SceneId != scene.SceneId)
                 .Select(s => new { id = s.SceneId, title = s.Title })
                 .ToList();
@@ -189,7 +189,7 @@ namespace Cms.Controllers
             this.ViewBag.Templates = new SelectList(templates, "id", "title");
             this.ViewBag.LinkableBricksSceneId = Constants.LinkableBricksSceneId;
 
-            return PartialView(ContentUrl.Views.Scene.Edit, scene.ToViewModel(GetViewModelContext(), this.db));
+            return PartialView(ContentUrl.Views.Scene.Edit, scene.ToViewModel(GetViewModelContext()));
         }
     }
 }

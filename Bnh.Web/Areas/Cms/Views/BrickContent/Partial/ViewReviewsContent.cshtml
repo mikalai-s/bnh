@@ -36,13 +36,13 @@
                 <span class="time">on @(review.Created):</span>
             </section>
             <section class="rating">
-               @* @foreach(var rating in review.Ratings)
+                @foreach(var rating in review.Ratings)
                 {
                     <div>
                         <label class="question">@(rating.Question)</label>
                         <div class="answer">@Html.Raw(rating.AnswerHtml)</div>
                     </div>
-                }*@
+                }
             </section>
             <section class="message">@Html.Raw(review.Message)</section>
             <section class="useful">

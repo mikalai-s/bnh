@@ -13,8 +13,8 @@ namespace Cms.ViewModels
     {
         public IEnumerable<ReviewViewModel> Reviews { get; set; }
 
-        public ReviewsBrickViewModel(ViewModelContext context, string title, float width, string brickContentId, ReviewsContent content, IRepositories repos)
-            : base(context, title, width, brickContentId, content, repos)
+        public ReviewsBrickViewModel(ViewModelContext context, string title, float width, string brickContentId, ReviewsContent content)
+            : base(context, title, width, brickContentId, content)
         {
             var reviewable = context.ViewBag.GlobalModel as IReviewable;
             if (reviewable == null)
@@ -23,17 +23,26 @@ namespace Cms.ViewModels
             }
             else
             {
-                this.Reviews = repos.Reviews
+                var userProfiles = context.Repos.Profiles.ToDictionary(p => p.UserName, p => p);
+
+                this.Reviews = context.Repos.Reviews
                     .Where(r => r.TargetId == reviewable.ReviewableTargetId)
                     .Select(r => new ReviewViewModel
                     {
                         ReviewId = r.ReviewId,
-                        UserName = "test",
-                        UserAvatarSrc = context.HtmlHelper.Avatar("msilivonik@gmail.com", 64).ToString(),
+                        UserName = userProfiles[r.UserName].DisplayName,
+                        UserAvatarSrc = context.HtmlHelper.Avatar(userProfiles[r.UserName].GravatarEmail, 64).ToString(),
                         Created = r.Created.ToLocalTime().ToUserFriendlyString(),
                         Message = r.Message,
                         Comments = (r.Comments ?? Enumerable.Empty<Comment>())
-                            .Select(c => new CommentViewModel(c)),
+                            .Select(c => new CommentViewModel(c, userProfiles[c.UserName])),
+                        Ratings = context.Config.Review.Questions
+                            .Where(q => r.Ratings[q.Key].HasValue)
+                            .Select(q => new RatingQuestionViewModel
+                            {
+                                Question = q.Value + ":",
+                                AnswerHtml = context.HtmlHelper.RatingStars(r.Ratings[q.Key]).ToString()
+                            }),
                         PostCommentActionUrl = context.UrlHelper.Action("PostReviewComment")
                     });
             }

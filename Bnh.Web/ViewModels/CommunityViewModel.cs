@@ -5,9 +5,9 @@ using System.Web;
 using System.Web.Mvc;
 using System.Web.Mvc.Html;
 using Cms.ViewModels;
-using Bnh.Core;
 using Bnh.Core.Entities;
 using Cms.Core;
+using Cms.Helpers;
 
 namespace Bnh.ViewModels
 {
