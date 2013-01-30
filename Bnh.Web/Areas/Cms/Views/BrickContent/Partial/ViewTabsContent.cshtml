@@ -1,0 +1,19 @@
+﻿@model BrickViewModel<TabsContent>
+
+@{
+    this.GetScriptBundle().Include(new[]
+    {
+        "~/Areas/Cms/Scripts/view-tabs-content.js"
+    });
+
+    var tabs = (Model.Content.Tabs == null) ? Enumerable.Empty<string>().ToArray() : Model.Content.Tabs.ToArray();
+}
+
+<ul class="tabs-content nav nav-tabs">
+    @for(int i = 0; i < tabs.Length; i ++)
+    {
+        <li class="@(i == 0 ? "active" : "")">
+            <a href="#">@tabs[i]</a>
+        </li>
+    }
+</ul>

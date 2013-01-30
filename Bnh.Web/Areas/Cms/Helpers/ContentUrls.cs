@@ -9,7 +9,7 @@ namespace Cms.Helpers
     {
         public static class Scripts
         {
-            public const string EditHtmlBrick = "~/Areas/Cms/Scripts/edit-html-brick.js";
+            public const string EditHtmlBrick = "~/Areas/Cms/Scripts/edit-html-content.js";
 
             public const string DesignScene = "~/Areas/Cms/Scripts/design-scene.js";
         }

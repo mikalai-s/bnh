@@ -48,6 +48,7 @@ namespace Cms
             yield return new BrickRegistration { Type = typeof(MapContent), Title = "Map", View = "" };
             yield return new BrickRegistration { Type = typeof(GalleryContent), Title = "Gallery", View = "" };
             yield return new BrickRegistration { Type = typeof(ReviewsContent), Title = "Reviews", View = "" };
+            yield return new BrickRegistration { Type = typeof(TabsContent), Title = "Tabs", View = "" };
             yield return new BrickRegistration { Type = typeof(EmptyContent), Title = "Empty", View = "" };
             yield return new BrickRegistration { Type = typeof(LinkableContent), Title = "Linkable", View = "" };
             yield return new BrickRegistration { Type = typeof(TocContent), Title = "Table of Content", View = "" };
