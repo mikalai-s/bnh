@@ -13,6 +13,8 @@ namespace Cms.ViewModels
     {
         public IEnumerable<ReviewViewModel> Reviews { get; set; }
 
+        public LinkViewModel AddReviewLink { get; set; }
+
         public ReviewsBrickViewModel(ViewModelContext context, string title, float width, string brickContentId, ReviewsContent content)
             : base(context, title, width, brickContentId, content)
         {
@@ -45,6 +47,12 @@ namespace Cms.ViewModels
                             }),
                         PostCommentActionUrl = context.UrlHelper.Action("PostReviewComment")
                     });
+
+                this.AddReviewLink = new LinkViewModel
+                {
+                    Text = "Write a review",
+                    Href = context.UrlHelper.Action("AddReview", new { id = reviewable.ReviewableTargetId })
+                };
             }
         }
     }

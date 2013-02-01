@@ -186,7 +186,7 @@ namespace Bnh.Controllers
                 pager,
                 profiles));
         }
-
+        */
         [HttpGet]
         [Authorize]
         public ActionResult AddReview(string id)
@@ -207,10 +207,10 @@ namespace Bnh.Controllers
             review.UserName = User.Identity.Name;
             review.Message = review.Message.IsEmpty() ? string.Empty : Encoding.FromBase64(review.Message);
             review.Created = DateTime.Now.ToUniversalTime();
-            this.repositories.Reviews.Insert(review);
+            this.repos.Reviews.Insert(review);
             return Redirect(Url.Action("Reviews", new { id = this.RouteData.Values["id"] }) + "#" + review.ReviewId);
         }
-
+        /*
         [HttpDelete]
         [DesignerAuthorize]
         public ActionResult DeleteReview(string reviewId)

@@ -15,14 +15,10 @@
     }*/
 }
 
-
-@*<div class="row center">
-    <div>
-        <a href="@Model.AddReviewLink.Href" class="@Model.AddReviewLink.Css btn btn-danger">@Model.AddReviewLink.Text</a>
-    </div>
-</div>*@
-
-
+@if(Model.AddReviewLink != null)
+{
+@:Do want to share your opinioin about this community? <a href="@Model.AddReviewLink.Href" class="@Model.AddReviewLink.Css">@Model.AddReviewLink.Text</a>
+}
 
 @RenderPagerControls()
 
