@@ -12,7 +12,7 @@
         <div class='wall-wrapper' style='width:@wall.WidthString'>
         @foreach (var brick in wall.Bricks ?? Enumerable.Empty<IBrickViewModel<BrickContent>>())
         {
-            <div id="@brick.Content.GetHtmlId()" class='brick-wrapper' style='width:@brick.WidthString'>
+            <div id="@brick.Content.GetHtmlId()" class='brick-wrapper tabid_@brick.Content.TabId tabindex_@brick.Content.TabIndex' style='width:@brick.WidthString'>
                 @Html.Partial(ContentUrl.Views.BrickContent.View, brick)
             </div>
         }

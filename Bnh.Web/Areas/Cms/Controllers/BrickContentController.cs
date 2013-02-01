@@ -8,6 +8,9 @@ using Cms.Core;
 using Cms.Helpers;
 using Cms.Infrastructure;
 using Cms.Models;
+using MongoDB.Bson;
+using MongoDB.Driver.Builders;
+using Newtonsoft.Json;
 
 namespace Cms.Controllers
 {
@@ -35,6 +38,28 @@ namespace Cms.Controllers
                     .First(s => s.SceneId == Constants.LinkableBricksSceneId)
                     .Walls.SelectMany(w => w.Bricks)
                     .Select(b => new SelectListItem { Value = b.BrickContentId, Text = b.Title });
+            }
+            if (!(content is TabsContent))
+            {
+                var sceneBricks = this.repos.Scenes.Collection
+                    .Find(Query.EQ("Walls.Bricks.BrickContentId", ObjectId.Parse(content.BrickContentId)))
+                    .SelectMany(s => s.Walls.SelectMany(w => w.Bricks.Select(b => b.BrickContentId)))
+                    .ToList();
+                var tabBricks = this.repos.BrickContents
+                    .OfType<TabsContent>()
+                    .Where(b => sceneBricks.Contains(b.BrickContentId))
+                    .ToList();
+                this.ViewBag.TabsAvailable = from tabBrick in tabBricks
+                                             let tabs = tabBrick.Tabs.ToList()
+                                             from tab in tabs
+                                             let tabId = tabBrick.BrickContentId
+                                             let index = tabs.IndexOf(tab)
+                                             select new SelectListItem
+                                             {
+                                                 Selected = (content.TabId == tabId) && (content.TabIndex == index),
+                                                 Text = tabBrick.ContentTitle + ": " + tab,
+                                                 Value = JsonConvert.SerializeObject(new { id = tabId, index })
+                                             };
             }
             return View(ContentUrl.Views.BrickContent.Edit, content);
         }

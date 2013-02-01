@@ -18,5 +18,11 @@ namespace Cms.Models
         public bool IsTitleUsedInToC { get; set; }
 
         public bool IsTitleVisible { get; set; }
+
+        [BsonRepresentation(BsonType.ObjectId)]
+        public string TabId { get; set; }
+
+        public int? TabIndex { get; set; }
+        
     }
 }
