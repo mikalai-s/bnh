@@ -232,6 +232,7 @@
     <Compile Include="Areas\Cms\AutofacModule.cs" />
     <Compile Include="Areas\Cms\CmsAreaRegistration.cs" />
     <Compile Include="Areas\Cms\Controllers\BrickContentController.cs" />
+    <Compile Include="Areas\Cms\Controllers\ReviewsController.cs" />
     <Compile Include="Areas\Cms\Controllers\SceneController.cs" />
     <Compile Include="Areas\Cms\Core\IRepositories.cs" />
     <Compile Include="Areas\Cms\Models\Brick.cs" />
@@ -666,8 +667,9 @@
     <Content Include="js\map.js" />
     <Content Include="js\review-add.js" />
     <Content Include="js\single-page.js" />
+    <Content Include="Areas\Cms\Scripts\view-reviews-content.js" />
     <Content Include="js\views\review-index.htm" />
-    <Content Include="js\views\review-index.js" />
+    <Content Include="js\views\review-index.old.js" />
     <Compile Include="Areas\Cms\ViewModels\CommentViewModel.cs" />
     <Compile Include="Areas\Cms\ViewModels\LinkViewModel.cs" />
     <Compile Include="ViewModels\PageViewModel.cs" />

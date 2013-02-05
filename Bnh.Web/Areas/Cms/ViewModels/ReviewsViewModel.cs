@@ -73,7 +73,7 @@ namespace Cms.ViewModels
                             Question = q.Value + ":",
                             AnswerHtml = context.HtmlHelper.RatingStars(r.Ratings[q.Key]).ToString()
                         }),
-                    PostCommentActionUrl = context.UrlHelper.Action("PostReviewComment")
+                    PostCommentActionUrl = context.UrlHelper.Action("PostReviewComment", "Reviews")
                 });
             this.Admin = context.IsUserInRole("content_manager");
             this.DeleteReviewUrl = this.Admin ? context.UrlHelper.Action("DeleteReview") : null;

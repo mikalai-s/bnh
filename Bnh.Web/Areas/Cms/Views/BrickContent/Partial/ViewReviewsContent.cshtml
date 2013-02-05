@@ -1,4 +1,13 @@
-﻿@model ReviewsBrickViewModel
+﻿@using Newtonsoft.Json
+
+@model ReviewsBrickViewModel
+
+@{
+    this.GetScriptBundle().Include(new[]
+    {
+        "~/Areas/Cms/Scripts/view-reviews-content.js"
+    });
+}
 
 @helper RenderPagerControls()
 {/*
@@ -17,44 +26,67 @@
 
 @if(Model.AddReviewLink != null)
 {
-@:Do want to share your opinioin about this community? <a href="@Model.AddReviewLink.Href" class="@Model.AddReviewLink.Css">@Model.AddReviewLink.Text</a>
+@:Do want to share your opinion about this community? <a href="@Model.AddReviewLink.Href" class="@Model.AddReviewLink.Css">@Model.AddReviewLink.Text</a>
 }
 
 @RenderPagerControls()
 
-@foreach (var review in Model.Reviews)
-{
-    <div id="@review.ReviewId" class="review-container">
-        <img class="avatar img-polaroid" src="@review.UserAvatarSrc"/>
+    <div data-bind="visible: !reviews().length">No reviews available yet! Be first to leave a feedback!</div>
+
+<!-- ko foreach: reviews -->
+    <div class="review-container" data-bind="attr: { id: reviewId }">
+        <img class="avatar img-polaroid" data-bind="attr: { src: userAvatarSrc }"/>
         <div class="review">
             <section>
-                <span class="user">@review.UserName</span>
-                <span class="time">on @(review.Created):</span>
+                <span class="user" data-bind="text: userName"></span>
+                <span class="time" data-bind="text: ' on ' + created + ':'"></span>
             </section>
             <section class="rating">
-                @foreach(var rating in review.Ratings)
-                {
-                    <div>
-                        <label class="question">@(rating.Question)</label>
-                        <div class="answer">@Html.Raw(rating.AnswerHtml)</div>
+                <!-- ko foreach: ratings -->
+                <div>
+                    <label class="question" data-bind="text: question"></label>
+                    <div class="answer" data-bind="html: answerHtml"></div>
+                </div>
+                <!-- /ko -->
+            </section>
+            <section class="message" data-bind="html: message"></section>
+            @*<section class="useful">
+                Was this review useful to you? <a href="#" data-bind="click: onUsefulClick">Yes</a>
+            </section>*@
+            <section data-bind="visible: comments().length">
+                <a class="commentsLink" href="#" data-bind="text: commentsLinkText, click: function() { commentsVisible(!commentsVisible()) }"></a>
+            </section>
+            <section class="commentsSection" data-bind="slideVisible: commentsVisible, foreach: comments">
+                <div class="comment-container" data-bind="attr: { class: ($index() +1) % 2 ? 'comment-container even' : 'comment-container' }">
+                    <img class="avatar img-polaroid" data-bind="attr: { src: userAvatarSrc }"/>
+                    <div class="comment">
+                        <div><span class="user" data-bind="text: userName"></span><span class="time" data-bind="text: ' on ' + created + ':'"></span></div>
+                        <div class="message" data-bind="html: message"></div>
                     </div>
-                }
+                    <sup class="alter delete" data-bind="visible: $parent.page.admin">
+                        <a href="#" title="Delete comment" data-bind="click: onDeleteComment">x</a>
+                    </sup>
+                </div>
             </section>
-            <section class="message">@Html.Raw(review.Message)</section>
-            <section class="useful">
-                Was this review useful to you? <a href="#">Yes</a>
-            </section>
-            @if(review.Comments.Count() > 0)
-            {
             <section>
-                <a href="#" class="commentsLink">View @review.Comments.Count() comments</a>
+                <a href="#" class="btn addCommentLink" data-bind="visible: !addCommentVisible(), click: onAddComment">Add comment</a>
             </section>
-            }
-            <section>
-                <a href="#" class="btn addCommentLink">Add comment</a>
+            <section class="addCommentSection" data-bind="slideVisible: addCommentVisible">
+                <textarea data-bind="attr: { id: 'textarea_' + reviewId }, tinymce: newComment, tinymceOptions : { initTrigger: tinyMceInitTrigger, encoding: 'xml', theme: 'simple', forced_root_block: false }"></textarea>
+                <p>
+                    <input type="button" class="btn btn-danger" value="Post" data-bind="click: onPostComment" />
+                    <input type="button" class="btn" data-bind="click: onCancelComment" value="Cancel" />
+                </p>
             </section>
+            <sup class="alter delete" data-bind="visible: $parent.admin">
+                <a href="#" title="Delete review" data-bind="click: onDeleteReview">x</a>
+            </sup>
         </div>
     </div>
-}
+    <!-- /ko -->
 
 @RenderPagerControls()
+
+<script>
+    var page_reviewsData = @Html.Raw(JsonConvert.SerializeObject(Model))
+</script>

@@ -55,11 +55,16 @@ namespace Bnh.Controllers
         {
             return new ViewModelContext(this, this.config, this.repos);
         }
-      
 
-        public ViewResult Details(string id)
+
+        public ActionResult Details(string id)
         {
             var community = GetCommunity(id);
+            if (this.repos.IsValidId(id))
+            {
+                return RedirectToAction("Details", new { id = community.UrlId });
+            }
+
             return View(community);
         }
 
@@ -158,35 +163,20 @@ namespace Bnh.Controllers
             this.repos.Communities.Delete(id);
             return RedirectToAction("Index");
         }
-        /*
-        [SinglePage(Module="views/review-index")]
-        public ActionResult Reviews(string id, int page = 1, int size = int.MaxValue)
+
+        private Community GetCommunity(string id)
         {
-            if (page < 1)
-                return HttpNotFound();
-
-            var community = GetCommunity(id);
-
-            var total = this.repositories.Reviews.Where(r => r.TargetId == community.ReviewableTargetId).Count();
-            var pager = new Pager<Review>(page - 1, size, total, this.repositories.Reviews.Where(r => r.TargetId == community.ReviewableTargetId).OrderBy(r => r.Created));
-
-            if (page > pager.NumberOfPages)
-                return HttpNotFound();
-
-            // prepare information about all participants
-            var participants = pager.PageItems.SelectMany(r => r.GetParticipants()).Distinct().ToList();
-            var profiles = this.repositories.Profiles.Where(p => participants.Contains(p.UserName)).ToList();
-
-            return View(new ReviewsViewModel(
-                GetViewModelContext(),
-                this.rating.GetTargetRating(community.CommunityId), 
-                id,
-                community.Name,
-                this.config.Review.Questions,
-                pager,
-                profiles));
+            if (this.repos.IsValidId(id))
+            {
+                return this.repos.Communities.Single(c => c.CommunityId == id);
+            }
+            else
+            {
+                id = id.ToLower();
+                return this.repos.Communities.Single(c => c.UrlId.ToLower() == id);
+            }
         }
-        */
+
         [HttpGet]
         [Authorize]
         public ActionResult AddReview(string id)
@@ -208,51 +198,7 @@ namespace Bnh.Controllers
             review.Message = review.Message.IsEmpty() ? string.Empty : Encoding.FromBase64(review.Message);
             review.Created = DateTime.Now.ToUniversalTime();
             this.repos.Reviews.Insert(review);
-            return Redirect(Url.Action("Reviews", new { id = this.RouteData.Values["id"] }) + "#" + review.ReviewId);
-        }
-        /*
-        [HttpDelete]
-        [DesignerAuthorize]
-        public ActionResult DeleteReview(string reviewId)
-        {
-            this.repositories.Reviews.Delete(reviewId);
-            return Json(null);
-        }
-
-        [HttpDelete]
-        [DesignerAuthorize]
-        public ActionResult DeleteReviewComment(string reviewId, string commentId)
-        {
-            this.repositories.Reviews.DeleteReviewComment(reviewId, commentId);
-            return Json(null);
-        }
-
-        [HttpPost]
-        [AjaxAuthorize]
-        public ActionResult PostReviewComment(string reviewId, string message)
-        {
-            var comment = new Comment
-            {
-                Created = DateTime.UtcNow,
-                UserName = this.User.Identity.Name,
-                Message = message
-            };
-            this.repositories.Reviews.AddReviewComment(reviewId, comment);
-            return Json(new CommentViewModel(comment, this.repositories));
-        }
-        */
-
-        private Community GetCommunity(string id)
-        {
-            if (this.repos.IsValidId(id))
-            {
-                return this.repos.Communities.Single(c => c.CommunityId == id);
-            }
-            else
-            {
-                id = id.ToLower();
-                return this.repos.Communities.Single(c => c.UrlId.ToLower() == id);
-            }
+            return Redirect(Url.Action("Details", new { id = this.RouteData.Values["id"] })/* + "#" + review.ReviewId*/);
         }
 
         protected override void Dispose(bool disposing)

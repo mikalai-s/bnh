@@ -15,6 +15,12 @@ namespace Cms.ViewModels
 
         public LinkViewModel AddReviewLink { get; set; }
 
+        public bool Admin { get; set; }
+
+        public string DeleteReviewUrl { get; set; }
+
+        public string DeleteCommentUrl { get; set; }
+
         public ReviewsBrickViewModel(ViewModelContext context, string title, float width, string brickContentId, ReviewsContent content)
             : base(context, title, width, brickContentId, content)
         {
@@ -29,6 +35,7 @@ namespace Cms.ViewModels
 
                 this.Reviews = context.Repos.Reviews
                     .Where(r => r.TargetId == reviewable.ReviewableTargetId)
+                    .OrderByDescending(r => r.Created)
                     .Select(r => new ReviewViewModel
                     {
                         ReviewId = r.ReviewId,
@@ -37,6 +44,7 @@ namespace Cms.ViewModels
                         Created = r.Created.ToLocalTime().ToUserFriendlyString(),
                         Message = r.Message,
                         Comments = (r.Comments ?? Enumerable.Empty<Comment>())
+                            .OrderBy(c => c.Created)
                             .Select(c => new CommentViewModel(c, userProfiles[c.UserName])),
                         Ratings = context.Config.Review.Questions
                             .Where(q => r.Ratings[q.Key].HasValue)
@@ -45,7 +53,7 @@ namespace Cms.ViewModels
                                 Question = q.Value + ":",
                                 AnswerHtml = context.HtmlHelper.RatingStars(r.Ratings[q.Key]).ToString()
                             }),
-                        PostCommentActionUrl = context.UrlHelper.Action("PostReviewComment")
+                        PostCommentActionUrl = context.UrlHelper.Action("PostReviewComment", "Reviews")
                     });
 
                 this.AddReviewLink = new LinkViewModel
@@ -53,6 +61,10 @@ namespace Cms.ViewModels
                     Text = "Write a review",
                     Href = context.UrlHelper.Action("AddReview", new { id = reviewable.ReviewableTargetId })
                 };
+
+                this.Admin = context.IsUserInRole(context.Config.Roles["ContentManager"]);
+                this.DeleteReviewUrl = this.Admin ? context.UrlHelper.Action("DeleteReview", "Reviews") : null;
+                this.DeleteCommentUrl = this.Admin ? context.UrlHelper.Action("DeleteReviewComment", "Reviews") : null;
             }
         }
     }

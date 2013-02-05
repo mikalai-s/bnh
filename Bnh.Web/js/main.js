@@ -13,7 +13,7 @@ define(
 define(
     'gmaps-drawing',
     ['async!' + gmapsUrl + '&libraries=drawing'],
-    function () {
+    function () { 
         // return the gmaps namespace for brevity
         return window.google.maps;
     });
