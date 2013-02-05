@@ -28,9 +28,9 @@
 
             @if(ViewBag.TabsAvailable != null)
             {
-                @Html.DropDownList("tabs", ViewBag.TabsAvailable as IEnumerable<SelectListItem>, "No Tab Assigned", new { @class = "tabs-available", onchange = "var v = JSON.parse(this.value || '{}');$('#TabId').val(v.id);$('#TabIndex').val(v.index)"})
-                @Html.HiddenFor(b => b.TabId)
-                @Html.HiddenFor(b => b.TabIndex)
+                @Html.DropDownList("tabs", ViewBag.TabsAvailable as IEnumerable<SelectListItem>, "No Tab Assigned", new { @class = "tabs-available", onchange = "var v = JSON.parse(this.value || '{}');$('#OwnerTabName').val(v.id);$('#OwnerTabIndex').val(v.index)"})
+                @Html.HiddenFor(b => b.OwnerTabName)
+                @Html.HiddenFor(b => b.OwnerTabIndex)
             }
 
             @if (File.Exists(Server.MapPath(view)))

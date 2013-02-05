@@ -8,6 +8,10 @@
     var tabs = (Model == null || Model.Tabs == null) ? new string[] { } : Model.Tabs;
 }
 
+
+    <label>@Html.LabelFor(model => model.TabName)</label>
+    @Html.EditorFor(model => model.TabName)
+
     @foreach (var tab in tabs)
     {
         <div>

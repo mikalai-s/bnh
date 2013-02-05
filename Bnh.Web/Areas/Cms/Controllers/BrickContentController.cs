@@ -52,13 +52,13 @@ namespace Cms.Controllers
                 this.ViewBag.TabsAvailable = from tabBrick in tabBricks
                                              let tabs = tabBrick.Tabs.ToList()
                                              from tab in tabs
-                                             let tabId = tabBrick.BrickContentId
+                                             let tabName = tabBrick.TabName
                                              let index = tabs.IndexOf(tab)
                                              select new SelectListItem
                                              {
-                                                 Selected = (content.TabId == tabId) && (content.TabIndex == index),
-                                                 Text = tabBrick.ContentTitle + ": " + tab,
-                                                 Value = JsonConvert.SerializeObject(new { id = tabId, index })
+                                                 Selected = (content.OwnerTabName == tabName) && (content.OwnerTabIndex == index),
+                                                 Text = tabName + ": " + tab,
+                                                 Value = JsonConvert.SerializeObject(new { id = tabName, index })
                                              };
             }
             return View(ContentUrl.Views.BrickContent.Edit, content);

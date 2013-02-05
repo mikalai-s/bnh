@@ -21,11 +21,13 @@ namespace Cms.ViewModels
 
         public IRepositories Repos { get; set; }
 
+        public IRatingCalculator RatingCalculator { get; set; }
+
         public IConfig Config { get; set; }
 
         public dynamic ViewBag { get; set; }
 
-        public ViewModelContext(Controller controller, IConfig config, IRepositories repos)
+        public ViewModelContext(Controller controller, IConfig config, IRepositories repos, IRatingCalculator rating)
         {
             this.controller = controller;
 
@@ -35,8 +37,8 @@ namespace Cms.ViewModels
                 controller.ControllerContext, "fake"), new ViewDataDictionary(), new TempDataDictionary(), new StringWriter()), new ViewPage());
 
             this.Config = config;
-
             this.Repos = repos;
+            this.RatingCalculator = rating;
 
             this.ViewBag = controller.ViewBag;
         }

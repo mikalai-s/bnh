@@ -53,7 +53,7 @@ namespace Bnh.Controllers
 
         private ViewModelContext GetViewModelContext()
         {
-            return new ViewModelContext(this, this.config, this.repos);
+            return new ViewModelContext(this, this.config, this.repos, this.rating);
         }
 
 

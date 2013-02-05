@@ -21,11 +21,13 @@ namespace Cms.Controllers
     {
         private IConfig config;
         private IRepositories repos;
+        private IRatingCalculator rating;
 
-        public SceneController(IConfig config, IRepositories repos)
+        public SceneController(IConfig config, IRepositories repos, IRatingCalculator rating)
         {
             this.config = config;
             this.repos = repos;
+            this.rating = rating;
         }
 
 
@@ -60,7 +62,7 @@ namespace Cms.Controllers
 
         private ViewModelContext GetViewModelContext()
         {
-            return new ViewModelContext(this, this.config, this.repos);
+            return new ViewModelContext(this, this.config, this.repos, this.rating);
         }
 
         private void SaveScene(Scene scene, bool cloning = false)

@@ -9,7 +9,7 @@
     var tabs = (Model.Content.Tabs == null) ? Enumerable.Empty<string>().ToArray() : Model.Content.Tabs.ToArray();
 }
 
-<ul class="tabs-content nav nav-tabs">
+<ul class="tabs-content nav nav-tabs" id="@Model.Content.TabName">
     @for(int i = 0; i < tabs.Length; i ++)
     {
         <li class="@(i == 0 ? "active" : "")">
