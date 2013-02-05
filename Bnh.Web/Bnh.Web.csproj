@@ -239,6 +239,7 @@
     <Compile Include="Areas\Cms\Models\Contents\BrickContent.cs" />
     <Compile Include="Areas\Cms\Infrastructure\Repositories.cs" />
     <Compile Include="Areas\Cms\Models\Constants.cs" />
+    <Compile Include="Areas\Cms\Models\Contents\RatingContent.cs" />
     <Compile Include="Areas\Cms\Models\Contents\TabsContent.cs" />
     <Compile Include="Areas\Cms\Models\IMappable.cs" />
     <Compile Include="Areas\Cms\Models\IReviewable.cs" />
@@ -259,6 +260,7 @@
     <Compile Include="Areas\Cms\Models\Wall.cs" />
     <Compile Include="Areas\Cms\MsCms.cs" />
     <Compile Include="Areas\Cms\ViewModels\BrickViewModel.cs" />
+    <Compile Include="Areas\Cms\ViewModels\RatingViewModel.cs" />
     <Compile Include="Areas\Cms\ViewModels\ReviewsBrickViewModel.cs" />
     <Compile Include="Areas\Cms\ViewModels\SceneViewModel.cs" />
     <Compile Include="Areas\Cms\ViewModels\WallViewModel.cs" />
@@ -692,6 +694,7 @@
     <Content Include="Areas\Cms\Views\BrickContent\Partial\ViewReviewsContent.cshtml" />
     <Content Include="Areas\Cms\Views\BrickContent\Partial\ViewTabsContent.cshtml" />
     <Content Include="Areas\Cms\Views\BrickContent\Partial\EditTabsContent.cshtml" />
+    <Content Include="Areas\Cms\Views\BrickContent\Partial\ViewRatingContent.cshtml" />
     <None Include="js\libs\jquery\jquery-1.9.0.intellisense.js" />
     <Content Include="js\libs\jquery\jquery-1.9.0.js" />
     <Content Include="js\libs\jquery\jquery-1.9.0.min.js" />

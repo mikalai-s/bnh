@@ -25,6 +25,7 @@ namespace Cms.ViewModels
 
     public class BrickViewModel<T> : IBrickViewModel<T> where T : BrickContent
     {
+
         protected ViewModelContext Context { get; private set; }
 
         public string Title { get; private set; }
@@ -38,6 +39,15 @@ namespace Cms.ViewModels
         public string WidthString
         {
             get { return this.Width.ToString("F") + "%"; }
+        }
+
+        static BrickViewModel()
+        {
+            // TODO: make discionary of brick content and brick view model assignments
+            // to simplify Create() method below
+            var types = System.Reflection.Assembly.GetExecutingAssembly().GetTypes().OrderBy(t => t.Name).ToList();
+            var contents = types.Where(t => t.IsAssignableFrom(typeof(BrickContent))).ToList();
+            var viewModels = types.Where(t => t.IsAssignableFrom(typeof(BrickViewModel<>))).ToList();
         }
 
         public BrickViewModel(ViewModelContext context, string title, float width, string brickContentId, T content)
@@ -64,6 +74,10 @@ namespace Cms.ViewModels
             if (content is ReviewsContent)
             {
                 return (IBrickViewModel<BrickContent>)new ReviewsBrickViewModel(context, brick.Title, brick.Width, brick.BrickContentId, (ReviewsContent)content);
+            }
+            else if (content is RatingContent)
+            {
+                return (IBrickViewModel<BrickContent>)new RatingViewModel(context, brick.Title, brick.Width, brick.BrickContentId, (RatingContent)content);
             }
             else
             {

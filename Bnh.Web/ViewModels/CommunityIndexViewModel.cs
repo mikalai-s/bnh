@@ -22,7 +22,7 @@ namespace Bnh.ViewModels
 
             this.Zones = grouped.ToDictionary(
                 e => e.zone,
-                e => e.groups.OrderBy(c => c.Name).Select(c => new CommunityViewModel(context, c, ratingCalculator)));
+                e => e.groups.OrderBy(c => c.Name).Select(c => new CommunityViewModel(context, c)));
         }
     }
 }

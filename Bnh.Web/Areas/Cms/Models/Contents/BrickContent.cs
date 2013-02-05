@@ -19,10 +19,9 @@ namespace Cms.Models
 
         public bool IsTitleVisible { get; set; }
 
-        [BsonRepresentation(BsonType.ObjectId)]
-        public string TabId { get; set; }
+        public string OwnerTabName { get; set; }
 
-        public int? TabIndex { get; set; }
+        public int? OwnerTabIndex { get; set; }
         
     }
 }

@@ -1,0 +1,14 @@
+﻿@model RatingViewModel
+
+<div class="description">
+    @Model.BigStars
+</div>
+<div class="rating">
+    @foreach (var rating in Model.Ratings)
+    {
+        <div>
+            <label class="question">@(rating.Question)</label>
+            <div class="answer">@Html.Raw(rating.AnswerHtml)</div>
+        </div>
+    }
+</div>

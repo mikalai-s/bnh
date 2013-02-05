@@ -8,5 +8,7 @@ namespace Cms.Models
     public class TabsContent : BrickContent
     {
         public string[] Tabs { get; set; }
+
+        public string TabName { get; set; }
     }
 }
