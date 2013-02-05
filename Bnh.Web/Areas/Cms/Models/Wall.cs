@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Runtime.Serialization;
 using MongoDB.Bson;
 
-namespace Bnh.Cms.Models
+namespace Cms.Models
 {
     public partial class Wall
     {

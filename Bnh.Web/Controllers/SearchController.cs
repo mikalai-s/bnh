@@ -4,24 +4,25 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using Bnh.Core;
-using Bnh.Web.Infrastructure.Search;
-using Bnh.Web.ViewModels;
+using Bnh.Infrastructure.Search;
+using Bnh.ViewModels;
 using System.Web.Mvc.Html;
 using System.IO;
 using Elmah;
+using Cms.Core;
 
-namespace Bnh.Web.Controllers
+namespace Bnh.Controllers
 {
     public class SearchController : Controller
     {
-        IEntityRepositories Entities { get; set; }
+        IBnhRepositories repos { get; set; }
 
-        ISearchProvider Searcher { get; set; }
+        ISearchProvider searcher { get; set; }
 
-        public SearchController(IEntityRepositories entities, ISearchProvider searcher)
+        public SearchController(IBnhRepositories repos, ISearchProvider searcher)
         {
-            this.Entities = entities;
-            this.Searcher = searcher;
+            this.repos = repos;
+            this.searcher = searcher;
         }
 
         //
@@ -41,7 +42,7 @@ namespace Bnh.Web.Controllers
                 var found = default(List<ISearchResult>);
                 try
                 {
-                    found = this.Searcher.Search(criteria.Query).ToList();
+                    found = this.searcher.Search(criteria.Query).ToList();
                 }
                 catch(Exception ex)
                 {
@@ -54,7 +55,7 @@ namespace Bnh.Web.Controllers
 
                 var communitiesFound = found.OfType<CommunitySearchResult>().ToList();
                 var communitiesIdsFound = communitiesFound.Select(r => r.CommunityId).ToList();
-                var communities = this.Entities.Communities.Where(c => communitiesIdsFound.Contains(c.CommunityId)).ToList();
+                var communities = this.repos.Communities.Where(c => communitiesIdsFound.Contains(c.CommunityId)).ToList();
 
                 searchViewModel.Result =
                     from r in communitiesFound
@@ -72,7 +73,7 @@ namespace Bnh.Web.Controllers
 
         public ActionResult RebuildIndex()
         {
-            this.Searcher.RebuildIndex();
+            this.searcher.RebuildIndex();
 
             return this.JavaScript("alert('done')");
         }

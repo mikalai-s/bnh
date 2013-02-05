@@ -4,17 +4,18 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using Bnh.Core;
+using Cms.Core;
 
-namespace Bnh.Web.Controllers
+namespace Bnh.Controllers
 {
     [Authorize(Roles = "content_manager")]
     public class AdminController : Controller
     {
-        IEntityRepositories Entities { get; set; }
+        IRepositories cms { get; set; }
 
-        public AdminController(IEntityRepositories entities)
+        public AdminController(IRepositories cms)
         {
-            this.Entities = entities;
+            this.cms = cms;
         }
 
         //
@@ -27,7 +28,7 @@ namespace Bnh.Web.Controllers
 
         public ActionResult FeedbackReport()
         {
-            return View(this.Entities.Feedback.OrderBy(c => c.Created));
+            return View(this.cms.Feedback.OrderBy(c => c.Created));
         }
     }
 }

@@ -1,6 +1,6 @@
 ﻿using System.Web.Mvc;
 
-namespace Bnh.Cms
+namespace Cms
 {
     public class CmsAreaRegistration : AreaRegistration
     {

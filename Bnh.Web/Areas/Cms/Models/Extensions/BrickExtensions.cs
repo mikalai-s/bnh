@@ -2,8 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using Cms.Core;
 
-namespace Bnh.Cms.Models
+namespace Cms.Models
 {
     public static class BrickExtensions
     {
@@ -13,16 +14,16 @@ namespace Bnh.Cms.Models
         /// </summary>
         /// <param name="brick"></param>
         /// <returns></returns>
-        public static BrickContent GetContent(this Brick brick, CmsEntities db)
+        public static BrickContent GetContent(this Brick brick, IRepositories repos)
         {
-            var list = db.BrickContents.ToList();
-            var content = db.BrickContents.FirstOrDefault(c => c.BrickContentId == brick.BrickContentId);
+            var list = repos.BrickContents.ToList();
+            var content = repos.BrickContents.FirstOrDefault(c => c.BrickContentId == brick.BrickContentId);
             if (content != null)
             {
                 var linkableContent = content as LinkableContent;
                 if (linkableContent != null)
                 {
-                    content = db.BrickContents.FirstOrDefault(c => c.BrickContentId == linkableContent.LinkedContentId);
+                    content = repos.BrickContents.FirstOrDefault(c => c.BrickContentId == linkableContent.LinkedContentId);
                 }
             }
             return content ?? new EmptyContent();

@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using MongoDB.Bson.Serialization.Attributes;
 using MongoDB.Bson;
 
-namespace Bnh.Cms.Models
+namespace Cms.Models
 {
     public class Scene
     {

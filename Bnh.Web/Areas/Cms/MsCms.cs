@@ -2,13 +2,13 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
-using Bnh.Cms.Models;
-using Bnh.Cms.Models.Utilities;
+using Cms.Models;
+using Cms.Models.Utilities;
 using System.Web.Mvc;
 using MongoDB.Bson;
 using MongoDB.Bson.Serialization;
 
-namespace Bnh.Cms
+namespace Cms
 {
     public static class MsCms
     {
@@ -47,6 +47,8 @@ namespace Bnh.Cms
             yield return new BrickRegistration { Type = typeof(RazorContent), Title = "Razor Template", View = "" };
             yield return new BrickRegistration { Type = typeof(MapContent), Title = "Map", View = "" };
             yield return new BrickRegistration { Type = typeof(GalleryContent), Title = "Gallery", View = "" };
+            yield return new BrickRegistration { Type = typeof(ReviewsContent), Title = "Reviews", View = "" };
+            yield return new BrickRegistration { Type = typeof(TabsContent), Title = "Tabs", View = "" };
             yield return new BrickRegistration { Type = typeof(EmptyContent), Title = "Empty", View = "" };
             yield return new BrickRegistration { Type = typeof(LinkableContent), Title = "Linkable", View = "" };
             yield return new BrickRegistration { Type = typeof(TocContent), Title = "Table of Content", View = "" };
@@ -56,11 +58,5 @@ namespace Bnh.Cms
                 yield return externalBrick;
             }
         }
-
-        
     }
-
-    
-
-
 }

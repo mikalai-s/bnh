@@ -6,7 +6,7 @@ using System.Web.Mvc;
 using System.Web.Security;
 using Microsoft.Web.Helpers;
 
-namespace Bnh.Web.Models
+namespace Bnh.Models
 {
     public class AccountModel
     {

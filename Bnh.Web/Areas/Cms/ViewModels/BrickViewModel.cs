@@ -2,25 +2,52 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
-using Bnh.Cms.Models;
+using Cms.Core;
+using Cms.Models;
 using Newtonsoft.Json;
 
-namespace Bnh.Cms.ViewModels
+namespace Cms.ViewModels
 {
-    public class BrickViewModel
+    public interface IBrickViewModel<out T> where T : BrickContent
     {
-        public string Title { get; set; }
+        string Title { get; }
 
-        public float Width { get; set; }
+        float Width { get; }
 
-        public string BrickContentId { get; set; }
+        string BrickContentId { get; }
 
-        public BrickContent Content { get; set; }
+        T Content { get; }
+
+        string WidthString { get; }
+
+        string ToJson();
+    }
+
+    public class BrickViewModel<T> : IBrickViewModel<T> where T : BrickContent
+    {
+        protected ViewModelContext Context { get; private set; }
+
+        public string Title { get; private set; }
+
+        public float Width { get; private set; }
+
+        public string BrickContentId { get; private set; }
+
+        public T Content { get; private set; }
 
         public string WidthString
         {
             get { return this.Width.ToString("F") + "%"; }
         }
+
+        public BrickViewModel(ViewModelContext context, string title, float width, string brickContentId, T content)
+        {
+            this.Title = title;
+            this.Width = width;
+            this.BrickContentId = brickContentId;
+            this.Content = content;
+        }
+
 
         public string ToJson()
         {
@@ -29,6 +56,29 @@ namespace Bnh.Cms.ViewModels
             properties["width"] = this.Width;
             properties["brickcontentid"] = this.BrickContentId;
             return JsonConvert.SerializeObject(properties);
+        }
+
+        internal static IBrickViewModel<BrickContent> Create(ViewModelContext context, Brick brick)
+        {
+            var content = brick.GetContent(context.Repos);
+            if (content is ReviewsContent)
+            {
+                return (IBrickViewModel<BrickContent>)new ReviewsBrickViewModel(context, brick.Title, brick.Width, brick.BrickContentId, (ReviewsContent)content);
+            }
+            else
+            {
+                var viewModelType = typeof(BrickViewModel<>).MakeGenericType(content.GetType());
+
+                return (IBrickViewModel<BrickContent>)Activator.CreateInstance(viewModelType, context, brick.Title, brick.Width, brick.BrickContentId, content);
+            }
+        }
+
+        public static IBrickViewModel<BrickContent> Prototype
+        {
+            get
+            {
+                return new BrickViewModel<BrickContent>(null, string.Empty, 100.0F, string.Empty, null);
+            }
         }
     }
 }

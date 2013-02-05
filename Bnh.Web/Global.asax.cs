@@ -11,12 +11,14 @@ using System.Web.Optimization;
 using System.Web.Routing;
 using Autofac;
 using Autofac.Integration.Mvc;
-using Bnh.Cms;
-using Bnh.Cms.Models.Utilities;
+using Cms.Models.Utilities;
 using Bnh.Core;
 using Bnh.Infrastructure.WebSecurity;
+using Cms;
+using Cms.Helpers;
+using Cms.Core;
 
-namespace Bnh.Web
+namespace Bnh
 {
     // Note: For instructions on enabling IIS6 or IIS7 classic mode, 
     // visit http://go.microsoft.com/?LinkId=9394801
@@ -89,14 +91,14 @@ namespace Bnh.Web
 
             ModelBinders.Binders.DefaultBinder = new BnhModelBinder();
 
-            Bnh.Web.Controllers.InitData.Init();
+            Bnh.Controllers.InitData.Init();
 
             RegisterExternalLoginServices();
         }
 
         private void RegisterExternalLoginServices()
         {
-            var config = this.container.Resolve<Config>();
+            var config = this.container.Resolve<IConfig>();
             if (config.Authentification == null)
             {
                 return;
@@ -112,10 +114,9 @@ namespace Bnh.Web
         {
             var builder = new ContainerBuilder();
             builder.RegisterModule<Bnh.Infrastructure.AutofacModule>();
-            builder.RegisterModule<Bnh.Web.AutofacModule>();
-            builder.RegisterModule<Bnh.Cms.AutofacModule>();
+            builder.RegisterModule<Cms.AutofacModule>();
             builder.RegisterControllers(typeof(MvcApplication).Assembly);
-            builder.RegisterControllers(typeof(Bnh.Cms.AutofacModule).Assembly);
+            builder.RegisterControllers(typeof(Cms.AutofacModule).Assembly);
             this.container = builder.Build();
             DependencyResolver.SetResolver(new AutofacDependencyResolver(this.container));
         }

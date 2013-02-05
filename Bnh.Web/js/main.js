@@ -1,32 +1,4 @@
-﻿/// <reference path="libs/twitter/bootstrapx-clickover.js" />
-require.config({
-    paths: {
-        jquery: 'libs/jquery/jquery-1.9.0.min' // '//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min'
-        , knockout: 'libs/knockout/knockout-2.2.1'
-        , async: 'libs/require/async'
-        , jqui: 'libs/jquery/jquery-ui-1.10.0.custom'
-        , json: 'libs/json2/json2'
-        , tinymce: 'libs/tiny_mce/tiny_mce'
-        , text: 'libs/require/text.min'
-        , debug: 'libs/debug/ba-debug.min'
-        , twitter: 'libs/twitter/bootstrap'
-        , twitteroverrides: 'libs/twitter/overrides'
-        , galleria: 'libs/galleria/galleria-1.2.9'
-    },
-    shim: {
-        twitter: {
-            deps: ["jquery"]
-        },
-        twitteroverrides: {
-            deps: ["twitter"]
-        },
-        galleria: {
-            deps: ["jquery"]
-        }
-    }
-    //urlArgs: "bust=" + (new Date()).getTime()
-});
-
+﻿
 var gmapsUrl = 'http://maps.google.com/maps/api/js?v=3&sensor=false';
 //var gmapsUrl = 'http://maps.googleapis.com/maps/api/js?key=AIzaSyBXgUOTPfgbS4kHE7fm_xr2za_O1ApA_TM&sensor=false';
 
@@ -41,7 +13,7 @@ define(
 define(
     'gmaps-drawing',
     ['async!' + gmapsUrl + '&libraries=drawing'],
-    function () {
+    function () { 
         // return the gmaps namespace for brevity
         return window.google.maps;
     });

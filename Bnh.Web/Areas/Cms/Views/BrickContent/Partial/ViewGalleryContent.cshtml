@@ -1,15 +1,15 @@
-﻿@model GalleryContent
+﻿@model BrickViewModel<GalleryContent>
 
 @{
     this.GetScriptBundle().Include(new[]
     {
-        "~/Areas/Cms/Scripts/brick-content-gallery.js"
+        "~/Areas/Cms/Scripts/view-gallery-content.js"
     });
 
-    var images = (Model.Images == null) ? Enumerable.Empty<string>() : Model.Images;
+    var images = (Model.Content.Images == null) ? Enumerable.Empty<string>() : Model.Content.Images;
 }
 
-<div class="galleria" style="width: 100%; height: @(Model.Height)px">
+<div class="galleria" style="width: 100%; height: @(Model.Content.Height)px">
     @foreach(var image in images)
     {
         <img src="@image" />

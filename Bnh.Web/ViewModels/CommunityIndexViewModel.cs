@@ -3,10 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using Cms.ViewModels;
 using Bnh.Core;
 using Bnh.Core.Entities;
+using Cms.Core;
 
-namespace Bnh.Web.ViewModels
+namespace Bnh.ViewModels
 {
     public class CommunityIndexViewModel : PageViewModel
     {

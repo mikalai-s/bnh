@@ -26,6 +26,13 @@
                 @Html.EditorFor(model => model.IsTitleUsedInToC) @Html.LabelFor(model => model.IsTitleUsedInToC)
             </label>
 
+            @if(ViewBag.TabsAvailable != null)
+            {
+                @Html.DropDownList("tabs", ViewBag.TabsAvailable as IEnumerable<SelectListItem>, "No Tab Assigned", new { @class = "tabs-available", onchange = "var v = JSON.parse(this.value || '{}');$('#TabId').val(v.id);$('#TabIndex').val(v.index)"})
+                @Html.HiddenFor(b => b.TabId)
+                @Html.HiddenFor(b => b.TabIndex)
+            }
+
             @if (File.Exists(Server.MapPath(view)))
             {
                 @Html.Partial(view, Model)

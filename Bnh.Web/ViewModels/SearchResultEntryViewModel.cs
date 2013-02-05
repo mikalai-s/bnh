@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace Bnh.Web.ViewModels
+namespace Bnh.ViewModels
 {
     public class SearchResultEntryViewModel
     {

@@ -5,31 +5,32 @@ using System.Web;
 using System.Web.Mvc;
 using Bnh.Core;
 using Bnh.Core.Entities;
-using Bnh.Web.Models;
-using Bnh.Web.ViewModels;
-using Bnh.Cms.Controllers;
-using Bnh.Cms.Models;
+using Bnh.Models;
+using Bnh.ViewModels;
+using Cms.Controllers;
+using Cms.Models;
 using System.Web.Mvc.Html;
-using Bnh.Web.Helpers;
+using Bnh.Helpers;
 using System.Collections.Generic;
+using Cms.ViewModels;
+using Cms.Core;
+using Cms.Infrastructure;
 
 namespace Bnh.Controllers
 {
     public class CommunityController : Controller
     {
-        private Config config = null;
-        private IEntityRepositories repositories = null;
+        private IBnhConfig config = null;
+        private IBnhRepositories repos = null;
         private IRatingCalculator rating = null;
-        private CmsEntities cms = null;
         private HtmlHelper htmlHelper = null;
         private SceneController sceneController = null;
 
-        public CommunityController(Config config, IEntityRepositories repositories, IRatingCalculator rating, CmsEntities cms, SceneController sceneController)
+        public CommunityController(IBnhConfig config, IBnhRepositories repos, IRatingCalculator rating, SceneController sceneController)
         {
             this.config = config;
-            this.repositories = repositories;
+            this.repos = repos;
             this.rating = rating;
-            this.cms = cms;
             this.sceneController = sceneController;
         }
 
@@ -44,21 +45,26 @@ namespace Bnh.Controllers
         // GET: /Community/
         public ViewResult Index()
         {
-            var city = this.repositories.Cities.First(c => c.Name == config.City);
-            var communities = this.repositories.Communities.Where(c => c.CityId == city.CityId);
+            var city = this.repos.Cities.First(c => c.Name == config.City);
+            var communities = this.repos.Communities.Where(c => c.CityId == city.CityId);
             var model = new CommunityIndexViewModel(GetViewModelContext(), city.Zones, communities, this.rating);
             return View(model);
         }
 
         private ViewModelContext GetViewModelContext()
         {
-            return new ViewModelContext(this);
+            return new ViewModelContext(this, this.config, this.repos);
         }
-      
 
-        public ViewResult Details(string id)
+
+        public ActionResult Details(string id)
         {
             var community = GetCommunity(id);
+            if (this.repos.IsValidId(id))
+            {
+                return RedirectToAction("Details", new { id = community.UrlId });
+            }
+
             return View(community);
         }
 
@@ -67,13 +73,13 @@ namespace Bnh.Controllers
         [DesignerAuthorize]
         public ActionResult Create()
         {
-            ViewBag.CityZones = new SelectList(this.repositories.Cities.First(c => c.Name == config.City).Zones);
-            var sceneTemplates = from s in cms.Scenes
+            ViewBag.CityZones = new SelectList(this.repos.Cities.First(c => c.Name == config.City).Zones);
+            var sceneTemplates = from s in this.repos.Scenes
                                     where s.IsTemplate
                                     select new { id = s.SceneId, title = s.Title };
             ViewBag.Templates = new SelectList(new[] { new { id = string.Empty, title = string.Empty } }.Union(sceneTemplates), "id", "title");
 
-            var city = this.repositories.Cities.First(c => c.Name == config.City);
+            var city = this.repos.Cities.First(c => c.Name == config.City);
             ViewBag.CityZones = new SelectList(city.Zones);
             ViewBag.CityId = city.CityId;
             return View();
@@ -88,7 +94,7 @@ namespace Bnh.Controllers
         {
             if (ModelState.IsValid)
             {
-                this.repositories.Communities.Insert(community);
+                this.repos.Communities.Insert(community);
 
                 var templateSceneId = this.Request.Form["templateSceneId"];
                 if (!string.IsNullOrEmpty(templateSceneId))
@@ -98,7 +104,7 @@ namespace Bnh.Controllers
                 return RedirectToAction("Edit", new { id = community.UrlId });
             }
 
-            ViewBag.CityZones = new SelectList(this.repositories.Cities.First(c => c.Name == config.City).Zones, community.Zone);
+            ViewBag.CityZones = new SelectList(this.repos.Cities.First(c => c.Name == config.City).Zones, community.Zone);
             return View(community);
         }
         
@@ -108,7 +114,7 @@ namespace Bnh.Controllers
         public ActionResult Edit(string id)
         {
             var community = GetCommunity(id);
-            ViewBag.CityZones = new SelectList(this.repositories.Cities.First(c => c.Name == config.City).Zones, community.Zone);
+            ViewBag.CityZones = new SelectList(this.repos.Cities.First(c => c.Name == config.City).Zones, community.Zone);
             return View(community);
         }
 
@@ -121,11 +127,11 @@ namespace Bnh.Controllers
         {
             if (ModelState.IsValid)
             {
-                this.repositories.Communities.Save(community);
+                this.repos.Communities.Save(community);
                 
                 return RedirectToAction("Details", new { id = community.UrlId });
             }
-            ViewBag.CityZones = new SelectList(this.repositories.Cities.First(c => c.Name == config.City).Zones, community.Zone);
+            ViewBag.CityZones = new SelectList(this.repos.Cities.First(c => c.Name == config.City).Zones, community.Zone);
             return View(community);
         }
 
@@ -143,7 +149,7 @@ namespace Bnh.Controllers
         [DesignerAuthorize]
         public ActionResult Delete(string id)
         {
-            var community = this.repositories.Communities.Single(c => c.CommunityId == id);
+            var community = this.repos.Communities.Single(c => c.CommunityId == id);
             return View(community);
         }
 
@@ -154,36 +160,21 @@ namespace Bnh.Controllers
         [DesignerAuthorize]
         public ActionResult DeleteConfirmed(string id)
         {            
-            this.repositories.Communities.Delete(id);
+            this.repos.Communities.Delete(id);
             return RedirectToAction("Index");
         }
 
-        [SinglePage(Module="views/review-index")]
-        public ActionResult Reviews(string id, int page = 1, int size = int.MaxValue)
+        private Community GetCommunity(string id)
         {
-            if (page < 1)
-                return HttpNotFound();
-
-            var community = GetCommunity(id);
-
-            var total = this.repositories.Reviews.Where(r => r.TargetId == community.CommunityId).Count();
-            var pager = new Pager<Review>(page - 1, size, total, this.repositories.Reviews.Where(r => r.TargetId == community.CommunityId).OrderBy(r => r.Created));
-
-            if (page > pager.NumberOfPages)
-                return HttpNotFound();
-
-            // prepare information about all participants
-            var participants = pager.PageItems.SelectMany(r => r.GetParticipants()).Distinct().ToList();
-            var profiles = this.repositories.Profiles.Where(p => participants.Contains(p.UserName)).ToList();
-
-            return View(new ReviewsViewModel(
-                GetViewModelContext(),
-                this.rating.GetTargetRating(community.CommunityId), 
-                id,
-                community.Name,
-                this.config.Review.Questions,
-                pager,
-                profiles));
+            if (this.repos.IsValidId(id))
+            {
+                return this.repos.Communities.Single(c => c.CommunityId == id);
+            }
+            else
+            {
+                id = id.ToLower();
+                return this.repos.Communities.Single(c => c.UrlId.ToLower() == id);
+            }
         }
 
         [HttpGet]
@@ -206,52 +197,8 @@ namespace Bnh.Controllers
             review.UserName = User.Identity.Name;
             review.Message = review.Message.IsEmpty() ? string.Empty : Encoding.FromBase64(review.Message);
             review.Created = DateTime.Now.ToUniversalTime();
-            this.repositories.Reviews.Insert(review);
-            return Redirect(Url.Action("Reviews", new { id = this.RouteData.Values["id"] }) + "#" + review.ReviewId);
-        }
-
-        [HttpDelete]
-        [DesignerAuthorize]
-        public ActionResult DeleteReview(string reviewId)
-        {
-            this.repositories.Reviews.Delete(reviewId);
-            return Json(null);
-        }
-
-        [HttpDelete]
-        [DesignerAuthorize]
-        public ActionResult DeleteReviewComment(string reviewId, string commentId)
-        {
-            this.repositories.Reviews.DeleteReviewComment(reviewId, commentId);
-            return Json(null);
-        }
-
-        [HttpPost]
-        [AjaxAuthorize]
-        public ActionResult PostReviewComment(string reviewId, string message)
-        {
-            var comment = new Comment
-            {
-                Created = DateTime.UtcNow,
-                UserName = this.User.Identity.Name,
-                Message = message
-            };
-            this.repositories.Reviews.AddReviewComment(reviewId, comment);
-            return Json(new CommentViewModel(comment, this.repositories));
-        }
-
-
-        private Community GetCommunity(string id)
-        {
-            if (this.repositories.IsValidId(id))
-            {
-                return this.repositories.Communities.Single(c => c.CommunityId == id);
-            }
-            else
-            {
-                id = id.ToLower();
-                return this.repositories.Communities.Single(c => c.UrlId.ToLower() == id);
-            }
+            this.repos.Reviews.Insert(review);
+            return Redirect(Url.Action("Details", new { id = this.RouteData.Values["id"] })/* + "#" + review.ReviewId*/);
         }
 
         protected override void Dispose(bool disposing)

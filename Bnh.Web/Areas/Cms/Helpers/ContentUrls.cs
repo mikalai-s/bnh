@@ -3,13 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
-namespace Bnh.Cms
+namespace Cms.Helpers
 {
     public static class ContentUrl
     {
         public static class Scripts
         {
-            public const string EditHtmlBrick = "~/Areas/Cms/Scripts/edit-html-brick.js";
+            public const string EditHtmlBrick = "~/Areas/Cms/Scripts/edit-html-content.js";
 
             public const string DesignScene = "~/Areas/Cms/Scripts/design-scene.js";
         }

@@ -2,16 +2,18 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using Cms.Core;
+using Cms.Helpers;
 using MongoDB.Bson;
 using MongoDB.Driver.Builders;
 
-namespace Bnh.Cms.Models
+namespace Cms.Models
 {
     public static class BrickContentExtensions
     {
-        public static string GetSceneId(this BrickContent content, CmsEntities cms)
+        public static string GetSceneId(this BrickContent content, IRepositories repos)
         {
-            return cms.Scenes.Collection
+            return repos.Scenes.Collection
                 .Find(Query.EQ("Walls.Bricks.BrickContentId", ObjectId.Parse(content.BrickContentId)))
                 .Select(c => c.SceneId)
                 .First();

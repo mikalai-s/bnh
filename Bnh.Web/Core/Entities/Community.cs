@@ -3,10 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Bnh.Core.Entities.Attributes;
+using Cms.Models;
 
 namespace Bnh.Core.Entities
 {
-    public class Community
+    public class Community : IMappable, IReviewable
     {
         public string CommunityId { get; set; }
 
@@ -73,5 +74,10 @@ namespace Bnh.Core.Entities
 
         [ExternalProperty]
         public string Schools { get; set; }
+
+        public string ReviewableTargetId
+        {
+            get { return this.CommunityId; }
+        }
     }
 }

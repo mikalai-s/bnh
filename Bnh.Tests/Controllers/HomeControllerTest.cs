@@ -4,16 +4,15 @@ using System.Linq;
 using System.Text;
 using System.Web.Mvc;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Bnh.Web;
-using Bnh.Web.Controllers;
-using Bnh.Cms.Models;
+using Bnh.Controllers;
+
 using MongoDB.Bson.Serialization;
 using MongoDB.Driver.Builders;
 using MongoDB.Bson;
 using MongoDB.Driver;
 using Bnh.Controllers;
 using System.Web.Script.Serialization;
-using Bnh.Infrastructure.Repositories;
+
 
 namespace Bnh.Tests.Controllers
 {/*

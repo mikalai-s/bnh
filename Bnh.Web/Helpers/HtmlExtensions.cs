@@ -22,17 +22,6 @@ namespace Bnh
             lastFormNumKey = new object();
         }
 
-        public static MvcHtmlString Avatar(this HtmlHelper html, string userName, int size = 64)
-        {
-            return new MvcHtmlString(Gravatar.GetUrl(userName, size) + "&d=identicon");
-        }
-
-        public static MvcHtmlString Rating(this HtmlHelper html, int rating)
-        {
-            var format = "<div class='scale l' style='width:{0}px'></div><div class='scale r' style='width:{1}px'></div>";
-            return new MvcHtmlString(string.Format(format, rating * 10, 100 - rating * 10));
-        }
-
         public static MvcHtmlString ActionMenuItem(this HtmlHelper htmlHelper, string linkText, string actionName, string controllerName, object attributes = null)
         {
             var tag = new TagBuilder("li");
@@ -122,22 +111,6 @@ namespace Bnh
             int num = (obj2 != null) ? (((int)obj2) + 1) : 0;
             items[lastFormNumKey] = num;
             return num;
-        }
-
-        /// <summary>
-        /// Creates rating stars HTML, where rating is in percents
-        /// </summary>
-        /// <param name="helper"></param>
-        /// <param name="rating"></param>
-        /// <returns></returns>
-        public static MvcHtmlString RatingStars(this HtmlHelper helper, double? rating)
-        {
-            if (rating.HasValue)
-            {
-                return new MvcHtmlString("<div class='scale'><div class='l' style='width:{0}%'></div></div>".FormatWith(rating * 100));
-            }
-
-            return new MvcHtmlString("Not rated");
         }
     }
 }

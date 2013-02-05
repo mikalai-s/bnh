@@ -3,18 +3,19 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using Cms.Models;
 using Bnh.Core;
 using Bnh.Core.Entities;
 
-namespace Bnh.Web.Controllers
+namespace Bnh.Controllers
 {
     public class HomeController : Controller
     {
-        IEntityRepositories Entities { get; set; }
+        IBnhRepositories repos { get; set; }
 
-        public HomeController(IEntityRepositories entities)
+        public HomeController(IBnhRepositories repos)
         {
-            this.Entities = entities;
+            this.repos = repos;
         }
 
         public ActionResult Index()
@@ -43,7 +44,7 @@ namespace Bnh.Web.Controllers
         {
             if(!message.IsEmpty())
             {
-                this.Entities.Feedback.Insert(new Comment
+                this.repos.Feedback.Insert(new Comment
                 {
                     Created = DateTime.UtcNow,
                     Message = message,

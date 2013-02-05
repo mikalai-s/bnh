@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using Bnh.Core;
+using Cms.Core;
 
 namespace Bnh.Infrastructure
 {
