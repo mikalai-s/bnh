@@ -25,21 +25,16 @@
                     , galleria: 'libs/galleria/galleria-1.2.9'
             },
             shim: {
-                twitter: {
-                    deps: ["jquery"]
-                },
-                twitteroverrides: {
-                    deps: ["twitter"]
-                },
-                galleria: {
-                    deps: ["jquery"]
-                }
+                jqui: { deps: ["jquery"] },
+                twitter: { deps: ["jquery"] },
+                twitteroverrides: { deps: ["twitter"] },
+                galleria: { deps: ["jquery"] }
             }
             //urlArgs: "bust=" + (new Date()).getTime()
         };
     </script>
-    <script src="~/js/libs/modernizr/modernizr-2.6.2.js"></script>
     <script src="~/js/libs/require/require.js" data-main="@Url.Content("~/js/main")"></script>
+    <script src="~/js/libs/modernizr/modernizr-2.6.2.js"></script>
 </head>
 <body>
 

@@ -17,8 +17,6 @@ namespace Bnh.ViewModels
 
         public string DetailsUrl { get; private set; }
 
-        public string ReviewsUrl { get; private set; }
-
         public string Name { get; private set; }
 
         public string UrlId { get; private set; }
@@ -35,7 +33,6 @@ namespace Bnh.ViewModels
         {
             this.DeleteUrl = context.UrlHelper.Action("Delete", "Community", new { id = community.UrlId });
             this.DetailsUrl = context.UrlHelper.Action("Details", "Community", new { id = community.UrlId });
-            this.ReviewsUrl = context.UrlHelper.Action("Reviews", "Community", new { id = community.UrlId });
             this.Name = community.Name;
             this.UrlId = community.UrlId;
             this.GpsBounds = community.GpsBounds;
@@ -47,10 +44,9 @@ namespace Bnh.ViewModels
                     p => p.Property.GetValue(community, null)
                 );
 
-            this.PopupHtml = "<div><a href='{1}'>{2}</a></div><div>{0}</div><div><a href='{3}'>{4}</a></div>".FormatWith(
+            this.PopupHtml = "<div><a href='{1}'>{2}</a></div><div>{0}</div>".FormatWith(
                 context.HtmlHelper.RatingStars(context.RatingCalculator.GetTargetRating(community.CommunityId)),
-                this.DetailsUrl, this.Name,
-                this.ReviewsUrl, "Reviews");
+                this.DetailsUrl, this.Name);
         }
     }
 }

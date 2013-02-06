@@ -21,7 +21,8 @@ namespace Cms.ViewModels
             var reviewable = context.ViewBag.GlobalModel as IReviewable;
             if (reviewable == null)
             {
-                BigStars = new MvcHtmlString("Not rated yet");
+                this.BigStars = new MvcHtmlString("Not rated yet");
+                this.Ratings = Enumerable.Empty<RatingQuestionViewModel>();
                 return;
             }
 

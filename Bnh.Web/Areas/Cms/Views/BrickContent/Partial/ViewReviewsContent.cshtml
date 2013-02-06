@@ -69,7 +69,7 @@
                 </div>
             </section>
             <section>
-                <a href="#" class="btn addCommentLink" data-bind="visible: !addCommentVisible(), click: onAddComment">Add comment</a>
+                <a href="#" class="addCommentLink" data-bind="visible: !addCommentVisible(), click: onAddComment">Add comment</a>
             </section>
             <section class="addCommentSection" data-bind="slideVisible: addCommentVisible">
                 <textarea data-bind="attr: { id: 'textarea_' + reviewId }, tinymce: newComment, tinymceOptions : { initTrigger: tinyMceInitTrigger, encoding: 'xml', theme: 'simple', forced_root_block: false }"></textarea>
