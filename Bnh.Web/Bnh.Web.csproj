@@ -267,6 +267,7 @@
     <Compile Include="Areas\Cms\Helpers\BnhModelBinder.cs" />
     <Compile Include="Areas\Cms\Helpers\ContentUrls.cs" />
     <Compile Include="Controllers\AdminController.cs" />
+    <Compile Include="Controllers\InfoController.cs" />
     <Compile Include="Controllers\SearchController.cs" />
     <Compile Include="Areas\Cms\Core\IConfig.cs" />
     <Compile Include="Core\BnhConfig.cs" />
