@@ -352,6 +352,21 @@
     <Content Include="App_Readme\Elmah.txt" />
     <Content Include="css\jquery-ui-1.10.0.custom.css" />
     <Content Include="css\jquery-ui-1.10.0.custom.min.css" />
+    <Content Include="css\royalslider.css" />
+    <Content Include="css\royalslider\blank.gif" />
+    <Content Include="css\royalslider\grab.png" />
+    <Content Include="css\royalslider\grabbing.png" />
+    <Content Include="css\royalslider\royalslider.css" />
+    <Content Include="css\royalslider\skins\preloader-white.gif" />
+    <Content Include="css\royalslider\skins\preloader.gif" />
+    <Content Include="css\royalslider\skins\rs-default-inverted.css" />
+    <Content Include="css\royalslider\skins\rs-default-inverted.png" />
+    <Content Include="css\royalslider\skins\rs-default.css" />
+    <Content Include="css\royalslider\skins\rs-default.png" />
+    <Content Include="css\royalslider\skins\rs-minimal-white.css" />
+    <Content Include="css\royalslider\skins\rs-minimal-white.png" />
+    <Content Include="css\royalslider\skins\rs-universal.css" />
+    <Content Include="css\royalslider\skins\rs-universal.png" />
     <Content Include="css\styles.css" />
     <Content Include="img\feedback.gif" />
     <Content Include="img\glyphicons-halflings-white.png" />
@@ -375,8 +390,23 @@
     <Content Include="js\community-index.js" />
     <Content Include="js\libs\jquery\jquery-ui-1.10.0.custom.js" />
     <Content Include="js\libs\jquery\jquery-ui-1.10.0.custom.min.js" />
+    <Content Include="js\libs\jquery\jquery.easing-1.3.js" />
     <Content Include="js\libs\knockout\knockout-postbox.js" />
     <Content Include="js\libs\knockout\knockout-postbox.min.js" />
+    <Content Include="js\libs\royalslider\jquery.royalslider.js" />
+    <Content Include="js\libs\royalslider\modules\jquery.rs.active-class.js" />
+    <Content Include="js\libs\royalslider\modules\jquery.rs.animated-blocks.js" />
+    <Content Include="js\libs\royalslider\modules\jquery.rs.auto-height.js" />
+    <Content Include="js\libs\royalslider\modules\jquery.rs.autoplay.js" />
+    <Content Include="js\libs\royalslider\modules\jquery.rs.bullets.js" />
+    <Content Include="js\libs\royalslider\modules\jquery.rs.deeplinking.js" />
+    <Content Include="js\libs\royalslider\modules\jquery.rs.fullscreen.js" />
+    <Content Include="js\libs\royalslider\modules\jquery.rs.global-caption.js" />
+    <Content Include="js\libs\royalslider\modules\jquery.rs.nav-auto-hide.js" />
+    <Content Include="js\libs\royalslider\modules\jquery.rs.tabs.js" />
+    <Content Include="js\libs\royalslider\modules\jquery.rs.thumbnails.js" />
+    <Content Include="js\libs\royalslider\modules\jquery.rs.video.js" />
+    <Content Include="js\libs\royalslider\modules\jquery.rs.visible-nearby.js" />
     <Content Include="js\libs\twitter\bootstrap.js" />
     <Content Include="js\libs\twitter\bootstrap.min.js" />
     <Content Include="js\community-edit.js" />
@@ -696,39 +726,18 @@
     <Content Include="Areas\Cms\Views\BrickContent\Partial\ViewTabsContent.cshtml" />
     <Content Include="Areas\Cms\Views\BrickContent\Partial\EditTabsContent.cshtml" />
     <Content Include="Areas\Cms\Views\BrickContent\Partial\ViewRatingContent.cshtml" />
-    <None Include="js\libs\jquery\jquery-1.9.0.intellisense.js" />
-    <Content Include="js\libs\jquery\jquery-1.9.0.js" />
-    <Content Include="js\libs\jquery\jquery-1.9.0.min.js" />
     <Content Include="js\libs\knockout\knockout-2.2.1.debug.js" />
     <Content Include="js\libs\knockout\knockout-2.2.1.js" />
     <Content Include="js\libs\require\r.js" />
     <Content Include="js\libs\require\require.js" />
-    <Content Include="js\libs\galleria\galleria-1.2.9.js" />
-    <Content Include="js\libs\galleria\galleria-1.2.9.min.js" />
-    <Content Include="js\libs\galleria\plugins\flickr\flickr-demo.html" />
-    <Content Include="js\libs\galleria\plugins\flickr\flickr-loader.gif" />
-    <Content Include="js\libs\galleria\plugins\flickr\galleria.flickr.js" />
-    <Content Include="js\libs\galleria\plugins\flickr\galleria.flickr.min.js" />
-    <Content Include="js\libs\galleria\plugins\flickr\loader.gif" />
-    <Content Include="js\libs\galleria\plugins\history\galleria.history.js" />
-    <Content Include="js\libs\galleria\plugins\history\galleria.history.min.js" />
-    <Content Include="js\libs\galleria\plugins\history\history-demo.html" />
-    <Content Include="js\libs\galleria\plugins\picasa\galleria.picasa.js" />
-    <Content Include="js\libs\galleria\plugins\picasa\galleria.picasa.min.js" />
-    <Content Include="js\libs\galleria\plugins\picasa\loader.gif" />
-    <Content Include="js\libs\galleria\plugins\picasa\picasa-demo.html" />
-    <Content Include="js\libs\galleria\themes\classic\classic-demo.html" />
-    <Content Include="js\libs\galleria\themes\classic\classic-loader.gif" />
-    <Content Include="js\libs\galleria\themes\classic\classic-map.png" />
-    <Content Include="js\libs\galleria\themes\classic\galleria.classic.css" />
-    <Content Include="js\libs\galleria\themes\classic\galleria.classic.js" />
-    <Content Include="js\libs\galleria\themes\classic\galleria.classic.min.js" />
+    <None Include="js\libs\jquery\jquery-1.9.1.intellisense.js" />
+    <Content Include="js\libs\jquery\jquery-1.9.1.js" />
+    <Content Include="js\libs\jquery\jquery-1.9.1.min.js" />
     <Content Include="Views\Search\Index.cshtml" />
     <Content Include="Views\Home\Feedback.cshtml" />
     <Content Include="Views\Admin\Index.cshtml" />
     <Content Include="Views\Admin\FeedbackReport.cshtml" />
-    <Content Include="js\libs\jquery\jquery-1.9.0.min.map" />
-    <Content Include="js\libs\galleria\LICENSE" />
+    <Content Include="js\libs\jquery\jquery-1.9.1.min.map" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="config.json" />
@@ -797,7 +806,9 @@
     <Content Include="Views\Account\_SetPasswordPartial.cshtml" />
     <Content Include="Views\Account\ExternalLoginConfirmation.cshtml" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Scripts\" />
+  </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
   </ItemGroup>

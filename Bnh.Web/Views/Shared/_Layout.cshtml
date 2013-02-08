@@ -12,7 +12,7 @@
     <script>
         var require = {
             paths: {
-                jquery: 'libs/jquery/jquery-1.9.0' // '//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min'
+                jquery: 'libs/jquery/jquery-1.9.1' // '//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min'
                     , knockout: 'libs/knockout/knockout-2.2.1'
                     , async: 'libs/require/async'
                     , jqui: 'libs/jquery/jquery-ui-1.10.0.custom'
@@ -22,13 +22,14 @@
                     , debug: 'libs/debug/ba-debug.min'
                     , twitter: 'libs/twitter/bootstrap'
                     , twitteroverrides: 'libs/twitter/overrides'
-                    , galleria: 'libs/galleria/galleria-1.2.9'
+                    , rs: 'libs/royalslider/jquery.royalslider'
             },
             shim: {
                 jqui: { deps: ["jquery"] },
                 twitter: { deps: ["jquery"] },
                 twitteroverrides: { deps: ["twitter"] },
-                galleria: { deps: ["jquery"] }
+                galleria: { deps: ["jquery"] },
+                rs: { deps: ["jquery"] }
             }
             //urlArgs: "bust=" + (new Date()).getTime()
         };
