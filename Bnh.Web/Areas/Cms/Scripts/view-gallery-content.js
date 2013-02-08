@@ -55,7 +55,7 @@
                     controlNavigation: 'thumbnails',
                     fullscreen: {
                         enabled: true,
-                        native: true
+                        nativeFS: true
                     },
                     thumbs: {
                         appendSpan: true,
