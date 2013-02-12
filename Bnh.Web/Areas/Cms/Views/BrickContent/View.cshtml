@@ -2,7 +2,7 @@
 
 @if (Model.Content != null && Model.Content.IsTitleVisible)
 {
-    <div class="brick-title">@Model.Content.ContentTitle</div>
+    <div class="brick-title"><span>@Model.Content.ContentTitle</span><hr /></div>
 }
 
 @Html.Partial(Model.Content.GetBrickView(this.Server), Model)
