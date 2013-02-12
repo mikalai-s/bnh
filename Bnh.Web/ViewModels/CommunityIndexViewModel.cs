@@ -14,7 +14,7 @@ namespace Bnh.ViewModels
     {
         public IDictionary<string, IEnumerable<CommunityViewModel>> Zones { get; set; }
 
-        public CommunityIndexViewModel(ViewModelContext context, IEnumerable<string> zones, IEnumerable<Community> communities, IRatingCalculator ratingCalculator)
+        public CommunityIndexViewModel(ViewModelContext context, IEnumerable<string> zones, IEnumerable<Community> communities)
         {
             var grouped = from zone in zones
                           join community in communities on zone equals community.Zone into groups

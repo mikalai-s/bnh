@@ -47,7 +47,7 @@ namespace Bnh.Controllers
         {
             var city = this.repos.Cities.First(c => c.Name == config.City);
             var communities = this.repos.Communities.Where(c => c.CityId == city.CityId);
-            var model = new CommunityIndexViewModel(GetViewModelContext(), city.Zones, communities, this.rating);
+            var model = new CommunityIndexViewModel(GetViewModelContext(), city.Zones, communities);
             return View(model);
         }
 
