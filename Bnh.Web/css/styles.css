@@ -60,6 +60,8 @@ footer
 
 footer .copyright { text-align: center; font-size: 12px; border-top: solid 1px #D5D5D5;}
 footer .small-logo { background-image: url(/img/logo-inverse.png); height: 50px; background-repeat: no-repeat; margin-top: 20px; margin-left: 20px; }
+    footer address { margin-bottom: 10px; }
+    footer .row { margin-top: 5px; }
 
 
 /* right scenarios */
