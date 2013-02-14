@@ -29,7 +29,7 @@ namespace Bnh.ViewModels
 
         public string PopupHtml { get; private set; }
 
-        public CommunityViewModel(ViewModelContext context, Community community)
+        public CommunityViewModel(ViewModelContext context, Community community, double? rating)
         {
             this.DeleteUrl = context.UrlHelper.Action("Delete", "Community", new { id = community.UrlId });
             this.DetailsUrl = context.UrlHelper.Action("Details", "Community", new { id = community.UrlId });
@@ -45,7 +45,7 @@ namespace Bnh.ViewModels
                 );
 
             this.PopupHtml = "<div><a href='{1}'>{2}</a></div><div>{0}</div>".FormatWith(
-                context.HtmlHelper.RatingStars(context.RatingCalculator.GetTargetRating(community.CommunityId)),
+                context.HtmlHelper.RatingStars(rating),
                 this.DetailsUrl, this.Name);
         }
     }

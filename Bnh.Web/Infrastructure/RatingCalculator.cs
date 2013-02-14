@@ -7,6 +7,7 @@ using Bnh.Core.Entities;
 using Cms.Core;
 using Cms.Infrastructure;
 using MongoDB.Bson;
+using MongoDB.Driver;
 using MongoDB.Driver.Builders;
 
 namespace Bnh.Infrastructure
@@ -84,6 +85,19 @@ namespace Bnh.Infrastructure
                 public int count { get; set; }
                 public IDictionary<string, double?> ratings { get; set; }
             }
+        }
+
+
+        public IDictionary<string, double?> GetTargetRatingMap(IEnumerable<string> ids, string questionKey)
+        {
+            var r = this.repos.Reviews.Collection.Aggregate(
+                BsonDocument.Parse("{{$match:{{TargetId:{{$in:[{0}]}}}}}}".FormatWith(
+                    string.Join(",", ids.Select(id => "ObjectId('{0}')".FormatWith(id))))),
+                BsonDocument.Parse("{{ $group: {{_id:'$TargetId', rating: {{ $avg: '$Ratings.{0}'  }}}}}}".FormatWith(questionKey)));
+            return r.ResultDocuments
+                .ToDictionary(
+                    d => d["_id"].AsObjectId.ToString(),
+                    d => d["rating"].AsNullableDouble);
         }
     }
 }

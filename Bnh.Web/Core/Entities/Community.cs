@@ -79,5 +79,8 @@ namespace Bnh.Core.Entities
         {
             get { return this.CommunityId; }
         }
+
+        // this is for fast communities loading
+        public IDictionary<string, double?> Ratings { get; set; }
     }
 }

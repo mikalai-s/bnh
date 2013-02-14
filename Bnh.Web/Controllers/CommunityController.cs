@@ -198,6 +198,15 @@ namespace Bnh.Controllers
             review.Message = review.Message.IsEmpty() ? string.Empty : Encoding.FromBase64(review.Message);
             review.Created = DateTime.Now.ToUniversalTime();
             this.repos.Reviews.Insert(review);
+
+            // update community rating now
+            var comm = this.repos.Communities.Single(c => c.CommunityId == review.TargetId);
+            comm.Ratings = this.config.Review.Questions
+                .ToDictionary(
+                    q => q.Key,
+                    q => this.rating.GetTargetRatingMap(new[] { review.TargetId }, q.Key)[review.TargetId]);
+            this.repos.Communities.Save(comm);
+
             return Redirect(Url.Action("Details", new { id = this.RouteData.Values["id"] })/* + "#" + review.ReviewId*/);
         }
 

@@ -14,5 +14,7 @@ namespace Cms.Models
         /// Id of review target
         /// </summary>
         string ReviewableTargetId { get; }
+
+        IDictionary<string, double?> Ratings { get; set; }
     }
 }
