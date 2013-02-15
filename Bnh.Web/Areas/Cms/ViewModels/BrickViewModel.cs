@@ -68,9 +68,8 @@ namespace Cms.ViewModels
             return JsonConvert.SerializeObject(properties);
         }
 
-        internal static IBrickViewModel<BrickContent> Create(ViewModelContext context, Brick brick)
+        internal static IBrickViewModel<BrickContent> Create(ViewModelContext context, Brick brick, BrickContent content)
         {
-            var content = brick.GetContent(context.Repos);
             if (content is ReviewsContent)
             {
                 return (IBrickViewModel<BrickContent>)new ReviewsBrickViewModel(context, brick.Title, brick.Width, brick.BrickContentId, (ReviewsContent)content);
