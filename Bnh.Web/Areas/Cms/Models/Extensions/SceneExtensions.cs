@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Web;
 using Cms.Core;
@@ -11,6 +12,7 @@ namespace Cms.Models
     {
         public static SceneViewModel ToViewModel(this Scene scene, ViewModelContext context)
         {
+            var fetch = scene.Walls.SelectMany(w => w.Bricks).GetContentMap(context.Repos);
             return new SceneViewModel
             {
                 SceneId = scene.SceneId,
@@ -20,7 +22,7 @@ namespace Cms.Models
                 {
                     Title = wall.Title,
                     Width = wall.Width,
-                    Bricks = wall.Bricks.Select(brick => BrickViewModel<BrickContent>.Create(context, brick))
+                    Bricks = wall.Bricks.Select(brick => BrickViewModel<BrickContent>.Create(context, brick, fetch[brick]))
                 })
             };
         }

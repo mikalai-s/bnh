@@ -738,6 +738,7 @@
     <Content Include="Views\Admin\Index.cshtml" />
     <Content Include="Views\Admin\FeedbackReport.cshtml" />
     <Content Include="js\libs\jquery\jquery-1.9.1.min.map" />
+    <Content Include="Views\Admin\Message.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="config.json" />

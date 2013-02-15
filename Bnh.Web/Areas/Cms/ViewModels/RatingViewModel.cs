@@ -26,12 +26,13 @@ namespace Cms.ViewModels
                 return;
             }
 
+            var reviewableRatings = reviewable.Ratings ?? new Dictionary<string, double?>();
 
-            this.BigStars = new MvcHtmlString(context.HtmlHelper.RatingStars(context.RatingCalculator.GetTargetRating(reviewable.ReviewableTargetId)).ToString());
+            this.BigStars = new MvcHtmlString(context.HtmlHelper.RatingStars(reviewableRatings.Values.Average()).ToString());
 
-            var answers = context.Repos.Reviews.Where(r => r.TargetId == reviewable.ReviewableTargetId).Select(r => r.Ratings).ToList();
-            this.Ratings = from question in  context.Config.Review.Questions
-                           let answer = answers.Average(a => a[question.Key])
+            this.Ratings = from question in context.Config.Review.Questions
+                           where reviewableRatings.ContainsKey(question.Key)
+                           let answer = reviewableRatings[question.Key]
                            select new RatingQuestionViewModel
                                {
                                    Question = question.Value,
