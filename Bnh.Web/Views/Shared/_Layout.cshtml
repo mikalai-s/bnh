@@ -1,3 +1,8 @@
+@{
+    var config = Autofac.Integration.Mvc.AutofacDependencyResolver.Current.GetService<Bnh.Core.IBnhConfig>();
+    var isValidHost = config.IsValidHost(this.Context);
+}
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -65,10 +70,20 @@
 
     <div id="page" class="container">
 
-        <header>
+        @if(isValidHost)
+        {
+        <header class="banner">
             <h1 class="title">@Html.Raw(ViewBag.Title)</h1>
             <h4 class="description">@Html.Raw(ViewBag.Description)</h4>
         </header>
+        }
+        else
+        {
+        <header class="alert alert-error">
+            <h1 class="title">@Html.Raw(ViewBag.Title) (Wrong host!!!)</h1>
+            <h4 class="description">@Html.Raw(ViewBag.Description) (Wrong host!!!)</h4>
+        </header>
+        }
 
         <a href="#feedback-modal" data-toggle="modal" class="feedback alert alert-success rotate270" title="Leave a feedback...">
             <div class="feedback-icon"></div>
