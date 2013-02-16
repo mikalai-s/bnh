@@ -388,6 +388,7 @@
     <Content Include="img\stars-small.png" />
     <Content Include="js\account-login.js" />
     <Content Include="js\community-index.js" />
+    <Content Include="js\layout.js" />
     <Content Include="js\libs\jquery\jquery-ui-1.10.0.custom.js" />
     <Content Include="js\libs\jquery\jquery-ui-1.10.0.custom.min.js" />
     <Content Include="js\libs\jquery\jquery.easing-1.3.js" />
