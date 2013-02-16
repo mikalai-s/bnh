@@ -2,9 +2,10 @@
     ViewBag.Title = "Index";
 }
 
-<h2>Index</h2>
-
 <ul>
+    <li>
+        @Html.ActionLink("Info", "Info")
+    </li>
     <li>
         @Html.ActionLink("Feedback Report", "FeedbackReport")
     </li>
@@ -12,7 +13,3 @@
         @Html.ActionLink("Refresh Community Ratings", "RefreshRatings")
     </li>
 </ul>
-
-
-
-

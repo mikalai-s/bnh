@@ -31,7 +31,8 @@ _ReSharper*/
 SearchIndex
 
 config.debug.json
-config.release.json
+config.production.json
+config.staging.json
 
 packages/
 

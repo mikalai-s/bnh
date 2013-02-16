@@ -1,24 +1,26 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Web;
 using System.Web.Mvc;
 using Bnh.Core;
 using Cms.Core;
+using Cms.Infrastructure;
 using MongoDB.Bson;
 using MongoDB.Driver;
 using MongoDB.Driver.Builders;
 
 namespace Bnh.Controllers
 {
-    [Authorize(Roles = "content_manager")]
+    [DesignerAuthorizeAttribute]
     public class AdminController : Controller
     {
         readonly IRatingCalculator rating;
         readonly IBnhRepositories repos;
-        readonly IConfig config;
+        readonly IBnhConfig config;
 
-        public AdminController(IBnhRepositories repos, IRatingCalculator rating, IConfig config)
+        public AdminController(IBnhRepositories repos, IRatingCalculator rating, IBnhConfig config)
         {
             this.repos = repos;
             this.rating = rating;
@@ -82,6 +84,17 @@ namespace Bnh.Controllers
             }
 
             return View("Message", model: "Community ratings has been updated");
+        }
+
+        public ActionResult Info()
+        {
+            return View(new Dictionary<string, object>
+            {
+                { "Version", Assembly.GetExecutingAssembly().GetName().Version },
+                { "Host", this.HttpContext.Request.ServerVariables["HTTP_HOST"] },
+                { "Activator", BnhConfig.Activator },
+                { "Is Valid Host?", this.config.IsValidHost(this.HttpContext) }
+            });
         }
     }
 }

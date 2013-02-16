@@ -1,8 +1,4 @@
 ﻿{
-    connectionStrings: {
-        mongo: "mongodb://127.0.0.1/bnh?safe=true",
-        cms: "mongodb://127.0.0.1/bnh?safe=true"
-    },
     city: "Calgary",
     review: {
         questions: {
@@ -12,8 +8,8 @@
             "3": "Parks"
         }
     },
-	searchIndexFolder: "~\\SearchIndex",
-	roles: {
-		ContentManager: "content_manager"
-	}
+    searchIndexFolder: "~\\SearchIndex",
+    roles: {
+        ContentManager: "content_manager"
+    }
 }

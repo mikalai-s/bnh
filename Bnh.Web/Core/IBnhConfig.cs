@@ -9,5 +9,7 @@ namespace Bnh.Core
     public interface IBnhConfig : IConfig
     {
         string City { get; set; }
+
+        bool IsValidHost(HttpContextBase request);
     }
 }

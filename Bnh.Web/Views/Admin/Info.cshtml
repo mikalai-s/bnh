@@ -1,0 +1,17 @@
+﻿@model IDictionary<string, object>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Key</th>
+            <th>Value</th>
+        </tr>
+    </thead>
+    @foreach(var pair in Model)
+    {
+    <tr>
+        <td>@pair.Key</td>
+        <td>@pair.Value</td>
+    </tr>
+    }
+</table>
