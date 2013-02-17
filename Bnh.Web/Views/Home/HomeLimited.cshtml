@@ -1,0 +1,104 @@
+@using Bnh.Core
+
+@{
+    var config = Autofac.Integration.Mvc.AutofacDependencyResolver.Current.GetService<IBnhConfig>();
+    var isValidHost = config.IsValidHost(this.Context);
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <title>@ViewBag.Title - Brand New Homes</title>
+    <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+    <link href="~/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <link href="~/css/styles.css" rel="stylesheet" type="text/css" />
+    @*<meta name="viewport" content="width=device-width" />*@
+    <script src="~/js/libs/modernizr/modernizr-2.6.2.js"></script>
+</head>
+<body>
+
+    <div class="header navbar navbar-static-top">
+        <div class="navbar-inner">
+            <div class="container">
+                <div class="row">
+                    <div class="span4">
+                        <div class="logo"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="page" class="container">
+
+        @if(isValidHost)
+        {
+        <header class="banner">
+            <h1 class="title">@Html.Raw(ViewBag.Title)</h1>
+            <h4 class="description">@Html.Raw(ViewBag.Description)</h4>
+        </header>
+        }
+        else
+        {
+        <header class="alert alert-error">
+            <h1 class="title">@Html.Raw(ViewBag.Title) (Wrong host!!!)</h1>
+            <h4 class="description">@Html.Raw(ViewBag.Description) (Wrong host!!!)</h4>
+        </header>
+        }
+
+        <a href="#feedback-modal" data-toggle="modal" class="feedback alert alert-success rotate270" title="Leave a feedback...">
+            <div class="feedback-icon"></div>
+            feedback
+        </a>
+
+        <div class="row">
+            <div class="span12 hero-movie">
+                <iframe src="http://player.vimeo.com/video/51971595?title=0&amp;byline=0&amp;portrait=0&amp;autoplay=0" width="700" height="393" frameborder="0" webkitAllowFullScreen mozallowfullscreen allowFullScreen></iframe>
+            </div>
+        </div>
+        <div class="row">
+            <div class="span12 hero-movie" style="margin: 50px 0">
+                <span class="btn btn-danger" style="font-size: 18px; cursor: default;">Coming soon...</span>
+            </div>
+        </div>
+
+    </div>
+
+    <footer>
+        <div class="container">
+            <div class="row">
+                <div class="span12 center">
+                    <div class="inline">
+                        <div class="span3">
+                            <p>BrandNewHomes.ca is a first choice to start your new home search. New home buying process has a lot of choices - make the right one!</p>
+                        </div>
+                        <div class="span4">
+                            <div class="small-logo"></div>
+                        </div>
+                        <div class="span3">
+                            <div>
+                                <address>
+                                    E-mail: <a href="mailto:calgary@brandnewhomes.ca">calgary@brandnewhomes.ca</a>
+                                </address>
+                                <address>
+                                    Phone: +1 (403) 481-1111
+                                </address>
+                                <address>
+                                    Fax: +1 (403) 366-5995
+                                </address>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="span0"></div>
+                <div class="span12 copyright">Copyright © 2013 BrandNewHomes.ca All rights reserved.</div>
+            </div>
+        </div>
+    </footer>
+
+</body>
+</html>

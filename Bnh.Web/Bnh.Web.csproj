@@ -740,6 +740,7 @@
     <Content Include="js\libs\jquery\jquery-1.9.1.min.map" />
     <Content Include="Views\Admin\Message.cshtml" />
     <Content Include="Views\Admin\Info.cshtml" />
+    <Content Include="Views\Home\HomeLimited.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="config.json" />
