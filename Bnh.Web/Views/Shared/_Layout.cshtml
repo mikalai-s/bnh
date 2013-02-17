@@ -1,5 +1,7 @@
+@using Bnh.Core
+
 @{
-    var config = Autofac.Integration.Mvc.AutofacDependencyResolver.Current.GetService<Bnh.Core.IBnhConfig>();
+    var config = Autofac.Integration.Mvc.AutofacDependencyResolver.Current.GetService<IBnhConfig>();
     var isValidHost = config.IsValidHost(this.Context);
 }
 
@@ -28,15 +30,18 @@
                     , twitter: 'libs/twitter/bootstrap'
                     , twitteroverrides: 'libs/twitter/overrides'
                     , rs: 'libs/royalslider/jquery.royalslider'
-            },
-            shim: {
+            }
+            , shim: {
                 jqui: { deps: ["jquery"] },
                 twitter: { deps: ["jquery"] },
                 twitteroverrides: { deps: ["twitter"] },
                 galleria: { deps: ["jquery"] },
                 rs: { deps: ["jquery"] }
             }
-            //urlArgs: "bust=" + (new Date()).getTime()
+            @if(!BnhConfig.IsDebug)
+            {
+            @:, urlArgs: "v=@BnhConfig.Version"
+            }
         };
     </script>
     <script src="~/js/libs/require/require.js" data-main="@Url.Content("~/js/main")"></script>

@@ -90,7 +90,7 @@ namespace Bnh.Controllers
         {
             return View(new Dictionary<string, object>
             {
-                { "Version", Assembly.GetExecutingAssembly().GetName().Version },
+                { "Version", BnhConfig.Version },
                 { "Host", this.HttpContext.Request.ServerVariables["HTTP_HOST"] },
                 { "Activator", BnhConfig.Activator },
                 { "Is Valid Host?", this.config.IsValidHost(this.HttpContext) }
