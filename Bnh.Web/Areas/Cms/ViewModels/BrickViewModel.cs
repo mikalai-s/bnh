@@ -41,13 +41,19 @@ namespace Cms.ViewModels
             get { return this.Width.ToString("F") + "%"; }
         }
 
+        static Dictionary<Type, Type> ViewModelMap = new Dictionary<Type, Type>();
+
         static BrickViewModel()
         {
-            // TODO: make discionary of brick content and brick view model assignments
-            // to simplify Create() method below
             var types = System.Reflection.Assembly.GetExecutingAssembly().GetTypes().OrderBy(t => t.Name).ToList();
-            var contents = types.Where(t => t.IsAssignableFrom(typeof(BrickContent))).ToList();
-            var viewModels = types.Where(t => t.IsAssignableFrom(typeof(BrickViewModel<>))).ToList();
+            var contents = types.Where(t => typeof(BrickContent).IsAssignableFrom(t)).ToList();
+
+            foreach (var contentType in contents)
+            {
+                ViewModelMap[contentType] = 
+                    types.SingleOrDefault(t => t.Name == contentType.Name.TrimEnd("Content".ToCharArray()) + "ViewModel") ??
+                    typeof(BrickViewModel<>).MakeGenericType(contentType);
+            }
         }
 
         public BrickViewModel(ViewModelContext context, string title, float width, string brickContentId, T content)
@@ -70,20 +76,8 @@ namespace Cms.ViewModels
 
         internal static IBrickViewModel<BrickContent> Create(ViewModelContext context, Brick brick, BrickContent content)
         {
-            if (content is ReviewsContent)
-            {
-                return (IBrickViewModel<BrickContent>)new ReviewsBrickViewModel(context, brick.Title, brick.Width, brick.BrickContentId, (ReviewsContent)content);
-            }
-            else if (content is RatingContent)
-            {
-                return (IBrickViewModel<BrickContent>)new RatingViewModel(context, brick.Title, brick.Width, brick.BrickContentId, (RatingContent)content);
-            }
-            else
-            {
-                var viewModelType = typeof(BrickViewModel<>).MakeGenericType(content.GetType());
-
-                return (IBrickViewModel<BrickContent>)Activator.CreateInstance(viewModelType, context, brick.Title, brick.Width, brick.BrickContentId, content);
-            }
+            var viewModelType = ViewModelMap[content.GetType()];
+            return (IBrickViewModel<BrickContent>)Activator.CreateInstance(viewModelType, context, brick.Title, brick.Width, brick.BrickContentId, content);
         }
 
         public static IBrickViewModel<BrickContent> Prototype

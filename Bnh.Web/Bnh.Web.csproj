@@ -260,8 +260,9 @@
     <Compile Include="Areas\Cms\Models\Wall.cs" />
     <Compile Include="Areas\Cms\MsCms.cs" />
     <Compile Include="Areas\Cms\ViewModels\BrickViewModel.cs" />
+    <Compile Include="Areas\Cms\ViewModels\TocViewModel.cs" />
     <Compile Include="Areas\Cms\ViewModels\RatingViewModel.cs" />
-    <Compile Include="Areas\Cms\ViewModels\ReviewsBrickViewModel.cs" />
+    <Compile Include="Areas\Cms\ViewModels\ReviewsViewModel.cs" />
     <Compile Include="Areas\Cms\ViewModels\SceneViewModel.cs" />
     <Compile Include="Areas\Cms\ViewModels\WallViewModel.cs" />
     <Compile Include="Areas\Cms\Helpers\BnhModelBinder.cs" />
@@ -708,7 +709,6 @@
     <Compile Include="ViewModels\PageViewModel.cs" />
     <Compile Include="Areas\Cms\ViewModels\RatingQuestionViewModel.cs" />
     <Compile Include="Areas\Cms\ViewModels\ReviewViewModel.cs" />
-    <Compile Include="Areas\Cms\ViewModels\ReviewsViewModel.cs" />
     <Compile Include="Helpers\CommunityExtensions.cs" />
     <Compile Include="Areas\Cms\Helpers\DateTimeExtensions.cs" />
     <Compile Include="Helpers\Encoding.cs" />

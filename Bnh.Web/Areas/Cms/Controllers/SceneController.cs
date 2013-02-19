@@ -160,21 +160,7 @@ namespace Cms.Controllers
         {
             var scene = this.repos.Scenes.FirstOrDefault(s => s.SceneId == sceneId) ?? new Scene { SceneId = sceneId };
 
-            var bricks = scene.Walls
-                .SelectMany(w => w.Bricks)
-                .Select(b => b.BrickContentId)
-                .ToList();
-            var tocContents = this.repos.BrickContents
-                .Where(c => bricks.Contains(c.BrickContentId))
-                .Where(c => c.IsTitleUsedInToC)
-                .Where(c => !string.IsNullOrEmpty(c.ContentTitle))
-                .ToList()
-                .Where(c => c.GetType() != typeof(TocContent))
-                .OrderBy(c => bricks.IndexOf(c.BrickContentId))
-                .ToList();
-
             this.ViewBag.GlobalModel = model;
-            this.ViewBag.TocBricks = tocContents;
 
             return PartialView(ContentUrl.Views.Scene.View, scene.ToViewModel(GetViewModelContext()));
         }
