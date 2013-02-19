@@ -49,12 +49,11 @@ namespace Cms.Controllers
                 SaveScene(scene);
             }
 
-            this.ViewBag.TocBricks = Enumerable.Empty<BrickContent>();
-
             if (Request.IsAjaxRequest())
             {
                 // render real (saved) scene
-                return PartialView(ContentUrl.Views.Scene.Partial.DesignScene, repos.Scenes.First(s => s.SceneId == scene.SceneId).ToViewModel(GetViewModelContext()));
+                var sc = repos.Scenes.First(s => s.SceneId == scene.SceneId);
+                return PartialView(ContentUrl.Views.Scene.Partial.DesignScene, sc.ToViewModel(GetSceneViewModelContext(sc)));
             }
 
             return View(ContentUrl.Views.Scene.Partial.DesignScene);
@@ -63,6 +62,11 @@ namespace Cms.Controllers
         private ViewModelContext GetViewModelContext()
         {
             return new ViewModelContext(this, this.config, this.repos, this.rating);
+        }
+
+        private ViewModelContext GetSceneViewModelContext(Scene scene)
+        {
+            return new SceneViewModelContext(this, this.config, this.repos, this.rating, scene);
         }
 
         private void SaveScene(Scene scene, bool cloning = false)
@@ -130,7 +134,7 @@ namespace Cms.Controllers
             template.IsTemplate = false;
             SaveScene(template, true);
 
-            return PartialView(ContentUrl.Views.Scene.Partial.DesignScene, template.ToViewModel(GetViewModelContext()));
+            return PartialView(ContentUrl.Views.Scene.Partial.DesignScene, template.ToViewModel(GetSceneViewModelContext(template)));
         }
 
         [DesignerAuthorizeAttribute]
@@ -162,7 +166,7 @@ namespace Cms.Controllers
 
             this.ViewBag.GlobalModel = model;
 
-            return PartialView(ContentUrl.Views.Scene.View, scene.ToViewModel(GetViewModelContext()));
+            return PartialView(ContentUrl.Views.Scene.View, scene.ToViewModel(GetSceneViewModelContext(scene)));
         }
 
         [DesignerAuthorizeAttribute]
@@ -177,7 +181,7 @@ namespace Cms.Controllers
             this.ViewBag.Templates = new SelectList(templates, "id", "title");
             this.ViewBag.LinkableBricksSceneId = Constants.LinkableBricksSceneId;
 
-            return PartialView(ContentUrl.Views.Scene.Edit, scene.ToViewModel(GetViewModelContext()));
+            return PartialView(ContentUrl.Views.Scene.Edit, scene.ToViewModel(GetSceneViewModelContext(scene)));
         }
     }
 }
