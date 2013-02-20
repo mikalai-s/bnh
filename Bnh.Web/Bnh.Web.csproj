@@ -259,6 +259,7 @@
     <Compile Include="Areas\Cms\Models\Utilities\BrickRegistration.cs" />
     <Compile Include="Areas\Cms\Models\Wall.cs" />
     <Compile Include="Areas\Cms\MsCms.cs" />
+    <Compile Include="Areas\Cms\Utils\SceneUtils.cs" />
     <Compile Include="Areas\Cms\ViewModels\BrickViewModel.cs" />
     <Compile Include="Areas\Cms\ViewModels\SceneViewModelContext.cs" />
     <Compile Include="Areas\Cms\ViewModels\TocViewModel.cs" />

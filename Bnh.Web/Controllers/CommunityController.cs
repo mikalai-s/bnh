@@ -15,6 +15,7 @@ using System.Collections.Generic;
 using Cms.ViewModels;
 using Cms.Core;
 using Cms.Infrastructure;
+using Cms.Utils;
 
 namespace Bnh.Controllers
 {
@@ -99,7 +100,7 @@ namespace Bnh.Controllers
                 var templateSceneId = this.Request.Form["templateSceneId"];
                 if (!string.IsNullOrEmpty(templateSceneId))
                 {
-                    this.sceneController.ApplyTemplate(community.CommunityId, templateSceneId);
+                    SceneUtils.ApplyTemplate(this.repos, templateSceneId, community.CommunityId);
                 }
                 return RedirectToAction("Edit", new { id = community.UrlId });
             }
@@ -127,6 +128,7 @@ namespace Bnh.Controllers
         {
             if (ModelState.IsValid)
             {
+                community.Ratings = CalculateCommunityRating(community.CommunityId);
                 this.repos.Communities.Save(community);
                 
                 return RedirectToAction("Details", new { id = community.UrlId });
@@ -149,8 +151,7 @@ namespace Bnh.Controllers
         [DesignerAuthorize]
         public ActionResult Delete(string id)
         {
-            var community = this.repos.Communities.Single(c => c.CommunityId == id);
-            return View(community);
+            return View(GetCommunity(id));
         }
 
         //
@@ -159,8 +160,8 @@ namespace Bnh.Controllers
         [HttpPost, ActionName("Delete")]
         [DesignerAuthorize]
         public ActionResult DeleteConfirmed(string id)
-        {            
-            this.repos.Communities.Delete(id);
+        {
+            this.repos.Communities.Delete(GetCommunity(id).CommunityId);
             return RedirectToAction("Index");
         }
 
@@ -201,13 +202,18 @@ namespace Bnh.Controllers
 
             // update community rating now
             var comm = this.repos.Communities.Single(c => c.CommunityId == review.TargetId);
-            comm.Ratings = this.config.Review.Questions
-                .ToDictionary(
-                    q => q.Key,
-                    q => this.rating.GetTargetRatingMap(new[] { review.TargetId }, q.Key)[review.TargetId]);
+            comm.Ratings = CalculateCommunityRating(review.TargetId);
             this.repos.Communities.Save(comm);
 
             return Redirect(Url.Action("Details", new { id = this.RouteData.Values["id"] })/* + "#" + review.ReviewId*/);
+        }
+
+        private IDictionary<string, double?> CalculateCommunityRating(string communityId)
+        {
+            return this.config.Review.Questions
+                .ToDictionary(
+                    q => q.Key,
+                    q => this.rating.GetTargetRatingMap(new[] { communityId }, q.Key)[communityId]);
         }
 
         protected override void Dispose(bool disposing)
