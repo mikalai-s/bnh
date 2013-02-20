@@ -369,6 +369,7 @@
     <Content Include="css\royalslider\skins\rs-universal.css" />
     <Content Include="css\royalslider\skins\rs-universal.png" />
     <Content Include="css\styles.css" />
+    <Content Include="img\favicon.ico" />
     <Content Include="img\feedback.gif" />
     <Content Include="img\glyphicons-halflings-white.png" />
     <Content Include="img\glyphicons-halflings.png" />
@@ -745,7 +746,6 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="config.json" />
-    <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="Properties\PublishProfiles\bnh.pubxml.user" />
     <Content Include="config.debug.json">
