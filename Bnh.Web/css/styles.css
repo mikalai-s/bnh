@@ -8,7 +8,7 @@ body { font-family: "segoe ui", verdana, arial, sans-serif; overflow-y: scroll;}
 legend { font-size: 18px; padding-left: 10px; }
 
 
-.logo { width: 338px; height: 62px; background-image: url(/img/logo.png); }
+.logo { display: block; width: 338px; height: 62px; background-image: url(/img/logo.png); }
 
 .header .navbar-inner, footer .navbar-inner { height: 170px; border: none; -webkit-box-shadow: none; box-shadow: none; }
 
