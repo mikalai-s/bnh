@@ -13,7 +13,7 @@ namespace Cms.ViewModels
 
         public float Width { get; set; }
 
-        public IEnumerable<IBrickViewModel<BrickContent>> Bricks { get; set; }
+        public IEnumerable<IBrickViewModel<Brick>> Bricks { get; set; }
 
         public string WidthString
         {

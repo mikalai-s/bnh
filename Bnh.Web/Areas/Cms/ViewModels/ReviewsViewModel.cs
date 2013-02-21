@@ -9,7 +9,7 @@ using Cms.Helpers;
 
 namespace Cms.ViewModels
 {
-    public class ReviewsViewModel : BrickViewModel<ReviewsContent>
+    public class ReviewsViewModel : BrickViewModel<ReviewsBrick>
     {
         public IEnumerable<ReviewViewModel> Reviews { get; set; }
 
@@ -21,10 +21,10 @@ namespace Cms.ViewModels
 
         public string DeleteCommentUrl { get; set; }
 
-        public ReviewsViewModel(ViewModelContext context, string title, float width, string brickContentId, ReviewsContent content)
-            : base(context, title, width, brickContentId, content)
+        public ReviewsViewModel(ViewModelContext context, ReviewsBrick content)
+            : base(context, content)
         {
-            var reviewable = context.ViewBag.GlobalModel as IReviewable;
+            var reviewable = GetReviewable(context);
             if (reviewable == null)
             {
                 this.Reviews = Enumerable.Empty<ReviewViewModel>();
@@ -66,6 +66,13 @@ namespace Cms.ViewModels
                 this.DeleteReviewUrl = this.Admin ? context.UrlHelper.Action("DeleteReview", "Reviews") : null;
                 this.DeleteCommentUrl = this.Admin ? context.UrlHelper.Action("DeleteReviewComment", "Reviews") : null;
             }
+        }
+
+        private IReviewable GetReviewable(ViewModelContext context)
+        {
+            return (context == null)
+                ? null
+                : context.ViewBag.GlobalModel as IReviewable;
         }
     }
 }

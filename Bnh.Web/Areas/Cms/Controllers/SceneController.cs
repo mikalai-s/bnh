@@ -6,8 +6,7 @@ using System.Web.Mvc;
 
 using System.Configuration;
 
-using MongoDB.Driver.Linq;
-using MongoDB.Bson;
+
 using Cms.ViewModels;
 using Cms.Core;
 using Cms.Models;
@@ -43,11 +42,63 @@ namespace Cms.Controllers
 
         [DesignerAuthorizeAttribute]
         [HttpPost]
-        public ActionResult Save(Scene scene)
+        public ActionResult Save(SceneViewModel scene)
         {
             if (ModelState.IsValid)
             {
-                SceneUtils.SaveScene(this.repos, scene);
+                var originalSceneBricks = this.repos.Scenes
+                    .Where(s => s.SceneId == scene.SceneId)
+                    .ToList()
+                    .SelectMany(s => s.Walls)
+                    .SelectMany(w => w.Bricks)
+                    .ToDictionary(
+                        b => b.BrickId,
+                        b => b);
+
+                var sceneEntity = new Scene();
+                sceneEntity.SceneId = scene.SceneId;
+                sceneEntity.Title = scene.Title;
+                sceneEntity.IsTemplate = scene.IsTemplate;
+
+                var wallList = new List<Wall>();
+
+                foreach (var wall in scene.Walls)
+                {
+                    var wallEntity = new Wall();
+                    wallEntity.Title = wall.Title;
+                    wallEntity.Width = wall.Width;
+
+                    wallList.Add(wallEntity);
+
+                    var brickList = new List<Brick>();
+
+                    foreach (var brick in wall.Bricks)
+                    {
+                        Brick brickEntity = null;
+                        if (!brick.BrickId.IsEmpty() && originalSceneBricks.ContainsKey(brick.BrickId))
+                        {
+                            brickEntity = originalSceneBricks[brick.BrickId];
+                        }
+
+                        if (brickEntity == null)
+                        {
+                            var brickType = brick.GetType().GetGenericArguments()[0];
+                            brickEntity = (Brick)Activator.CreateInstance(MsCms.RegisteredBrickTypes.Single(b => b.Type == brickType).Type);
+                            brickEntity.BrickId = MongoDB.Bson.ObjectId.GenerateNewId().ToString();
+                        }
+
+                        brickEntity.Title = brick.Title;
+                        brickEntity.Width = brick.Width;
+
+                        brickList.Add(brickEntity);
+                    }
+
+                    wallEntity.Bricks = brickList;
+                }
+
+                sceneEntity.Walls = wallList;
+
+                this.repos.Scenes.Save(sceneEntity);
             }
 
             if (Request.IsAjaxRequest())
@@ -85,7 +136,7 @@ namespace Cms.Controllers
         [HttpPost]
         public ActionResult CanDeleteBrick(Brick brick)
         {
-            if (brick == null || string.IsNullOrEmpty(brick.BrickContentId))
+            if (brick == null || string.IsNullOrEmpty(brick.BrickId))
             {
                 return new JsonResult { Data = true };
             }
@@ -95,11 +146,7 @@ namespace Cms.Controllers
                 {
                     // because OfType() extension is not implemented in current MongoDd driver
                     // the query is a little bit weird
-                    Data = !repos.BrickContents
-                        .Where(b => b is LinkableContent)
-                        .Select(b => b as LinkableContent)
-                        .ToList()
-                        .Any(b => b.LinkedContentId == brick.BrickContentId)
+                    Data = repos.Scenes.CanDeleteBrick(brick.BrickId)
                 };
             }
         }

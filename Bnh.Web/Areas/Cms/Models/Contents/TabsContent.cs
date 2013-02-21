@@ -5,7 +5,7 @@ using System.Web;
 
 namespace Cms.Models
 {
-    public class TabsContent : BrickContent
+    public class TabsBrick : Brick
     {
         public string[] Tabs { get; set; }
 

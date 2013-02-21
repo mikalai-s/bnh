@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace Cms.Models
 {
-    public partial class MapContent : BrickContent
+    public partial class MapBrick : Brick
     {
         public string GpsLocation { get; set; }
 

@@ -1,19 +1,19 @@
-﻿@model GalleryContent
+﻿@model IBrickViewModel<GalleryBrick>
 
 @{
     this.GetScriptBundle().Include(new[]
     {
         "~/Areas/Cms/Scripts/edit-gallery-content.js"
     });
-    var images = (Model == null || Model.Images == null) ? new string[] { } : Model.Images;
+    var images = (Model == null || Model.Content.Images == null) ? new string[] { } : Model.Content.Images;
 }
 
 <div class="editor-label">
-    @Html.LabelFor(model => model.Height)
+    @Html.LabelFor(model => model.Content.Height)
 </div>
 <div class="editor-field">
-    @Html.EditorFor(model => model.Height)
-    @Html.ValidationMessageFor(model => model.Height)
+    @Html.EditorFor(model => model.Content.Height)
+    @Html.ValidationMessageFor(model => model.Content.Height)
 </div>
 
     <br />

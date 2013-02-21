@@ -10,10 +10,11 @@
     @foreach (var wall in Model.Walls ?? Enumerable.Empty<WallViewModel>())
     {
         <div class='wall-wrapper' style='width:@wall.WidthString'>
-        @foreach (var brick in wall.Bricks ?? Enumerable.Empty<IBrickViewModel<BrickContent>>())
+        @foreach (var brick in wall.Bricks ?? Enumerable.Empty<IBrickViewModel<Brick>>())
         {
-            <div id="@brick.Content.GetHtmlId()" class='brick-wrapper tabname_@brick.Content.OwnerTabName tabindex_@brick.Content.OwnerTabIndex' style='width:@brick.WidthString;display:@((!brick.Content.OwnerTabIndex.HasValue || brick.Content.OwnerTabIndex == 0) ? "block" : "none")'>
-                @Html.Partial(ContentUrl.Views.BrickContent.View, brick)
+            @*<div id="@brick.GetHtmlId()" class='brick-wrapper tabname_@brick.OwnerTabName tabindex_@brick.OwnerTabIndex' style='width:@brick.WidthString;display:@((!brick.OwnerTabIndex.HasValue || brick.OwnerTabIndex == 0) ? "block" : "none")'>*@
+            <div id="@brick.GetHtmlId()" class='brick-wrapper' style='width:@brick.WidthString'>
+                @Html.Partial(ContentUrl.Views.Brick.View, brick)
             </div>
         }
         </div>

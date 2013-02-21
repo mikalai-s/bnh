@@ -28,6 +28,8 @@ namespace Cms.Utils
 
         private static void SaveScene(IRepositories repos, Scene scene, bool cloning)
         {
+            throw new NotImplementedException();
+            /*
             // enumerate scene's existing brick contents to track deleted ones
             var existingSceneWalls = repos.Scenes
                 .Where(s => s.SceneId == scene.SceneId)
@@ -67,7 +69,7 @@ namespace Cms.Utils
                             .Where(br => br.Type.Name == brick.NewContentTypeName)
                             .Select(br => br.Type)
                             .First();
-                        var newContent = Activator.CreateInstance(contentType) as BrickContent;
+                        var newContent = Activator.CreateInstance(contentType) as Brick;
                         repos.BrickContents.Insert(newContent);
                         brick.BrickContentId = newContent.BrickContentId;
                     }
@@ -79,6 +81,7 @@ namespace Cms.Utils
 
             // delete removed bricks
             existingBricks.ForEach(repos.BrickContents.Delete);
+          * */
         }
     }
 }

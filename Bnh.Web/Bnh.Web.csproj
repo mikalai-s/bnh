@@ -231,12 +231,12 @@
   <ItemGroup>
     <Compile Include="Areas\Cms\AutofacModule.cs" />
     <Compile Include="Areas\Cms\CmsAreaRegistration.cs" />
-    <Compile Include="Areas\Cms\Controllers\BrickContentController.cs" />
+    <Compile Include="Areas\Cms\Controllers\BrickController.cs" />
     <Compile Include="Areas\Cms\Controllers\ReviewsController.cs" />
     <Compile Include="Areas\Cms\Controllers\SceneController.cs" />
     <Compile Include="Areas\Cms\Core\IRepositories.cs" />
+    <Compile Include="Areas\Cms\Infrastructure\SceneRepository.cs" />
     <Compile Include="Areas\Cms\Models\Brick.cs" />
-    <Compile Include="Areas\Cms\Models\Contents\BrickContent.cs" />
     <Compile Include="Areas\Cms\Infrastructure\Repositories.cs" />
     <Compile Include="Areas\Cms\Models\Constants.cs" />
     <Compile Include="Areas\Cms\Models\Contents\RatingContent.cs" />
@@ -244,8 +244,6 @@
     <Compile Include="Areas\Cms\Models\IMappable.cs" />
     <Compile Include="Areas\Cms\Models\IReviewable.cs" />
     <Compile Include="Areas\Cms\Models\Contents\ReviewsContent.cs" />
-    <Compile Include="Areas\Cms\Models\Contents\EmptyContent.cs" />
-    <Compile Include="Areas\Cms\Models\Extensions\BrickContentExtensions.cs" />
     <Compile Include="Areas\Cms\Models\Extensions\BrickExtensions.cs" />
     <Compile Include="Areas\Cms\Models\Extensions\SceneExtensions.cs" />
     <Compile Include="Areas\Cms\Models\Contents\GalleryContent.cs" />
@@ -726,13 +724,13 @@
     <Content Include="js\libs\modernizr\modernizr-2.6.2.js" />
     <Content Include="js\libs\json2\json2.js" />
     <Content Include="js\libs\json2\json2.min.js" />
-    <Content Include="Areas\Cms\Views\BrickContent\Partial\EditGalleryContent.cshtml" />
-    <Content Include="Areas\Cms\Views\BrickContent\Partial\ViewGalleryContent.cshtml" />
-    <Content Include="Areas\Cms\Views\BrickContent\Partial\EditReviewsContent.cshtml" />
-    <Content Include="Areas\Cms\Views\BrickContent\Partial\ViewReviewsContent.cshtml" />
-    <Content Include="Areas\Cms\Views\BrickContent\Partial\ViewTabsContent.cshtml" />
-    <Content Include="Areas\Cms\Views\BrickContent\Partial\EditTabsContent.cshtml" />
-    <Content Include="Areas\Cms\Views\BrickContent\Partial\ViewRatingContent.cshtml" />
+    <Content Include="Areas\Cms\Views\Brick\Partial\EditGalleryBrick.cshtml" />
+    <Content Include="Areas\Cms\Views\Brick\Partial\ViewGalleryBrick.cshtml" />
+    <Content Include="Areas\Cms\Views\Brick\Partial\EditReviewsBrick.cshtml" />
+    <Content Include="Areas\Cms\Views\Brick\Partial\ViewReviewsBrick.cshtml" />
+    <Content Include="Areas\Cms\Views\Brick\Partial\ViewTabsBrick.cshtml" />
+    <Content Include="Areas\Cms\Views\Brick\Partial\EditTabsBrick.cshtml" />
+    <Content Include="Areas\Cms\Views\Brick\Partial\ViewRatingBrick.cshtml" />
     <Content Include="js\libs\knockout\knockout-2.2.1.debug.js" />
     <Content Include="js\libs\knockout\knockout-2.2.1.js" />
     <Content Include="js\libs\require\r.js" />
@@ -763,17 +761,17 @@
     <Content Include="config.staging.json">
       <DependentUpon>config.json</DependentUpon>
     </Content>
-    <Content Include="Areas\Cms\Views\BrickContent\Edit.cshtml" />
-    <Content Include="Areas\Cms\Views\BrickContent\Partial\EditHtmlContent.cshtml" />
-    <Content Include="Areas\Cms\Views\BrickContent\Partial\EditLinkableContent.cshtml" />
-    <Content Include="Areas\Cms\Views\BrickContent\Partial\EditMapContent.cshtml" />
-    <Content Include="Areas\Cms\Views\BrickContent\Partial\EditRazorContent.cshtml" />
-    <Content Include="Areas\Cms\Views\BrickContent\Partial\ViewBrickContent.cshtml" />
-    <Content Include="Areas\Cms\Views\BrickContent\Partial\ViewHtmlContent.cshtml" />
-    <Content Include="Areas\Cms\Views\BrickContent\Partial\ViewMapContent.cshtml" />
-    <Content Include="Areas\Cms\Views\BrickContent\Partial\ViewRazorContent.cshtml" />
-    <Content Include="Areas\Cms\Views\BrickContent\Partial\ViewTocContent.cshtml" />
-    <Content Include="Areas\Cms\Views\BrickContent\View.cshtml" />
+    <Content Include="Areas\Cms\Views\Brick\Edit.cshtml" />
+    <Content Include="Areas\Cms\Views\Brick\Partial\EditHtmlBrick.cshtml" />
+    <Content Include="Areas\Cms\Views\Brick\Partial\EditLinkableBrick.cshtml" />
+    <Content Include="Areas\Cms\Views\Brick\Partial\EditMapBrick.cshtml" />
+    <Content Include="Areas\Cms\Views\Brick\Partial\EditRazorBrick.cshtml" />
+    <Content Include="Areas\Cms\Views\Brick\Partial\ViewBrick.cshtml" />
+    <Content Include="Areas\Cms\Views\Brick\Partial\ViewHtmlBrick.cshtml" />
+    <Content Include="Areas\Cms\Views\Brick\Partial\ViewMapBrick.cshtml" />
+    <Content Include="Areas\Cms\Views\Brick\Partial\ViewRazorBrick.cshtml" />
+    <Content Include="Areas\Cms\Views\Brick\Partial\ViewTocBrick.cshtml" />
+    <Content Include="Areas\Cms\Views\Brick\View.cshtml" />
     <Content Include="Areas\Cms\Views\Scene\Edit.cshtml" />
     <Content Include="Areas\Cms\Views\Scene\EditLinkable.cshtml" />
     <Content Include="Areas\Cms\Views\Scene\Partial\DesignBrick.cshtml" />

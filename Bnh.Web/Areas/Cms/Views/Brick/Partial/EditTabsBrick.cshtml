@@ -1,16 +1,16 @@
-﻿@model TabsContent
+﻿@model IBrickViewModel<TabsBrick>
 
 @{
     this.GetScriptBundle().Include(new[]
     {
         "~/Areas/Cms/Scripts/edit-tabs-content.js"
     });
-    var tabs = (Model == null || Model.Tabs == null) ? new string[] { } : Model.Tabs;
+    var tabs = (Model == null || Model.Content.Tabs == null) ? new string[] { } : Model.Content.Tabs;
 }
 
 
-    <label>@Html.LabelFor(model => model.TabName)</label>
-    @Html.EditorFor(model => model.TabName)
+    <label>@Html.LabelFor(model => model.Content.TabName)</label>
+    @Html.EditorFor(model => model.Content.TabName)
 
     @foreach (var tab in tabs)
     {

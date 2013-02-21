@@ -9,22 +9,17 @@ using MongoDB.Bson;
 
 namespace Cms.Models
 {
-    public partial class Brick
+    public class Brick
     {
+        [BsonRepresentation(BsonType.ObjectId), BsonId]
+        public string BrickId { get; set; }
+
         public string Title { get; set; }
 
         public float Width { get; set; }
 
-        [BsonRepresentation(BsonType.ObjectId)]
-        public string BrickContentId { get; set; }
+        public bool IsTitleUsedInToC { get; set; }
 
-
-        #region UI Specific Properties
-        // TODO: use viewmodel instead
-
-        [BsonIgnore]
-        public string NewContentTypeName { get; set; }
-
-        #endregion
+        public bool IsTitleVisible { get; set; }
     }
 }

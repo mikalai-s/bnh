@@ -9,16 +9,16 @@ using Cms.Helpers;
 
 namespace Cms.ViewModels
 {
-    public class RatingViewModel : BrickViewModel<RatingContent>
+    public class RatingViewModel : BrickViewModel<RatingBrick>
     {
         public MvcHtmlString BigStars { get; private set; }
 
         public IEnumerable<RatingQuestionViewModel> Ratings { get; private set; }
 
-        public RatingViewModel(ViewModelContext context, string title, float width, string brickContentId, RatingContent content)
-            : base(context, title, width, brickContentId, content)
+        public RatingViewModel(ViewModelContext context, RatingBrick brick)
+            : base(context, brick)
         {
-            var reviewable = context.ViewBag.GlobalModel as IReviewable;
+            var reviewable = GetReviewable(context);
             if (reviewable == null)
             {
                 this.BigStars = new MvcHtmlString("Not rated yet");
@@ -38,6 +38,13 @@ namespace Cms.ViewModels
                                    Question = question.Value,
                                    AnswerHtml = context.HtmlHelper.RatingStars(answer).ToString()
                                };
+        }
+
+        private IReviewable GetReviewable(ViewModelContext context)
+        {
+            return (context == null)
+                ? null
+                : context.ViewBag.GlobalModel as IReviewable;
         }
     }
 }

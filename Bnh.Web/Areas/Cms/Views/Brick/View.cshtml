@@ -1,0 +1,8 @@
+﻿@model IBrickViewModel<Brick>
+
+@if (Model.ShowTitle)
+{
+    <div class="brick-title"><span>@Model.Title</span><hr /></div>
+}
+
+@Html.Partial(Model.GetBrickView(this.Server), Model)

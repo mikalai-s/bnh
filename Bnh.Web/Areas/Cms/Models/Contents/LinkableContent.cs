@@ -6,10 +6,10 @@ using MongoDB.Bson.Serialization.Attributes;
 
 namespace Cms.Models
 {
-    public partial class LinkableContent : BrickContent
+    public partial class LinkableBrick : Brick
     {
         [BsonRepresentation(BsonType.ObjectId)]
-        public string LinkedContentId { get; set; }
+        public string LinkedBrickId { get; set; }
     }
     
 }

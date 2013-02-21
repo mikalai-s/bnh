@@ -1,0 +1,25 @@
+﻿@model BrickViewModel<MapBrick>
+
+<div class="editor-label">
+    @Html.LabelFor(model => model.Content.GpsLocation)
+</div>
+<div class="editor-field">
+    @Html.EditorFor(model => model.Content.GpsLocation)
+    @Html.ValidationMessageFor(model => model.Content.GpsLocation)
+</div>
+
+<div class="editor-label">
+    @Html.LabelFor(model => model.Content.Zoom)
+</div>
+<div class="editor-field">
+    @Html.EditorFor(model => model.Content.Zoom)
+    @Html.ValidationMessageFor(model => model.Content.Zoom)
+</div>
+
+<div class="editor-label">
+    @Html.LabelFor(model => model.Content.Height)
+</div>
+<div class="editor-field">
+    @Html.EditorFor(model => model.Content.Height)
+    @Html.ValidationMessageFor(model => model.Content.Height)
+</div>

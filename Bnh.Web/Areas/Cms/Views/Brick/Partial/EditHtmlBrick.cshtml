@@ -1,9 +1,9 @@
-﻿@model HtmlContent
+﻿@model IBrickViewModel<HtmlBrick>
 
 @{
     ViewBag.Title = "Edit";
     this.GetStyleBundle().Include(new[] { ContentUrl.Styles.DesignBrick });
-    this.GetScriptBundle().Include(new[]
+    this.GetScriptBundle().Include(new []
     {
         ContentUrl.Scripts.EditHtmlBrick
     });
@@ -11,5 +11,5 @@
 
 <div class="editor-label">Content</div>
 <div class="editor-field">
-    @Html.TextAreaFor(model => model.Html, new { id = "htmlTextArea"})
+    @Html.TextAreaFor(model => model.Content.Html, new { id = "htmlTextArea"})
 </div>
