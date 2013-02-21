@@ -36,8 +36,8 @@
 
 /*#region Brick Content */
 
-.brick-title { margin-top: 20px;}
-    .brick-title span { font-size: medium; padding-left: 15px; }
+.brick-title { margin-top: 20px; }
+    .brick-title span { font-size: 20px; padding-left: 15px;  }
     .brick-title hr { margin: 0; }
 
 /*#endregion */
