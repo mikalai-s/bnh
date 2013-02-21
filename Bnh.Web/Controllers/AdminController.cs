@@ -1,12 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Web;
 using System.Web.Mvc;
 using Bnh.Core;
+using Bnh.ViewModels;
 using Cms.Core;
 using Cms.Infrastructure;
+using Cms.ViewModels;
 using MongoDB.Bson;
 using MongoDB.Driver;
 using MongoDB.Driver.Builders;
@@ -19,12 +22,14 @@ namespace Bnh.Controllers
         readonly IRatingCalculator rating;
         readonly IBnhRepositories repos;
         readonly IBnhConfig config;
+        readonly IPathMapper pathMapper;
 
-        public AdminController(IBnhRepositories repos, IRatingCalculator rating, IBnhConfig config)
+        public AdminController(IBnhRepositories repos, IRatingCalculator rating, IBnhConfig config, IPathMapper pathMapper)
         {
             this.repos = repos;
             this.rating = rating;
             this.config = config;
+            this.pathMapper = pathMapper;
         }
 
         //
@@ -95,6 +100,50 @@ namespace Bnh.Controllers
                 { "Activator", BnhConfig.Activator },
                 { "Is Valid Host?", this.config.IsValidHost(this.HttpContext) }
             });
+        }
+
+        [HttpGet]
+        public ActionResult Files(string path)
+        {
+            path = path ?? string.Empty;
+
+            var uploadsFolderPath = this.pathMapper.Map(config.UploadsFolder);
+            var fullPath = Path.Combine(uploadsFolderPath, path);
+
+            // Check whether uploads folder exist
+            var uploadsFolder = this.pathMapper.Map(config.UploadsFolder);
+            if (!Directory.Exists(uploadsFolder))
+            {
+                Directory.CreateDirectory(uploadsFolder);
+            }
+
+            return View(new FilesViewModel(path, fullPath, config.UploadsFolder));
+        }
+
+        [HttpPost]
+        public ActionResult UploadFile(IEnumerable<HttpPostedFileBase> files, string path)
+        {
+            var uploadsFolder = this.pathMapper.Map(config.UploadsFolder);
+            foreach (var file in files.Where(f => f != null))
+            {
+                if (file.ContentLength > 0)
+                {
+                    var fileName = Path.GetFileName(file.FileName);
+                    var fullPath = Path.Combine(uploadsFolder, path ?? string.Empty, fileName);
+                    file.SaveAs(fullPath);
+                }
+            }
+            return RedirectToAction("Files", new { path });
+        }
+
+        [HttpPost]
+        public ActionResult CreateFolder(string folderName, string path)
+        {
+            var uploadsFolder = this.pathMapper.Map(config.UploadsFolder);
+            var folderPath = Path.Combine(uploadsFolder, path ?? string.Empty, folderName);
+            Directory.CreateDirectory(folderPath);
+
+            return RedirectToAction("Files", new { path });
         }
     }
 }

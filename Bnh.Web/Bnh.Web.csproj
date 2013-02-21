@@ -336,6 +336,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ViewModels\CommunityIndexViewModel.cs" />
     <Compile Include="ViewModels\CommunityViewModel.cs" />
+    <Compile Include="ViewModels\FilesViewModel.cs" />
     <Compile Include="ViewModels\FilterPropertyViewModel.cs" />
     <Compile Include="ViewModels\SearchResultEntryViewModel.cs" />
     <Compile Include="ViewModels\SearchViewModel.cs" />
@@ -744,6 +745,7 @@
     <Content Include="Views\Admin\Message.cshtml" />
     <Content Include="Views\Admin\Info.cshtml" />
     <Content Include="Views\Home\HomeLimited.cshtml" />
+    <Content Include="Views\Admin\Files.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="config.json" />
@@ -829,6 +831,7 @@
     <Content Include="Views\Shared\FilterPartial.cshtml" />
     <Content Include="Views\Community\EditScene.cshtml" />
   </ItemGroup>
+  <ItemGroup />
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>

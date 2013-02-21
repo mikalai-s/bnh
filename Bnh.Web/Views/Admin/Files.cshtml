@@ -1,0 +1,67 @@
+﻿@model FilesViewModel
+
+<div class="row">
+
+    <div class="span12">
+
+        <fieldset>
+            <legend>Folders</legend>
+            <ul>
+                @foreach (var folder in Model.Folders)
+                {
+                    <li>
+                        @Html.ActionLink(folder.Name, "Files", new { path = folder.Path })
+                    </li>
+                }
+            </ul>
+        </fieldset>
+
+        <fieldset>
+            <legend>Files</legend>
+            <ul>
+                @foreach (var file in Model.Files)
+                {
+                    <li>
+                        <a href="@Url.Content(file.Path)">@file.Name</a>
+                    </li>
+                }
+            </ul>
+        </fieldset>
+
+        <fieldset>
+            <legend>Actions</legend>
+
+            @using (Html.BeginForm("CreateFolder", "Admin", FormMethod.Post))
+            {
+                <input type="hidden" name="path" value="@Model.CurrentPath" />
+                <input type="text" name="folderName" />
+                <input type="submit" class="btn" value="Create Folder" />
+            }
+
+            @using (Html.BeginForm("UploadFile", "Admin", FormMethod.Post, new { enctype = "multipart/form-data" }))
+            {
+                <input type="hidden" name="path" value="@Model.CurrentPath" />
+                <ul>
+                    <li>
+                        <input type="file" name="files" />
+                    </li>
+                    <li>
+                        <input type="file" name="files" />
+                    </li>
+                    <li>
+                        <input type="file" name="files" />
+                    </li>
+                    <li>
+                        <input type="file" name="files" />
+                    </li>
+                    <li>
+                        <input type="file" name="files" />
+                    </li>
+                </ul>
+
+                <input type="submit" class="btn" value="Upload" />
+            }
+        </fieldset>
+
+    </div>
+</div>

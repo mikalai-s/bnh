@@ -16,6 +16,7 @@ namespace Bnh.Core
         public string City { get; set; }
         public ReviewConfig Review { get; set; }
         public string SearchIndexFolder { get; set; }
+        public string UploadsFolder { get; set; }
         public IDictionary<string, string> Roles { get; set; }
 
         /// <summary>
