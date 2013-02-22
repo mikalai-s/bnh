@@ -1,5 +1,9 @@
 ﻿@model FilesViewModel
 
+@{
+    ViewBag.Title = "Files";
+}
+
 <style>
     .table td { padding: 0; padding-left: 8px; vertical-align: middle; }
     .table .icon { width: 25px; }
@@ -7,6 +11,17 @@
 <div class="row">
 
     <div class="span12">
+
+        <ul class="breadcrumb">
+            @foreach (var crumb in Model.BreadCrumbs.Take(Model.BreadCrumbs.Length - 1))
+            {
+                <li>
+                    @Html.ActionLink(crumb.Name, "Files", new { path = crumb.Path })
+                    <span class="divider">/</span>
+                </li>
+            }
+            <li class="active">@Model.BreadCrumbs[Model.BreadCrumbs.Length - 1].Name</li>
+        </ul>
 
         @using (Html.BeginForm("DeleteFile", "Admin", FormMethod.Post))
         {
@@ -37,7 +52,9 @@
                                 @Html.ActionLink(file.Name, "Files", new { path = file.Path })
                                 }
                             </td>
-                            <td></td>
+                            <td>
+                                @file.Added
+                            </td>
                             <td>
                                 <input type="submit" onclick="return (confirm('Are you sure you want to delete the file?') && $('#file-name').val('@(file.Name)'))" class="btn btn-danger" value="Delete" />
                             </td>
