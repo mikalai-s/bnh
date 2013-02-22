@@ -15,6 +15,7 @@ using System.Web.WebPages;
 using System.Web.Optimization;
 using Cms.ViewModels;
 using Microsoft.Web.Helpers;
+using Bnh.Core;
 
 namespace Cms.Helpers
 {
@@ -118,7 +119,7 @@ namespace Cms.Helpers
             // define styles
             page.DefineSection("_MsCmsStyles", () =>
             {
-                page.Write(Styles.Render(page.GetStyleBundle().Distinct().ToArray()));
+                page.Write(Styles.Render(page.GetStyleBundle().Distinct().Select(s => "{0}?v={1}".FormatWith(s, BnhConfig.Version)).ToArray()));
             });
 
             // define scripts

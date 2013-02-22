@@ -95,6 +95,7 @@
     border: 1px solid black;
     background-color: white;
     padding: 10px;
+    overflow: auto;
 }
 
 .drop-target > .wall {

@@ -27,66 +27,66 @@
     </div>
 
     <div class="control-panel">
-        <div>
-            <h2>Scene Control Panel</h2>
+   
+        <h2>Scene Control Panel</h2>
 
-            <div style='@(linkableBricks ? "display:none" : "display:block")'>
-                <h4>Walls</h4>
-                <div class="fieldset">
-                    <div class="editor-label">New wall</div>
-                    <div class="editor-field">
-                        @Html.TextBox("wallTitle", null, new { @class = "small" })
-                        <input id="addWallButton" class="btn" type="button" value="Add Wall" />
-                    </div>
-                    <div class="editor-field">
-                        <label class="checkbox">@Html.CheckBox("lockWallsCheckbox")Lock walls</label>
-                    </div>
+        <div style='@(linkableBricks ? "display:none" : "display:block")'>
+            <h4>Walls</h4>
+            <div class="fieldset">
+                <div class="editor-label">New wall</div>
+                <div class="editor-field">
+                    @Html.TextBox("wallTitle", null, new { @class = "small" })
+                    <input id="addWallButton" class="btn" type="button" value="Add Wall" />
+                </div>
+                <div class="editor-field">
+                    <label class="checkbox">@Html.CheckBox("lockWallsCheckbox")Lock walls</label>
                 </div>
             </div>
-
-            <div>
-                <h4>Bricks</h4>
-                <div class="fieldset">
-                    <div class="editor-label">New brick</div>
-                    <div class="editor-field">
-                        @Html.DropDownListForBrickTypes("brickType")
-                        @Html.TextBox("brickTitle", null, new { @class = "small" })
-                        <input id="addBrickButton" class="btn" type="button" value="Add Brick" />
-                    </div>
-
-                    <div class="editor-field">
-                        <label class="checkbox">@Html.CheckBox("lockBricksCheckbox")Lock bricks</label>
-                    </div>
-                    <div class="editor-field">
-                        <label class="checkbox">@Html.CheckBox("hideBricksContentCheckbox")Hide bricks content</label>
-                    </div>
-
-                    @Html.ActionLink("Manage Linkable Bricks", "EditLinkable", "Scene")
-                </div>
-            </div>
-
-            <div>
-                <h4>Is Template?</h4>
-                <div class="fieldset">
-                    <div class="editor-field">
-                        <label class="checkbox">@Html.CheckBoxFor(model => model.IsTemplate)Use as template with title: </label>
-                        @Html.TextBoxFor(model => model.Title)
-                    </div>
-                </div>
-            </div>
-
-            <div>
-                <h4>Apply Template</h4>
-                <div class="fieldset">
-                    <div class="editor-field">
-                        @Html.DropDownList("templateSceneId", (SelectList)ViewBag.Templates)
-                        <input type="button" class="btn" id="applyTemplateButton" value="Apply Template" />
-                    </div>
-                </div>
-            </div>
-
-            <input type="button" class="btn btn-danger" id="saveSceneButton" value="Save" style='display: @(linkableBricks ? "display:none" : "display:block")' />
         </div>
+
+        <div>
+            <h4>Bricks</h4>
+            <div class="fieldset">
+                <div class="editor-label">New brick</div>
+                <div class="editor-field">
+                    @Html.DropDownListForBrickTypes("brickType")
+                    @Html.TextBox("brickTitle", null, new { @class = "small" })
+                    <input id="addBrickButton" class="btn" type="button" value="Add Brick" />
+                </div>
+
+                <div class="editor-field">
+                    <label class="checkbox">@Html.CheckBox("lockBricksCheckbox")Lock bricks</label>
+                </div>
+                <div class="editor-field">
+                    <label class="checkbox">@Html.CheckBox("hideBricksContentCheckbox")Hide bricks content</label>
+                </div>
+
+                @Html.ActionLink("Manage Linkable Bricks", "EditLinkable", "Scene")
+            </div>
+        </div>
+
+        <div>
+            <h4>Is Template?</h4>
+            <div class="fieldset">
+                <div class="editor-field">
+                    <label class="checkbox">@Html.CheckBoxFor(model => model.IsTemplate)Use as template with title: </label>
+                    @Html.TextBoxFor(model => model.Title)
+                </div>
+            </div>
+        </div>
+
+        <div>
+            <h4>Apply Template</h4>
+            <div class="fieldset">
+                <div class="editor-field">
+                    @Html.DropDownList("templateSceneId", (SelectList)ViewBag.Templates)
+                    <input type="button" class="btn" id="applyTemplateButton" value="Apply Template" />
+                </div>
+            </div>
+        </div>
+
+        <input type="button" class="btn btn-danger" id="saveSceneButton" value="Save" style='display: @(linkableBricks ? "display:none" : "display:block")' />
+  
     </div>
 
 </fieldset>
