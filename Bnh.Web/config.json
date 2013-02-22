@@ -8,8 +8,8 @@
             "3": "Parks"
         }
     },
-    searchIndexFolder: "~\\SearchIndex",
-    uploadsFolder: "~\\Uploads",
+    searchIndexFolder: "~\\Files\\SearchIndex",
+    uploadsFolder: "~\\Files\\Uploads",
     roles: {
         ContentManager: "content_manager"
     }
