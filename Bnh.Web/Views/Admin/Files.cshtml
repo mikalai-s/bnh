@@ -1,0 +1,103 @@
+﻿@model FilesViewModel
+
+@{
+    ViewBag.Title = "Files";
+}
+
+<style>
+    .table td { padding: 0; padding-left: 8px; vertical-align: middle; }
+    .table .icon { width: 25px; }
+</style>
+<div class="row">
+
+    <div class="span12">
+
+        <ul class="breadcrumb">
+            @foreach (var crumb in Model.BreadCrumbs.Take(Model.BreadCrumbs.Length - 1))
+            {
+                <li>
+                    @Html.ActionLink(crumb.Name, "Files", new { path = crumb.Path })
+                    <span class="divider">/</span>
+                </li>
+            }
+            <li class="active">@Model.BreadCrumbs[Model.BreadCrumbs.Length - 1].Name</li>
+        </ul>
+
+        @using (Html.BeginForm("DeleteFile", "Admin", FormMethod.Post))
+        {
+            <input type="hidden" name="path" value="@Model.CurrentPath" />
+            <input type="hidden" name="fileName" id="file-name" value="" />
+
+            <table class="table">
+                <thead>
+                    <th class="icon"></th>
+                    <th>Name</th>
+                    <th>Added</th>
+                    <th></th>
+                </thead>
+                <tbody>
+                    @foreach (var file in Model.Files)
+                    {
+                        <tr>
+                            <td class="icon">
+                                <img src="~/img/admin/@(file.IsFile ? "file" : "folder").png"/>
+                            </td>
+                            <td>
+                                @if(file.IsFile)
+                                {
+                                <a href="@Url.Content(file.Path)">@file.Name</a>
+                                }
+                                else
+                                {
+                                @Html.ActionLink(file.Name, "Files", new { path = file.Path })
+                                }
+                            </td>
+                            <td>
+                                @file.Added
+                            </td>
+                            <td>
+                                <input type="submit" onclick="return (confirm('Are you sure you want to delete the file?') && $('#file-name').val('@(file.Name)'))" class="btn btn-danger" value="Delete" />
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        }
+
+        <fieldset>
+            <legend>Actions</legend>
+
+            @using (Html.BeginForm("CreateFolder", "Admin", FormMethod.Post))
+            {
+                <input type="hidden" name="path" value="@Model.CurrentPath" />
+                <input type="text" name="folderName" />
+                <input type="submit" class="btn" value="Create Folder" />
+            }
+
+            @using (Html.BeginForm("UploadFile", "Admin", FormMethod.Post, new { enctype = "multipart/form-data" }))
+            {
+                <input type="hidden" name="path" value="@Model.CurrentPath" />
+                <ul>
+                    <li>
+                        <input type="file" name="files" />
+                    </li>
+                    <li>
+                        <input type="file" name="files" />
+                    </li>
+                    <li>
+                        <input type="file" name="files" />
+                    </li>
+                    <li>
+                        <input type="file" name="files" />
+                    </li>
+                    <li>
+                        <input type="file" name="files" />
+                    </li>
+                </ul>
+
+                <input type="submit" class="btn" value="Upload" />
+            }
+        </fieldset>
+
+    </div>
+</div>

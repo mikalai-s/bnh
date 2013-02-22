@@ -11,5 +11,7 @@ namespace Bnh.Core
         string City { get; set; }
 
         bool IsValidHost(HttpContextBase request);
+
+        string UploadsFolder { get; set; }
     }
 }

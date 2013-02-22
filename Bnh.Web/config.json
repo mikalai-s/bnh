@@ -9,6 +9,7 @@
         }
     },
     searchIndexFolder: "~\\SearchIndex",
+    uploadsFolder: "~\\Uploads",
     roles: {
         ContentManager: "content_manager"
     }
