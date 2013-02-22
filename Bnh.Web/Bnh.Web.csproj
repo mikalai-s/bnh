@@ -341,6 +341,7 @@
     <Compile Include="ViewModels\SearchResultEntryViewModel.cs" />
     <Compile Include="ViewModels\SearchViewModel.cs" />
     <Compile Include="Areas\Cms\ViewModels\ViewModelContext.cs" />
+    <Content Include="app_offline1.htm" />
     <Content Include="Areas\Cms\Scripts\view-tabs-content.js" />
     <Content Include="Areas\Cms\Scripts\view-map-content.js" />
     <Content Include="Areas\Cms\Scripts\view-gallery-content.js" />

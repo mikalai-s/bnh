@@ -1,21 +1,11 @@
-@using Bnh.Core
-
-@{
-    var config = Autofac.Integration.Mvc.AutofacDependencyResolver.Current.GetService<IBnhConfig>();
-    var isValidHost = config.IsValidHost(this.Context);
-    Layout = null;
-}
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
-    <title>@ViewBag.Title - Brand New Homes</title>
-    <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
-    <link href="~/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
-    <link href="~/css/styles.css" rel="stylesheet" type="text/css" />
-    @*<meta name="viewport" content="width=device-width" />*@
-    <script src="~/js/libs/modernizr/modernizr-2.6.2.js"></script>
+    <title>Offline - Brand New Homes</title>
+    <link href="img/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+    <link href="css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <link href="css/styles.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
 
@@ -24,7 +14,7 @@
             <div class="container">
                 <div class="row">
                     <div class="span4">
-                        <div class="logo"></div>
+                        <img src="img/logo.png" />
                     </div>
                 </div>
             </div>
@@ -33,30 +23,12 @@
 
     <div id="page" class="container">
 
-        @if(isValidHost)
-        {
         <header class="banner">
-            <h1 class="title">@Html.Raw(ViewBag.Title)</h1>
-            <h4 class="description">@Html.Raw(ViewBag.Description)</h4>
+            <h1 class="title">Offline</h1>
         </header>
-        }
-        else
-        {
-        <header class="alert alert-error">
-            <h1 class="title">@Html.Raw(ViewBag.Title) (Wrong host!!!)</h1>
-            <h4 class="description">@Html.Raw(ViewBag.Description) (Wrong host!!!)</h4>
-        </header>
-        }
 
-        <div class="row">
-            <div class="span12 hero-movie">
-                <iframe src="http://player.vimeo.com/video/51971595?title=0&amp;byline=0&amp;portrait=0&amp;autoplay=0" width="700" height="393" frameborder="0" webkitAllowFullScreen mozallowfullscreen allowFullScreen></iframe>
-            </div>
-        </div>
-        <div class="row">
-            <div class="span12 hero-movie" style="margin: 50px 0">
-                <span class="btn btn-danger uppercase" style="cursor: default;">Coming soon...</span>
-            </div>
+        <div class="hero-movie center">
+            <h4>Application is temporary anavailable due to maintenance. Sorry for inconvenience - come back later.</h4>
         </div>
 
     </div>
@@ -70,7 +42,7 @@
                             <p>BrandNewHomes.ca is a first choice to start your new home search. New home buying process has a lot of choices - make the right one!</p>
                         </div>
                         <div class="span4">
-                            <div class="small-logo"></div>
+                            <img src="img/logo-inverse.png" />
                         </div>
                         <div class="span3">
                             <div>
@@ -94,6 +66,5 @@
             </div>
         </div>
     </footer>
-
 </body>
 </html>
