@@ -10,8 +10,6 @@ namespace Bnh.ViewModels
     {
         public string CurrentPath { get; set; }
 
-        public IEnumerable<FileViewModel> Folders { get; set; }
-
         public IEnumerable<FileViewModel> Files { get; set; }
 
         public IEnumerable<FileViewModel> BreadCrumbs { get; set; }
@@ -22,33 +20,44 @@ namespace Bnh.ViewModels
 
             if (Directory.Exists(fullPath))
             {
-                Folders = Directory.GetDirectories(fullPath).Select(d =>
+                Files = EnumerateFolders(fullPath, relativePath).Union(EnumerateFiles(fullPath, relativePath, uploadsFolder));
+                //var bc = new List<FileViewModel>();
+                //var di = new DirectoryInfo(fullPath);
+                //while (true)
+                //{
+                //    di = di.Parent;
+                //    relativePath = Path.GetDirectoryName(relativePath);
+                //}
+                //BreadCrumbs = 
+            }
+        }
+
+        private IEnumerable<FileViewModel> EnumerateFolders(string fullPath, string relativePath)
+        {
+            return Directory.GetDirectories(fullPath).Select(d =>
                     {
                         var folderName = Path.GetFileName(d);
                         return new FileViewModel
                         {
+                            IsFile = false,
                             Name = folderName,
                             Path = Path.Combine(relativePath, folderName)
                         };
                     });
-                Files = Directory.GetFiles(fullPath).Select(f =>
+        }
+
+        private IEnumerable<FileViewModel> EnumerateFiles(string fullPath, string relativePath, string uploadsFolder)
+        {
+            return Directory.GetFiles(fullPath).Select(f =>
                 {
                     var fileName = Path.GetFileName(f);
                     return new FileViewModel
                     {
+                        IsFile = true,
                         Name = fileName,
                         Path = Path.Combine(uploadsFolder, relativePath, fileName)
                     };
                 });
-                var bc = new List<FileViewModel>();
-                var di = new DirectoryInfo(fullPath);
-                while (true)
-                {
-                    di = di.Parent;
-                    relativePath = Path.GetDirectoryName(relativePath);
-                }
-                //BreadCrumbs = 
-            }
         }
     }
 
@@ -57,5 +66,7 @@ namespace Bnh.ViewModels
         public string Name { get; set; }
 
         public string Path { get; set; }
+
+        public bool IsFile { get; set; }
     }
 }

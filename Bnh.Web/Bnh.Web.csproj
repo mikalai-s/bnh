@@ -371,6 +371,8 @@
     <Content Include="css\royalslider\skins\rs-universal.css" />
     <Content Include="css\royalslider\skins\rs-universal.png" />
     <Content Include="css\styles.css" />
+    <Content Include="img\admin\file.png" />
+    <Content Include="img\admin\folder.png" />
     <Content Include="img\favicon.ico" />
     <Content Include="img\feedback.gif" />
     <Content Include="img\glyphicons-halflings-white.png" />

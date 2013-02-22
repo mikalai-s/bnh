@@ -145,5 +145,25 @@ namespace Bnh.Controllers
 
             return RedirectToAction("Files", new { path });
         }
+
+        [HttpPost]
+        public ActionResult DeleteFile(string path, string fileName)
+        {
+            if (!fileName.IsEmpty())
+            {
+                var uploadsFolder = this.pathMapper.Map(config.UploadsFolder);
+                var filePath = Path.Combine(uploadsFolder, path, fileName);
+                if (Directory.Exists(filePath))
+                {
+                    Directory.Delete(filePath, true);
+                }
+                else if (System.IO.File.Exists(filePath))
+                {
+                    System.IO.File.Delete(filePath);
+                }
+            }
+
+            return RedirectToAction("Files", new { path} );
+        }
     }
 }
