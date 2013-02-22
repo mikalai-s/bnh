@@ -93,6 +93,8 @@ namespace Bnh.Infrastructure.Search
             {
                 foreach (var content in groups)
                 {
+                    if (content.Html.IsEmpty()) { continue; }
+
                     // create a document, add in a single field
                     var doc = new Document();
 

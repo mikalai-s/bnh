@@ -96,6 +96,8 @@ namespace Bnh.Controllers
             return View(new Dictionary<string, object>
             {
                 { "Version", BnhConfig.Version },
+                { "Entities Database", config.ConnectionStrings["mongo"] },
+                { "Cms Database", config.ConnectionStrings["cms"] },
                 { "Host", this.HttpContext.Request.ServerVariables["HTTP_HOST"] },
                 { "Activator", BnhConfig.Activator },
                 { "Is Valid Host?", this.config.IsValidHost(this.HttpContext) }

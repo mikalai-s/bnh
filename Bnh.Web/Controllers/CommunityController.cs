@@ -161,7 +161,9 @@ namespace Bnh.Controllers
         [DesignerAuthorize]
         public ActionResult DeleteConfirmed(string id)
         {
-            this.repos.Communities.Delete(GetCommunity(id).CommunityId);
+            var communityId = GetCommunity(id).CommunityId;
+            this.repos.Communities.Delete(communityId);
+            this.repos.Scenes.Delete(communityId);
             return RedirectToAction("Index");
         }
 
