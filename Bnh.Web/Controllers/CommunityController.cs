@@ -183,7 +183,7 @@ namespace Bnh.Controllers
         private IMongoQuery GetCommunityQuery(string id)
         {
             return this.repos.IsValidId(id)
-                ? Query.EQ("CommunityId", new BsonObjectId(id))
+                ? Query.EQ("_id", new BsonObjectId(id))
                 : Query.Matches("UrlId", BsonRegularExpression.Create(new Regex(id, RegexOptions.IgnoreCase)));
         }
 

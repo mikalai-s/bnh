@@ -98,7 +98,7 @@ namespace Cms.Helpers
         }
 
 
-        public static void RenderScene(this WebViewPage page, ISceneHolder sceneHolder)
+        public static void RenderScene(this WebViewPage page, ISceneHolder sceneHolder, bool design = false)
         {
             var sceneController = page.ViewContext.Controller as SceneController;
             if (sceneController == null)
@@ -106,20 +106,8 @@ namespace Cms.Helpers
                 throw new InvalidCastException("Controller {0} doesn't inherit SceneController".FormatWith(page.ViewContext.Controller.GetType().Name));
             }
 
-            page.Html.RenderPartial(ContentUrl.Views.Scene.View, sceneController.GetSceneViewModel(sceneHolder));
+            page.Html.RenderPartial(design ? ContentUrl.Views.Scene.Edit : ContentUrl.Views.Scene.View, sceneController.GetSceneViewModel(sceneHolder));
 
-            page.RenderStylesAndScripts();
-        }
-
-        public static void RenderDesignScene(this WebViewPage page, ISceneHolder sceneHolder)
-        {
-            var sceneController = page.ViewContext.Controller as SceneController;
-            if(sceneController == null)
-            {
-                throw new InvalidCastException("Controller {0} doesn't inherit SceneController".FormatWith(page.ViewContext.Controller.GetType().Name));
-            }
-
-            page.Html.RenderPartial(ContentUrl.Views.Scene.Edit, sceneController.GetSceneViewModel(sceneHolder));
             page.RenderStylesAndScripts();
         }
 

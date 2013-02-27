@@ -15,7 +15,7 @@ namespace Cms.ViewModels
 
         public IEnumerable<RatingQuestionViewModel> Ratings { get; private set; }
 
-        public RatingBrickViewModel(ViewModelContext context, RatingBrick brick)
+        public RatingBrickViewModel(SceneViewModelContext context, RatingBrick brick)
             : base(context, brick)
         {
             var reviewable = GetReviewable(context);
@@ -40,11 +40,11 @@ namespace Cms.ViewModels
                                };
         }
 
-        private IReviewable GetReviewable(ViewModelContext context)
+        private IReviewable GetReviewable(SceneViewModelContext context)
         {
             return (context == null)
                 ? null
-                : context.ViewBag.GlobalModel as IReviewable;
+                : context.SceneHolder as IReviewable;
         }
     }
 }

@@ -21,7 +21,7 @@ namespace Cms.ViewModels
 
         public string DeleteCommentUrl { get; set; }
 
-        public ReviewsBrickViewModel(ViewModelContext context, ReviewsBrick content)
+        public ReviewsBrickViewModel(SceneViewModelContext context, ReviewsBrick content)
             : base(context, content)
         {
             var reviewable = GetReviewable(context);
@@ -68,11 +68,11 @@ namespace Cms.ViewModels
             }
         }
 
-        private IReviewable GetReviewable(ViewModelContext context)
+        private IReviewable GetReviewable(SceneViewModelContext context)
         {
             return (context == null)
                 ? null
-                : context.ViewBag.GlobalModel as IReviewable;
+                : context.SceneHolder as IReviewable;
         }
     }
 }
