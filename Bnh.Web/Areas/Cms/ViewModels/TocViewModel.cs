@@ -9,11 +9,11 @@ using Cms.Helpers;
 
 namespace Cms.ViewModels
 {
-    public class TocViewModel : BrickViewModel<TocBrick>
+    public class TocBrickViewModel : BrickViewModel<TocBrick>
     {
         public IEnumerable<Brick> TocBricks { get; private set; }
 
-        public TocViewModel(ViewModelContext context, TocBrick content)
+        public TocBrickViewModel(ViewModelContext context, TocBrick content)
             : base(context, content)
         {
             //var sceneContext = context as SceneViewModelContext;

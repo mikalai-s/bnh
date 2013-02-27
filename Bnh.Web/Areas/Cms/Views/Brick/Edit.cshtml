@@ -6,7 +6,7 @@
 
 <div class="row">
     <div class="span12">
-    @using (Html.BeginForm("Edit", "Brick", new { id = Model.BrickId }))
+    @using (Html.BeginForm("EditBrick", null, new { brickId = Model.BrickId }))
     {
         @Html.ValidationSummary(true)
         <fieldset>

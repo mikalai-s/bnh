@@ -16,31 +16,43 @@ using Cms.ViewModels;
 using Cms.Core;
 using Cms.Infrastructure;
 using Cms.Utils;
+using MongoDB.Driver.Builders;
+using MongoDB.Bson;
+using System.Text.RegularExpressions;
+using MongoDB.Driver;
 
 namespace Bnh.Controllers
 {
-    public class CommunityController : Controller
+    public class CommunityController : SceneController
     {
         private IBnhConfig config = null;
         private IBnhRepositories repos = null;
         private IRatingCalculator rating = null;
-        private HtmlHelper htmlHelper = null;
-        private SceneController sceneController = null;
 
-        public CommunityController(IBnhConfig config, IBnhRepositories repos, IRatingCalculator rating, SceneController sceneController)
+        public CommunityController(IBnhConfig config, IBnhRepositories repos, IRatingCalculator rating)
+            : base(config, repos, rating)
         {
             this.config = config;
             this.repos = repos;
             this.rating = rating;
-            this.sceneController = sceneController;
         }
 
-        protected override void Initialize(System.Web.Routing.RequestContext requestContext)
+
+
+        protected override ISceneHolder GetSceneHolder(string communityId)
         {
-            base.Initialize(requestContext);
-
-            this.htmlHelper = new HtmlHelper(new ViewContext(this.ControllerContext, new WebFormView(this.ControllerContext, "fake"), new ViewDataDictionary(), new TempDataDictionary(), new StringWriter()), new ViewPage());
+            return GetCommunity(communityId, true);
         }
+
+        protected override void SaveScene(string communityId, Scene scene)
+        {
+
+            this.repos.Communities.Collection.Update(
+                GetCommunityQuery(communityId),
+                Update.Set("Scene", scene.ToBsonDocument()));
+        }
+
+
 
         //
         // GET: /Community/
@@ -60,7 +72,7 @@ namespace Bnh.Controllers
 
         public ActionResult Details(string id)
         {
-            var community = GetCommunity(id);
+            var community = GetCommunity(id, true);
             if (this.repos.IsValidId(id))
             {
                 return RedirectToAction("Details", new { id = community.UrlId });
@@ -74,16 +86,17 @@ namespace Bnh.Controllers
         [DesignerAuthorize]
         public ActionResult Create()
         {
-            ViewBag.CityZones = new SelectList(this.repos.Cities.First(c => c.Name == config.City).Zones);
-            var sceneTemplates = from s in this.repos.Scenes
-                                    where s.IsTemplate
-                                    select new { id = s.SceneId, title = s.Title };
-            ViewBag.Templates = new SelectList(new[] { new { id = string.Empty, title = string.Empty } }.Union(sceneTemplates), "id", "title");
+            throw new NullReferenceException();
+            //ViewBag.CityZones = new SelectList(this.repos.Cities.First(c => c.Name == config.City).Zones);
+            //var sceneTemplates = from s in this.repos.Scenes
+            //                        where s.IsTemplate
+            //                        select new { id = s.SceneId, title = s.Title };
+            //ViewBag.Templates = new SelectList(new[] { new { id = string.Empty, title = string.Empty } }.Union(sceneTemplates), "id", "title");
 
-            var city = this.repos.Cities.First(c => c.Name == config.City);
-            ViewBag.CityZones = new SelectList(city.Zones);
-            ViewBag.CityId = city.CityId;
-            return View();
+            //var city = this.repos.Cities.First(c => c.Name == config.City);
+            //ViewBag.CityZones = new SelectList(city.Zones);
+            //ViewBag.CityId = city.CityId;
+            //return View();
         } 
 
         //
@@ -138,9 +151,10 @@ namespace Bnh.Controllers
         }
 
         [HttpGet]
+        [DesignerAuthorize]
         public ActionResult EditScene(string id)
         {
-            var community = GetCommunity(id);
+            var community = GetCommunity(id, true);
             return View(community);
         }
 
@@ -163,21 +177,22 @@ namespace Bnh.Controllers
         {
             var communityId = GetCommunity(id).CommunityId;
             this.repos.Communities.Delete(communityId);
-            this.repos.Scenes.Delete(communityId);
             return RedirectToAction("Index");
         }
 
-        private Community GetCommunity(string id)
+        private IMongoQuery GetCommunityQuery(string id)
         {
-            if (this.repos.IsValidId(id))
-            {
-                return this.repos.Communities.Single(c => c.CommunityId == id);
-            }
-            else
-            {
-                id = id.ToLower();
-                return this.repos.Communities.Single(c => c.UrlId.ToLower() == id);
-            }
+            return this.repos.IsValidId(id)
+                ? Query.EQ("CommunityId", new BsonObjectId(id))
+                : Query.Matches("UrlId", BsonRegularExpression.Create(new Regex(id, RegexOptions.IgnoreCase)));
+        }
+
+        private Community GetCommunity(string id, bool includeScene = false)
+        {
+            return this.repos.Communities.Collection
+                .Find(GetCommunityQuery(id))
+                .SetFields(includeScene ? Fields.Null : Fields.Exclude("Scene"))
+                .Single();
         }
 
         [HttpGet]
@@ -215,12 +230,24 @@ namespace Bnh.Controllers
             return this.config.Review.Questions
                 .ToDictionary(
                     q => q.Key,
-                    q => this.rating.GetTargetRatingMap(new[] { communityId }, q.Key)[communityId]);
+                    q => 
+                        {
+                            var map = this.rating.GetTargetRatingMap(new[] { communityId }, q.Key);
+                            return map.ContainsKey(communityId)
+                                ? map[communityId]
+                                : null;
+                        });
         }
 
         protected override void Dispose(bool disposing)
         {
             base.Dispose(disposing);
         }
+
+
+
+
+
+       
     }
 }

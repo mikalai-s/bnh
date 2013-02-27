@@ -19,20 +19,7 @@
         function onSaveSceneButton() {
             var data = getSceneData();
 
-            $.ajax({
-                url: "/Scene/Save", //form.action,
-                type: "POST",
-                contentType: "application/json",
-                async: false,
-                data: JSON.stringify(data),
-                success: function (result) {
-                    getScene().replaceWith(result);
-                    initScene();
-                },
-                error: function (result) {
-                    if (window.console) { window.console.error(result); }
-                }
-            });
+            $("#sceneJson").val(JSON.stringify(data));
         }
 
         // collect form data to submit
@@ -263,23 +250,23 @@
 
         function onDeleteBrickButtonClicked() {
             var brick = $(this).closest(".brick-wrapper");
-            $.ajax({
-                url: "/Scene/CanDeleteBrick",
-                type: "POST",
-                contentType: "application/json",
-                async: true,
-                data: JSON.stringify(brick.data("entity")),
-                success: function (result) {
-                    if (result === true) {
+            //$.ajax({
+            //    url: "/Scene/CanDeleteBrick",
+            //    type: "POST",
+            //    contentType: "application/json",
+            //    async: true,
+            //    data: JSON.stringify(brick.data("entity")),
+            //    success: function (result) {
+            //        if (result === true) {
                         brick.remove();
-                    } else {
-                        alert("Unable to delete brick because it's in use!");
-                    }
-                },
-                error: function (result) {
-                    if (window.console) { window.console.error(result); }
-                }
-            });
+                //    } else {
+                //        alert("Unable to delete brick because it's in use!");
+                //    }
+                //},
+                //error: function (result) {
+                //    if (window.console) { window.console.error(result); }
+                //}
+            //});
         }
 
         function ensureSceneSaved() {
@@ -287,12 +274,8 @@
             var modified = (originalSceneData !== newData);
 
             if (modified) {
-                if (!confirm("There are unsaved changes on the scene! Do you want to save them before processing?")) {
-                    return false;
-                }
-
-                // save wall
-                onSaveSceneButton();
+                alert("There are unsaved changes on the scene! Please save them before processing!")
+                return false;
             }
             return true;
         }

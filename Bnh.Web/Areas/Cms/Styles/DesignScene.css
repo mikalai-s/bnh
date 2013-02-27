@@ -6,11 +6,13 @@
 */
 .wall-wrapper {
     height: auto !important;
+        padding: 0;
 }
 
 .wall-wrapper .wall {
     border: 1px dodgerblue dashed;
     min-height: 200px;
+
 }
 
 .brick-wrapper {

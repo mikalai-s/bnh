@@ -9,13 +9,13 @@ using Cms.Helpers;
 
 namespace Cms.ViewModels
 {
-    public class RatingViewModel : BrickViewModel<RatingBrick>
+    public class RatingBrickViewModel : BrickViewModel<RatingBrick>
     {
         public MvcHtmlString BigStars { get; private set; }
 
         public IEnumerable<RatingQuestionViewModel> Ratings { get; private set; }
 
-        public RatingViewModel(ViewModelContext context, RatingBrick brick)
+        public RatingBrickViewModel(ViewModelContext context, RatingBrick brick)
             : base(context, brick)
         {
             var reviewable = GetReviewable(context);

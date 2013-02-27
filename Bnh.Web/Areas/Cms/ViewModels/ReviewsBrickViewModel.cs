@@ -9,7 +9,7 @@ using Cms.Helpers;
 
 namespace Cms.ViewModels
 {
-    public class ReviewsViewModel : BrickViewModel<ReviewsBrick>
+    public class ReviewsBrickViewModel : BrickViewModel<ReviewsBrick>
     {
         public IEnumerable<ReviewViewModel> Reviews { get; set; }
 
@@ -21,7 +21,7 @@ namespace Cms.ViewModels
 
         public string DeleteCommentUrl { get; set; }
 
-        public ReviewsViewModel(ViewModelContext context, ReviewsBrick content)
+        public ReviewsBrickViewModel(ViewModelContext context, ReviewsBrick content)
             : base(context, content)
         {
             var reviewable = GetReviewable(context);

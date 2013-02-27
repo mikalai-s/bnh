@@ -1,8 +1,8 @@
 ﻿@model SceneViewModel
 
 @{
-    var sceneId = Model.SceneId;
-    var linkableBricks = (sceneId == Constants.LinkableBricksSceneId);
+    
+    var linkableBricks = false;// (sceneId == Constants.LinkableBricksSceneId);
     ViewBag.Title = linkableBricks ? "Linkable Bricks" : "Scene designer";
 
     this.GetStyleBundle().Include(new []
@@ -18,9 +18,7 @@
 }
 
 <fieldset>
-    <legend>Scene</legend>
-
-    @Html.HiddenFor(model => sceneId)
+    <legend>Scene</legend>   
 
     <div class="scene-wrapper">
         @Html.Partial(ContentUrl.Views.Scene.Partial.DesignScene, Model)
@@ -79,13 +77,18 @@
             <h4>Apply Template</h4>
             <div class="fieldset">
                 <div class="editor-field">
-                    @Html.DropDownList("templateSceneId", (SelectList)ViewBag.Templates)
+                    @*@Html.DropDownList("templateSceneId", (SelectList)ViewBag.Templates)*@
                     <input type="button" class="btn" id="applyTemplateButton" value="Apply Template" />
                 </div>
             </div>
         </div>
 
-        <input type="button" class="btn btn-danger" id="saveSceneButton" value="Save" style='display: @(linkableBricks ? "display:none" : "display:block")' />
+        @using (Html.BeginForm("SaveScene", null, FormMethod.Post, new { id = "save-form" }))
+        {
+            @Html.Hidden("sceneJson", null, new { id = "sceneJson" })
+
+            <input type="submit" class="btn btn-danger" id="saveSceneButton" value="Save" style='display: @(linkableBricks ? "display:none" : "display:block")' />
+        }
   
     </div>
 

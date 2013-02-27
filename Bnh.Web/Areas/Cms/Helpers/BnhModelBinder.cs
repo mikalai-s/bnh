@@ -20,8 +20,7 @@ namespace Cms.Helpers
             bool hasPrefix = bindingContext.ValueProvider.ContainsPrefix(bindingContext.ModelName);
             string prefix = ((hasPrefix) && (bindingContext.ModelName != "")) ? bindingContext.ModelName + "." : "";
 
-            if ((controllerContext.Controller.GetType() == typeof(BrickController)) ||
-               (controllerContext.Controller.GetType() == typeof(SceneController)))
+            if (typeof(SceneController).IsAssignableFrom(controllerContext.Controller.GetType()))
             {
                 if (modelType.IsAssignableFrom(typeof(IBrickViewModel<>)))
                 {
@@ -39,7 +38,14 @@ namespace Cms.Helpers
                 }
             }
 
-            return base.CreateModel(controllerContext, bindingContext, modelType);
+            try
+            {
+                return base.CreateModel(controllerContext, bindingContext, modelType);
+            }
+            catch(Exception)
+            {
+                throw;
+            }
         }        
 
         protected override void SetProperty(ControllerContext controllerContext, ModelBindingContext bindingContext, PropertyDescriptor propertyDescriptor, object value)

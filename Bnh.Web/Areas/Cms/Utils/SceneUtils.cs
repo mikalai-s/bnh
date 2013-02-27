@@ -11,14 +11,15 @@ namespace Cms.Utils
     {
         public static Scene ApplyTemplate(IRepositories repos, string sourceSceneId, string targetSceneId)
         {
-            var template = repos.Scenes.First(t => t.SceneId == sourceSceneId && t.IsTemplate);
-            template.SceneId = targetSceneId;
-            template.Title = null;
-            template.IsTemplate = false;
+            throw new NotImplementedException();
+            //var template = repos.Scenes.First(t => t.SceneId == sourceSceneId && t.IsTemplate);
+            //template.SceneId = targetSceneId;
+            //template.Title = null;
+            //template.IsTemplate = false;
 
-            SaveScene(repos, template, true);
+            //SaveScene(repos, template, true);
 
-            return template;
+            //return template;
         }
 
         public static void SaveScene(IRepositories repos, Scene scene)

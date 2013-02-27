@@ -7,7 +7,7 @@ namespace Cms.ViewModels
 {
     public class SceneViewModel
     {
-        public string SceneId { get; set; }
+        //public string SceneId { get; set; }
         public IEnumerable<WallViewModel> Walls { get; set; }
         public bool IsTemplate { get; set; }
         public string Title { get; set; }

@@ -58,13 +58,13 @@ namespace Cms.ViewModels
         static BrickViewModel()
         {
             var types = System.Reflection.Assembly.GetExecutingAssembly().GetTypes().OrderBy(t => t.Name).ToList();
-            var contents = types.Where(t => typeof(Brick).IsAssignableFrom(t)).ToList();
+            var brickTypes = types.Where(t => typeof(Brick).IsAssignableFrom(t)).ToList();
 
-            foreach (var contentType in contents)
+            foreach (var brickType in brickTypes)
             {
-                ViewModelMap[contentType] = 
-                    types.SingleOrDefault(t => t.Name == contentType.Name.TrimEnd("Content".ToCharArray()) + "ViewModel") ??
-                    typeof(BrickViewModel<>).MakeGenericType(contentType);
+                ViewModelMap[brickType] = 
+                    types.SingleOrDefault(t => t.Name == brickType.Name + "ViewModel") ??
+                    typeof(BrickViewModel<>).MakeGenericType(brickType);
             }
         }
 
@@ -91,7 +91,7 @@ namespace Cms.ViewModels
             properties["title"] = this.Title;
             properties["width"] = this.Width;
             properties["brickId"] = this.BrickId;
-            properties["brickType"] = typeof(T).Name;
+            properties["brickType"] = typeof(T).FullName;
             return JsonConvert.SerializeObject(properties);
         }
 

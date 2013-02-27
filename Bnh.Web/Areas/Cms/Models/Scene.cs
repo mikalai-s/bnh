@@ -8,8 +8,8 @@ namespace Cms.Models
 {
     public class Scene
     {
-        [BsonRepresentation(BsonType.ObjectId), BsonId]
-        public string SceneId { get; set; }
+        //[BsonRepresentation(BsonType.ObjectId), BsonId]
+        //public string SceneId { get; set; }
 
         public string Title { get; set; }
 

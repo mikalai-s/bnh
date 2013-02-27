@@ -14,12 +14,12 @@ namespace Cms.ViewModels
     /// </summary>
     public class SceneViewModelContext : ViewModelContext
     {
-        public Scene Scene { get; private set; }
+        public ISceneHolder SceneHolder { get; private set; }
 
-        public SceneViewModelContext(Controller controller, IConfig config, IRepositories repos, IRatingCalculator rating, Scene scene)
+        public SceneViewModelContext(Controller controller, IConfig config, IRepositories repos, IRatingCalculator rating, ISceneHolder sceneHolder)
             : base(controller, config, repos, rating)
         {
-            this.Scene = scene;
+            this.SceneHolder = sceneHolder;
         }
     }
 }

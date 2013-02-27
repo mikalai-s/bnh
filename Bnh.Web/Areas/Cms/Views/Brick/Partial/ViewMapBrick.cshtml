@@ -1,22 +1,11 @@
-﻿@model BrickViewModel<MapBrick>
+﻿@model MapBrickViewModel
 @{
     this.GetScriptBundle().Include(new []
     {
         "~/Areas/Cms/Scripts/view-map-content.js"
     });
-
-    var mappable = ViewBag.GlobalModel as Cms.Models.IMappable;
 }
 
-@if (mappable != null)
-{ 
-    <div class="map-canvas-wrapper" zoom="@Model.Content.Zoom" gpsLocation="@mappable.GpsLocation" gpsBounds="@mappable.GpsBounds">
-        <div id="mapCanvas" style="height: @(Model.Content.Height)px"></div>
-    </div>
-}
-else
-{
-    <div class="map-canvas-wrapper"  zoom="@Model.Content.Zoom" gpsLocation="@Model.Content.GpsLocation">
-        <div id="mapCanvas" style="height: @(Model.Content.Height)px"></div>
-    </div>
-}
+<div class="map-canvas-wrapper" zoom="@Model.Content.Zoom" gpsLocation="@Model.GpsLocation" gpsBounds="@Model.GpsBounds">
+    <div id="mapCanvas" style="height: @(Model.Content.Height)px"></div>
+</div>

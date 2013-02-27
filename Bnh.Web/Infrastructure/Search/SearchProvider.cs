@@ -64,33 +64,34 @@ namespace Bnh.Infrastructure.Search
 
         private void IndexCommunities(IndexWriter indexWriter)
         {
+            throw new NotImplementedException();
             // all content IDs
-            var sceneWithBricks = this.repos.Scenes
-                .ToList()
-                .ToDictionary(
-                    s => s.SceneId,
-                    s => s.Walls
-                        .SelectMany(w => w.Bricks)
-                        .OfType<HtmlBrick>());
+            //var sceneWithBricks = this.repos.Scenes
+            //    .ToList()
+            //    .ToDictionary(
+            //        s => s.SceneId,
+            //        s => s.Walls
+            //            .SelectMany(w => w.Bricks)
+            //            .OfType<HtmlBrick>());
 
-            foreach (var group in sceneWithBricks)
-            {
-                foreach (var brick in group.Value)
-                {
-                    if (content.Html.IsEmpty()) { continue; }
+            //foreach (var group in sceneWithBricks)
+            //{
+            //    foreach (var brick in group.Value)
+            //    {
+            //        if (brick.Html.IsEmpty()) { continue; }
 
-                    // create a document, add in a single field
-                    var doc = new Document();
+            //        // create a document, add in a single field
+            //        var doc = new Document();
 
-                    doc.Add(new Field("community-id", group.Key, Field.Store.YES, Field.Index.NO));
-                    doc.Add(new Field("content-id", brick.BrickId, Field.Store.YES, Field.Index.NO));
-                    doc.Add(new Field("type", "community", Field.Store.YES, Field.Index.NO));
-                    doc.Add(new Field("content", EscapeHtml(brick.Html), Field.Store.YES, Field.Index.ANALYZED, Field.TermVector.WITH_POSITIONS_OFFSETS));
+            //        doc.Add(new Field("community-id", group.Key, Field.Store.YES, Field.Index.NO));
+            //        doc.Add(new Field("content-id", brick.BrickId, Field.Store.YES, Field.Index.NO));
+            //        doc.Add(new Field("type", "community", Field.Store.YES, Field.Index.NO));
+            //        doc.Add(new Field("content", EscapeHtml(brick.Html), Field.Store.YES, Field.Index.ANALYZED, Field.TermVector.WITH_POSITIONS_OFFSETS));
 
-                    // write the document to the index
-                    indexWriter.AddDocument(doc);
-                }
-            }
+            //        // write the document to the index
+            //        indexWriter.AddDocument(doc);
+            //    }
+            //}
         }
 
         private void IndexReviews(IndexWriter indexWriter)

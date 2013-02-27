@@ -63,10 +63,11 @@ namespace Cms.Models
 
         public static string GetSceneId(this Brick brick, IRepositories repos)
         {
-            return repos.Scenes.Collection
-                .Find(Query.EQ("Walls.Bricks.BrickId", ObjectId.Parse(brick.BrickId)))
-                .Select(c => c.SceneId)
-                .First();
+            throw new NotImplementedException();
+            //return repos.Scenes.Collection
+            //    .Find(Query.EQ("Walls.Bricks.BrickId", ObjectId.Parse(brick.BrickId)))
+            //    .Select(c => c.SceneId)
+            //    .First();
         }
     }
 }

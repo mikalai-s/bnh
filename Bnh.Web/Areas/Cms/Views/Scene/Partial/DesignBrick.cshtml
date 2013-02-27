@@ -5,7 +5,7 @@
         <div class='header'>
             <span class='title'>@Model.Title</span>
             <a class='delete'>delete</a>
-            @Html.ActionLink("edit", "Edit", "Brick", new { id = Model.BrickId }, new { @class = "edit" })
+            @Html.ActionLink("edit", "EditBrick", null, new { brickId = Model.BrickId }, new { @class = "edit" })
         </div>
         <div class='content'>
             @Html.Partial(ContentUrl.Views.Brick.View, Model)

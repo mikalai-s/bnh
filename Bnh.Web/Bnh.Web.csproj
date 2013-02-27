@@ -252,6 +252,8 @@
     <Compile Include="Areas\Cms\Models\Contents\LinkableContent.cs" />
     <Compile Include="Areas\Cms\Models\Contents\MapContent.cs" />
     <Compile Include="Areas\Cms\Models\Contents\RazorContent.cs" />
+    <Compile Include="Areas\Cms\Models\SceneController.cs" />
+    <Compile Include="Areas\Cms\Models\ISceneHolder.cs" />
     <Compile Include="Areas\Cms\Models\Scene.cs" />
     <Compile Include="Areas\Cms\Models\Contents\TocContent.cs" />
     <Compile Include="Areas\Cms\Models\Utilities\BrickRegistration.cs" />
@@ -259,10 +261,11 @@
     <Compile Include="Areas\Cms\MsCms.cs" />
     <Compile Include="Areas\Cms\Utils\SceneUtils.cs" />
     <Compile Include="Areas\Cms\ViewModels\BrickViewModel.cs" />
+    <Compile Include="Areas\Cms\ViewModels\MapBrickViewModel.cs" />
     <Compile Include="Areas\Cms\ViewModels\SceneViewModelContext.cs" />
     <Compile Include="Areas\Cms\ViewModels\TocViewModel.cs" />
-    <Compile Include="Areas\Cms\ViewModels\RatingViewModel.cs" />
-    <Compile Include="Areas\Cms\ViewModels\ReviewsViewModel.cs" />
+    <Compile Include="Areas\Cms\ViewModels\RatingBrickViewModel.cs" />
+    <Compile Include="Areas\Cms\ViewModels\ReviewsBrickViewModel.cs" />
     <Compile Include="Areas\Cms\ViewModels\SceneViewModel.cs" />
     <Compile Include="Areas\Cms\ViewModels\WallViewModel.cs" />
     <Compile Include="Areas\Cms\Helpers\BnhModelBinder.cs" />
