@@ -35,7 +35,7 @@ namespace Cms.ViewModels
     public class BrickViewModel<T> : IBrickViewModel<T> where T : Brick, new()
     {
 
-        protected ViewModelContext Context { get; private set; }
+        protected SceneViewModelContext Context { get; private set; }
 
         public string Title { get; set; }
 
@@ -74,8 +74,10 @@ namespace Cms.ViewModels
 
         }
 
-        public BrickViewModel(ViewModelContext context, T brick)
+        public BrickViewModel(SceneViewModelContext context, T brick)
         {
+            this.Context = context;
+
             this.Content = brick ?? new T();
 
             this.Title = this.Content.Title;

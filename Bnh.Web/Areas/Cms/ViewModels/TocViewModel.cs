@@ -13,7 +13,7 @@ namespace Cms.ViewModels
     {
         public IEnumerable<Brick> TocBricks { get; private set; }
 
-        public TocBrickViewModel(ViewModelContext context, TocBrick content)
+        public TocBrickViewModel(SceneViewModelContext context, TocBrick content)
             : base(context, content)
         {
             //var sceneContext = context as SceneViewModelContext;

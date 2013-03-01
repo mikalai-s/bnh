@@ -1,32 +1,59 @@
 ﻿/*global define, tinymce*/
 
 define(
-    ["jquery"],
-    function () {
+    ["knockout"],
+    function (ko) {
         "use strict";
 
-        var remove = function () {
+        function Tabs() {
+            this.tabs = ko.observableArray();
+            this.availableBricks = ko.observableArray();
+        }
 
-            var $this = $(this);
+        Tabs.prototype.addTab = function () {
+            this.tabs.push(new Tab());
+        };
 
-            $this.parent().remove();
-
+        Tabs.prototype.removeTab = function (index) {
+            this.tabs.splice(index, 1);
         };
 
 
-        $(".button-remove").click(remove);
+        function Tab() {
+            this.title = ko.observable();
+            this.bricks = ko.observableArray();
+        }
 
-        $("#button-add").click(function () {
+        Tab.prototype.addBrick = function () {
+            this.bricks.push({ name: "", value: "" });
+        };
 
-            var $newImagesDiv = $("#new-tabs");
+        Tab.prototype.removeBrick = function (index) {
+            this.bricks.splice(index, 1);
+        };
 
-            $newImagesDiv
-                .append('<div><input name="tabs" style="width: 700px;" type="text" /><input class="button-remove btn" type="button" value="Remove" /></div>')
-                .find(".button-remove")
-                .click(remove);
+        Tab.prototype.getInputKeyNameAttribute = function (index) {
+            return "content.tabs[" + index + "].key";
+        };
 
-        });
+        Tab.prototype.getInputValueNameAttribute = function (index) {
+            return "content.tabs[" + index + "].value";
+        }
 
+        var tabs = new Tabs();
+        tabs.availableBricks.push({});
+        for (var i = 0; i < page_availableBricks.length; i ++) {
+            tabs.availableBricks.push(page_availableBricks[i]);
+        }
+
+        for (var tabName in page_tabs) {
+            var tab = new Tab();
+            tab.title(tabName);
+            tab.bricks(page_tabs[tabName]);
+            tabs.tabs.push(tab);
+        }
+
+        ko.applyBindings(window.tabs = tabs);
 
     }
 );

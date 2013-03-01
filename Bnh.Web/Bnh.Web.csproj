@@ -263,6 +263,7 @@
     <Compile Include="Areas\Cms\ViewModels\BrickViewModel.cs" />
     <Compile Include="Areas\Cms\ViewModels\MapBrickViewModel.cs" />
     <Compile Include="Areas\Cms\ViewModels\SceneViewModelContext.cs" />
+    <Compile Include="Areas\Cms\ViewModels\TabsBrickViewModel.cs" />
     <Compile Include="Areas\Cms\ViewModels\TocViewModel.cs" />
     <Compile Include="Areas\Cms\ViewModels\RatingBrickViewModel.cs" />
     <Compile Include="Areas\Cms\ViewModels\ReviewsBrickViewModel.cs" />

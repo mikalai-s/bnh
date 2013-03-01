@@ -6,14 +6,17 @@
         "~/Areas/Cms/Scripts/view-tabs-content.js"
     });
 
-    var tabs = (Model.Content.Tabs == null) ? Enumerable.Empty<string>().ToArray() : Model.Content.Tabs.ToArray();
+    var tabs = (Model.Content.Tabs == null) 
+        ? new Dictionary<string, string[]>()
+        : Model.Content.Tabs;
+    var tabKeys = tabs.Keys.ToArray();
 }
 
-<ul class="tabs-content nav nav-tabs" id="@Model.Content.TabName">
-    @for(int i = 0; i < tabs.Length; i ++)
+<ul class="tabs-content nav nav-tabs">
+    @for(int i = 0; i < tabKeys.Length; i ++)
     {
         <li class="@(i == 0 ? "active" : "")">
-            <a href="#" data-toggle="tab">@tabs[i]</a>
+            <a href="#" data-toggle="tab">@tabKeys[i]</a>
         </li>
     }
 </ul>

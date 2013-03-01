@@ -27,13 +27,6 @@ namespace Cms.Models
             this.rating = rating;
         }
 
-        //public virtual ActionResult ViewScene(ISceneHolder sceneHolder)
-        //{
-        //    var scene = sceneHolder.Scene ?? new Scene();
-
-        //    return PartialView(ContentUrl.Views.Scene.View, scene.ToViewModel(GetViewModelContext(sceneHolder)));
-        //}
-
         public virtual SceneViewModel GetSceneViewModel(ISceneHolder sceneHolder)
         {
             var scene = sceneHolder.Scene ?? new Scene();
@@ -48,6 +41,7 @@ namespace Cms.Models
         protected abstract ISceneHolder GetSceneHolder(string entityId);
         protected abstract void SaveScene(string entityId, Scene scene);
         //protected abstract ActionResult RedirectToDesignScene();
+
 
         private class SceneViewModelResolver : JsonConverter
         {
@@ -205,6 +199,7 @@ namespace Cms.Models
             {
                 htmlBrick.Html = HttpUtility.HtmlDecode(htmlBrick.Html);
             }
+
 
             var scene = this.GetSceneHolder(id).Scene;
 
