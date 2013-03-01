@@ -3,19 +3,16 @@
     function ($) {
         "use strict";
 
-        var $tabs = $('a[data-toggle="tab"]');
-
-        function switchTab($a) {
-            var tabName = $a.closest(".tabs-content").attr("id");
-            var tabIndex = $a.closest("li").index();
-            var $associatedBricks = $a.closest(".wall-wrapper").find(".brick-wrapper.tabname_" + tabName);
-
-            $associatedBricks.hide();
-            $associatedBricks.parent().find(".tabindex_" + tabIndex).show();
+        function processBricks($tab, showHide) {
+            var brickClasses = $.map($tab.data("bricks"), function (id) {
+                return ".id_" + id;
+            });
+            $tab.closest(".wall-wrapper").find(brickClasses.join(","))[showHide]();
         }
 
-        $tabs.on('shown', function (e) {
-            switchTab($(this));
+        $('a[data-toggle="tab"]').on('shown', function (e) {
+            processBricks($(e.relatedTarget), "hide");
+            processBricks($(e.target), "show");
         });
     }
 );

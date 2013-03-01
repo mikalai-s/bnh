@@ -1,5 +1,7 @@
 ﻿@model BrickViewModel<TabsBrick>
 
+@using Newtonsoft.Json
+
 @{
     this.GetScriptBundle().Include(new[]
     {
@@ -16,7 +18,7 @@
     @for(int i = 0; i < tabKeys.Length; i ++)
     {
         <li class="@(i == 0 ? "active" : "")">
-            <a href="#" data-toggle="tab">@tabKeys[i]</a>
+            <a href="#" data-toggle="tab" data-bricks="@JsonConvert.SerializeObject(tabs[tabKeys[i]])">@tabKeys[i]</a>
         </li>
     }
 </ul>

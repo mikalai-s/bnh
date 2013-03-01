@@ -30,6 +30,8 @@ namespace Cms.ViewModels
         string GetBrickView(HttpServerUtilityBase server);
 
         string GetBrickEditView(HttpServerUtilityBase server);
+
+        string InitialDisplayStyle { get; }
     }
 
     public class BrickViewModel<T> : IBrickViewModel<T> where T : Brick, new()
@@ -50,6 +52,18 @@ namespace Cms.ViewModels
         public string WidthString
         {
             get { return this.Width.ToString("F") + "%"; }
+        }
+
+        public string InitialDisplayStyle
+        {
+            get
+            {
+                // Only bricks in first tab are visible
+                var wall = this.Context.SceneHolder.Scene.Walls.First(w => w.Bricks.Any(b => b.BrickId == this.BrickId));
+                var nonFirst = wall.Bricks.OfType<TabsBrick>().Any(b => b.Tabs.Skip(1).Any(e => e.Value.Any(bid => bid == this.BrickId)));
+
+                return !nonFirst ? "block" : "none";
+            }
         }
 
 
