@@ -32,6 +32,8 @@ namespace Cms.ViewModels
         string GetBrickEditView(HttpServerUtilityBase server);
 
         string InitialDisplayStyle { get; }
+
+        object EnsureNonLinkable();
     }
 
     public class BrickViewModel<T> : IBrickViewModel<T> where T : Brick, new()
@@ -64,6 +66,11 @@ namespace Cms.ViewModels
 
                 return !nonFirst ? "block" : "none";
             }
+        }
+
+        public virtual object EnsureNonLinkable()
+        {
+            return this;
         }
 
 

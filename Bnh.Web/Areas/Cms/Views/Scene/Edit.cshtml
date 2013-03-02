@@ -18,7 +18,7 @@
 }
 
 <fieldset>
-    <legend>Scene</legend>   
+    <legend>Scene</legend>
 
     <div class="scene-wrapper">
         @Html.Partial(ContentUrl.Views.Scene.Partial.DesignScene, Model)
@@ -59,7 +59,7 @@
                     <label class="checkbox">@Html.CheckBox("hideBricksContentCheckbox")Hide bricks content</label>
                 </div>
 
-                @Html.ActionLink("Manage Linkable Bricks", "EditLinkable", "Scene")
+                @Html.ActionLink("Manage Linkable Bricks", "EditScene", "LinkablesScene")
             </div>
         </div>
 

@@ -1,3 +1,3 @@
-﻿@model BrickViewModel<RazorBrick>
+﻿@model RazorBrickViewModel
 
-@Html.Raw(RazorEngine.GetContent(Model.Content.Html, ViewBag.GlobalModel))
+@Model.Html

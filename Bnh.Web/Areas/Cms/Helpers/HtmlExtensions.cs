@@ -16,6 +16,7 @@ using System.Web.Optimization;
 using Cms.ViewModels;
 using Microsoft.Web.Helpers;
 using Bnh.Core;
+using Cms.Controllers;
 
 namespace Cms.Helpers
 {

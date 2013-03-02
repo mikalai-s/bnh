@@ -49,7 +49,7 @@ namespace Cms.Helpers
             {
                 public const string Edit = "~/Areas/Cms/Views/Scene/Edit.cshtml";
 
-                public const string EditLinkable = "~/Areas/Cms/Views/Scene/EditLinkable.cshtml";
+                public const string EditLinkable = "~/Areas/Cms/Views/Scene/EditLinkables.cshtml";
 
                 public const string View = "~/Areas/Cms/Views/Scene/View.cshtml";
 

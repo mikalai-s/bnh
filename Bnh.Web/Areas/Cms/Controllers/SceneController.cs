@@ -1,180 +1,206 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Web;
 using System.Web.Mvc;
-
-using System.Configuration;
-
-
-using Cms.ViewModels;
+using System.Web.Script.Serialization;
 using Cms.Core;
-using Cms.Models;
-using Cms.Infrastructure;
 using Cms.Helpers;
-using Cms.Utils;
-
+using Cms.Infrastructure;
+using Cms.Models;
+using Cms.ViewModels;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 
 namespace Cms.Controllers
 {
-    public class SceneController1 : Controller
+    public abstract class SceneController : Controller
     {
-        private IConfig config;
-        private IRepositories repos;
-        private IRatingCalculator rating;
+        private IConfig config = null;
+        private IRepositories repos = null;
+        private IRatingCalculator rating = null;
 
-        public SceneController1(IConfig config, IRepositories repos, IRatingCalculator rating)
+        public SceneController(IConfig config, IRepositories repos, IRatingCalculator rating)
         {
             this.config = config;
             this.repos = repos;
             this.rating = rating;
         }
 
-
-        [HttpGet]
-        public ActionResult EditLinkable()
+        public virtual SceneViewModel GetSceneViewModel(ISceneHolder sceneHolder)
         {
-            return View(ContentUrl.Views.Scene.EditLinkable);
+            var scene = sceneHolder.Scene ?? new Scene();
+
+            // var templates = Enumerable.Empty<Scene>();
+         //   this.ViewBag.Templates = new SelectList(templates, "id", "title");
+           // this.ViewBag.LinkableBricksSceneId = Constants.LinkableBricksSceneId;
+
+            return scene.ToViewModel(GetViewModelContext(sceneHolder));
+        }
+
+        protected abstract ISceneHolder GetSceneHolder(string entityId);
+        protected abstract void SaveScene(string entityId, Scene scene);
+        //protected abstract ActionResult RedirectToDesignScene();
+
+
+        private class SceneViewModelResolver : JsonConverter
+        {
+            SceneViewModelContext sceneViewModelContext;
+
+            public SceneViewModelResolver(SceneViewModelContext sceneViewModelContext)
+            {
+                this.sceneViewModelContext = sceneViewModelContext;
+            }
+
+            public override bool CanConvert(Type objectType)
+            {
+                return (objectType == typeof(IBrickViewModel<Brick>));
+            }
+
+            public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
+            {
+                // Load JObject from stream
+                var jObject = JObject.Load(reader);
+
+                var brickType = Assembly.GetExecutingAssembly().GetType(jObject["brickType"].Value<string>());
+                var brick = (Brick)Activator.CreateInstance(brickType);
+                // Create target object based on JObject
+
+                var brickViewModel = BrickViewModel<Brick>.Create(this.sceneViewModelContext, brick);
+
+                // Populate the object properties
+                serializer.Populate(jObject.CreateReader(), brickViewModel);
+
+                return brickViewModel;
+            }
+
+            public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
+            {
+                throw new NotImplementedException();
+            }
         }
 
 
-        // POST: /Scene/Edit/5
-
-        [DesignerAuthorizeAttribute]
-        [HttpPost]
-        public ActionResult Save(SceneViewModel scene)
+        [DesignerAuthorize]
+        public virtual ActionResult SaveScene(string id, string sceneJson)
         {
-            throw new NullReferenceException();
-            //if (ModelState.IsValid)
-            //{
-            //    var originalSceneBricks = this.repos.Scenes
-            //        .Where(s => s.SceneId == scene.SceneId)
-            //        .ToList()
-            //        .SelectMany(s => s.Walls)
-            //        .SelectMany(w => w.Bricks)
-            //        .ToDictionary(
-            //            b => b.BrickId,
-            //            b => b);
+            var sceneHolder = GetSceneHolder(id);
+            var converter = new SceneViewModelResolver(GetViewModelContext(sceneHolder));
+            var scene = JsonConvert.DeserializeObject<SceneViewModel>(sceneJson, converter);
+            if (ModelState.IsValid)
+            {
+                var originalSceneBricks = id.IsEmpty()
+                    ? new Dictionary<string, Brick>()
+                    : (this.GetSceneHolder(id).Scene ?? new Scene()).Walls
+                        .SelectMany(w => w.Bricks)
+                        .ToDictionary(b => b.BrickId, b => b);
 
-            //    var sceneEntity = new Scene();
-            //    sceneEntity.SceneId = scene.SceneId;
-            //    sceneEntity.Title = scene.Title;
-            //    sceneEntity.IsTemplate = scene.IsTemplate;
+                var sceneEntity = new Scene();
+                //sceneEntity.SceneId = scene.SceneId;
+                sceneEntity.Title = scene.Title;
+                sceneEntity.IsTemplate = scene.IsTemplate;
 
-            //    var wallList = new List<Wall>();
+                var wallList = new List<Wall>();
 
-            //    foreach (var wall in scene.Walls)
-            //    {
-            //        var wallEntity = new Wall();
-            //        wallEntity.Title = wall.Title;
-            //        wallEntity.Width = wall.Width;
+                foreach (var wall in scene.Walls)
+                {
+                    var wallEntity = new Wall();
+                    wallEntity.Title = wall.Title;
+                    wallEntity.Width = wall.Width;
 
-            //        wallList.Add(wallEntity);
+                    wallList.Add(wallEntity);
 
-            //        var brickList = new List<Brick>();
+                    var brickList = new List<Brick>();
 
-            //        foreach (var brick in wall.Bricks)
-            //        {
-            //            Brick brickEntity = null;
-            //            if (!brick.BrickId.IsEmpty() && originalSceneBricks.ContainsKey(brick.BrickId))
-            //            {
-            //                brickEntity = originalSceneBricks[brick.BrickId];
-            //            }
+                    foreach (var brick in wall.Bricks)
+                    {
+                        Brick brickEntity = null;
+                        if (!brick.BrickId.IsEmpty() && originalSceneBricks.ContainsKey(brick.BrickId))
+                        {
+                            brickEntity = originalSceneBricks[brick.BrickId];
+                        }
 
-            //            if (brickEntity == null)
-            //            {
-            //                var brickType = brick.GetType().GetGenericArguments()[0];
-            //                brickEntity = (Brick)Activator.CreateInstance(MsCms.RegisteredBrickTypes.Single(b => b.Type == brickType).Type);
-            //                brickEntity.BrickId = MongoDB.Bson.ObjectId.GenerateNewId().ToString();
-            //            }
+                        if (brickEntity == null)
+                        {
+                            brickEntity = brick.Content;
+                            brickEntity.BrickId = MongoDB.Bson.ObjectId.GenerateNewId().ToString();
+                        }
 
-            //            brickEntity.Title = brick.Title;
-            //            brickEntity.Width = brick.Width;
+                        brickEntity.Title = brick.Title;
+                        brickEntity.Width = brick.Width;
 
-            //            brickList.Add(brickEntity);
-            //        }
+                        brickList.Add(brickEntity);
+                    }
 
-            //        wallEntity.Bricks = brickList;
-            //    }
+                    wallEntity.Bricks = brickList;
+                }
 
-            //    sceneEntity.Walls = wallList;
+                sceneEntity.Walls = wallList;
 
-            //    this.repos.Scenes.Save(sceneEntity);
-            //}
+                this.SaveScene(id, sceneEntity);
+            }
 
-            //if (Request.IsAjaxRequest())
-            //{
-            //    // render real (saved) scene
-            //    var sc = repos.Scenes.First(s => s.SceneId == scene.SceneId);
-            //    return PartialView(ContentUrl.Views.Scene.Partial.DesignScene, sc.ToViewModel(GetSceneViewModelContext(sc)));
-            //}
-
-            //return View(ContentUrl.Views.Scene.Partial.DesignScene);
+            return RedirectToAction("EditScene", null, new { id });
         }
 
-        private ViewModelContext GetViewModelContext()
-        {
-            return new ViewModelContext(this, this.config, this.repos, this.rating);
-        }
-
-        private ViewModelContext GetSceneViewModelContext(ISceneHolder sceneHolder)
+        private SceneViewModelContext GetViewModelContext(ISceneHolder sceneHolder)
         {
             return new SceneViewModelContext(this, this.config, this.repos, this.rating, sceneHolder);
         }
 
-        
 
-        [DesignerAuthorizeAttribute]
+        //
+        // GET: /Brick/Edit/5
+        [DesignerAuthorize]
+        public ActionResult EditBrick(string id, string brickId)
+        {
+            var sceneHolder = this.GetSceneHolder(id);
+            var brick = sceneHolder.Scene.Walls.SelectMany(w => w.Bricks).Single(b => b.BrickId == brickId);
+
+            return View(ContentUrl.Views.Brick.Edit, BrickViewModel<Brick>.Create(GetViewModelContext(sceneHolder), brick));
+        }
+
+
         [HttpPost]
-        public ActionResult ApplyTemplate(string sceneId, string templateSceneId)
+        [DesignerAuthorize]
+        public ActionResult EditBrick(string id, IBrickViewModel<Brick> brickViewModel)
         {
-            throw new NotImplementedException();
-            //var template = SceneUtils.ApplyTemplate(this.repos, templateSceneId, sceneId);
+            var htmlBrick = brickViewModel.Content as HtmlBrick;
+            if (htmlBrick != null)
+            {
+                htmlBrick.Html = HttpUtility.HtmlDecode(htmlBrick.Html);
+            }
 
-            //return PartialView(ContentUrl.Views.Scene.Partial.DesignScene, template.ToViewModel(GetSceneViewModelContext(template)));
-        }
 
-        [DesignerAuthorizeAttribute]
-        [HttpPost]
-        public ActionResult CanDeleteBrick(Brick brick)
-        {
-            //if (brick == null || string.IsNullOrEmpty(brick.BrickId))
-            //{
-            //    return new JsonResult { Data = true };
-            //}
-            //else
-            //{
-            //    return new JsonResult()
-            //    {
-            //        // because OfType() extension is not implemented in current MongoDd driver
-            //        // the query is a little bit weird
-            //        Data = repos.Scenes.CanDeleteBrick(brick.BrickId)
-            //    };
-            //}
-            throw new NotImplementedException();
-        }
+            var scene = this.GetSceneHolder(id).Scene;
 
-        public ActionResult Details(ISceneHolder sceneHolder)
-        {
-            var scene = sceneHolder.Scene ?? new Scene();
+            foreach(var wall in scene.Walls)
+            {
+                var brickList = wall.Bricks.ToList();
 
-            return PartialView(ContentUrl.Views.Scene.View, scene.ToViewModel(GetSceneViewModelContext(sceneHolder)));
-        }
+                for(int i = 0; i < brickList.Count; i ++)
+                {
+                    var brick = brickList[i];
+                    if(brick.BrickId == brickViewModel.BrickId)
+                    {
+                        var newBrick = brickViewModel.Content;
+                        newBrick.Title = brick.Title;
+                        newBrick.Width = brick.Width;
 
-        [DesignerAuthorizeAttribute]
-        public ActionResult Edit(ISceneHolder sceneHolder)
-        {
-            var scene = sceneHolder.Scene ?? new Scene();
-            //var templates = repos.Scenes
-            //    .Where(s => s.IsTemplate && s.SceneId != scene.SceneId)
-            //    .Select(s => new { id = s.SceneId, title = s.Title })
-            //    .ToList();
-            //this.ViewBag.GlobalModel = model;
-            var templates = Enumerable.Empty<Scene>();
-            this.ViewBag.Templates = new SelectList(templates, "id", "title");
-            this.ViewBag.LinkableBricksSceneId = Constants.LinkableBricksSceneId;
+                        brickList.RemoveAt(i);
+                        brickList.Insert(i, newBrick);
 
-            return PartialView(ContentUrl.Views.Scene.Edit, scene.ToViewModel(GetSceneViewModelContext(sceneHolder)));
+                        wall.Bricks = brickList;
+
+                        break;
+                    }
+                }
+            }
+
+            this.SaveScene(id, scene);
+
+            return RedirectToAction("EditScene", null, new { id });
         }
     }
 }

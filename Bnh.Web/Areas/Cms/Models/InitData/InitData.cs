@@ -10,27 +10,25 @@ namespace Cms.Models
     {
         public static void Init(IRepositories repos)
         {
-            return;
-
             // just a simple check whether there is need to initialize data
-            //if (repos.Scenes.Where(s => s.SceneId == Constants.LinkableBricksSceneId).Any()) { return; }
+            if (repos.SpecialScenes.Where(s => s.SceneId == Constants.LinkableBricksSceneId).Any()) { return; }
 
-            //repos.Scenes.Insert(new Scene
-            //{
-            //    SceneId = Constants.LinkableBricksSceneId,
-            //    Title = "Linkable Bricks Scene",
-            //    Walls = new[] 
-            //    {
-            //        new Wall
-            //        {
-            //            Title = "Wall",
-            //            Width = 100.0f
-            //        }
-            //    }
-            //});
-
-            //// add index to brick content
-            //repos.Scenes.Collection.EnsureIndex("Walls", "Bricks", "BrickContentId");
+            repos.SpecialScenes.Insert(new SpecialScene
+            {
+                SceneId = Constants.LinkableBricksSceneId,
+                Scene = new Scene
+                {
+                    Title = "Linkable Bricks Scene",
+                    Walls = new[] 
+                    {
+                        new Wall
+                        {
+                            Title = "Wall",
+                            Width = 100.0f
+                        }
+                    }
+                }
+            });
         }
     }
 }

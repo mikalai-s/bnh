@@ -1,11 +1,6 @@
-﻿@model LinkableBrick
+﻿@model LinkableBrickViewModel
 
-@{
-    ViewBag.Title = "Edit";
-    var bricks = ViewBag.BricksToLink as IEnumerable<SelectListItem>;
-}
-
-<div class="editor-label">Brick To Link</div>
+<div class="editor-label">Brick To Link To</div>
 <div class="editor-field">
-    @Html.DropDownList("linkedContentId", bricks)
+    @Html.DropDownList("Content.LinkedBrickId", Model.BricksToLink, "")
 </div>

@@ -5,7 +5,7 @@ namespace Cms.Core
 {
     public interface IRepositories
     {
-        //SceneRepository Scenes { get; }
+        MongoRepository<SpecialScene> SpecialScenes { get; }
         ReviewRepository Reviews { get; }
         MongoRepository<Profile> Profiles { get; }
         MongoRepository<Comment> Feedback { get; }

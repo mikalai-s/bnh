@@ -1,8 +1,12 @@
 ﻿@model IBrickViewModel<Brick>
 
+@{
+    var nonLinkableBrick = Model.EnsureNonLinkable() as IBrickViewModel<Brick>;
+}
+
 @if (Model.ShowTitle)
 {
     <div class="brick-title"><span>@Model.Title</span><hr /></div>
 }
 
-@Html.Partial(Model.GetBrickView(this.Server), Model)
+@Html.Partial(nonLinkableBrick.GetBrickView(this.Server), nonLinkableBrick)
