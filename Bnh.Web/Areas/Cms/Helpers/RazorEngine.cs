@@ -9,6 +9,7 @@ using System.CodeDom;
 using System.CodeDom.Compiler;
 using Microsoft.CSharp;
 using System.Dynamic;
+using System.Security.Cryptography;
 
 namespace Cms.Helpers
 {
@@ -23,36 +24,47 @@ namespace Cms.Helpers
             const string namespaceForDynamicClasses = "dyn";
             const string dynamicClassFullName = namespaceForDynamicClasses + "." + dynamicallyGeneratedClassName;
 
-            var language = new CSharpRazorCodeLanguage();
-            var host = new RazorEngineHost(language)
+            var assembly = default(Assembly);
+
+            string assemblyFileName = Path.Combine(Path.GetTempPath(), "CompiledRazor.{0}.dll".FormatWith(Hash(template)));
+            if (File.Exists(assemblyFileName))
             {
-                DefaultBaseClass = typeof(DynamicContentGeneratorBase).FullName,
-                DefaultClassName = dynamicallyGeneratedClassName,
-                DefaultNamespace = namespaceForDynamicClasses,
-            };
-            host.NamespaceImports.Add("System");
-            host.NamespaceImports.Add("System.Dynamic");
-            host.NamespaceImports.Add("System.Text");
-            var engine = new RazorTemplateEngine(host);
-
-            var tr = new StringReader(template); // here is where the string come in place
-            GeneratorResults razorTemplate = engine.GenerateCode(tr);
-
-            var compilerParameters = new CompilerParameters();
-            AppDomain.CurrentDomain.GetAssemblies()
-                .Where(a => !a.IsDynamic)
-                .ToList()
-                .ForEach(a => compilerParameters.ReferencedAssemblies.Add(a.Location));
-            compilerParameters.GenerateInMemory = true;
-
-            CompilerResults compilerResults = new CSharpCodeProvider().CompileAssemblyFromDom(compilerParameters, razorTemplate.GeneratedCode);
-            if (compilerResults.Errors.Count > 0)
-            {
-                return "Error: " + string.Join("\r\nError: ", compilerResults.Errors.Cast<CompilerError>().Select(e => e.ErrorText));
+                assembly = Assembly.LoadFrom(assemblyFileName);
             }
-            var compiledAssembly = compilerResults.CompiledAssembly;
+            else
+            {
+                var language = new CSharpRazorCodeLanguage();
+                var host = new RazorEngineHost(language)
+                {
+                    DefaultBaseClass = typeof(DynamicContentGeneratorBase).FullName,
+                    DefaultClassName = dynamicallyGeneratedClassName,
+                    DefaultNamespace = namespaceForDynamicClasses,
+                };
+                host.NamespaceImports.Add("System");
+                host.NamespaceImports.Add("System.Dynamic");
+                host.NamespaceImports.Add("System.Text");
+                var engine = new RazorTemplateEngine(host);
 
-            var templateInstance = (DynamicContentGeneratorBase)compiledAssembly.CreateInstance(dynamicClassFullName);
+                var tr = new StringReader(template); // here is where the string come in place
+                GeneratorResults razorTemplate = engine.GenerateCode(tr);
+
+                var compilerParameters = new CompilerParameters();
+                AppDomain.CurrentDomain.GetAssemblies()
+                    .Where(a => !a.IsDynamic)
+                    .ToList()
+                    .ForEach(a => compilerParameters.ReferencedAssemblies.Add(a.Location));
+                compilerParameters.OutputAssembly = assemblyFileName;
+                compilerParameters.TempFiles = new TempFileCollection(Path.GetTempPath(), true);
+
+                CompilerResults compilerResults = new CSharpCodeProvider().CompileAssemblyFromDom(compilerParameters, razorTemplate.GeneratedCode);
+                if (compilerResults.Errors.Count > 0)
+                {
+                    return "Error: " + string.Join("\r\nError: ", compilerResults.Errors.Cast<CompilerError>().Select(e => e.ErrorText));
+                }
+                assembly = compilerResults.CompiledAssembly;
+            }
+
+            var templateInstance = (DynamicContentGeneratorBase)assembly.CreateInstance(dynamicClassFullName);
 
             templateInstance.Model = model;
 
@@ -64,8 +76,23 @@ namespace Cms.Helpers
             {
                 return "Error: " + e.Message;
             }
-        }        
+        }
+
+        private static string Hash(string input)
+        {
+            var bytes = input.ToCharArray().SelectMany(c => BitConverter.GetBytes(c)).ToArray();
+
+            var sb = new StringBuilder();
+            var alg = MD5.Create();
+            foreach (var b in alg.ComputeHash(bytes, 0, bytes.Length))
+            {
+                sb.AppendFormat("{0:X}", b);
+            }
+            return sb.ToString();
+        }
     }
+
+
 
     public abstract class DynamicContentGeneratorBase
     {
