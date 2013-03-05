@@ -832,7 +832,9 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="js\views\community-index.htm" />
-    <None Include="Properties\PublishProfiles\bnh.pubxml" />
+    <None Include="Properties\PublishProfiles\bnh.msilivonik.com - Arvixe.pubxml" />
+    <None Include="Properties\PublishProfiles\bnh.azurewebsites.net - Azure.pubxml" />
+    <None Include="Properties\PublishProfiles\bnh.azurewebsites.net - Azure %28FTP%29.pubxml" />
     <Content Include="Views\Community\Create.cshtml" />
     <Content Include="Views\Community\Delete.cshtml" />
     <Content Include="Views\Community\Details.cshtml" />
