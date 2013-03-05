@@ -6,9 +6,7 @@
         var originalSceneData,
             lockWallsCheckbox = $("#lockWallsCheckbox"),
             lockBricksCheckbox = $("#lockBricksCheckbox"),
-            hideBricksContentCheckbox = $("#hideBricksContentCheckbox"),
-            $isTemplateCheckbox = $("#IsTemplate"),
-            $titleTextbox = $("#Title");
+            hideBricksContentCheckbox = $("#hideBricksContentCheckbox");
 
         function initScene() {
             initWalls();
@@ -19,20 +17,13 @@
         function onSaveSceneButton() {
             var data = getSceneData();
 
-            $.ajax({
-                url: "/Scene/Save", //form.action,
-                type: "POST",
-                contentType: "application/json",
-                async: false,
-                data: JSON.stringify(data),
-                success: function (result) {
-                    getScene().replaceWith(result);
-                    initScene();
-                },
-                error: function (result) {
-                    if (window.console) { window.console.error(result); }
-                }
-            });
+            $("#sceneJson").val(JSON.stringify(data));
+        }
+
+        function onExtractTemplateButtonClicked() {
+            var data = getSceneData();
+
+            $("#templateJson").val(JSON.stringify(data));
         }
 
         // collect form data to submit
@@ -47,23 +38,16 @@
                 walls[walls.length] = entity;
             
                 entity.bricks = [];
-                entity.order = i;
 
                 wall.find(".brick-wrapper").each(function (j, brick) {
                     brick = $(brick);
 
                     var entity2 = brick.data("entity");
                     entity.bricks[entity.bricks.length] = entity2;
-
-                    entity2.order = j;
                 });
             });
 
             return {
-                sceneId: $("#sceneId").val(),
-                ownerGuidId: $("#ownerId").val(),
-                isTemplate: $isTemplateCheckbox.is(':checked'),
-                title: $titleTextbox.val(),
                 walls: walls
             };
         }
@@ -185,7 +169,7 @@
 
             // initialize brick object
             initializeBrick(brick, {
-                NewContentTypeName: $("#brickType").val(),
+                brickType: $("#brickType").val(),
                 title: brickTitle.val()
             });
 
@@ -263,23 +247,23 @@
 
         function onDeleteBrickButtonClicked() {
             var brick = $(this).closest(".brick-wrapper");
-            $.ajax({
-                url: "/Scene/CanDeleteBrick",
-                type: "POST",
-                contentType: "application/json",
-                async: true,
-                data: JSON.stringify(brick.data("entity")),
-                success: function (result) {
-                    if (result === true) {
+            //$.ajax({
+            //    url: "/Scene/CanDeleteBrick",
+            //    type: "POST",
+            //    contentType: "application/json",
+            //    async: true,
+            //    data: JSON.stringify(brick.data("entity")),
+            //    success: function (result) {
+            //        if (result === true) {
                         brick.remove();
-                    } else {
-                        alert("Unable to delete brick because it's in use!");
-                    }
-                },
-                error: function (result) {
-                    if (window.console) { window.console.error(result); }
-                }
-            });
+                //    } else {
+                //        alert("Unable to delete brick because it's in use!");
+                //    }
+                //},
+                //error: function (result) {
+                //    if (window.console) { window.console.error(result); }
+                //}
+            //});
         }
 
         function ensureSceneSaved() {
@@ -287,12 +271,8 @@
             var modified = (originalSceneData !== newData);
 
             if (modified) {
-                if (!confirm("There are unsaved changes on the scene! Do you want to save them before processing?")) {
-                    return false;
-                }
-
-                // save wall
-                onSaveSceneButton();
+                alert("There are unsaved changes on the scene! Please save them before processing!")
+                return false;
             }
             return true;
         }
@@ -344,37 +324,11 @@
                 .toggleClass("hide-content", checked);
         }
 
-        function onApplyTemplateButtonClicked() {
-            if (!confirm("Are you sure you want to replace entire scene with template data?"))
-                return false;
-
-            var data = {
-                sceneId: $("#sceneId").val(),
-                templateSceneId: $("#templateSceneId").val()
-            };
-
-            $.ajax({
-                url: "/Scene/ApplyTemplate",
-                type: "POST",
-                contentType: "application/json",
-                data: JSON.stringify(data),
-                success: function (result) {
-                    getScene().replaceWith(result);
-                    initScene();
-                },
-                error: function (result) {
-                    if (window.console) { window.console.error(result); }
-                }
-            });
-        }
-
-
-
         $("#addBrickButton").click(onAddBrickButtonClicked);
         $("#addWallButton").click(onAddWallButtonClicked);
         $("#viewScene").click(onViewSceneButtonClicked);
-        $("#applyTemplateButton").click(onApplyTemplateButtonClicked);
         $("#saveSceneButton").click(onSaveSceneButton);
+        $("#extractTemplateButton").click(onExtractTemplateButtonClicked);
 
         lockWallsCheckbox.click(onLockWallsCheckbox);
         lockBricksCheckbox.click(onLockBricksCheckbox);

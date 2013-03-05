@@ -14,12 +14,21 @@ namespace Cms.ViewModels
     /// </summary>
     public class SceneViewModelContext : ViewModelContext
     {
-        public Scene Scene { get; private set; }
+        public ISceneHolder SceneHolder { get; private set; }
 
-        public SceneViewModelContext(Controller controller, IConfig config, IRepositories repos, IRatingCalculator rating, Scene scene)
+        public Lazy<Dictionary<string, Brick>> LinkableBricks { get; private set; }
+
+
+        public SceneViewModelContext(Controller controller, IConfig config, IRepositories repos, IRatingCalculator rating, ISceneHolder sceneHolder)
             : base(controller, config, repos, rating)
         {
-            this.Scene = scene;
+            this.SceneHolder = sceneHolder;
+
+            this.LinkableBricks = new Lazy<Dictionary<string,Brick>>(() =>
+                this.Repos.SpecialScenes.Single(s => s.SceneId == Constants.LinkableBricksSceneId)
+                    .Scene.Walls.SelectMany(w => w.Bricks)
+                    .ToDictionary(b => b.BrickId, b => b));
         }
+
     }
 }

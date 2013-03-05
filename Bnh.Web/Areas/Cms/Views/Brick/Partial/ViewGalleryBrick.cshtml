@@ -1,0 +1,24 @@
+﻿@model BrickViewModel<GalleryBrick>
+
+@{
+    this.GetStyleBundle().Include(new []
+    {
+        "~/css/royalslider/royalslider.css",
+        "~/css/royalslider/skins/rs-default-inverted.css"
+    });
+    this.GetScriptBundle().Include(new[]
+    {
+        "~/Areas/Cms/Scripts/view-gallery-content.js"
+    });
+
+    var images = (Model.Content.Images == null) ? Enumerable.Empty<string>() : Model.Content.Images;
+}
+
+<div class="royalSlider rsDefault rsDefaultInv rsMinW rsUni" style="width: 100%; height: @(Model.Content.Height)px; visibility: hidden;">
+    @foreach(var image in images)
+    {
+        <a class="rsImg" data-rsh="400" href="@image" data-rsBigImg="@image">
+            <img src="@image" class="rsTmb" />
+        </a>
+    }
+</div>

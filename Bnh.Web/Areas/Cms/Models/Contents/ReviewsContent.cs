@@ -5,7 +5,7 @@ using System.Web;
 
 namespace Cms.Models
 {
-    public class ReviewsContent : BrickContent
+    public class ReviewsBrick : Brick
     {
         
     }

@@ -9,6 +9,7 @@ using System.Collections;
 using TypeMap = System.Collections.Generic.Dictionary<string, System.Type>;
 using Cms.Controllers;
 using Cms.Models;
+using Cms.ViewModels;
 
 namespace Cms.Helpers
 {
@@ -19,25 +20,32 @@ namespace Cms.Helpers
             bool hasPrefix = bindingContext.ValueProvider.ContainsPrefix(bindingContext.ModelName);
             string prefix = ((hasPrefix) && (bindingContext.ModelName != "")) ? bindingContext.ModelName + "." : "";
 
-            if (controllerContext.Controller.GetType() == typeof(BrickContentController))
+            if (typeof(SceneController).IsAssignableFrom(controllerContext.Controller.GetType()))
             {
-                if(modelType.IsAssignableFrom(typeof(BrickContent)))
+                if (modelType.IsAssignableFrom(typeof(IBrickViewModel<>)))
                 {
                     // get the parameter species
-                    var result = bindingContext.ValueProvider.GetValue(prefix + "Type");
+                    var result = bindingContext.ValueProvider.GetValue(prefix + "BrickType");
                     if (result == null || string.IsNullOrEmpty(result.AttemptedValue))
                     {
                         throw new Exception(string.Format("Unknown type \"{0}\"", result.AttemptedValue));
                     }
 
                     var type = MsCms.RegisteredBrickTypes.Select(br => br.Type).First(t => t.Name == result.AttemptedValue);
-                    var model = Activator.CreateInstance(type);
-                    bindingContext.ModelMetadata = ModelMetadataProviders.Current.GetMetadataForType(() => model, type);
+                    var model = BrickViewModel<Brick>.Create(type);
+                    bindingContext.ModelMetadata = ModelMetadataProviders.Current.GetMetadataForType(() => model, model.GetType());
                     return model;
                 }
             }
 
-            return base.CreateModel(controllerContext, bindingContext, modelType);           
+            try
+            {
+                return base.CreateModel(controllerContext, bindingContext, modelType);
+            }
+            catch(Exception)
+            {
+                throw;
+            }
         }        
 
         protected override void SetProperty(ControllerContext controllerContext, ModelBindingContext bindingContext, PropertyDescriptor propertyDescriptor, object value)

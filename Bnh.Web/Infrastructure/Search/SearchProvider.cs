@@ -64,49 +64,34 @@ namespace Bnh.Infrastructure.Search
 
         private void IndexCommunities(IndexWriter indexWriter)
         {
+            throw new NotImplementedException();
             // all content IDs
-            var contentWithScenes = from scene in this.repos.Scenes.ToList()
-                                    from wall in scene.Walls
-                                    from brick in wall.Bricks
-                                    select new
-                                    {
-                                        SceneId = scene.SceneId,
-                                        ContentId = brick.BrickContentId
-                                    };
-            var contentIds = contentWithScenes.Select(c => c.ContentId);
+            //var sceneWithBricks = this.repos.Scenes
+            //    .ToList()
+            //    .ToDictionary(
+            //        s => s.SceneId,
+            //        s => s.Walls
+            //            .SelectMany(w => w.Bricks)
+            //            .OfType<HtmlBrick>());
 
-            // all HTML brick contents to index
-            var contents = this.repos.BrickContents
-                .OfType<HtmlContent>()
-                .AsQueryable()
-                .Where(b => b.BrickContentId.In(contentIds))
-                .ToList();
+            //foreach (var group in sceneWithBricks)
+            //{
+            //    foreach (var brick in group.Value)
+            //    {
+            //        if (brick.Html.IsEmpty()) { continue; }
 
-            // group them by their scenes
-            var contentGroups = from contentWithScene in contentWithScenes
-                                from content in contents
-                                where contentWithScene.ContentId == content.BrickContentId
-                                group content by contentWithScene.SceneId;
-            // var dictionary = contentGroups.ToDictionary(c => c.Key, c => c.ToList());
+            //        // create a document, add in a single field
+            //        var doc = new Document();
 
-            foreach (var groups in contentGroups)
-            {
-                foreach (var content in groups)
-                {
-                    if (content.Html.IsEmpty()) { continue; }
+            //        doc.Add(new Field("community-id", group.Key, Field.Store.YES, Field.Index.NO));
+            //        doc.Add(new Field("content-id", brick.BrickId, Field.Store.YES, Field.Index.NO));
+            //        doc.Add(new Field("type", "community", Field.Store.YES, Field.Index.NO));
+            //        doc.Add(new Field("content", EscapeHtml(brick.Html), Field.Store.YES, Field.Index.ANALYZED, Field.TermVector.WITH_POSITIONS_OFFSETS));
 
-                    // create a document, add in a single field
-                    var doc = new Document();
-
-                    doc.Add(new Field("community-id", groups.Key, Field.Store.YES, Field.Index.NO));
-                    doc.Add(new Field("content-id", content.GetHtmlId(), Field.Store.YES, Field.Index.NO));
-                    doc.Add(new Field("type", "community", Field.Store.YES, Field.Index.NO));
-                    doc.Add(new Field("content", EscapeHtml(content.Html), Field.Store.YES, Field.Index.ANALYZED, Field.TermVector.WITH_POSITIONS_OFFSETS));
-
-                    // write the document to the index
-                    indexWriter.AddDocument(doc);
-                }
-            }
+            //        // write the document to the index
+            //        indexWriter.AddDocument(doc);
+            //    }
+            //}
         }
 
         private void IndexReviews(IndexWriter indexWriter)

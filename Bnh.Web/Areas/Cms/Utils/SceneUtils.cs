@@ -11,14 +11,15 @@ namespace Cms.Utils
     {
         public static Scene ApplyTemplate(IRepositories repos, string sourceSceneId, string targetSceneId)
         {
-            var template = repos.Scenes.First(t => t.SceneId == sourceSceneId && t.IsTemplate);
-            template.SceneId = targetSceneId;
-            template.Title = null;
-            template.IsTemplate = false;
+            throw new NotImplementedException();
+            //var template = repos.Scenes.First(t => t.SceneId == sourceSceneId && t.IsTemplate);
+            //template.SceneId = targetSceneId;
+            //template.Title = null;
+            //template.IsTemplate = false;
 
-            SaveScene(repos, template, true);
+            //SaveScene(repos, template, true);
 
-            return template;
+            //return template;
         }
 
         public static void SaveScene(IRepositories repos, Scene scene)
@@ -28,6 +29,8 @@ namespace Cms.Utils
 
         private static void SaveScene(IRepositories repos, Scene scene, bool cloning)
         {
+            throw new NotImplementedException();
+            /*
             // enumerate scene's existing brick contents to track deleted ones
             var existingSceneWalls = repos.Scenes
                 .Where(s => s.SceneId == scene.SceneId)
@@ -67,7 +70,7 @@ namespace Cms.Utils
                             .Where(br => br.Type.Name == brick.NewContentTypeName)
                             .Select(br => br.Type)
                             .First();
-                        var newContent = Activator.CreateInstance(contentType) as BrickContent;
+                        var newContent = Activator.CreateInstance(contentType) as Brick;
                         repos.BrickContents.Insert(newContent);
                         brick.BrickContentId = newContent.BrickContentId;
                     }
@@ -79,6 +82,7 @@ namespace Cms.Utils
 
             // delete removed bricks
             existingBricks.ForEach(repos.BrickContents.Delete);
+          * */
         }
     }
 }

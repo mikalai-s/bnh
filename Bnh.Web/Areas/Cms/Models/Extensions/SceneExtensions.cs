@@ -12,17 +12,13 @@ namespace Cms.Models
     {
         public static SceneViewModel ToViewModel(this Scene scene, ViewModelContext context)
         {
-            var fetch = scene.Walls.SelectMany(w => w.Bricks).GetContentMap(context.Repos);
             return new SceneViewModel
             {
-                SceneId = scene.SceneId,
-                Title = scene.Title,
-                IsTemplate = scene.IsTemplate,
                 Walls = scene.Walls.Select(wall => new WallViewModel
                 {
                     Title = wall.Title,
                     Width = wall.Width,
-                    Bricks = wall.Bricks.Select(brick => BrickViewModel<BrickContent>.Create(context, brick, fetch[brick]))
+                    Bricks = wall.Bricks.Select(brick => BrickViewModel<Brick>.Create(context, brick))
                 })
             };
         }

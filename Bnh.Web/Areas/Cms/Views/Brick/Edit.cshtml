@@ -1,0 +1,50 @@
+﻿@model IBrickViewModel<Brick>
+
+@{
+    var view = Model.GetBrickEditView(this.Server);
+}
+
+<div class="row">
+    <div class="span12">
+    @using (Html.BeginForm("EditBrick", null, new { brickId = Model.BrickId }))
+    {
+        @Html.ValidationSummary(true)
+        <fieldset>
+            <legend>Brick</legend>
+
+            @Html.HiddenFor(model => model.Content.BrickId)
+            @Html.Hidden("BrickType", Model.Content.GetType().Name)
+
+            <label>@Html.LabelFor(model => model.Content.Title)</label>
+            @Html.EditorFor(model => model.Title)
+
+            <label class="checkbox">
+                @Html.EditorFor(model => model.Content.IsTitleVisible) @Html.LabelFor(model => model.Content.IsTitleVisible)
+            </label>
+
+            <label class="checkbox">
+                @Html.EditorFor(model => model.Content.IsTitleUsedInToC) @Html.LabelFor(model => model.Content.IsTitleUsedInToC)
+            </label>
+
+           @* @if(ViewBag.TabsAvailable != null)
+            {
+                @Html.DropDownList("tabs", ViewBag.TabsAvailable as IEnumerable<SelectListItem>, "No Tab Assigned", new { @class = "tabs-available", onchange = "var v = JSON.parse(this.value || '{}');$('#OwnerTabName').val(v.id);$('#OwnerTabIndex').val(v.index)"})
+                @Html.HiddenFor(b => b.OwnerTabName)
+                @Html.HiddenFor(b => b.OwnerTabIndex)
+            }*@
+
+            @if (File.Exists(Server.MapPath(view)))
+            {
+                @Html.Partial(view, Model)
+            }
+
+            <span class="alter"><input type="submit" value="Save" id="saveButton" /></span>
+            <span><a href="@Html.ViewContext.RequestContext.GetBackUrl()">Cancel</a></span>
+        </fieldset>
+    }
+    </div>
+</div>
+
+@{
+    this.RenderStylesAndScripts();
+}

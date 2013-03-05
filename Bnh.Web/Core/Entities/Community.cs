@@ -7,7 +7,7 @@ using Cms.Models;
 
 namespace Bnh.Core.Entities
 {
-    public class Community : IMappable, IReviewable
+    public class Community : ISceneHolder, IMappable, IReviewable
     {
         public string CommunityId { get; set; }
 
@@ -82,5 +82,7 @@ namespace Bnh.Core.Entities
 
         // this is for fast communities loading
         public IDictionary<string, double?> Ratings { get; set; }
+
+        public Scene Scene { get; set; }
     }
 }

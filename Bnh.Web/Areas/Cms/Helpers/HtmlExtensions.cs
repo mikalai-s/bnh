@@ -16,6 +16,7 @@ using System.Web.Optimization;
 using Cms.ViewModels;
 using Microsoft.Web.Helpers;
 using Bnh.Core;
+using Cms.Controllers;
 
 namespace Cms.Helpers
 {
@@ -53,14 +54,14 @@ namespace Cms.Helpers
         public static MvcHtmlString DropDownListForBrickTypes(this HtmlHelper htmlHelper, string name)
         {
             var items = MsCms.RegisteredBrickTypes
-                .Select(br => new SelectListItem { Value = br.Type.Name, Text = br.Title });
+                .Select(br => new SelectListItem { Value = br.Type.FullName, Text = br.Title });
             return htmlHelper.DropDownList(name, items);
         }
 
-        public static MvcHtmlString EditSceneLink(this HtmlHelper html, Scene scene, string text, Uri viewUrl)
-        {
-            return html.ActionLink(text, "Edit", "Scene", new { id = scene.SceneId, returnUrl = viewUrl.AbsoluteUri }, null);
-        }
+        //public static MvcHtmlString EditSceneLink(this HtmlHelper html, Scene scene, string text, Uri viewUrl)
+        //{
+        //    return html.ActionLink(text, "Edit", "Scene", new { id = scene.SceneId, returnUrl = viewUrl.AbsoluteUri }, null);
+        //}
 
         public static string GetBackUrl(this RequestContext rc)
         {
@@ -98,18 +99,15 @@ namespace Cms.Helpers
         }
 
 
-        public static void RenderScene(this WebViewPage page, string sceneId, object model)
+        public static void RenderScene(this WebViewPage page, ISceneHolder sceneHolder, bool design = false)
         {
-            page.Html.RenderAction("Details", "Scene", new { sceneId, model });
-            page.RenderStylesAndScripts();
-        }
+            var sceneController = page.ViewContext.Controller as SceneController;
+            if (sceneController == null)
+            {
+                throw new InvalidCastException("Controller {0} doesn't inherit SceneController".FormatWith(page.ViewContext.Controller.GetType().Name));
+            }
 
-        public static void RenderDesignScene(this WebViewPage page, string sceneId, object model)
-        {
-            // save crrent URL in sesion so we know it when redirecting back from brick editing
-            page.Session["_lastUsedSceneDesignUrl"] = page.Request.Url.AbsoluteUri;
-
-            page.Html.RenderAction("Edit", "Scene", new { sceneId, model });
+            page.Html.RenderPartial(design ? ContentUrl.Views.Scene.Edit : ContentUrl.Views.Scene.View, sceneController.GetSceneViewModel(sceneHolder, design));
 
             page.RenderStylesAndScripts();
         }

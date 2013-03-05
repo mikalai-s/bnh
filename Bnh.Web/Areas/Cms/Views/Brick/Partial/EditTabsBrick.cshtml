@@ -1,0 +1,45 @@
+﻿@model TabsBrickViewModel
+
+@using Newtonsoft.Json
+
+@{
+    this.GetScriptBundle().Include(new[]
+    {
+        "~/Areas/Cms/Scripts/edit-tabs-content.js"
+    });
+}
+
+<div style="padding: 20px;">
+    Tabs:
+    <div data-bind="foreach: tabs">
+        <div>
+            <input type="text" data-bind="attr: { name: getInputKeyNameAttribute($index()) }, value: title" />
+            <input type="button" class="button-remove btn" value="Remove Tab" data-bind="click: function() { $parent.removeTab($index()) }" />
+
+            <div style="padding-left: 40px;">
+
+                Bricks:
+                <div data-bind="foreach: bricks" >
+
+                    <select data-bind="options: $root.availableBricks, optionsText: 'name', optionsValue: 'value', value: $data, attr: { name: $parent.getInputValueNameAttribute($parentContext.$index()) }" ></select>
+                    <input type="button" class="button-remove btn" value="Remove Brick" data-bind="click: function() { $parent.removeBrick($index()) }" /><br />
+
+                </div>
+
+                <input class="btn" type="button" value="Add Brick" data-bind="click: addBrick" />
+
+            </div>
+        </div>
+    </div>
+    
+    <input class="btn" type="button" value="Add Tab" data-bind="click: addTab" />
+</div>
+
+<script>
+    var page_tabs = @Html.Raw(JsonConvert.SerializeObject(Model.Tabs))
+    var page_availableBricks = @Html.Raw(JsonConvert.SerializeObject(Model.Bricks))
+</script>
+<br />
+<br />
+<br />
+<br />

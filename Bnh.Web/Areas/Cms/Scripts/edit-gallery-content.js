@@ -21,7 +21,7 @@ define(
             var $newImagesDiv = $("#new-images");
 
             $newImagesDiv
-                .append('<div><input name="images" style="width: 700px;" type="text" /><input class="button-remove btn" type="button" value="Remove" /></div>')
+                .append('<div><input name="Content.Images" style="width: 700px;" type="text" /><input class="button-remove btn" type="button" value="Remove" /></div>')
                 .find(".button-remove")
                 .click(remove);
 

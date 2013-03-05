@@ -25,22 +25,22 @@ namespace Cms.Helpers
 
         public static class Views
         {
-            public static class BrickContent
+            public static class Brick
             {
-                public const string Edit = "~/Areas/Cms/Views/BrickContent/Edit.cshtml";
+                public const string Edit = "~/Areas/Cms/Views/Brick/Edit.cshtml";
 
-                public const string View = "~/Areas/Cms/Views/BrickContent/View.cshtml";
+                public const string View = "~/Areas/Cms/Views/Brick/View.cshtml";
 
                 public static class Partial
                 {
                     public static string GetEdit(Type type)
                     {
-                        return "~/Areas/Cms/Views/BrickContent/Partial/Edit{0}.cshtml".FormatWith(type.Name);
+                        return "~/Areas/Cms/Views/Brick/Partial/Edit{0}.cshtml".FormatWith(type.Name);
                     }
 
                     public static string GetView(Type type)
                     {
-                        return "~/Areas/Cms/Views/BrickContent/Partial/View{0}.cshtml".FormatWith(type.Name);
+                        return "~/Areas/Cms/Views/Brick/Partial/View{0}.cshtml".FormatWith(type.Name);
                     }
                 }
             }
@@ -49,7 +49,11 @@ namespace Cms.Helpers
             {
                 public const string Edit = "~/Areas/Cms/Views/Scene/Edit.cshtml";
 
-                public const string EditLinkable = "~/Areas/Cms/Views/Scene/EditLinkable.cshtml";
+                public const string EditLinkable = "~/Areas/Cms/Views/Scene/EditLinkables.cshtml";
+
+                public const string EditTemplate = "~/Areas/Cms/Views/Scene/EditTemplate.cshtml";
+
+                public const string TemplateIndex = "~/Areas/Cms/Views/Scene/TemplateIndex.cshtml";
 
                 public const string View = "~/Areas/Cms/Views/Scene/View.cshtml";
 

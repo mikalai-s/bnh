@@ -16,8 +16,8 @@ namespace Cms.Infrastructure
 {
     public class Repositories : IRepositories
     {
-        public MongoRepository<Scene> Scenes { get; private set; }
-        public MongoRepository<BrickContent> BrickContents { get; private set; }
+        public MongoRepository<SpecialScene> SpecialScenes { get; private set; }
+        public MongoRepository<Brick> BrickContents { get; private set; }
         public ReviewRepository Reviews { get; private set; }
         public MongoRepository<Profile> Profiles { get; private set; }
         public MongoRepository<Comment> Feedback { get; private set; }
@@ -25,8 +25,8 @@ namespace Cms.Infrastructure
         public Repositories(IConfig config) 
         {
             var connectionString = config.ConnectionStrings["cms"];
-            this.Scenes = new MongoRepository<Scene>(connectionString);
-            this.BrickContents = new MongoRepository<BrickContent>(connectionString);
+            this.SpecialScenes = new MongoRepository<SpecialScene>(connectionString);
+            this.BrickContents = new MongoRepository<Brick>(connectionString);
             this.Reviews = new ReviewRepository(connectionString);
             this.Profiles = new MongoRepository<Profile>(connectionString, "Profiles");
             this.Feedback = new MongoRepository<Comment>(connectionString, "Feedback");

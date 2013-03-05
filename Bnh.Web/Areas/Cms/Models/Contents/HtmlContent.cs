@@ -5,7 +5,7 @@ using System.Web.Mvc;
 
 namespace Cms.Models
 {
-    public partial class HtmlContent : BrickContent
+    public partial class HtmlBrick : Brick
     {
         [AllowHtml]
         public string Html { get; set; }

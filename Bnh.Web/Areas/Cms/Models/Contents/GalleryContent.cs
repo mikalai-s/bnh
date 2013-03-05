@@ -5,7 +5,7 @@ using System.Web;
 
 namespace Cms.Models
 {
-    public class GalleryContent : BrickContent
+    public class GalleryBrick : Brick
     {
         public int? Height { get; set; }
 

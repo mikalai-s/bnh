@@ -8,13 +8,6 @@ namespace Cms.Models
 {
     public class Scene
     {
-        [BsonRepresentation(BsonType.ObjectId), BsonId]
-        public string SceneId { get; set; }
-
-        public string Title { get; set; }
-
-        public bool IsTemplate { get; set; }
-
         public ICollection<Wall> Walls
         {
             get { return this._walls ?? (this._walls = new List<Wall>()); }

@@ -1,0 +1,34 @@
+﻿@model IBrickViewModel<GalleryBrick>
+
+@{
+    this.GetScriptBundle().Include(new[]
+    {
+        "~/Areas/Cms/Scripts/edit-gallery-content.js"
+    });
+    var images = (Model == null || Model.Content.Images == null) ? new string[] { } : Model.Content.Images;
+}
+
+<div class="editor-label">
+    @Html.LabelFor(model => model.Content.Height)
+</div>
+<div class="editor-field">
+    @Html.EditorFor(model => model.Content.Height)
+    @Html.ValidationMessageFor(model => model.Content.Height)
+</div>
+
+    <br />
+<br />
+<br />
+    @foreach (var image in images)
+    {
+        <div>
+            <input name="Content.Images" style="width: 700px;" type="text" readonly="true" value="@image" /><input class="button-remove btn" type="button" value="Remove" />
+        </div>
+    }
+    <div id="new-images"></div>
+    
+    <input id="button-add" class="btn" type="button" value="Add" />
+<br />
+<br />
+<br />
+<br />
