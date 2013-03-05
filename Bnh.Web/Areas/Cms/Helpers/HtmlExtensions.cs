@@ -107,7 +107,7 @@ namespace Cms.Helpers
                 throw new InvalidCastException("Controller {0} doesn't inherit SceneController".FormatWith(page.ViewContext.Controller.GetType().Name));
             }
 
-            page.Html.RenderPartial(design ? ContentUrl.Views.Scene.Edit : ContentUrl.Views.Scene.View, sceneController.GetSceneViewModel(sceneHolder));
+            page.Html.RenderPartial(design ? ContentUrl.Views.Scene.Edit : ContentUrl.Views.Scene.View, sceneController.GetSceneViewModel(sceneHolder, design));
 
             page.RenderStylesAndScripts();
         }

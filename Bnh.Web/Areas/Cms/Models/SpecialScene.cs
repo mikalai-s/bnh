@@ -12,6 +12,8 @@ namespace Cms.Models
         [BsonRepresentation(BsonType.ObjectId), BsonId]
         public string SceneId { get; set; }
 
+        public string Title { get; set; }
+
         public Scene Scene { get; set; }
     }
 }

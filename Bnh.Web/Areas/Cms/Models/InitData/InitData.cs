@@ -16,9 +16,9 @@ namespace Cms.Models
             repos.SpecialScenes.Insert(new SpecialScene
             {
                 SceneId = Constants.LinkableBricksSceneId,
+                Title = "Linkable Bricks Scene",
                 Scene = new Scene
                 {
-                    Title = "Linkable Bricks Scene",
                     Walls = new[] 
                     {
                         new Wall

@@ -28,15 +28,24 @@ namespace Cms.Controllers
             this.rating = rating;
         }
 
-        public virtual SceneViewModel GetSceneViewModel(ISceneHolder sceneHolder)
+        public virtual SceneViewModel GetSceneViewModel(ISceneHolder sceneHolder, bool includeTemplates = false)
         {
             var scene = sceneHolder.Scene ?? new Scene();
 
-            // var templates = Enumerable.Empty<Scene>();
-         //   this.ViewBag.Templates = new SelectList(templates, "id", "title");
-           // this.ViewBag.LinkableBricksSceneId = Constants.LinkableBricksSceneId;
+            var viewModel = scene.ToViewModel(GetViewModelContext(sceneHolder));
 
-            return scene.ToViewModel(GetViewModelContext(sceneHolder));
+            if (includeTemplates)
+            {
+                viewModel.Templates = this.repos.SpecialScenes
+                    .Where(s => s.SceneId != Constants.LinkableBricksSceneId)
+                    .Select(s => new SelectListItem
+                    {
+                        Text = s.Title,
+                        Value = s.SceneId
+                    });
+            }
+
+            return viewModel;
         }
 
         protected abstract ISceneHolder GetSceneHolder(string entityId);
@@ -92,15 +101,11 @@ namespace Cms.Controllers
             {
                 var originalSceneBricks = id.IsEmpty()
                     ? new Dictionary<string, Brick>()
-                    : (this.GetSceneHolder(id).Scene ?? new Scene()).Walls
+                    : (sceneHolder.Scene ?? new Scene()).Walls
                         .SelectMany(w => w.Bricks)
                         .ToDictionary(b => b.BrickId, b => b);
 
                 var sceneEntity = new Scene();
-                //sceneEntity.SceneId = scene.SceneId;
-                sceneEntity.Title = scene.Title;
-                sceneEntity.IsTemplate = scene.IsTemplate;
-
                 var wallList = new List<Wall>();
 
                 foreach (var wall in scene.Walls)
@@ -199,6 +204,19 @@ namespace Cms.Controllers
             }
 
             this.SaveScene(id, scene);
+
+            return RedirectToAction("EditScene", null, new { id });
+        }
+
+        public ActionResult ExtractTemplate(string templateTitle, string templateJson)
+        {
+            return RedirectToAction("Create", "TemplateScene", new { title = templateTitle, sceneJson = templateJson });
+        }
+
+        public ActionResult ApplyTemplate(string id, string templateId)
+        {
+            var template = this.repos.SpecialScenes.First(s => s.SceneId == templateId);
+            this.SaveScene(id, template.Scene);
 
             return RedirectToAction("EditScene", null, new { id });
         }

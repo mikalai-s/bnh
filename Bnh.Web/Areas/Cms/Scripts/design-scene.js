@@ -6,9 +6,7 @@
         var originalSceneData,
             lockWallsCheckbox = $("#lockWallsCheckbox"),
             lockBricksCheckbox = $("#lockBricksCheckbox"),
-            hideBricksContentCheckbox = $("#hideBricksContentCheckbox"),
-            $isTemplateCheckbox = $("#IsTemplate"),
-            $titleTextbox = $("#Title");
+            hideBricksContentCheckbox = $("#hideBricksContentCheckbox");
 
         function initScene() {
             initWalls();
@@ -20,6 +18,12 @@
             var data = getSceneData();
 
             $("#sceneJson").val(JSON.stringify(data));
+        }
+
+        function onExtractTemplateButtonClicked() {
+            var data = getSceneData();
+
+            $("#templateJson").val(JSON.stringify(data));
         }
 
         // collect form data to submit
@@ -34,23 +38,16 @@
                 walls[walls.length] = entity;
             
                 entity.bricks = [];
-                entity.order = i;
 
                 wall.find(".brick-wrapper").each(function (j, brick) {
                     brick = $(brick);
 
                     var entity2 = brick.data("entity");
                     entity.bricks[entity.bricks.length] = entity2;
-
-                    entity2.order = j;
                 });
             });
 
             return {
-                sceneId: $("#sceneId").val(),
-                ownerGuidId: $("#ownerId").val(),
-                isTemplate: $isTemplateCheckbox.is(':checked'),
-                title: $titleTextbox.val(),
                 walls: walls
             };
         }
@@ -327,37 +324,11 @@
                 .toggleClass("hide-content", checked);
         }
 
-        function onApplyTemplateButtonClicked() {
-            if (!confirm("Are you sure you want to replace entire scene with template data?"))
-                return false;
-
-            var data = {
-                sceneId: $("#sceneId").val(),
-                templateSceneId: $("#templateSceneId").val()
-            };
-
-            $.ajax({
-                url: "/Scene/ApplyTemplate",
-                type: "POST",
-                contentType: "application/json",
-                data: JSON.stringify(data),
-                success: function (result) {
-                    getScene().replaceWith(result);
-                    initScene();
-                },
-                error: function (result) {
-                    if (window.console) { window.console.error(result); }
-                }
-            });
-        }
-
-
-
         $("#addBrickButton").click(onAddBrickButtonClicked);
         $("#addWallButton").click(onAddWallButtonClicked);
         $("#viewScene").click(onViewSceneButtonClicked);
-        $("#applyTemplateButton").click(onApplyTemplateButtonClicked);
         $("#saveSceneButton").click(onSaveSceneButton);
+        $("#extractTemplateButton").click(onExtractTemplateButtonClicked);
 
         lockWallsCheckbox.click(onLockWallsCheckbox);
         lockBricksCheckbox.click(onLockBricksCheckbox);

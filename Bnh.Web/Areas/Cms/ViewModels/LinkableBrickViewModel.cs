@@ -25,6 +25,7 @@ namespace Cms.ViewModels
         {
         }
 
+        // TODO: as an idea to avoid one more DB call for linkable contents - we can cache them
         public override object EnsureNonLinkable()
         {
             if (!this.Content.LinkedBrickId.IsEmpty() && this.Context.LinkableBricks.Value.ContainsKey(this.Content.LinkedBrickId))

@@ -14,9 +14,6 @@ namespace Cms.Models
         {
             return new SceneViewModel
             {
-                //SceneId = scene.SceneId,
-                Title = scene.Title,
-                IsTemplate = scene.IsTemplate,
                 Walls = scene.Walls.Select(wall => new WallViewModel
                 {
                     Title = wall.Title,

@@ -51,6 +51,10 @@ namespace Cms.Helpers
 
                 public const string EditLinkable = "~/Areas/Cms/Views/Scene/EditLinkables.cshtml";
 
+                public const string EditTemplate = "~/Areas/Cms/Views/Scene/EditTemplate.cshtml";
+
+                public const string TemplateIndex = "~/Areas/Cms/Views/Scene/TemplateIndex.cshtml";
+
                 public const string View = "~/Areas/Cms/Views/Scene/View.cshtml";
 
                 public static class Partial
