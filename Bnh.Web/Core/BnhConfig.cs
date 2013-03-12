@@ -39,7 +39,7 @@ namespace Bnh.Core
 
             return this.Host.IsEmpty()
                 ? true
-                : this.Host == http.Request.ServerVariables["HTTP_HOST"];
+                : http.Request.ServerVariables["HTTP_HOST"].IndexOf(this.Host) != -1;
         }
 
         public static bool IsStaging { get { return (Activator == ActivatorType.Staging); } }
