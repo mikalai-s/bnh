@@ -234,7 +234,6 @@
     <Compile Include="Areas\Cms\Controllers\BrickController.cs" />
     <Compile Include="Areas\Cms\Controllers\TemplateSceneController.cs" />
     <Compile Include="Areas\Cms\Controllers\ReviewsController.cs" />
-    <Compile Include="Areas\Cms\Controllers\SceneController1.cs" />
     <Compile Include="Areas\Cms\Core\IRepositories.cs" />
     <Compile Include="Areas\Cms\Models\Brick.cs" />
     <Compile Include="Areas\Cms\Infrastructure\Repositories.cs" />
@@ -358,8 +357,6 @@
     <Content Include="Areas\Cms\Styles\DesignBrick.css" />
     <Content Include="Areas\Cms\Styles\DesignScene.css" />
     <Content Include="Areas\Cms\Styles\Scene.css" />
-    <Content Include="App_Readme\Elmah.MongoDB.txt" />
-    <Content Include="App_Readme\Elmah.txt" />
     <Content Include="css\jquery-ui-1.10.0.custom.css" />
     <Content Include="css\jquery-ui-1.10.0.custom.min.css" />
     <Content Include="css\royalslider.css" />
@@ -757,11 +754,13 @@
     <Content Include="Views\Admin\Info.cshtml" />
     <Content Include="Views\Home\HomeLimited.cshtml" />
     <Content Include="Views\Admin\Files.cshtml" />
+    <None Include="Properties\PublishProfiles\Folder.pubxml">
+      <SubType>Designer</SubType>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Content Include="config.json" />
     <Content Include="Global.asax" />
-    <Content Include="Properties\PublishProfiles\bnh.pubxml.user" />
     <Content Include="config.debug.json">
       <DependentUpon>config.json</DependentUpon>
     </Content>
