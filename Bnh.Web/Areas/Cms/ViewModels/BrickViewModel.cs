@@ -62,7 +62,7 @@ namespace Cms.ViewModels
             {
                 // Only bricks in first tab are visible
                 var wall = this.Context.SceneHolder.Scene.Walls.First(w => w.Bricks.Any(b => b.BrickId == this.BrickId));
-                var nonFirst = wall.Bricks.OfType<TabsBrick>().Any(b => b.Tabs.Skip(1).Any(e => e.Value.Any(bid => bid == this.BrickId)));
+                var nonFirst = wall.Bricks.OfType<TabsBrick>().Any(b => (b.Tabs != null) && b.Tabs.Skip(1).Any(e => e.Value.Any(bid => bid == this.BrickId)));
 
                 return !nonFirst ? "block" : "none";
             }
