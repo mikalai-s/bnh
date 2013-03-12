@@ -142,6 +142,7 @@ namespace Bnh.Controllers
             if (ModelState.IsValid)
             {
                 community.Ratings = CalculateCommunityRating(community.CommunityId);
+                community.Scene = GetSceneHolder(community.CommunityId).Scene;
                 this.repos.Communities.Save(community);
                 
                 return RedirectToAction("Details", new { id = community.UrlId });
