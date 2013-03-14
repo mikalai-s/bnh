@@ -18,5 +18,7 @@ namespace Cms.Core
     public class ReviewConfig
     {
         public IDictionary<string, string> Questions { get; set; }
+
+        public bool RatingEnabled { get; set; }
     }
 }

@@ -6,7 +6,8 @@
             "1": "Roads",
             "2": "Schools",
             "3": "Parks"
-        }
+        },
+        ratingEnabled: false
     },
     searchIndexFolder: "~\\Files\\SearchIndex",
     uploadsFolder: "~\\Files\\Uploads",
