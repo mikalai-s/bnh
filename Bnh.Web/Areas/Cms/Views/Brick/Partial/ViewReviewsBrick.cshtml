@@ -7,7 +7,7 @@
     {
         "~/Areas/Cms/Scripts/view-reviews-content.js"
     });
-    
+
     // TODO: make it loadable on client
 }
 
@@ -43,6 +43,8 @@
                 <span class="user" data-bind="text: userName"></span>
                 <span class="time" data-bind="text: ' on ' + created + ':'"></span>
             </section>
+            @if(Model.RatingEnabled)
+            {
             <section class="rating">
                 <!-- ko foreach: ratings -->
                 <div>
@@ -51,6 +53,7 @@
                 </div>
                 <!-- /ko -->
             </section>
+            }
             <section class="message" data-bind="html: message"></section>
             @*<section class="useful">
                 Was this review useful to you? <a href="#" data-bind="click: onUsefulClick">Yes</a>

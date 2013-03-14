@@ -21,9 +21,13 @@ namespace Cms.ViewModels
 
         public string DeleteCommentUrl { get; set; }
 
+        public bool RatingEnabled { get; private set; }
+
         public ReviewsBrickViewModel(SceneViewModelContext context, ReviewsBrick content)
             : base(context, content)
         {
+            this.RatingEnabled = context.Config.Review.RatingEnabled;
+
             var reviewable = GetReviewable(context);
             if (reviewable == null)
             {
@@ -46,13 +50,15 @@ namespace Cms.ViewModels
                         Comments = (r.Comments ?? Enumerable.Empty<Comment>())
                             .OrderBy(c => c.Created)
                             .Select(c => new CommentViewModel(c, userProfiles[c.UserName])),
-                        Ratings = context.Config.Review.Questions
-                            .Where(q => r.Ratings[q.Key].HasValue)
-                            .Select(q => new RatingQuestionViewModel
-                            {
-                                Question = q.Value + ":",
-                                AnswerHtml = context.HtmlHelper.RatingStars(r.Ratings[q.Key]).ToString()
-                            }),
+                        Ratings = context.Config.Review.RatingEnabled
+                            ? context.Config.Review.Questions
+                                .Where(q => r.Ratings[q.Key].HasValue)
+                                .Select(q => new RatingQuestionViewModel
+                                {
+                                    Question = q.Value + ":",
+                                    AnswerHtml = context.HtmlHelper.RatingStars(r.Ratings[q.Key]).ToString()
+                                })
+                            : Enumerable.Empty<RatingQuestionViewModel>(),
                         PostCommentActionUrl = context.UrlHelper.Action("PostReviewComment", "Reviews")
                     });
 

@@ -206,7 +206,7 @@ namespace Bnh.Controllers
             ViewBag.CommunityName = community.Name;
             ViewBag.Questions = this.config.Review.Questions;
 
-            return View(new Review { TargetId = community.CommunityId });
+            return View(new ReviewViewModel(GetViewModelContext(), community.CommunityId));
         }
 
         [HttpPost]

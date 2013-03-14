@@ -1,5 +1,7 @@
 ﻿@model RatingBrickViewModel
 
+@if(Model.Enabled)
+{
 <div class="description">
     @Model.BigStars
 </div>
@@ -12,3 +14,4 @@
         </div>
     }
 </div>
+}

@@ -45,7 +45,9 @@ namespace Bnh.ViewModels
                 );
 
             this.PopupHtml = "<div><a href='{1}'>{2}</a></div><div>{0}</div>".FormatWith(
-                context.HtmlHelper.RatingStars(rating),
+                context.Config.Review.RatingEnabled
+                    ? context.HtmlHelper.RatingStars(rating)
+                    : MvcHtmlString.Empty,
                 this.DetailsUrl, this.Name);
         }
     }

@@ -15,9 +15,14 @@ namespace Cms.ViewModels
 
         public IEnumerable<RatingQuestionViewModel> Ratings { get; private set; }
 
+        public bool Enabled { get; private set; }
+
         public RatingBrickViewModel(SceneViewModelContext context, RatingBrick brick)
             : base(context, brick)
         {
+            this.Enabled = context.Config.Review.RatingEnabled;
+            if (!this.Enabled) { return; }
+
             var reviewable = GetReviewable(context);
             if (reviewable == null)
             {

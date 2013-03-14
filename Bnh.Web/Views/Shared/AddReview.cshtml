@@ -1,4 +1,4 @@
-﻿@model Cms.Models.Review
+﻿@model Cms.ViewModels.ReviewViewModel
 
 @section Scripts {
     <script>require(["review-add"])</script>
@@ -16,6 +16,8 @@
         {
             @Html.HiddenFor(m => m.TargetId);
             
+            if(Model.RatingEnabled)
+            {
             <fieldset>
                 <legend>Rate @ViewBag.CommunityName community</legend>
 
@@ -39,6 +41,7 @@
                 </div>
 
             </fieldset>
+            }
 
             <fieldset>
                 <legend>Leave @ViewBag.CommunityName review</legend>
