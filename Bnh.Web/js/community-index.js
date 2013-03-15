@@ -8,12 +8,12 @@
         function CommunityViewModel(community, pageViewModel) {
             var associatedMapObject;
 
+            this.gpsLocation = map.deserializeCoordinates(JSON.parse(community.GpsLocation));
+
             if ((community.GpsBounds != null) && (community.GpsBounds != 'null')) {
                 this.gpsBounds = $.map(JSON.parse(community.GpsBounds), map.deserializeCoordinates);
-                associatedMapObject = map.addPolygon(this.gpsBounds, community.PopupHtml);
+                associatedMapObject = map.addMarker(this.gpsLocation, community.PopupHtml);
             }
-
-            this.gpsLocation = map.deserializeCoordinates(JSON.parse(community.GpsLocation));
 
             this.visible = ko.computed(function() {
                 var visible = pageViewModel.filter.isVisible(community.UrlId);

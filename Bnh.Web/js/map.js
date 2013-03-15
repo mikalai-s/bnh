@@ -52,6 +52,7 @@
                 return;
             }
             self.mapInstance = new google.maps.Map(mapCanvas, self.mapOptions);
+
             self.highlightPolygon = function (polygon) {
                 if (!polygon)
                     return;
@@ -77,6 +78,27 @@
             self.closeInfoPopUp = function () {
                 infoPopUp.close();
             };
+
+            self.addMarker = function (coord, infoPopUpContent) {
+                var marker = new google.maps.Marker({
+                    position: coord,
+                    map: self.mapInstance,
+                    icon: "/img/community-map-marker.png",
+                    shadow: {
+                        url: "/img/community-map-marker-shadow.png",
+                        anchor: new google.maps.Point(4, 34)
+                    }
+                });
+
+                if (infoPopUpContent) {
+                    google.maps.event.addListener(marker, 'click', function (event) {
+                        self.showInfoPopUp(event.latLng, infoPopUpContent);
+                    });
+                }
+
+                return marker;
+            };
+
             self.addPolygon = function (coords, infoPopUpContent) {
                 var polygon = new google.maps.Polygon({
                     paths: coords,

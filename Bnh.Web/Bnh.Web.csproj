@@ -377,11 +377,12 @@
     <Content Include="css\styles.css" />
     <Content Include="img\admin\file.png" />
     <Content Include="img\admin\folder.png" />
+    <Content Include="img\community-map-marker-shadow.png" />
+    <Content Include="img\community-map-marker.png" />
     <Content Include="img\favicon.ico" />
     <Content Include="img\feedback.gif" />
     <Content Include="img\glyphicons-halflings-white.png" />
     <Content Include="img\glyphicons-halflings.png" />
-    <Content Include="img\house.jpg" />
     <Content Include="img\list-icon.png" />
     <Content Include="img\Login\facebook.jpg" />
     <Content Include="img\Login\facebook30.png" />
