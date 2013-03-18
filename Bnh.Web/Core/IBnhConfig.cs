@@ -13,5 +13,7 @@ namespace Bnh.Core
         bool IsValidHost(HttpContextBase request);
 
         string UploadsFolder { get; set; }
+
+        string GoogleAnalytics { get; set; }
     }
 }

@@ -14,6 +14,7 @@ namespace Bnh.Core
         public string Host { get; set; }
         public IDictionary<string, IDictionary<string, string>> Authentification { get; set; }
         public string City { get; set; }
+        public string GoogleAnalytics { get; set; }
         public ReviewConfig Review { get; set; }
         public string SearchIndexFolder { get; set; }
         public string UploadsFolder { get; set; }
