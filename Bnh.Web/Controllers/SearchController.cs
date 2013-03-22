@@ -70,12 +70,5 @@ namespace Bnh.Controllers
 
             return View(searchViewModel);
         }
-
-        public ActionResult RebuildIndex()
-        {
-            this.searcher.RebuildIndex();
-
-            return this.JavaScript("alert('done')");
-        }
     }
 }

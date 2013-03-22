@@ -1,0 +1,17 @@
+﻿@model Bnh.ViewModels.MessageViewModel
+
+@{
+    var type = Model.MessageType.ToString();
+    var css = (Model.MessageType == MessageType.Error)
+        ? "alert-error"
+        : (Model.MessageType == MessageType.Success)
+            ? "alert-success"
+            : (Model.MessageType == MessageType.Info)
+                ? "alert-info"
+                : "";
+    ViewBag.Title = Model.Title;
+}
+
+<div class="page-message alert @css">
+  <strong>@type!</strong> @Model.Text
+</div>

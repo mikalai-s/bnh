@@ -202,6 +202,12 @@ namespace Bnh.Controllers
         {
             var community = GetCommunity(id);
 
+            if (this.repos.Reviews.Any(r => (r.TargetId == community.CommunityId) && (r.UserName == User.Identity.Name)))
+            {
+                // current user has already left a review, show error message
+                return this.ErrorMessage("Unable to leave a review", "You have already left a review for given community. If you changed your opinion, please, leave a comment to existing one.");
+            }
+
             ViewBag.CommunityUrlId = id;
             ViewBag.CommunityName = community.Name;
             ViewBag.Questions = this.config.Review.Questions;

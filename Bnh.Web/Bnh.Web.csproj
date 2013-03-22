@@ -295,6 +295,7 @@
     <Compile Include="Helpers\AjaxAuthorizeAttribute.cs" />
     <Compile Include="Areas\Cms\Infrastructure\DesignerAuthorizeAttribute.cs" />
     <Compile Include="Areas\Cms\Helpers\HtmlExtensions.cs" />
+    <Compile Include="Helpers\ControllerExtensions.cs" />
     <Compile Include="Helpers\MongoErrorLog.cs" />
     <Compile Include="Areas\Cms\Helpers\RazorEngine.cs" />
     <Compile Include="Helpers\StirngExtensions.cs" />
@@ -343,6 +344,7 @@
     <Compile Include="ViewModels\CommunityViewModel.cs" />
     <Compile Include="ViewModels\FilesViewModel.cs" />
     <Compile Include="ViewModels\FilterPropertyViewModel.cs" />
+    <Compile Include="ViewModels\MessageViewModel.cs" />
     <Compile Include="ViewModels\SearchResultEntryViewModel.cs" />
     <Compile Include="ViewModels\SearchViewModel.cs" />
     <Compile Include="Areas\Cms\ViewModels\ViewModelContext.cs" />
@@ -751,13 +753,13 @@
     <Content Include="Views\Admin\Index.cshtml" />
     <Content Include="Views\Admin\FeedbackReport.cshtml" />
     <Content Include="js\libs\jquery\jquery-1.9.1.min.map" />
-    <Content Include="Views\Admin\Message.cshtml" />
     <Content Include="Views\Admin\Info.cshtml" />
     <Content Include="Views\Home\HomeLimited.cshtml" />
     <Content Include="Views\Admin\Files.cshtml" />
     <None Include="Properties\PublishProfiles\Folder.pubxml">
       <SubType>Designer</SubType>
     </None>
+    <Content Include="Views\Shared\Message.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="config.json" />

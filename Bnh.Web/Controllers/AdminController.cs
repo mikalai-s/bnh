@@ -23,13 +23,15 @@ namespace Bnh.Controllers
         readonly IBnhRepositories repos;
         readonly IBnhConfig config;
         readonly IPathMapper pathMapper;
+        readonly ISearchProvider searcher;
 
-        public AdminController(IBnhRepositories repos, IRatingCalculator rating, IBnhConfig config, IPathMapper pathMapper)
+        public AdminController(IBnhRepositories repos, IRatingCalculator rating, IBnhConfig config, IPathMapper pathMapper, ISearchProvider searcher)
         {
             this.repos = repos;
             this.rating = rating;
             this.config = config;
             this.pathMapper = pathMapper;
+            this.searcher = searcher;
         }
 
         //
@@ -88,7 +90,7 @@ namespace Bnh.Controllers
                     Update.Unset("Ratings"));
             }
 
-            return View("Message", model: "Community ratings has been updated");
+            return this.SuccessMessage("Community ratings", "Community ratings has been updated");
         }
 
         public ActionResult Info()
@@ -166,6 +168,13 @@ namespace Bnh.Controllers
             }
 
             return RedirectToAction("Files", new { path} );
+        }
+
+        public ActionResult RebuildSearchIndex()
+        {
+            this.searcher.RebuildIndex();
+
+            return this.SuccessMessage("Rebuilding search index...", "Done");
         }
     }
 }

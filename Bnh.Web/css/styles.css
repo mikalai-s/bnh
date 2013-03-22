@@ -229,3 +229,9 @@ fieldset legend { -moz-box-sizing: border-box; -webkit-box-sizing: border-box; b
 
 /*#endregion */
 
+
+/*#region page message */
+
+.page-message { margin: 30px; }
+
+/*#endregion */

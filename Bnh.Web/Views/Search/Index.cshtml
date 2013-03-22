@@ -12,12 +12,6 @@
             <button type="submit" class="btn btn-primary">Search</button>
         </form>
     </div>
-    @if (Context.User.IsInRole("content_manager"))
-    {
-        <div class="span6">
-            @Html.ActionLink("Rebuild Index", "RebuildIndex")
-        </div>
-    }
 </div>
 
 <div class="row padding">
