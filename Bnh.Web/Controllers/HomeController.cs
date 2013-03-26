@@ -45,7 +45,7 @@ namespace Bnh.Controllers
         [HttpPost]
         public ActionResult Feedback(string message)
         {
-            if(!message.IsEmpty())
+            if(!message.IsNullOrEmpty())
             {
                 this.repos.Feedback.Insert(new Comment
                 {

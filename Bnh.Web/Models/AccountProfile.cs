@@ -35,7 +35,7 @@ namespace Bnh.Models
 
         public override void Save()
         {
-            if (this.GravatarEmail.IsEmpty())
+            if (this.GravatarEmail.IsNullOrEmpty())
             {
                 this.GravatarEmail = this.UserName;
             }

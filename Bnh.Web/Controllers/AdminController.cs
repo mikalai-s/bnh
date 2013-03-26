@@ -153,7 +153,7 @@ namespace Bnh.Controllers
         [HttpPost]
         public ActionResult DeleteFile(string path, string fileName)
         {
-            if (!fileName.IsEmpty())
+            if (!fileName.IsNullOrEmpty())
             {
                 var uploadsFolder = this.pathMapper.Map(config.UploadsFolder);
                 var filePath = Path.Combine(uploadsFolder, path, fileName);

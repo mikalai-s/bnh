@@ -35,7 +35,7 @@ namespace Bnh.Controllers
                 Query = criteria.Query
             };
 
-            if (!criteria.Query.IsEmpty())
+            if (!criteria.Query.IsNullOrEmpty())
             {
                 var htmlHelper = new HtmlHelper(new ViewContext(this.ControllerContext, new WebFormView(this.ControllerContext, "fake"), new ViewDataDictionary(), new TempDataDictionary(), new StringWriter()), new ViewPage());
 

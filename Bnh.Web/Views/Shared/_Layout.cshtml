@@ -3,6 +3,20 @@
 @{
     var config = Autofac.Integration.Mvc.AutofacDependencyResolver.Current.GetService<IBnhConfig>();
     var isValidHost = config.IsValidHost(this.Context);
+    var customBanner = ViewBag.Banner as Image;
+    var customBannerStyle = string.Empty;
+    if(customBanner != null && !customBanner.Url.IsNullOrEmpty())
+    {
+        customBannerStyle += "background: url({0})".FormatWith(customBanner.Url);
+        if(customBanner.Width.HasValue)
+        {
+            customBannerStyle += "; width: {0}px".FormatWith(customBanner.Width);
+        }
+        if(customBanner.Height.HasValue)
+        {
+            customBannerStyle += "; height: {0}px".FormatWith(customBanner.Height);
+        }
+    }
 }
 
 <!DOCTYPE html>
@@ -77,17 +91,24 @@
 
         @if(isValidHost)
         {
-        <header class="banner">
-            <h1 class="title">@Html.Raw(ViewBag.Title)</h1>
-            <h4 class="description">@Html.Raw(ViewBag.Description)</h4>
-        </header>
+            if (customBannerStyle.IsNullOrEmpty())
+            {
+                <header class="banner">
+                    <h1 class="title">@Html.Raw(ViewBag.Title)</h1>
+                    <h4 class="description">@Html.Raw(ViewBag.Description)</h4>
+                </header>
+            }
+            else
+            {
+                <header class="custom-logo" style="@customBannerStyle"></header>
+            }
         }
         else
         {
-        <header class="alert alert-error">
-            <h1 class="title">@Html.Raw(ViewBag.Title) (Wrong host!!!)</h1>
-            <h4 class="description">@Html.Raw(ViewBag.Description) (Wrong host!!!)</h4>
-        </header>
+            <header class="alert alert-error">
+                <h1 class="title">@Html.Raw(ViewBag.Title) (Wrong host!!!)</h1>
+                <h4 class="description">@Html.Raw(ViewBag.Description) (Wrong host!!!)</h4>
+            </header>
         }
 
         <a href="#feedback-modal" data-toggle="modal" class="feedback alert alert-success rotate270" title="Leave a feedback...">

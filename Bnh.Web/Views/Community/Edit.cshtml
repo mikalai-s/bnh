@@ -2,7 +2,7 @@
 
 @{
     ViewBag.Title = Model.Name + " community";
-    ViewBag.GlobalModel = Model;
+    ViewBag.Banner = Model.Logo;
     var propertiesToSkip = new List<string> { "Name", "Zone" };
     var externalProperties = ExternalProperty.Get(typeof(Community)).Where(p => !propertiesToSkip.Contains(p.Property.Name));
     var zones = ViewBag.CityZones as IEnumerable<SelectListItem>;

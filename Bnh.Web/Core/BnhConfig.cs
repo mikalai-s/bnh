@@ -38,7 +38,7 @@ namespace Bnh.Core
             if (http == null)
                 throw new ArgumentNullException("http");
 
-            return this.Host.IsEmpty()
+            return this.Host.IsNullOrEmpty()
                 ? true
                 : http.Request.ServerVariables["HTTP_HOST"].IndexOf(this.Host) != -1;
         }

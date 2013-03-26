@@ -220,7 +220,7 @@ namespace Bnh.Controllers
         public ActionResult AddReview(Review review)
         {
             review.UserName = User.Identity.Name;
-            review.Message = review.Message.IsEmpty() ? string.Empty : Encoding.FromBase64(review.Message);
+            review.Message = review.Message.IsNullOrEmpty() ? string.Empty : Encoding.FromBase64(review.Message);
             review.Created = DateTime.Now.ToUniversalTime();
             this.repos.Reviews.Insert(review);
 

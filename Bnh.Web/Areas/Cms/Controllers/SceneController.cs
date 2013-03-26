@@ -99,7 +99,7 @@ namespace Cms.Controllers
             var scene = JsonConvert.DeserializeObject<SceneViewModel>(sceneJson, converter);
             if (ModelState.IsValid)
             {
-                var originalSceneBricks = id.IsEmpty()
+                var originalSceneBricks = id.IsNullOrEmpty()
                     ? new Dictionary<string, Brick>()
                     : (sceneHolder.Scene ?? new Scene()).Walls
                         .SelectMany(w => w.Bricks)
@@ -121,7 +121,7 @@ namespace Cms.Controllers
                     foreach (var brick in wall.Bricks)
                     {
                         Brick brickEntity = null;
-                        if (!brick.BrickId.IsEmpty() && originalSceneBricks.ContainsKey(brick.BrickId))
+                        if (!brick.BrickId.IsNullOrEmpty() && originalSceneBricks.ContainsKey(brick.BrickId))
                         {
                             brickEntity = originalSceneBricks[brick.BrickId];
                         }

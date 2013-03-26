@@ -19,7 +19,7 @@ namespace System
             return string.Format(format, args);
         }
 
-        public static bool IsEmpty(this string source)
+        public static bool IsNullOrEmpty(this string source)
         {
             return string.IsNullOrEmpty(source);
         }

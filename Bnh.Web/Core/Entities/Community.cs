@@ -21,6 +21,9 @@ namespace Bnh.Core.Entities
         public string UrlId { get; set; }
 
         [ExternalProperty]
+        public Image Logo { get; set; }
+
+        [ExternalProperty]
         public string Developer { get; set; }
 
         [ExternalProperty]

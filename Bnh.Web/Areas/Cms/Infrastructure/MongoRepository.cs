@@ -24,7 +24,7 @@ namespace Cms.Infrastructure
         {
             this.connectionString = connectionString;
             this.database = new Lazy<MongoDatabase>(() => MongoDatabase.Create(connectionString));
-            this.collectionName = collectionName.IsEmpty() ? typeof(T).Name : collectionName;
+            this.collectionName = collectionName.IsNullOrEmpty() ? typeof(T).Name : collectionName;
         }
 
         public string CollectionName

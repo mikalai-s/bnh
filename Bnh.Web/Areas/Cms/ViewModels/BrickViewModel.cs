@@ -125,7 +125,7 @@ namespace Cms.ViewModels
         /// <returns></returns>
         public string GetHtmlId()
         {
-            return this.Title.IsEmpty() ? this.BrickId.ToHtmlId() : this.Title.ToHtmlId();
+            return this.Title.IsNullOrEmpty() ? this.BrickId.ToHtmlId() : this.Title.ToHtmlId();
         }
 
 

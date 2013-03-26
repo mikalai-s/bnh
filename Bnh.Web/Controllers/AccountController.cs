@@ -55,7 +55,7 @@ namespace Bnh.Controllers
         {
             WebSecurity.Logout();
 
-            return returnUrl.IsEmpty()
+            return returnUrl.IsNullOrEmpty()
                 ? RedirectToAction("Index", "Home")
                 : RedirectToLocal(returnUrl);
         }
@@ -88,7 +88,7 @@ namespace Bnh.Controllers
                     var userProfile = AccountProfile.GetProfile(model.Email);
                     userProfile.DisplayName = model.DisplayName;
                     userProfile.RealName = model.RealName;
-                    userProfile.GravatarEmail = model.GravatarEmail.IsEmpty() ? model.Email : model.GravatarEmail;
+                    userProfile.GravatarEmail = model.GravatarEmail.IsNullOrEmpty() ? model.Email : model.GravatarEmail;
                     userProfile.Save();
 
                     WebSecurity.Login(model.Email, model.Password);

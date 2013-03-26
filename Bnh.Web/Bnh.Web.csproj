@@ -284,6 +284,7 @@
     <Compile Include="Areas\Cms\Models\Comment.cs" />
     <Compile Include="Core\Entities\Community.cs" />
     <Compile Include="Areas\Cms\Models\Review.cs" />
+    <Compile Include="Core\Entities\Image.cs" />
     <Compile Include="Core\Extensions\LinkExtensions.cs" />
     <Compile Include="Core\IBnhConfig.cs" />
     <Compile Include="Core\IBnhRepositories.cs" />
@@ -820,7 +821,6 @@
     <Content Include="Views\Web.config">
       <SubType>Designer</SubType>
     </Content>
-    <Content Include="Views\Shared\Reviews.cshtml" />
     <Content Include="Views\Shared\AddReview.cshtml" />
     <Content Include="Views\Shared\_SinglePageLayout.cshtml" />
     <Content Include="Views\Account\_ExternalLoginsListPartial.cshtml" />
