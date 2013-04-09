@@ -68,7 +68,6 @@ namespace Bnh.Infrastructure
             if (result.value.count == 0 && count == 0) return null;
 
             return rating / ((result.value.count > 0) ? (double)result.value.count : (double)count);
-            return null;
         }
 
         /// <summary>
