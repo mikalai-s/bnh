@@ -8,97 +8,116 @@
     var zones = ViewBag.CityZones as IEnumerable<SelectListItem>;
 }
 
-@section Styles {
-    <link href="~/Content/themes/base/jquery.ui.all.css" rel="stylesheet" type="text/css" />
-    <link href="~/Styles/MapEditor.css" rel="stylesheet" type="text/css" />
-    <link href="~/Styles/CommunityEdit.css" rel="stylesheet" type="text/css" />
-}
-
 @section Scripts {
     <script>require(["community-edit"])</script>
 }
 
-<h2>@ViewBag.Title</h2>
+<style>
+    #Logo_Url { width: 100%; }
+</style>
 
-<h4>
-    @Html.ActionLink("edit scene", "EditScene", new { id = Model.UrlId })
-</h4>
+<article class="row">
 
-<div>
-    @using (Html.BeginForm())
-    {
-        @Html.ValidationSummary(true)
+    <div class="span6">
+        <h4>
+            @Html.ActionLink("edit scene", "EditScene", new { id = Model.UrlId })
+        </h4>
 
-        <fieldset>
-            <legend>Properties</legend>
+        @using (Html.BeginForm("Edit", "Community", FormMethod.Post, new { @class = "form-horizontal" }))
+        {
+            @Html.ValidationSummary(true)
 
-            @Html.HiddenFor(model => model.CommunityId)
-            @Html.HiddenFor(model => model.CityId)
-            @Html.HiddenFor(model => model.GpsLocation)
-            @Html.HiddenFor(model => model.GpsBounds)
+            <fieldset>
+                <legend>Main Properties</legend>
 
-            <div style="float: left;">
-                <table class="properties">
-                    <tr>
-                        <td>@Html.LabelFor(model => model.Name)</td>
-                        <td>
-                            @Html.EditorFor(model => model.Name)
-                            @Html.ValidationMessageFor(model => model.Name)
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>@Html.LabelFor(model => model.UrlId)</td>
-                        <td>
-                            @Html.EditorFor(model => model.UrlId)
-                            @Html.ValidationMessageFor(model => model.UrlId)
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>@Html.LabelFor(model => model.Zone, "Zone")</td>
-                        <td>
-                            @Html.DropDownList("Zone", zones)
-                            @Html.ValidationMessageFor(model => model.Zone)
-                        </td>
-                    </tr>             
+                @Html.HiddenFor(model => model.CommunityId)
+                @Html.HiddenFor(model => model.CityId)
+                @Html.HiddenFor(model => model.GpsLocation)
+                @Html.HiddenFor(model => model.GpsBounds)
 
-                    @foreach (var property in externalProperties)
+                <div class="control-group">
+                    @Html.LabelFor(model => model.Name, new { @class = "control-label" })
+                    <div class="controls">
+                        @Html.EditorFor(model => model.Name)
+                        @Html.ValidationMessageFor(model => model.Name)
+                    </div>
+                </div>
+
+                <div class="control-group">
+                    @Html.LabelFor(model => model.UrlId, new { @class = "control-label" })
+                    <div class="controls">
+                        @Html.EditorFor(model => model.UrlId)
+                        @Html.ValidationMessageFor(model => model.UrlId)
+                    </div>
+                </div>
+
+                <div class="control-group">
+                    @Html.LabelFor(model => model.Zone, "Zone", new { @class = "control-label" })
+                    <div class="controls">
+                        @Html.DropDownList("Zone", zones)
+                        @Html.ValidationMessageFor(model => model.Zone)
+                    </div>
+                </div>
+
+                <div class="control-group">
+                    @Html.LabelFor(model => model.ShortDescription, new { @class = "control-label" })
+                    <div class="controls">
+                        @Html.TextAreaFor(model => Model.ShortDescription)
+                        @Html.ValidationMessageFor(model => model.Zone)
+                    </div>
+                </div>
+
+                <div class="control-group">
+                    @Html.LabelFor(model => model.Logo, new { @class = "control-label" })
+                    <div class="controls">
+                        @Html.EditorFor(model => Model.Logo)
+                        @Html.ValidationMessageFor(model => model.Logo)
+                    </div>
+                </div>
+
+                <div class="control-group">
+                    <span class="control-label">Location and Bounds</span>
+                    <div class="controls" id="mapContainer">
+                        <div id="mapCanvas" style="width: 600px; height: 600px;"></div>
+                    </div>
+                </div>
+            </fieldset>
+            
+            <fieldset>
+                <legend>Filterable Properties</legend>
+
+                @foreach (var property in externalProperties)
+                {
+                    if (property.TypeName == "Boolean")
                     {
-                        if (property.TypeName == "Boolean")
-                        {
-                    <tr>
-                        <td>
-                            @Html.Editor(property.Property.Name)
-                        </td>
-                        <td>
-                            @Html.Label(property.Title.ToString())
-                        </td>
-                    </tr>
-                        }
-                        else
-                        {
-                    <tr>
-                        <td>@Html.Label(property.Title.ToString())</td>
-                        <td>
-                            @Html.Editor(property.Property.Name)
-                            @Html.ValidationMessage(property.Property.Name)
-                        </td>
-                    </tr>
-                        }
-                    } 
-                </table>
-            </div>
+                <div class="control-group">
+                    @Html.Label(property.Title.ToString(), new { @class = "control-label" })
+                    <div class="controls">
+                        @Html.Editor(property.Property.Name)
+                        
+                    </div>
+                </div>
+                    }
+                    else
+                    {
+                <div class="control-group">
+                    @Html.Label(property.Title.ToString(), new { @class = "control-label" })
+                    <div class="controls">
+                        @Html.Editor(property.Property.Name)
+                        @Html.ValidationMessage(property.Property.Name)
+                    </div>
+                </div>
+                    }
+                }
+            </fieldset>
 
-            <div id="mapEditor" style="float: right;">
-                <div id="mapCanvas" style="width: 600px; height: 600px;"></div>
+            <div class="form-actions">
+                <div style="clear: both;">
+                    <input type="submit" value="Save" class="btn btn-primary" />
+                    @Html.ActionInputLink("View", "Details", attributes: new { id = Model.UrlId, @class="btn" })
+                </div>
             </div>
+        }
+    </div>
 
-            <div style="clear: both;">
-                <span class="alter">
-                    <input type="submit" value="Save" />
-                </span>
-                @Html.ActionInputLink("View", "Details", attributes: new { id = Model.UrlId })
-            </div>
-
-        </fieldset>
-    }
-</div>
+</article>

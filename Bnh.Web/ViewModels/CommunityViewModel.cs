@@ -44,11 +44,11 @@ namespace Bnh.ViewModels
                     p => p.Property.GetValue(community, null)
                 );
 
-            this.PopupHtml = "<div><a href='{1}'>{2}</a></div><div>{0}</div>".FormatWith(
+            this.PopupHtml = "<div><a href='{1}'>{2}</a></div><div>{0}</div>{3}".FormatWith(
                 context.Config.Review.RatingEnabled
                     ? context.HtmlHelper.RatingStars(rating)
                     : MvcHtmlString.Empty,
-                this.DetailsUrl, this.Name);
+                this.DetailsUrl, this.Name, community.ShortDescription);
         }
     }
 }

@@ -137,6 +137,9 @@ namespace Bnh.Controllers
 
         [HttpPost]
         [DesignerAuthorize]
+        // NOTE: Request Validation is diabled to allow tinymce HTML to be transferred
+        // NOET: We'are OK to disable that because only admin is able to do that request
+        [ValidateInput(false)] 
         public ActionResult Edit(Community community)
         {
             if (ModelState.IsValid)

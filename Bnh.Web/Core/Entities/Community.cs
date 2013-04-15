@@ -20,7 +20,6 @@ namespace Bnh.Core.Entities
 
         public string UrlId { get; set; }
 
-        [ExternalProperty]
         public Image Logo { get; set; }
 
         [ExternalProperty]
@@ -87,5 +86,7 @@ namespace Bnh.Core.Entities
         public IDictionary<string, double?> Ratings { get; set; }
 
         public Scene Scene { get; set; }
+
+        public string ShortDescription { get; set; }
     }
 }
