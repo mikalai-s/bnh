@@ -2,7 +2,7 @@ The project requires MongoDB to persist data.
 
 Here is sample instruction of installing MongoDb on a machine:
 
-	1. Download zip from http://downloads.mongodb.org/win32/mongodb-win32-x86_64-2008plus-2.0.6.zip
+	1. Download lagest build from http://www.mongodb.org/downloads
 
 	2. Create the following folder structure:
 
