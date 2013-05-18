@@ -9,6 +9,7 @@ Here is sample instruction of installing MongoDb on a machine:
 		C:\data
 		C:\data\bin  <-- put bin files from zip in here
 		C:\data\db  <-- database / data will be saved in here but folder needs to be created
+		C:\data\logs  <-- log files will be saved in here but folder needs to be created (This is necessary if you run database as a service)
 
 		(the locations can be changed, these are just the defaults so easiest to use)
 
