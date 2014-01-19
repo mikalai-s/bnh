@@ -10,6 +10,7 @@ using Bnh.ViewModels;
 using Cms.Core;
 using Cms.Infrastructure;
 using Cms.ViewModels;
+using ICSharpCode.SharpZipLib.Zip;
 using MongoDB.Bson;
 using MongoDB.Driver;
 using MongoDB.Driver.Builders;
@@ -19,13 +20,14 @@ namespace Bnh.Controllers
     [DesignerAuthorizeAttribute]
     public class AdminController : Controller
     {
-        readonly IRatingCalculator rating;
-        readonly IBnhRepositories repos;
-        readonly IBnhConfig config;
-        readonly IPathMapper pathMapper;
-        readonly ISearchProvider searcher;
+        private readonly IRatingCalculator rating;
+        private readonly IBnhRepositories repos;
+        private readonly IBnhConfig config;
+        private readonly IPathMapper pathMapper;
+        private readonly ISearchProvider searcher;
 
-        public AdminController(IBnhRepositories repos, IRatingCalculator rating, IBnhConfig config, IPathMapper pathMapper, ISearchProvider searcher)
+        public AdminController(IBnhRepositories repos, IRatingCalculator rating, IBnhConfig config,
+            IPathMapper pathMapper, ISearchProvider searcher)
         {
             this.repos = repos;
             this.rating = rating;
@@ -56,25 +58,25 @@ namespace Bnh.Controllers
 
             // q: { id: a }
             var allRatings = this.config.Review.Questions
-                    .ToDictionary(
-                        q => q.Key,
-                        q => this.rating.GetTargetRatingMap(targetIdsList, q.Key));
+                .ToDictionary(
+                    q => q.Key,
+                    q => this.rating.GetTargetRatingMap(targetIdsList, q.Key));
 
             // id: { q: a }
             var reorganizedRatings = new Dictionary<string, Dictionary<string, double?>>();
-            foreach(var question in allRatings)
+            foreach (var question in allRatings)
             {
-                foreach(var targetWithAnswer in question.Value)
+                foreach (var targetWithAnswer in question.Value)
                 {
                     var targetQuestion = reorganizedRatings.ContainsKey(targetWithAnswer.Key)
                         ? reorganizedRatings[targetWithAnswer.Key]
-                        : (reorganizedRatings[targetWithAnswer.Key] = new Dictionary<string,double?>());
+                        : (reorganizedRatings[targetWithAnswer.Key] = new Dictionary<string, double?>());
 
                     targetQuestion[question.Key] = targetWithAnswer.Value;
                 }
             }
 
-            foreach(var targetEntry in reorganizedRatings)
+            foreach (var targetEntry in reorganizedRatings)
             {
                 // set fresh rating
                 this.repos.Communities.Collection.Update(
@@ -82,7 +84,9 @@ namespace Bnh.Controllers
                     Update.Set("Ratings", BsonDocumentWrapper.Create(targetEntry.Value)));
             }
 
-            foreach (var noRatingTarget in this.repos.Communities.Select(c => c.CommunityId).ToList().Except(reorganizedRatings.Keys))
+            foreach (
+                var noRatingTarget in
+                    this.repos.Communities.Select(c => c.CommunityId).ToList().Except(reorganizedRatings.Keys))
             {
                 // set fresh rating
                 this.repos.Communities.Collection.Update(
@@ -97,12 +101,12 @@ namespace Bnh.Controllers
         {
             return View(new Dictionary<string, object>
             {
-                { "Version", BnhConfig.Version },
-                { "Entities Database", config.ConnectionStrings["mongo"] },
-                { "Cms Database", config.ConnectionStrings["cms"] },
-                { "Host", this.HttpContext.Request.ServerVariables["HTTP_HOST"] },
-                { "Activator", BnhConfig.Activator },
-                { "Is Valid Host?", this.config.IsValidHost(this.HttpContext) }
+                {"Version", BnhConfig.Version},
+                {"Entities Database", config.ConnectionStrings["mongo"]},
+                {"Cms Database", config.ConnectionStrings["cms"]},
+                {"Host", this.HttpContext.Request.ServerVariables["HTTP_HOST"]},
+                {"Activator", BnhConfig.Activator},
+                {"Is Valid Host?", this.config.IsValidHost(this.HttpContext)}
             });
         }
 
@@ -137,7 +141,7 @@ namespace Bnh.Controllers
                     file.SaveAs(fullPath);
                 }
             }
-            return RedirectToAction("Files", new { path });
+            return RedirectToAction("Files", new {path});
         }
 
         [HttpPost]
@@ -147,7 +151,7 @@ namespace Bnh.Controllers
             var folderPath = Path.Combine(uploadsFolder, path ?? string.Empty, folderName);
             Directory.CreateDirectory(folderPath);
 
-            return RedirectToAction("Files", new { path });
+            return RedirectToAction("Files", new {path});
         }
 
         [HttpPost]
@@ -167,7 +171,7 @@ namespace Bnh.Controllers
                 }
             }
 
-            return RedirectToAction("Files", new { path} );
+            return RedirectToAction("Files", new {path});
         }
 
         public ActionResult RebuildSearchIndex()
@@ -175,6 +179,33 @@ namespace Bnh.Controllers
             this.searcher.RebuildIndex();
 
             return this.SuccessMessage("Rebuilding search index...", "Done");
+        }
+
+        /// <summary>
+        /// Downloads Files folder.
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult DownloadFiles()
+        {
+            var zip = new FastZip();
+            var fileName = Path.GetTempFileName();
+            zip.CreateZip(fileName, HttpContext.Server.MapPath("~/Files"), true, null);
+            return File(fileName, "application/x-zip-compressed", "files-{0}.zip".FormatWith(DateTime.UtcNow.ToString("u").Replace(":", "-")));
+        }
+
+        /// <summary>
+        /// Downloads Files folder. Anonumous user a able to call the method but they should proved a token.
+        /// TODO: improve this method to use some other technique to be more secure.
+        /// </summary>
+        /// <param name="token"></param>
+        /// <returns></returns>
+        [AllowAnonymous]
+        public ActionResult DownloadFilesAnonymous(string token)
+        {
+            Guid guid;
+            return Guid.TryParse(token, out guid) && (guid == new Guid("5F3BAE83-CC98-4AA8-89F3-22D6A0F9FFFE"))
+                ? DownloadFiles()
+                : new HttpNotFoundResult();
         }
     }
 }
