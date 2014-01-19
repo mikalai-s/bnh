@@ -66,6 +66,10 @@
 
         <fieldset>
             <legend>Actions</legend>
+            
+            @Html.ActionLink("Download files archive", "DownloadFiles")
+            <br/>
+            <br/>
 
             @using (Html.BeginForm("CreateFolder", "Admin", FormMethod.Post))
             {
