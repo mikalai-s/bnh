@@ -175,7 +175,7 @@ fieldset legend { -moz-box-sizing: border-box; -webkit-box-sizing: border-box; b
 
 /* end review-add */
 
-.popover { width: auto; }
+.popover { width: 350px; }
 .popover-content { height: auto; }
 
 /* search */
@@ -235,3 +235,6 @@ fieldset legend { -moz-box-sizing: border-box; -webkit-box-sizing: border-box; b
 .page-message { margin: 30px; }
 
 /*#endregion */
+
+
+.info-window { max-width: 350px; white-space: normal; }

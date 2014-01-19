@@ -71,7 +71,7 @@
             };
             var infoPopUp = new google.maps.InfoWindow();
             self.showInfoPopUp = function (coordinates, content) {
-                infoPopUp.setContent(content);
+                infoPopUp.setContent("<div class='info-window'>" + content + "</div>");
                 infoPopUp.setPosition(coordinates);
                 infoPopUp.open(self.mapInstance);
             };
