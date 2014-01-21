@@ -1,25 +1,22 @@
 ﻿using System;
-using System.IO;
+using System.Collections.Generic;
 using System.Linq;
-using System.Web;
+using System.Text.RegularExpressions;
 using System.Web.Mvc;
+
 using Bnh.Core;
 using Bnh.Core.Entities;
-using Bnh.Models;
 using Bnh.ViewModels;
+
 using Cms.Controllers;
-using Cms.Models;
-using System.Web.Mvc.Html;
-using Bnh.Helpers;
-using System.Collections.Generic;
-using Cms.ViewModels;
 using Cms.Core;
 using Cms.Infrastructure;
-using Cms.Utils;
-using MongoDB.Driver.Builders;
+using Cms.Models;
+using Cms.ViewModels;
+
 using MongoDB.Bson;
-using System.Text.RegularExpressions;
 using MongoDB.Driver;
+using MongoDB.Driver.Builders;
 
 namespace Bnh.Controllers
 {
@@ -86,17 +83,15 @@ namespace Bnh.Controllers
         [DesignerAuthorize]
         public ActionResult Create()
         {
-            throw new NullReferenceException();
-            //ViewBag.CityZones = new SelectList(this.repos.Cities.First(c => c.Name == config.City).Zones);
-            //var sceneTemplates = from s in this.repos.Scenes
-            //                        where s.IsTemplate
-            //                        select new { id = s.SceneId, title = s.Title };
-            //ViewBag.Templates = new SelectList(new[] { new { id = string.Empty, title = string.Empty } }.Union(sceneTemplates), "id", "title");
+            ViewBag.CityZones = new SelectList(this.repos.Cities.First(c => c.Name == config.City).Zones);
+            var sceneTemplates = from s in this.repos.SpecialScenes.Where(s => s.SceneId != Constants.LinkableBricksSceneId)
+                                 select new { id = s.SceneId, title = s.Title };
+            ViewBag.Templates = new SelectList(new[] { new { id = string.Empty, title = string.Empty } }.Union(sceneTemplates), "id", "title");
 
-            //var city = this.repos.Cities.First(c => c.Name == config.City);
-            //ViewBag.CityZones = new SelectList(city.Zones);
-            //ViewBag.CityId = city.CityId;
-            //return View();
+            var city = this.repos.Cities.First(c => c.Name == config.City);
+            ViewBag.CityZones = new SelectList(city.Zones);
+            ViewBag.CityId = city.CityId;
+            return View();
         } 
 
         //
@@ -113,7 +108,8 @@ namespace Bnh.Controllers
                 var templateSceneId = this.Request.Form["templateSceneId"];
                 if (!string.IsNullOrEmpty(templateSceneId))
                 {
-                    SceneUtils.ApplyTemplate(this.repos, templateSceneId, community.CommunityId);
+                    var template = this.repos.SpecialScenes.First(s => s.SceneId == templateSceneId);
+                    this.SaveScene(community.CommunityId, template.Scene);
                 }
                 return RedirectToAction("Edit", new { id = community.UrlId });
             }

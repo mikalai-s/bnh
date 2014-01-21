@@ -260,7 +260,6 @@
     <Compile Include="Areas\Cms\Models\Utilities\BrickRegistration.cs" />
     <Compile Include="Areas\Cms\Models\Wall.cs" />
     <Compile Include="Areas\Cms\MsCms.cs" />
-    <Compile Include="Areas\Cms\Utils\SceneUtils.cs" />
     <Compile Include="Areas\Cms\ViewModels\BrickViewModel.cs" />
     <Compile Include="Areas\Cms\ViewModels\LinkableBrickViewModel.cs" />
     <Compile Include="Areas\Cms\ViewModels\MapBrickViewModel.cs" />
