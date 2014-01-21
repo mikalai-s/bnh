@@ -223,9 +223,10 @@ fieldset legend { -moz-box-sizing: border-box; -webkit-box-sizing: border-box; b
 /*#endregion */
 
 
-/*#region map container */
+/*#region maps */
 
 #mapContainer { border: solid lightgray 1px; }
+.info-window { max-width: 350px; white-space: normal; }
 
 /*#endregion */
 
@@ -237,4 +238,8 @@ fieldset legend { -moz-box-sizing: border-box; -webkit-box-sizing: border-box; b
 /*#endregion */
 
 
-.info-window { max-width: 350px; white-space: normal; }
+/*#region page message */
+
+.wall-wrapper #Tabs.brick-wrapper { display: none !important; }
+
+/*#endregion */
