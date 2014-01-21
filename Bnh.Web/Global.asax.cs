@@ -43,6 +43,7 @@ namespace Bnh
             );
 
             MapControllerInvertRoutes(routes, "Community");
+            MapControllerInvertRoutes(routes, "TemplateScene");
 
             routes.MapRoute(
                 "Default",
@@ -51,23 +52,23 @@ namespace Bnh
             );
         }
 
-        private static void MapControllerInvertRoutes(RouteCollection routes, string controller)
+        private static void MapControllerInvertRoutes(RouteCollection routes, string controller, bool prependCity = true)
         {
             routes.MapRoute(
                 controller + 1,
-                "Calgary/" + controller,
+                (prependCity ? "Calgary/" : "") + controller,
                 new { controller = controller, action = "Index" }
             );
 
             routes.MapRoute(
                 controller + 2,
-                "Calgary/" + controller + "/Create",
+                (prependCity ? "Calgary/" : "") + controller + "/Create",
                 new { controller = controller, action = "Create" }
             );
 
             routes.MapRoute(
                 controller + 3,
-                "Calgary/" + controller + "/{id}/{action}",
+                (prependCity ? "Calgary/" : "") + controller + "/{id}/{action}",
                 new { controller = controller, action = "Details" }
             );
         }
