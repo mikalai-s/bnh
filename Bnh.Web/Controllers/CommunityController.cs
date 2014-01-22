@@ -103,6 +103,12 @@ namespace Bnh.Controllers
         {
             if (ModelState.IsValid)
             {
+                if (GetCommunity(community.UrlId) != null)
+                {
+                    return View("Error",new HandleErrorInfo(new InvalidOperationException(
+                                "There is already community with UrlId \"" + community.UrlId + "\""), "Community", "Create"));
+                }
+
                 this.repos.Communities.Insert(community);
 
                 var templateSceneId = this.Request.Form["templateSceneId"];
@@ -184,7 +190,7 @@ namespace Bnh.Controllers
         {
             return this.repos.IsValidId(id)
                 ? Query.EQ("_id", new BsonObjectId(id))
-                : Query.Matches("UrlId", BsonRegularExpression.Create(new Regex(id, RegexOptions.IgnoreCase)));
+                : Query.Matches("UrlId", BsonRegularExpression.Create(new Regex("^" + id + "$", RegexOptions.IgnoreCase)));
         }
 
         private Community GetCommunity(string id, bool includeScene = false)
