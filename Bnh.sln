@@ -10,10 +10,13 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{890B9F
 		.nuget\packages.config = .nuget\packages.config
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BackupTool", "BackupTool\BackupTool.csproj", "{CF87E4A1-A276-44BD-B5DC-B052F5D4AF36}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Production|Any CPU = Production|Any CPU
+		Release|Any CPU = Release|Any CPU
 		Staging|Any CPU = Staging|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
@@ -21,6 +24,8 @@ Global
 		{0A805134-A1F2-4A14-84A7-16C701FB95AA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0A805134-A1F2-4A14-84A7-16C701FB95AA}.Production|Any CPU.ActiveCfg = Production|Any CPU
 		{0A805134-A1F2-4A14-84A7-16C701FB95AA}.Production|Any CPU.Build.0 = Production|Any CPU
+		{0A805134-A1F2-4A14-84A7-16C701FB95AA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0A805134-A1F2-4A14-84A7-16C701FB95AA}.Release|Any CPU.Build.0 = Release|Any CPU
 		{0A805134-A1F2-4A14-84A7-16C701FB95AA}.Staging|Any CPU.ActiveCfg = Staging|Any CPU
 		{0A805134-A1F2-4A14-84A7-16C701FB95AA}.Staging|Any CPU.Build.0 = Staging|Any CPU
 		{0A805134-A1F2-4A14-84A7-16C701FB95AA}.Staging|Any CPU.Deploy.0 = Staging|Any CPU
@@ -28,8 +33,18 @@ Global
 		{60CF4AAD-7085-4A3E-B2D8-D1E77EF8E5BE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{60CF4AAD-7085-4A3E-B2D8-D1E77EF8E5BE}.Production|Any CPU.ActiveCfg = Production|Any CPU
 		{60CF4AAD-7085-4A3E-B2D8-D1E77EF8E5BE}.Production|Any CPU.Build.0 = Production|Any CPU
+		{60CF4AAD-7085-4A3E-B2D8-D1E77EF8E5BE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{60CF4AAD-7085-4A3E-B2D8-D1E77EF8E5BE}.Release|Any CPU.Build.0 = Release|Any CPU
 		{60CF4AAD-7085-4A3E-B2D8-D1E77EF8E5BE}.Staging|Any CPU.ActiveCfg = Staging|Any CPU
 		{60CF4AAD-7085-4A3E-B2D8-D1E77EF8E5BE}.Staging|Any CPU.Build.0 = Staging|Any CPU
+		{CF87E4A1-A276-44BD-B5DC-B052F5D4AF36}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CF87E4A1-A276-44BD-B5DC-B052F5D4AF36}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CF87E4A1-A276-44BD-B5DC-B052F5D4AF36}.Production|Any CPU.ActiveCfg = Release|Any CPU
+		{CF87E4A1-A276-44BD-B5DC-B052F5D4AF36}.Production|Any CPU.Build.0 = Release|Any CPU
+		{CF87E4A1-A276-44BD-B5DC-B052F5D4AF36}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CF87E4A1-A276-44BD-B5DC-B052F5D4AF36}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CF87E4A1-A276-44BD-B5DC-B052F5D4AF36}.Staging|Any CPU.ActiveCfg = Release|Any CPU
+		{CF87E4A1-A276-44BD-B5DC-B052F5D4AF36}.Staging|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
