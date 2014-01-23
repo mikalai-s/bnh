@@ -103,7 +103,7 @@ namespace Bnh.Controllers
         {
             if (ModelState.IsValid)
             {
-                if (GetCommunity(community.UrlId) != null)
+                if (this.repos.Communities.Collection.Count(GetCommunityQuery(community.UrlId)) != 0)
                 {
                     return View("Error",new HandleErrorInfo(new InvalidOperationException(
                                 "There is already community with UrlId \"" + community.UrlId + "\""), "Community", "Create"));
