@@ -6,10 +6,14 @@ using System.Threading.Tasks;
 
 namespace BackupTool
 {
-    public struct Config
+    internal partial class Config
     {
+        public string CurrentDateTime;
+
+        public string MongoDumpArgs;
+
         public string DestinationPath;
 
-        public string MongoDumpCmd;
+        public string MongoDumpPath;
     }
 }

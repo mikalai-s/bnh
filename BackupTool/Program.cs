@@ -25,11 +25,20 @@ namespace BackupTool
                 return;
             }
 
-            var config = JsonConvert.DeserializeObject<Config>(File.ReadAllText(args[0]));
+            var config = Config.Parse(args[0]);
 
             // backup:
-            var psi = new ProcessStartInfo(config.MongoDumpCmd.Replace("{DestinationPath}", config.DestinationPath));
-          
+            var process = new Process
+            {
+                StartInfo = new ProcessStartInfo(config.MongoDumpPath, config.MongoDumpArgs)
+                {
+                    UseShellExecute = false
+                }
+            };
+            //process.Start();
+            process.WaitForExit();
+            
+            Console.ReadKey();
         }
 
         private static void WriteLine(string str, ConsoleColor color = ConsoleColor.Gray)

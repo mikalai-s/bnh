@@ -78,6 +78,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BackupTool.cs" />
     <Compile Include="Pager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Controllers\HomeControllerTest.cs" />
@@ -86,6 +87,10 @@
     <Content Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\BackupTool\BackupTool.csproj">
+      <Project>{cf87e4a1-a276-44bd-b5dc-b052f5d4af36}</Project>
+      <Name>BackupTool</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Bnh.Web\Bnh.Web.csproj">
       <Project>{0A805134-A1F2-4A14-84A7-16C701FB95AA}</Project>
       <Name>Bnh.Web</Name>
