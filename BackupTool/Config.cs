@@ -15,5 +15,9 @@ namespace BackupTool
         public string DestinationPath;
 
         public string MongoDumpPath;
+
+        public string FilesPath;
+
+        public string DownloadFilesUrl;
     }
 }
