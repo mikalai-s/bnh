@@ -52,15 +52,21 @@ namespace BackupTool
                     {
                         CreateNoWindow = true,
                         UseShellExecute = false,
-                        RedirectStandardOutput = true
+                        RedirectStandardOutput = true,
+                        RedirectStandardError = true
                     }
                 };
                 process.OutputDataReceived += (a, e) => Trace.TraceInformation(e.Data);
                 process.ErrorDataReceived += (a, e) => Trace.TraceEvent(TraceEventType.Error, 0, e.Data);
+               
                 process.Start();
-                process.BeginOutputReadLine();
                 process.BeginErrorReadLine();
+                process.BeginOutputReadLine();
                 process.WaitForExit();
+                process.CancelErrorRead();
+                process.CancelOutputRead();
+                process.Close();
+            
                 Trace.TraceInformation("Dump completed!");
             });
         }

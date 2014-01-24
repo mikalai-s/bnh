@@ -756,10 +756,8 @@
     <Content Include="Views\Admin\Info.cshtml" />
     <Content Include="Views\Home\HomeLimited.cshtml" />
     <Content Include="Views\Admin\Files.cshtml" />
-    <None Include="Properties\PublishProfiles\Folder.pubxml">
-      <SubType>Designer</SubType>
-    </None>
     <Content Include="Views\Shared\Message.cshtml" />
+    <None Include="Properties\PublishProfiles\Local Folder.pubxml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="config.json" />
